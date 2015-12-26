@@ -1,8 +1,6 @@
 var React = require('react');
 var Input = require('./components/Input');
 var _ = require('underscore');
-//var Select = require('./components/Select');
-var STATES = require('./components/data/states');
 var Icon = require('./components/Icon');
 
 var CreateAccountScreen = React.createClass({
