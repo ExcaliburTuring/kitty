@@ -1,6 +1,5 @@
-﻿// entry.jsx
 var React = require('react');
-var Hello = require('./js/Hello');
-var TodoComponent = require('./js/register');
-React.render(<Hello />, document.getElementById('hello'));
-React.render(<TodoComponent />, document.getElementById('container'));
+var ReactDOM = require('react-dom');
+var App = require('./js/App');
+require('./css/application.less');
+ReactDOM.render(<App/>, document.getElementById('app'));
