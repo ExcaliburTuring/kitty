@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 butterfloege kitty
 
 安装
@@ -17,3 +18,6 @@ npm start
 2、使用fetch进行ajax，替代jquery，详见src/Register/js/app.js                 --依赖whatwg-fetch
 
 3、使用react-router实现页面路由的功能。	（还在构思阶段）                     --依赖react-router
+=======
+kitty
+>>>>>>> refs/remotes/buterfleoge/master

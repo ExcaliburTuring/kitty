@@ -1,9 +1,7 @@
-node_modules
+node_modules/	
 
 npm-debug.log
 
 kitty.cmd
-
-email suc
 
 
