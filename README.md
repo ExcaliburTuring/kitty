@@ -1,16 +1,16 @@
-butterfloege kitty
+#butterfloege kitty
 
-安装
+###安装
 
-npm install
-
-
-启动
-
-npm start
+####npm install
 
 
-2016-1-3 更新日志：
+###启动
+
+####npm start
+
+
+##2016-1-3 更新日志：
 
 1、调整文件架构，更新package.json依赖，删除node_modules文件夹。				 --依赖express-urlrewrite
 
