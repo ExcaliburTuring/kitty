@@ -1,8 +1,7 @@
-var React = require('react');
-var _ = require('underscore');
-var Icon = require('./Icon');
-
-var cx = require('classnames');
+import React from 'react';
+import _  from 'underscore';
+import Icon from './Icon';
+import cx from 'classnames';
 
 var PasswordValidator = React.createClass({
 

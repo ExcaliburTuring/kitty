@@ -1,4 +1,4 @@
 # Build and Release Folders
-node_modules/	
+node_modules/*
 npm-debug.log
 kitty.cmd

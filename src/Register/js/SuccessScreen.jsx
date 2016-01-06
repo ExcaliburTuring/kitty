@@ -1,22 +1,16 @@
-var React = require('react');
-var Router = require('react-router');
-var Route = Router.Route;
-var Redirect = Router.Redirect;
-var RouteHandler = Router.RouteHandler;
-var NotFoundRoute = Router.NotFoundRoute;
+import React from 'react';
+import { browserHistory, Router, IndexRoute, Route, Link } from 'react-router';
 
 
-var SuccessScreen = React.createClass({
-  mixins: [ Router.State, Router.Navigation ],
-
+var Signin = React.createClass({
   render: function() {
+    var success = this.props.location.state;
     return (
       <div className="success_screen">
-
         <div className="success_form">
           <h1>Thanks</h1>
           <p>Form has been validated and submitted</p>
-          <span>Your email:{this.props.email}</span>
+          <span>Your email:{success}</span>
         </div>
       </div>
     );
@@ -24,4 +18,4 @@ var SuccessScreen = React.createClass({
     
 });
     
-module.exports = SuccessScreen;
+module.exports = Signin;

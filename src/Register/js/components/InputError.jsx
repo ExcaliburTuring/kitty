@@ -1,7 +1,6 @@
-var React = require('react');
-var _ = require('underscore');
-
-var cx = require('classnames');
+import React from 'react';
+import _ from 'underscore';
+import cx from 'classnames';
 
 var InputError = React.createClass({
 
