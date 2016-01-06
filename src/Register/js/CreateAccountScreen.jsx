@@ -1,7 +1,7 @@
-var React = require('react');
-var Input = require('./components/Input');
-var _ = require('underscore');
-var Icon = require('./components/Icon');
+import React from 'react';
+import Input from './components/Input';
+import _ from 'underscore';
+import Icon from './components/Icon';
 
 var CreateAccountScreen = React.createClass({
   getInitialState: function () {
@@ -44,7 +44,7 @@ var CreateAccountScreen = React.createClass({
         companyName: this.state.companyName,
         password: this.state.password
       }
-      this.props.onChange(data);
+      this.props.onSubmit(data);
     } else {
       this.refs.email.isValid();
       this.refs.companyName.isValid();
