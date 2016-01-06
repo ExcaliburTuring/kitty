@@ -22,7 +22,7 @@ npm start
 ####2、使用fetch进行ajax，替代jquery，详见src/Register/js/app.js                 
 > * 依赖[whatwg-fetch](https://github.com/github/fetch)
 
-###3、使用reflux类库控制数据流
+####3、使用reflux类库控制数据流
 > * 依赖[reflux](https://github.com/reflux/refluxjs)
 
 ####4、使用react-router实现页面路由的功能。	
