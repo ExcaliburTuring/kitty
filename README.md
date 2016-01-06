@@ -1,4 +1,4 @@
-![kitty](http://www.iconpng.com/download/png/100881)
+![kitty](http://www.iconpng.com/png/hello_kitty/kitty_2.png)
 # ButterFleog - kitty
 
 ------
