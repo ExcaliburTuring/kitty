@@ -2,6 +2,8 @@ import React from 'react';
 import Reflux from 'reflux';
 import CreateAccountScreen from './CreateAccountScreen';
 import { History, Router, IndexRoute, Route, Link } from 'react-router';
+var img = document.createElement('img');
+img.src = require('../img/bg_city.png');
 
 var TodoActions = Reflux.createActions([
   'validate'
@@ -56,7 +58,8 @@ var ValidateInfo = React.createClass({
     return (
       <div className="application_wrapper">
       <div className="application_routeHandler">
-      <CreateAccountScreen onSubmit={this.onSubmit}/>
+        <CreateAccountScreen onSubmit={this.onSubmit}/>
+        <div className="create_account_bg"><img name="bg-city" src={img.src}/></div>
       </div>
       </div>
     )

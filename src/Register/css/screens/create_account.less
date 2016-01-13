@@ -4,6 +4,7 @@
   .bottomRight(0, 0);  
   min-height: 520px;
   opacity: 0;
+  z-index: 3;
   .animation(fadeIn .4s ease-in-out forwards);
 
   .create_account_form {
@@ -12,21 +13,20 @@
     .justify-content(center);
     .align-items(center);
     position: relative;
-    margin: 80px 0 200px 0;
+    margin: 140px 0 200px 0;
     min-height: 400px;
 
     > h1 {
       .display(relative);
-      font-size: 34px;
+      font: normal normal 100 43px/50px FZYouHJW;
+      color: @white;
       letter-spacing: .8px;
-      font-weight: 200;
-      line-height: 34px;
-      margin: 0 0 5px 0;
+      margin: 0 0 30px 0;
     }
 
     p {
       .display(relative);
-      font-size: 16px;
+      font-size: 28px;
       font-weight: 100;
       letter-spacing: .7px;
       color: @dark-blue;
@@ -69,6 +69,7 @@
     }
   }
 
+  
   form {
     width: 430px;
 
@@ -77,6 +78,7 @@
     }
   }
 }
+
 
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
