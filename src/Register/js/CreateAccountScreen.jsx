@@ -98,8 +98,7 @@ var CreateAccountScreen = React.createClass({
       <div className="create_account_screen">
 
       <div className="create_account_form">
-      <h1>Creat A New Account</h1>
-      <p>海逍遥，专注于年轻人的旅行</p>
+      <h1>新建一个账户</h1>
       <form onSubmit={this.saveAndContinue}>
 
       <Input 
@@ -153,7 +152,7 @@ var CreateAccountScreen = React.createClass({
       <button 
       type="submit" 
       className="button button_wide">
-      CREATE ACCOUNT
+      完  成
       </button>
 
       </form>
