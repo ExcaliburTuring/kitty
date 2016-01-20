@@ -14,12 +14,14 @@ module.exports = {
   output: {
     path: __dirname + '/static',
     filename: '[name].js',
+    chunkFilename: '[id].chunk.js',
     publicPath: '/static/'
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json', '.css', '.less', '.jpg', '.png']
   },
   plugins: [
+  new webpack.optimize.CommonsChunkPlugin('shared.js'),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin()
   ],
