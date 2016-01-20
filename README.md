@@ -9,6 +9,7 @@ npm install
 ###安装
 npm start
 
+
 ##2016-1-3 更新日志：
 ####1、调整文件架构，更新package.json依赖，删除node_modules文件夹。				 
 > * 依赖express-urlrewrite
@@ -28,9 +29,19 @@ npm start
 ####4、使用react-router实现页面路由的功能。	
 > * 依赖[react-router](https://github.com/rackt/react-router)
 
+
 ##2016-1-13 更新日志：
 ####1、删除static文件夹,并在gitignore中添加对static文件夹的忽略。
 
 ####2、添加FZYouHJW字体及对字体的引用。
 
 ####3、前端样式微调，并增加了对热启动加载图片的支持 get√。
+
+
+##2016-1-21 更新日志：
+####1、新建HomePage工程，删除旧的RegisterTest。
+
+####2、前端样式微调，使用CommonsChunkPlugin插件打包公共代码。
+
+####3、使用轮播插件swiper。
+> * [swiper](http://www.idangero.us/swiper)

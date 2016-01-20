@@ -13,16 +13,12 @@ var TodoStore = Reflux.createStore({
   items: {},
   listenables: [TodoActions],
   onValidate:function(data){
-    var update = data;
-    //这是fetch官方文档里面写的url后面加param的方法，我自己用的时候并不好使
-    //var url = new URL("http://192.168.1.110:8080/service/emailValidation"),
-    // params = {lat:35.696233, long:139.570431}
-    //Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-    //console.log(url);
-    fetch("http://192.168.1.110:8080/service/emailValidation?email=aa@qq.com", {
-      method: "GET",
+    var formData = JSON.stringify(data);
+    console.log(formData);
+    fetch("http://192.168.1.110:8080/service/emailValidation", {
+      method: "POST", body: formData
     }).then(function(res) {
-      if (res.ok) {
+      if(res.ok) {
         res.json().then(function(data) {
           console.log(data.status);
           if(data.status=="success"){
@@ -30,10 +26,11 @@ var TodoStore = Reflux.createStore({
             TodoStore.trigger(TodoStore.item);
           }
         });
-      } else if (res.status == 401) {
+      }else if (res.status == 401) {
         console.log("401");
       }
     });
+
   },
 });
 
@@ -55,11 +52,14 @@ var ValidateInfo = React.createClass({
   },
   render: function() {
     var data = this.state.map;
+    var bgStyle = {
+        backgroundImage: "url(" + img.src + ")"
+    };
     return (
       <div className="application_wrapper">
       <div className="application_routeHandler">
         <CreateAccountScreen onSubmit={this.onSubmit}/>
-        <div className="create_account_bg"><img name="bg-city" src={img.src}/></div>
+        <div className="create_account_bg" style={bgStyle}></div>
       </div>
       </div>
     )
