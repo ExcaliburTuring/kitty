@@ -1,12 +1,12 @@
 import React from 'react';
-import Swiper from './swiper/swiper.js';
-import a from '../img/A.jpg';
-import b from '../img/B.jpg';
-import c from '../img/C.jpg';
-import d from '../img/D.jpg';
+import Swiper from '../swiper/swiper.js';
+import a from '../../img/A.jpg';
+import b from '../../img/B.jpg';
+import c from '../../img/C.jpg';
+import d from '../../img/D.jpg';
 
 
-var App = React.createClass({
+module.exports = React.createClass({
   render: function() {
     var abg = {backgroundImage: "url(" + a + ")"};
     var bbg = {backgroundImage: "url(" + b + ")"};
@@ -39,6 +39,3 @@ var App = React.createClass({
     });
   }
 });
-
-
-module.exports = App;

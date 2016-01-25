@@ -5,12 +5,64 @@ body{
 	height:100%;
 }
 
+.head {
+    position: relative;
+    width: 100%;
+    height: 500px;
+}
+
 .swiper-container {
     width: 100%;
-    height: 100%;
-    position: fixed;
+    height: 500px;
+    position: relative;
     bottom:0px;
     right:0px;
     left:0px;
     top:0px;
+    z-index: 1;
+    .swiper-slide {
+    	background-position: center center;
+    	background-size: cover;
+  		background-repeat: no-repeat;
+  	}
+}
+
+.navbar {
+    height: 60px;
+    border: none;
+    left: 0;
+    top: 0;
+    background: rgba(17, 17, 17, 0);
+    position: absolute;
+    z-index: 2;
+
+    .navbar-header {
+        position: relative;
+    }
+}
+
+.navbar-navi {
+    line-height: 60px;
+    font-family:"Hiragino Sans GB","Microsoft YaHei",SimHei,SimSun,sans-serif;
+    font-size: 1pc;
+    font-weight: 700;
+    color: #ffffff;
+    padding: 0 10px;
+}
+
+.navbar-desc {
+    float: left;
+    height: 25px;
+    margin-left: 100px;
+    width: 800px;
+}
+
+.navbar-logo {
+    padding:14px 8px 0 15px;
+    position: absolute;
+    left: 0;
+    > img{
+        width: 84px;
+        height: 32px;
+    }
 }

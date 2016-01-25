@@ -45,3 +45,17 @@ npm start
 
 ####3、使用轮播插件swiper。
 > * [swiper](http://www.idangero.us/swiper)
+
+
+##2016-1-25 更新日志：
+####1、新建Product产品介绍页工程。
+
+####2、使用amaze-ui前端库。
+> * [amaze-ui](http://amazeui.org/react/)
+
+####3、使用marked插件。
+> * [marked](https://github.com/chjj/marked)
+
+####4、问题！
+-- 产品展示我想用markdown来做，现在前端可以显示markdown格式的文本了，但是前后端这个文本不知道怎么传。
+-- sticky那个玩意儿我自己用的时候在chrome上显示正常，ie和edge浏览器都不兼容，但是官方的demo就没事，这个我后面再看看。
