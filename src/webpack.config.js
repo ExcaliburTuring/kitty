@@ -13,12 +13,14 @@ module.exports = {
   output: {
     path: '../static',
     filename: '[name].js',
+    chunkFilename: '[id].chunk.js',
     publicPath: '../static/'
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json', '.css']
   },
   plugins: [
+  new webpack.optimize.CommonsChunkPlugin('shared.js'),
   new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.DefinePlugin({
     'process.env': {

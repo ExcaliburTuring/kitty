@@ -1,0 +1,265 @@
+.hair{
+  text-align: center;
+  width: 100%;
+  background: @light-red;
+  margin-bottom: 10px;
+}
+
+.navbar{ 
+  text-align: left;
+  margin: auto;
+  width: 1250px;
+  height: 60px;
+  line-height: 60px;   
+  overflow: hidden;
+}
+
+.navbar-logo img{
+  display:inline;
+  width: 84px;
+  height: 32px;
+  margin-bottom: 8px;
+}
+
+.navbar-desc{
+  margin-left: 10px;
+  display:inline;
+}
+
+.navbar-navi {
+  line-height: 60px;
+  font-family:"Hiragino Sans GB","Microsoft YaHei",SimHei,SimSun,sans-serif;
+  font-size: 1em;
+  font-weight: @wide;
+  color: @nav;
+  padding: 0 10px;
+}
+
+.profile{
+  text-align: right;
+  float: right;
+  display: inline;
+}
+
+.searchLocation, .avatar{
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.am-form-field{
+  width: 200px;
+  font-size: 10px!important;
+  fond-weight: @thin;
+}
+
+.userName{
+  text-align: right;
+  display: inline-block;
+  font-family:"Hiragino Sans GB","Microsoft YaHei",SimHei,SimSun,sans-serif;
+  font-size: 0.8em;
+  font-weight: @thin;
+  color: @nav;
+}
+
+.userName:hover{
+  color: @green;
+  cursor: pointer;
+}
+
+.face{
+  width: 1250px;
+  height: 535px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.brief{
+  width: 250px;
+  height: 535px;
+  position: absolute;
+  float: left;
+}
+
+.relative{
+  position: relative;
+  height: 535px;
+}
+
+.duration{
+  text-align: center;
+  display: inline-block;
+  padding: 5px; 
+  width: 3em; 
+  height: 3em;
+  font-weight: @wide;
+  font-size: 0.7em;
+  line-height: 100%;
+  color: @nav;
+  background: #D40000; 
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.day{
+  font-size: 0.5em;
+}
+
+.title{
+  margin: 5px 10px;
+  font-size: 33px!important;
+  display: inline-block;
+}
+
+.intro{
+  margin: 5px 0;
+  font-size: 16px!important;
+  color: @dark-gray;
+}
+
+.route{
+  margin: 5px 0;
+  font-size: 14px!important;
+  color: @dark-blue;
+}
+
+
+.bottom{
+  bottom: 0;
+  position: absolute;
+}
+
+.limit{
+  margin: 5px 0;
+  font-size: 14px!important;
+  font-weight: @xian;
+}
+
+.price{
+  margin: 5px 0;
+  font-size: 28px!important;
+  font-weight: @wide;
+}
+
+.time{
+  margin: 5px 0;
+  width: 250px;
+  height: 60px;
+  background: #D40000;
+  border: none;
+  font-size: 25px!important;
+  font-weight: @wide;
+  color: @white;
+}
+
+.swiper-container{
+  width: 950px;
+  height: 535px;
+  position: absolute;
+  float: right;
+  z-index: 1;
+  .swiper-slide {
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+.am-sticky-placeholder{
+  width: 100%;
+  position: absolute;
+  text-align: right;
+  line-height: 10px;
+  float: right;
+  z-index: 2;
+  bottom: 0;
+
+  .scrollspy-nav {
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .scrollspy-nav ul {
+    margin: 0;
+    padding: 0
+  }
+
+  .scrollspy-nav li {
+    display: inline-block;
+    list-style: none
+  }
+
+  .scrollspy-nav a {
+    color: @rice;
+    font-size: 23px!important;
+    font-weight: 500;
+    width: 120px;
+    padding: 20px 0;
+    margin: 0 10px;
+    text-align: center;
+    display: inline-block;
+    transition: color 0.2s,border 0.2s;
+    -moz-transition: color 0.2s,border 0.2s; /* Firefox 4 */
+    -webkit-transition: color 0.2s,border 0.2s; /* Safari and Chrome */
+    -o-transition: color 0.2s,border 0.2s; /* Opera */
+  }
+
+  .scrollspy-nav a.am-active, .scrollspy-nav a:Hover{
+    color: @light-red;
+    border-top: 5px solid #e75657;
+  }
+}
+
+.am-animation-stwork{
+  animation-duration: 1s;
+  animation-name: stwork;
+}
+
+@-o-keyframes amactive /* Opera */
+{
+from {border-top:none;color: @rice;}
+to {border-top: 5px solid @light-red;color: @light-red;}
+}
+
+
+@keyframes stwork
+{
+from   {background:none;}
+to {background: rgba(255,255,255,0.3);}
+}
+
+@-moz-keyframes stwork /* Firefox */
+{
+from {background:none;}
+to {background: rgba(255,255,255,0.3);}
+}
+
+@-webkit-keyframes stwork /* Safari 和 Chrome */
+{
+from {background:none;}
+to {background: rgba(255,255,255,0.3);}
+}
+
+@-o-keyframes stwork /* Opera */
+{
+from {background:none;}
+to {background: rgba(255,255,255,0.3);}
+}
+
+.body{
+  text-align: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.maininfo{
+  text-align: left;
+  margin: auto;
+  width: 1250px;
+  height: 1000px;
+  background-color: @orange;
+  line-height: 60px;   
+  overflow: hidden;
+}
