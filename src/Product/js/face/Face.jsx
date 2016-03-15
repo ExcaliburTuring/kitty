@@ -12,7 +12,7 @@ var Nav = AMUIReact.Nav;
 
 
 module.exports = React.createClass({
-	getInitialState: function(){
+	getInitialState: function() {
 		return{
 			duration: "",
 			title: "",
@@ -22,7 +22,7 @@ module.exports = React.createClass({
 			price: ""
 		}
 	},
-	componentWillMount: function(){
+	componentWillMount: function() {
 		this.setState({
 			duration: "7",
 			title: "锡兰的微笑",
