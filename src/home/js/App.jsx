@@ -1,5 +1,5 @@
 import React from 'react';
-import Swiper from './swiper/swiper.js';
+import Swiper from 'swiper.js';
 import a from '../img/A.jpg';
 import b from '../img/B.jpg';
 import c from '../img/C.jpg';
