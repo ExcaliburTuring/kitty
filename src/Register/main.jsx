@@ -22,4 +22,4 @@ ReactDOM.render((
       <Route path="Signin" component={SuccessScreen} />
     </Route>
   </Router>
-), document.getElementById('app'))
+), document.getElementById('app'));

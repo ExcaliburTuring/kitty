@@ -17,7 +17,7 @@ var entries = {};
 var plugins = [
     new webpack.optimize.CommonsChunkPlugin({
         name: 'common',
-        filename: debug ? 'common.js' : 'common-[hash].js',
+        filename: debug ? 'common.js' : 'common-[chunkhash].js',
         minChunks: 3
     })
 ];
@@ -46,7 +46,7 @@ var plugins = [
             }
         }
         plugins.push(new HtmlWebpackPlugin({
-            filename: htmlFileName,
+            filename: "../" + htmlFileName,
             template: path.resolve(dirPath, htmlFileName),
             chunks:['common', dir] // also add common chunk
         }));
@@ -57,7 +57,7 @@ module.exports = {
     entry: entries,
     output: {
         path: ASSETS_PATH,
-        filename: debug ? '[name].js' : '[name]-[hash].js',
+        filename: debug ? '[name].js' : '[name]-[chunkhash].js',
         publicPath: PUBLIC_PATH
     },
     resolve: {

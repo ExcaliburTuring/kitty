@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "kitty",
   "scripts": {
-    "clean": "rimraf assets",
+    "clean": "rimraf static",
     "start": "node server.js",
     "build": "npm run clean && NODE_ENV=production webpack --config webpack.config.js"
   },
