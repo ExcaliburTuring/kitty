@@ -6,8 +6,8 @@ var path = require('path');
 var projectRoot = path.resolve(process.cwd());
 var SRC_PATH = path.join(projectRoot, 'src/');
 var LIB_PATH = path.join(projectRoot, 'lib/');
-var ASSETS_PATH = path.join(projectRoot, 'assets/');
-var PUBLIC_PATH = '/assets/';
+var ASSETS_PATH = path.join(projectRoot, 'static/public');
+var PUBLIC_PATH = '/public/';
 var TEST_PATH = path.join(projectRoot, 'test/');
 
 var PATH_MAP = {

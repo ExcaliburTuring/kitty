@@ -1,6 +1,6 @@
 # Build and Release Folders
 node_modules/*
-static/*
+static/
 npm-debug.log
 kitty.cmd
 assets/
