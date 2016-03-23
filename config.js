@@ -12,7 +12,8 @@ var TEST_PATH = path.join(projectRoot, 'test/');
 
 var PATH_MAP = {
     'swiper.js': LIB_PATH + 'js/swiper/swiper.js',
-    'swiper.less': LIB_PATH + 'css/swiper/swiper.less'
+    'swiper.less': LIB_PATH + 'css/swiper/swiper.less',
+    'font-awesome.less': LIB_PATH + 'css/font-awesome/less/font-awesome.less'
 };
 
 var NOT_ENTRY_DIR = [
