@@ -57,7 +57,7 @@ module.exports = React.createClass({
 			        <nav className="scrollspy-nav" data-am-scrollspy-nav="{offsetTop: 45}" data-am-sticky>
 			          <ul>
 			            <li><a href="#app">路线简介</a></li>
-			            <li><a href="#body">行程</a></li>
+			            <li><a href="#behind">  行程  </a></li>
 			            <li><a href="#arm">注意事项</a></li>
 			            <li><a href="#hand">费用说明</a></li>
 			            <li><a href="#foot">报名</a></li>

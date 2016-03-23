@@ -213,7 +213,6 @@
 }
 
 .am-animation-stwork{
-  height: 100px;
   animation-duration: 1s;
   animation-name: stwork;
 }
@@ -228,191 +227,39 @@ to {border-top: 5px solid @light-red;color: @light-red;}
 @keyframes stwork
 {
 from   {background:none;}
-to {background: rgba(255,255,255,0.5);}
+to {background: rgba(255,255,255,0.3);}
 }
 
 @-moz-keyframes stwork /* Firefox */
 {
 from {background:none;}
-to {background: rgba(255,255,255,0.5);}
+to {background: rgba(255,255,255,0.3);}
 }
 
 @-webkit-keyframes stwork /* Safari 和 Chrome */
 {
 from {background:none;}
-to {background: rgba(255,255,255,0.5);}
+to {background: rgba(255,255,255,0.3);}
 }
 
 @-o-keyframes stwork /* Opera */
 {
 from {background:none;}
-to {background: rgba(255,255,255,0.5);}
+to {background: rgba(255,255,255,0.3);}
 }
 
 .body{
+  text-align: center;
   width: 100%;
   margin-top: 10px;
 }
 
 .maininfo{
+  text-align: left;
   margin: auto;
   width: 1250px;
+  height: 1000px;
+  background-color: @orange;
+  line-height: 60px;   
   overflow: hidden;
-}
-
-.day1{
-  margin: 30px 0;
-  left: 0;
-  h1{
-    font-size: 1.8em!important;
-  }
-  h6{
-    margin: 0.5em 0;
-  }
-  p{
-    margin: 1em 0;
-  }
-  .fa-bookmark{
-    font-size: 5em;
-    color: @dark-red;
-  }
-  .content{
-    width: 1250px;
-    display: inline-block;
-    position: relative;
-    .left{
-      float: left;
-      display: inline-block;
-      width: 650px;
-      img{
-        width: 100%;
-      }
-    }
-
-    .right{
-      float: right;
-      display: inline-block;
-      width: 570px;
-    }
-  }
-}
-
-
-
-.days{
-  margin: 30px 0;
-  left: 0;
-  h1{
-    font-size: 1.8em!important;
-  }
-  h2{
-    font-size: 1.2em!important;
-  }
-  h6{
-    margin: 0.5em 0;
-  }
-  p{
-    margin: 1em 0;
-  }
-  .fa{
-    font-size: 2em;
-    color: @light-blue;
-    margin: 0 10px;
-  }
-  img{
-    width: 100%;
-  }
-  .content{
-    width: 1250px;
-    display: inline-block;
-    position: relative;
-    .left{
-      float: left;
-      display: inline-block;
-      width: 610px;
-      
-    }
-    .right{
-      float: right;
-      display: inline-block;
-      width: 610px;
-    }
-  }
-}
-
-.notice{
-  margin: 30px 0;
-  left: 0;
-  font-size: 16px;
-  h1{
-    font-size: 1.8em!important;
-  }
-  h2{
-    font-size: 1.2em!important;
-  }
-  h6{
-    margin: 0.5em 0;
-  }
-  p{
-    margin: 1em 0;
-  }
-  .fa{
-    font-size: 1em;
-    color: @dark-gray;
-    margin: 0 10px;
-  }
-  .content{
-    width: 1250px;
-    display: inline-block;
-    position: relative;
-    .left{
-      float: left;
-      display: inline-block;
-      width: 610px;
-      
-    }
-    .right{
-      float: right;
-      display: inline-block;
-      width: 610px;
-    }
-  }
-}
-
-.expense{
-  margin: 30px 0;
-  left: 0;
-  h1{
-    font-size: 1.8em!important;
-  }
-  h2{
-    font-size: 1.2em!important;
-  }
-  h6{
-    margin: 0.5em 0;
-  }
-  p{
-    margin: 1em 0;
-  }
-  .fa{
-    font-size: 1em;
-    color: @dark-gray;
-    margin: 0 10px;
-  }
-  .content{
-    width: 1250px;
-    display: inline-block;
-    position: relative;
-    .left{
-      float: left;
-      display: inline-block;
-      width: 610px;
-      
-    }
-    .right{
-      float: right;
-      display: inline-block;
-      width: 610px;
-    }
-  }
 }

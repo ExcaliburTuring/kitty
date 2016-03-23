@@ -12,10 +12,6 @@ ReactDOM.render(
 	<div>
 		<Navbar/>
 		<Head/>
-		<div className="body" id="body">
-			<div className="maininfo">
-				<Body/>
-			</div>
-		</div>
+		<Body/>
 	</div>
 	, document.getElementById('app'));
