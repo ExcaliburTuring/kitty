@@ -4,28 +4,41 @@
 var path = require('path');
 
 var projectRoot = path.resolve(process.cwd());
-var SRC_PATH = path.join(projectRoot, 'src/');
-var LIB_PATH = path.join(projectRoot, 'lib/');
-var ASSETS_PATH = path.join(projectRoot, 'static/public');
-var PUBLIC_PATH = '/public/';
-var TEST_PATH = path.join(projectRoot, 'test/');
+const SRC_PATH = path.join(projectRoot, 'src/');
+const LIB_PATH = path.join(projectRoot, 'lib/');
+const ASSETS_PATH = path.join(projectRoot, 'static/public');
+const PUBLIC_PATH = '/public/';
+const TEST_PATH = path.join(projectRoot, 'test/');
 
-var PATH_MAP = {
-    'swiper.js': LIB_PATH + 'js/swiper/swiper.js',
-    'swiper.less': LIB_PATH + 'css/swiper/swiper.less'
+var commonPath = path.join(SRC_PATH, 'common/');
+var componentPath = path.join(SRC_PATH, 'component/');
+
+const PATH_MAP = {
+    // lib    
+    'swiper': LIB_PATH + 'js/swiper/swiper.js',
+    'swiper.less': LIB_PATH + 'css/swiper/swiper.less',
+
+    // src/common
+    'base.less': commonPath + 'base.less',
+    'account_basic_info': commonPath + 'account_basic_info.js',
+    'url_config': commonPath + 'url_config.js',
+
+    // src/component
+    'icon': componentPath + 'icon.jsx'
+
 };
 
-var NOT_ENTRY_DIR = [
+const ENTRY_EXCLUDE = [
     'common',
-    'util'
+    'component'
 ];
 
-module.exports =  {
+module.exports = {
     SRC_PATH: SRC_PATH,
     LIB_PATH: LIB_PATH,
     ASSETS_PATH: ASSETS_PATH,
     PATH_MAP: PATH_MAP,
-    NOT_ENTRY_DIR: NOT_ENTRY_DIR,
+    ENTRY_EXCLUDE: ENTRY_EXCLUDE,
     PUBLIC_PATH: PUBLIC_PATH,
     TEST_PATH: TEST_PATH
 };
