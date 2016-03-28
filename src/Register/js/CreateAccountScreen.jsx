@@ -4,98 +4,96 @@ import _ from 'underscore';
 import Icon from './components/Icon';
 
 var CreateAccountScreen = React.createClass({
-  getInitialState: function () {
-    return {
-      email: null,
-      companyName: null,
-      password: null,
-      confirmPassword: null,
-      statesValue: null,
-      forbiddenWords: ["password", "user", "username"]
-    }
-  },
+    getInitialState: function() {
+        return {
+            email: null,
+            companyName: null,
+            password: null,
+            confirmPassword: null,
+            statesValue: null,
+            forbiddenWords: ["password", "user", "username"]
+        }
+    },
 
-  handlePasswordInput: function (event) {
-    if(!_.isEmpty(this.state.confirmPassword)){
-      this.refs.passwordConfirm.isValid();
-    }
-    this.refs.passwordConfirm.hideError();
-    this.setState({
-      password: event.target.value
-    });
-  },
+    handlePasswordInput: function(event) {
+        if (!_.isEmpty(this.state.confirmPassword)) {
+            this.refs.passwordConfirm.isValid();
+        }
+        this.refs.passwordConfirm.hideError();
+        this.setState({
+            password: event.target.value
+        });
+    },
 
-  handleConfirmPasswordInput: function (event) {
-    this.setState({
-      confirmPassword: event.target.value
-    });
-  },
+    handleConfirmPasswordInput: function(event) {
+        this.setState({
+            confirmPassword: event.target.value
+        });
+    },
 
-  saveAndContinue: function (e) {
-    e.preventDefault();
+    saveAndContinue: function(e) {
+        e.preventDefault();
 
-    var canProceed = this.validateEmail(this.state.email) 
-    && this.refs.password.isValid()
-    && this.refs.passwordConfirm.isValid();
+        var canProceed = this.validateEmail(this.state.email) && this.refs.password.isValid() && this.refs.passwordConfirm.isValid();
 
-    if(canProceed) {
-      var data = {
-        email: this.state.email,
-        companyName: this.state.companyName,
-        password: this.state.password
-      }
-      this.props.onSubmit(data);
-    } else {
-      this.refs.email.isValid();
-      this.refs.companyName.isValid();
-      this.refs.password.isValid();
-      this.refs.passwordConfirm.isValid();
-    }
-  },
+        if (canProceed) {
+            var data = {
+                email: this.state.email,
+                companyName: this.state.companyName,
+                password: this.state.password
+            }
+            this.props.onSubmit(data);
+        } else {
+            this.refs.email.isValid();
+            this.refs.companyName.isValid();
+            this.refs.password.isValid();
+            this.refs.passwordConfirm.isValid();
+        }
+    },
 
-  isConfirmedPassword: function (event) {
-    return (event == this.state.password)
-  },
+    isConfirmedPassword: function(event) {
+        return (event == this.state.password)
+    },
 
-  handleCompanyInput: function(event) {
-    this.setState({
-      companyName: event.target.value
-    })
-  },
+    handleCompanyInput: function(event) {
+        this.setState({
+            companyName: event.target.value
+        })
+    },
 
-  handleEmailInput: function(event){
-    this.setState({
-      email: event.target.value
-    });
-  },
+    handleEmailInput: function(event) {
+        this.setState({
+            email: event.target.value
+        });
+    },
 
-  validateEmail: function (event) {
-    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(event);
-  },
+    validateEmail: function(event) {
+        // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(event);
+    },
 
-  testEmail: function (event) {
-    $.post('',event, function (e) {
-      this.items = JSON.parse(e);
-      alert(this.items);
-    }.bind(this));
-    return re.test(event);
-  },
+    testEmail: function(event) {
+        $.post('', event, function(e) {
+            this.items = JSON.parse(e);
+            alert(this.items);
+        }.bind(this));
+        return re.test(event);
+    },
 
-  isEmpty: function (value) {
-    return !_.isEmpty(value);
-  },
+    isEmpty: function(value) {
+        return !_.isEmpty(value);
+    },
 
-  updateStatesValue: function (value) {
-    this.setState({
-      statesValue: value
-    })
-  },
+    updateStatesValue: function(value) {
+        this.setState({
+            statesValue: value
+        })
+    },
 
-  render: function() {
-    return (
-      <div className="create_account_screen">
+    render: function() {
+        return (
+            <div className="create_account_screen">
 
       <div className="create_account_form">
       <h1>新建一个账户</h1>
@@ -159,8 +157,8 @@ var CreateAccountScreen = React.createClass({
       </div>
 
       </div>
-      );
-}
+        );
+    }
 
 });
 
