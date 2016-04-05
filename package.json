@@ -33,7 +33,6 @@
     "jsx-loader": "^0.13.2",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
-    "react-router": "^1.0.3",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.2.2",

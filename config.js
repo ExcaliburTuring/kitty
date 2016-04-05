@@ -2,6 +2,7 @@
  * @author xiezhenzong
  */
 var path = require('path');
+var fs = require('fs');
 
 var projectRoot = path.resolve(process.cwd());
 const SRC_PATH = path.join(projectRoot, 'src/');
@@ -10,25 +11,55 @@ const ASSETS_PATH = path.join(projectRoot, 'static/public');
 const PUBLIC_PATH = '/public/';
 const TEST_PATH = path.join(projectRoot, 'test/');
 
-var commonPath = path.join(SRC_PATH, 'common/');
+var commonJsPath = path.join(SRC_PATH, 'common/js/');
+var commonCssPath = path.join(SRC_PATH, 'common/css/');
 var componentPath = path.join(SRC_PATH, 'component/');
 
-const PATH_MAP = {
-    // lib    
-    'swiper': LIB_PATH + 'js/swiper/swiper.js',
-    'swiper.less': LIB_PATH + 'css/swiper/swiper.less',
+const PATH_MAP = (function () {
+    // lib
+    var pathMap = {
+        'swiper': LIB_PATH + 'js/swiper/swiper.js',
+        'swiper.less': LIB_PATH + 'css/swiper/swiper.less'
+    };
 
-    // src/common
-    'base.less': commonPath + 'base.less',
-    'account_basic_info': commonPath + 'account_basic_info.js',
-    'url_config': commonPath + 'url_config.js',
+    function readFile(dir, callback) {
+        fs.readdirSync(dir)
+        .forEach(function(file) {
+            var filePath = path.join(dir, file);
+            if (fs.statSync(filePath).isDirectory()) {
+                readFile(filePath, callback);
+            } else {
+                callback(file, filePath);   
+            }
+        });
+    };
 
+    function addJsToPathMap(file, filePath) {
+        if (file.indexOf('.jsx', file - 4) !== -1) {
+            pathMap[file.substring(0, file.length - 4)] = filePath;
+        } else if (file.indexOf('.js', file - 3) !== -1) {
+            pathMap[file.substring(0, file.length - 3)] = filePath;
+        }
+    }
+
+    // src/common/js
+    readFile(commonJsPath, addJsToPathMap);
+    // src/common/css
+    readFile(commonCssPath, function(file, filePath) {
+        pathMap[file] = filePath;
+    });
     // src/component
-    'icon': componentPath + 'icon.jsx'
+    readFile(componentPath, addJsToPathMap);
 
-};
+    console.log('pathMap: ');
+    console.log(pathMap);
+    console.log();
+    return pathMap;
+}());
 
 const ENTRY_EXCLUDE = [
+    '.DS_Store',
+    'font',
     'common',
     'component'
 ];

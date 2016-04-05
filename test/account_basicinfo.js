@@ -1,7 +1,10 @@
 module.exports = {
 	'login': true,
-	'info': {
+	'accountInfo': {
 		'accountid': 123456,
 		'accountName': 'xiezhenzong'
+	},
+	'accountSetting': {
+		
 	}
 };

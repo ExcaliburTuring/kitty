@@ -2,13 +2,20 @@ var express = require('express');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./config');
 const TEST_PATH = config.TEST_PATH;
-var mockPages = ['/', '/test', '/index', '/product', '/register', '/login'];
+var mockPages = ['/', '/test', '/index', '/product', '/register', '/login', '/user'];
 var mockRequest = ['/account/*'];
 
 var app = express();
-app.use(express.static(TEST_PATH));
-app.get('/*', function(req, res) {
+var mockHandler = function(req, res) {
     var path = req.path;
+    if (path.match(new RegExp('/account/*'))) { // special case
+        var id = path.split('/')[2];
+        if (!isNaN(id)) { // 是否数字
+            res.sendFile('/account.html', {root: TEST_PATH});
+            return;
+        }
+    }
+
     if (mockPages.indexOf(path) > 0) {
         res.sendFile(path === '/' ? '/index.html' : path + '.html', {root: TEST_PATH});
     } else {
@@ -21,7 +28,10 @@ app.get('/*', function(req, res) {
         }
         res.json({status: 404, errMsg: "Can't find " + path});
     }
-});
+};
+app.use(express.static(TEST_PATH));
+app.get('/*', mockHandler);
+app.post('/*', mockHandler);
 app.listen(8081, 'localhost', function(err) {
     console.log(err ? err : 'Mock server listening at http://localhost:8081');
 });
@@ -58,4 +68,5 @@ var server = new WebpackDevServer(compiler, {
 });
 server.listen(8080, 'localhost', function(err) {
     console.log(err ? err : 'Asserts server listening at http://localhost:8080');
+    console.log();
 });
