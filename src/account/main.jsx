@@ -1,16 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDom from 'react-dom';
+import { Router, Route, IndexRoute, useRouterHistory } from 'react-router'
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 
-import Navbar from 'navbar';
-import Footer from 'footer';
 import App from './js/app';
+import Home from './js/home';
+import Info from './js/info';
+import Orders from './js/orders';
+import Order from './js/order';
+import Setting from './js/setting';
 
-require('./css/application.less');
+const browserHistory = useRouterHistory(createBrowserHistory)({ 
+	queryKey: false,
+	basename: '/account'
+});
 
-ReactDOM.render(
- 	<div> 
-		<Navbar/>
-		<App />
-		<Footer/>
-	</div>
-, document.getElementById('app'));
+ReactDom.render(
+	<Router history={browserHistory}>
+		<Route path="/:accountid" component={App}>
+			<IndexRoute component={Home}/>
+	    	<Route path="/:accountid/info" component={Info} />
+	    	<Route path="/:accountid/orders" component={Orders}>
+	    		<Route path="/:accountid/orders/:orderid" component={Order}/>
+	    	</Route>
+	    	<Route path="/:accountid/setting" component={Setting}/>
+  		</Route>
+	</Router>,
+	document.getElementById('app')
+);
