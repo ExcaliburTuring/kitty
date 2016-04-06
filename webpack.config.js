@@ -1,7 +1,6 @@
 /**
  * @author zhaowei
  */
-'use strict';
 
 var fs = require('fs');
 var path = require('path');
@@ -10,9 +9,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var debug = process.env.NODE_ENV !== 'production';
 var config = require('./config');
-var SRC_PATH = config.SRC_PATH;
-var PUBLIC_PATH = config.PUBLIC_PATH;
-var ASSETS_PATH = config.ASSETS_PATH;
+const SRC_PATH = config.SRC_PATH;
+const PUBLIC_PATH = config.PUBLIC_PATH;
+const ASSETS_PATH = config.ASSETS_PATH;
 var entries = {};
 var plugins = [
     new webpack.optimize.CommonsChunkPlugin({
@@ -35,16 +34,15 @@ var plugins = [
     }
     fs.readdirSync(SRC_PATH)
     .filter(function(dir) {
-        return config.NOT_ENTRY_DIR.indexOf(dir) < 0;
+        return config.ENTRY_EXCLUDE.indexOf(dir) < 0 
+            && fs.statSync(path.join(SRC_PATH, dir)).isDirectory();
     }).forEach(function(dir) {
         var dirPath = path.join(SRC_PATH, dir);
-        var htmlFileName = dir + '.html';
-        if (fs.statSync(dirPath).isDirectory()) {
-            entries[dir] = [path.resolve(dirPath, 'main.jsx')];
-            if (debug) {
-                entries[dir].unshift("webpack-dev-server/client?http://localhost:8080/", "webpack/hot/dev-server");
-            }
+        entries[dir] = [path.resolve(dirPath, 'main.jsx')];
+        if (debug) {
+            entries[dir].unshift("webpack-dev-server/client?http://localhost:8080/", "webpack/hot/dev-server");
         }
+        var htmlFileName = dir + '.html';
         plugins.push(new HtmlWebpackPlugin({
             filename: "../" + htmlFileName,
             template: path.resolve(dirPath, htmlFileName),
@@ -68,7 +66,12 @@ module.exports = {
     module: {
         loaders: [{
             test: /\.js$/,
-            include: SRC_PATH
+            include: SRC_PATH,
+            exclude: /node_modules/,
+            loader: 'babel',
+            query: {
+              presets: ['es2015', 'stage-0', 'react']
+            }
         }, {
             test: /\.jsx$/,
             exclude: /node_modules/,

@@ -1,0 +1,97 @@
+/**
+ * @author xiezhenzong
+ */
+@import '~base.less';
+
+.footer {
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 1px 0 0;
+    border-radius: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+.main-footer {
+    background: #111;
+    color: #959595;
+    padding: 35px 0 0;
+    
+    .footer-content {
+        margin-bottom: 35px;
+        padding: 0 30px;
+
+        .title {
+            border-bottom: 1px solid #303030;
+            color: #FFF;
+            margin-bottom: 21px;
+            margin-top: 0;
+            padding-bottom: 7px;
+            position: relative;
+        }
+
+        .title:after {
+            background: #FF9966;
+            bottom: -1px;
+            content: "";
+            height: 1px;
+            left: 0;
+            position: absolute;
+            width: 90px;
+        }
+
+        .link {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                font-size: 12px;
+                line-height: 30px;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                a, p {
+                    color: #999;
+                }
+
+                a:HOVER {
+                    color: #FF9966;
+                    text-decoration: none;
+                }
+
+                p {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .qr-img {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 5px;
+            background-color: #FFF;
+        }
+    }
+}
+
+.footer-copyright {
+    background: #111;
+    border-top: 1px solid #303030;
+    color: #555;
+    font-size: 13px;
+    padding-bottom: 20px;
+    padding-top: 14px;
+    text-align: center;
+
+    a {
+        color: #555;
+    }
+
+    a:HOVER {
+        color: #FF9966;
+        text-decoration: none;
+    }
+}
