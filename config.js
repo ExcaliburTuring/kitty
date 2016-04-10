@@ -5,21 +5,6 @@ var path = require('path');
 var fs = require('fs');
 
 var projectRoot = path.resolve(process.cwd());
-<<<<<<< HEAD
-var SRC_PATH = path.join(projectRoot, 'src/');
-var LIB_PATH = path.join(projectRoot, 'lib/');
-var ASSETS_PATH = path.join(projectRoot, 'static/public');
-var PUBLIC_PATH = '/public/';
-var TEST_PATH = path.join(projectRoot, 'test/');
-
-var PATH_MAP = {
-    'swiper.js': LIB_PATH + 'js/swiper/swiper.js',
-    'swiper.less': LIB_PATH + 'css/swiper/swiper.less',
-    'font-awesome.less': LIB_PATH + 'css/font-awesome/less/font-awesome.less'
-};
-
-var NOT_ENTRY_DIR = [
-=======
 const SRC_PATH = path.join(projectRoot, 'src/');
 const LIB_PATH = path.join(projectRoot, 'lib/');
 const ASSETS_PATH = path.join(projectRoot, 'static/public');
@@ -75,7 +60,6 @@ const PATH_MAP = (function () {
 const ENTRY_EXCLUDE = [
     '.DS_Store',
     'font',
->>>>>>> refs/remotes/buterfleoge/master
     'common',
     'component'
 ];

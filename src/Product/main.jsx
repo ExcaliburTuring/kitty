@@ -4,6 +4,8 @@ import Body from './js/body/Body';
 import Head from './js/face/Face';
 import Navbar from './js/navbar/Navbar';
 
+require ('./css/app_scaffolding.less');
+
 ReactDOM.render(
 	<div>
 		<Navbar/>
