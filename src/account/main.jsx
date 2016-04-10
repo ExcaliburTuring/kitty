@@ -4,11 +4,11 @@ import { Router, Route, IndexRoute, useRouterHistory } from 'react-router'
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 import App from './js/app';
-import Home from './js/home';
+import Index from './js/index';
 import Info from './js/info';
 import Orders from './js/orders';
 import Order from './js/order';
-import Setting from './js/setting';
+import Contacts from './js/contacts';
 
 const browserHistory = useRouterHistory(createBrowserHistory)({ 
 	queryKey: false,
@@ -18,12 +18,12 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
 ReactDom.render(
 	<Router history={browserHistory}>
 		<Route path="/:accountid" component={App}>
-			<IndexRoute component={Home}/>
-	    	<Route path="/:accountid/info" component={Info} />
-	    	<Route path="/:accountid/orders" component={Orders}>
-	    		<Route path="/:accountid/orders/:orderid" component={Order}/>
+			<IndexRoute component={Index}/>
+			<Route path="info" component={Info} />
+	    	<Route path="orders" component={Orders}>
+	    		<Route path=":orderid" component={Order}/>
 	    	</Route>
-	    	<Route path="/:accountid/setting" component={Setting}/>
+	    	<Route path="contact" component={Contacts} />
   		</Route>
 	</Router>,
 	document.getElementById('app')

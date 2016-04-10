@@ -67,7 +67,7 @@ var AccountMenu = React.createClass({
         if (this.state.basicInfo.login) {
             return (
                 <Nav pullRight>
-                    <NavDropdown eventKey={3} title={this.state.basicInfo.accountInfo.accountName} id="kdkdkdkdkdkdk">
+                    <NavDropdown eventKey={3} title={this.state.basicInfo.accountInfo.name} id="kdkdkdkdkdkdk">
                         <MenuItem eventKey={3.1}>我的行程</MenuItem>
                         <MenuItem eventKey={3.2}>设置</MenuItem>
                         <MenuItem divider />
