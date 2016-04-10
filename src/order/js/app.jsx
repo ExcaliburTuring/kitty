@@ -10,7 +10,7 @@ var App = React.createClass({
 		
 		return (
 			<div >
-                <CreateAccountScreen/>
+                <CreateAccountScreen onSubmit={this.onSubmit}/>
             </div>
 		);
 	}

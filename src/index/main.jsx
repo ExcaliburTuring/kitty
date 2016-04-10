@@ -11,4 +11,12 @@ var Panel = AMUIReact.Panel;
 
 require('./css/application.less');
 
-ReactDOM.render(<div className="head" id="head"><Navbar/><App/></div>, document.getElementById('app'));
+
+ReactDOM.render(
+	<div className="head" id="head">
+		<Navbar />
+		<App />
+		<Footer />
+	</div>, 
+	document.getElementById('app')
+);
