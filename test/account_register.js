@@ -1,7 +1,7 @@
 module.exports = {
 	'status': 0,
 	'accountInfo': {
-		'accountid': 123
+		'accountid': 1
 	},
 	'redirect': '/account'
 };
