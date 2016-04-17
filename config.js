@@ -7,7 +7,8 @@ var fs = require('fs');
 var projectRoot = path.resolve(process.cwd());
 const SRC_PATH = path.join(projectRoot, 'src/');
 const LIB_PATH = path.join(projectRoot, 'lib/');
-const ASSETS_PATH = path.join(projectRoot, 'static/public');
+const ASSET_PATH = path.join(projectRoot, 'asset/');
+const STATIC_PATH = path.join(projectRoot, 'static/public');
 const PUBLIC_PATH = '/public/';
 const TEST_PATH = path.join(projectRoot, 'test/');
 
@@ -67,7 +68,8 @@ const ENTRY_EXCLUDE = [
 module.exports = {
     SRC_PATH: SRC_PATH,
     LIB_PATH: LIB_PATH,
-    ASSETS_PATH: ASSETS_PATH,
+    ASSET_PATH: ASSET_PATH,
+    STATIC_PATH: STATIC_PATH,
     PATH_MAP: PATH_MAP,
     ENTRY_EXCLUDE: ENTRY_EXCLUDE,
     PUBLIC_PATH: PUBLIC_PATH,

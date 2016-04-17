@@ -5,7 +5,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
-import AccountBasicInfo from 'account_basic_info';
+import AccountBasicInfo from 'account_basicinfo';
 
 require('./navbar.less');
 
@@ -15,7 +15,7 @@ var KittyNavbar = React.createClass({
 	},
     render: function() {
         return (
-            <Navbar staticTop>
+            <Navbar staticTop inverse>
         		<Navbar.Header>
 					<Brand />
       				<Navbar.Toggle />

@@ -1,2 +1,35 @@
 @import "~base.less";
-@import "app_scaffolding.less";
+
+@vertical_breakpoint: 820px;
+
+body {
+	-webkit-font-smoothing: subpixel-antialiased;
+	background: @body-bg;
+	font: normal normal 100 @font-size-base/@line-height-base 'Roboto', sans-serif;
+	-webkit-overflow-scrolling: touch;
+}
+
+.section-container {
+	border: 1px solid @stroke-gray;
+	margin-bottom: 20px;
+}
+
+.noauth-container {
+	.noauth-content {
+		width: 400px;
+		margin: 60px auto 0 auto;
+
+		.noauth-icon, 
+		.noauth-tip {
+			text-align: center;
+		}
+
+		.noauth-tip {
+			margin-bottom: 60px;
+
+			i {
+				margin-left: 20px;
+			}
+		}
+	}
+}

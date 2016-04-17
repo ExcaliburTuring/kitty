@@ -2,7 +2,8 @@ var express = require('express');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./config');
 const TEST_PATH = config.TEST_PATH;
-var mockPages = ['/', '/test', '/index', '/product', '/register', '/login', '/user'];
+const ASSET_PATH = config.ASSET_PATH;
+var mockUrl = ['/', '/img/*', '/test', '/index', '/product', '/register', '/login', '/user', '/order/*'];
 var mockRequest = ['/account/*'];
 
 var app = express();
@@ -16,7 +17,15 @@ var mockHandler = function(req, res) {
         }
     }
 
-    if (mockPages.indexOf(path) > 0) {
+    if (path.match(new RegExp('/order/*'))) { // special case
+        var id = path.split('/')[2];
+        if (!isNaN(id)) { // 是否数字
+            res.sendFile('/order.html', {root: TEST_PATH});
+            return;
+        }
+    }
+
+    if (mockUrl.indexOf(path) > 0) {
         res.sendFile(path === '/' ? '/index.html' : path + '.html', {root: TEST_PATH});
     } else {
         for (var i = 0; i < mockRequest.length; i++) {
@@ -30,8 +39,10 @@ var mockHandler = function(req, res) {
     }
 };
 app.use(express.static(TEST_PATH));
+app.use(express.static(ASSET_PATH));
 app.get('/*', mockHandler);
 app.post('/*', mockHandler);
+
 app.listen(8081, 'localhost', function(err) {
     console.log(err ? err : 'Mock server listening at http://localhost:8081');
 });
@@ -43,7 +54,7 @@ var compiler = (function(){
 }());
 var proxyConfig =(function(){
     var tempProxyConfig 
-        = mockPages.concat(mockRequest)
+        = mockUrl.concat(mockRequest)
         .reduce(function(temp, url) {
             temp[url] = {
                 target: 'http://localhost:8081',

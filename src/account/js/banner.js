@@ -3,22 +3,17 @@
  */
 import React from 'react';
 
-import { defaultValue } from 'config';
-
-function makeUrl(accountid) {
-    return defaultValue.registerSuccessRedirect + '/' + accountid;
-}
+import bannerImg from '../img/banner.gif';
 
 var Banner = React.createClass({
-    render() {
-        var url = makeUrl(this.props.accountid);
+    render: function() {
+        var bg = {
+            backgroundImage: `url(${bannerImg})`
+        };
         return (
-            <div className="jumbotron">
-				<h1>Hello, world!</h1>
-				<p>...</p>
-				<p><a className="btn btn-primary btn-lg" href={url} role="button">Learn more</a></p>
-			</div>
+            <div className="banner" style={bg}></div>
         );
     }
 });
+
 module.exports = Banner;

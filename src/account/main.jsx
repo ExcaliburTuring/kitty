@@ -7,8 +7,9 @@ import App from './js/app';
 import Index from './js/index';
 import Info from './js/info';
 import Orders from './js/orders';
-import Order from './js/order';
-import Contacts from './js/contacts';
+import ContactList from './js/contacts';
+
+require('./css/application.less');
 
 const browserHistory = useRouterHistory(createBrowserHistory)({ 
 	queryKey: false,
@@ -20,10 +21,8 @@ ReactDom.render(
 		<Route path="/:accountid" component={App}>
 			<IndexRoute component={Index}/>
 			<Route path="info" component={Info} />
-	    	<Route path="orders" component={Orders}>
-	    		<Route path=":orderid" component={Order}/>
-	    	</Route>
-	    	<Route path="contact" component={Contacts} />
+	    	<Route path="orders" component={Orders} />
+	    	<Route path="contacts" component={ContactList} />
   		</Route>
 	</Router>,
 	document.getElementById('app')

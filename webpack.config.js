@@ -11,7 +11,7 @@ var debug = process.env.NODE_ENV !== 'production';
 var config = require('./config');
 const SRC_PATH = config.SRC_PATH;
 const PUBLIC_PATH = config.PUBLIC_PATH;
-const ASSETS_PATH = config.ASSETS_PATH;
+const STATIC_PATH = config.STATIC_PATH;
 var entries = {};
 var plugins = [
     new webpack.optimize.CommonsChunkPlugin({
@@ -54,13 +54,13 @@ var plugins = [
 module.exports = {
     entry: entries,
     output: {
-        path: ASSETS_PATH,
+        path: STATIC_PATH,
         filename: debug ? '[name].js' : '[name]-[chunkhash].js',
         publicPath: PUBLIC_PATH
     },
     resolve: {
         alias: config.PATH_MAP,
-        extensions: ['', '.js', '.jsx', '.json', '.css', '.less', '.jpg', '.png']
+        extensions: ['', '.js', '.jsx', '.json', '.css', '.less', '.jpg', '.png', '.gif']
     },
     plugins: plugins,
     module: {
@@ -86,7 +86,7 @@ module.exports = {
             test: /\.css$/,
             loader: 'style!css'
         }, {
-            test: /\.(png|jpg)$/,
+            test: /\.(png|jpg|gif)$/,
             loader: 'url?limit=25000'
         }, {
             test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
