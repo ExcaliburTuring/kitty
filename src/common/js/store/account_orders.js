@@ -4,9 +4,9 @@
 import Reflux from 'reflux';
 import { url } from 'config';
 
-var accountContacts = null; 
+var accountOrders = null; 
 
-var AccountContactsActions = Reflux.createActions([
+var AccountOrdersActions = Reflux.createActions([
     {
         'get': {
             asyncResult: true
@@ -19,23 +19,23 @@ var AccountContactsActions = Reflux.createActions([
     }
 ]);
 
-AccountContactsActions.get.listen(function(option) {
+AccountOrdersActions.get.listen(function(option) {
     var self = this;
-    $.getJSON(url.contacts)
-        .done(function(data) {
-           if (data.status == 0) {
-                accountContacts = data.contacts;
-                self.completed(accountContacts)
-            } else {
-                self.fail();
-            }
-        })
-        .fail(function(jqxhr, textStatus, error) {
-            self.failed();
-        });
+    $.getJSON(url.accountOrders)
+    .done(function(data) {
+       if (data.status == 0) {
+            accountOrders = data;
+            self.completed(accountOrders)
+        } else {
+            self.fail();
+        }
+    })
+    .fail(function(jqxhr, textStatus, error) {
+        self.failed();
+    });
 });
 
-AccountContactsActions.post.listen(function(option) {
+AccountOrdersActions.post.listen(function(option) {
     //var self = this;
     // $.getJSON(url.contacts)
     //     .done(function(data) {
@@ -46,8 +46,8 @@ AccountContactsActions.post.listen(function(option) {
     //     });
 });
 
-var AccountContactsStore = Reflux.createStore({
-    listenables: AccountContactsActions,
+var AccountOrdersStore = Reflux.createStore({
+    listenables: AccountOrdersActions,
     onGet: function() {
 
     },
@@ -69,6 +69,6 @@ var AccountContactsStore = Reflux.createStore({
 });
 
 module.exports = {
-    actions: AccountContactsActions,
-    store: AccountContactsStore
+    actions: AccountOrdersActions,
+    store: AccountOrdersStore
 };

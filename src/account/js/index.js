@@ -1,31 +1,31 @@
 /**
  * @author xiezhenzong
  */
-import React from 'react';
+import React from 'react'; 
 
+import Info from './info';
+import Orders from './orders';
 import { defaultValue } from 'config';
 
-function makeUrl(accountid, url) {
-    return ;
-}
-
 var Index = React.createClass({
-    render() {
+    render: function() {
         var { accountid } = this.props.params;
-        var ordersUrl = `${defaultValue.registerSuccessRedirect}/${accountid}/orders`;
-        var infoUrl = `${defaultValue.registerSuccessRedirect}/${accountid}/info`;
+        var ordersUrl = `${defaultValue.accountUrl}/${accountid}/orders`;
+        var infoUrl = `${defaultValue.accountUrl}/${accountid}/info`;
         return (
             <div >
-				<div>
-					<p>这里是简短的订单信息，全部请查看
-                        <a href={ordersUrl} activeClassName="active">这里</a>
-                    </p>
-				</div>
-				<div>
-					<p>这里是简短的个人信息，全部请查看
+                <div>
+                    <p>这里是简短的个人信息，全部请查看
                         <a href={infoUrl} activeClassName="active">这里</a>
                     </p>
-				</div>
+                    <Info/>
+                </div>
+                <div>
+                    <p>这里是简短的订单信息，全部请查看
+                        <a href={ordersUrl} activeClassName="active">这里</a>
+                    </p>
+                    <Orders/>
+                </div>
             </div>
         );
     }

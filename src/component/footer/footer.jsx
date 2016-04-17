@@ -3,6 +3,9 @@
  */
 import React from 'react';
 
+import hxyImg from './haixiaoyao.png';
+import xyjImg from './xiaoyaojun.png'; 
+
 require('./footer.less');
 
 var KittyFooter = React.createClass({
@@ -67,13 +70,13 @@ var Info = React.createClass({
                         <div className="col-sm-3">
                             <div className="footer-content">
                                 <h4 className="title">官方公众号</h4>
-                                <img className="qr-img" alt="官方二维码" width="120" height="120" src="/src/resources/img/haixiaoyao.png" />
+                                <img className="qr-img" alt="官方二维码" width="120" height="120" src={hxyImg} />
                             </div>
                         </div>
                         <div className="col-sm-3">
                             <div className="footer-content">
                                 <h4 className="title">客服微信号</h4>
-                                <img className="qr-img" alt="逍遥君二维码" width="120" height="120" src="/src/resources/img/xiaoyaojun.png" />
+                                <img className="qr-img" alt="逍遥君二维码" width="120" height="120" src={xyjImg} />
                             </div>
                         </div>
                     </div>

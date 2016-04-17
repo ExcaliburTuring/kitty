@@ -1,1 +1,85 @@
-@import "~base.js";
+@import "~base.less";
+
+.banner {
+	text-align: center;
+	background-color: #006488;
+	height: 260px;
+	background-position: center 0;
+	background-repeat: no-repeat;
+}
+
+.noauth-container {
+	.noauth-content {
+		width: 400px;
+		margin: 60px auto 0 auto;
+
+		.noauth-icon, 
+		.noauth-tip {
+			text-align: center;
+		}
+
+		.noauth-tip {
+			margin-bottom: 60px;
+
+			i {
+				margin-left: 20px;
+			}
+		}
+	}
+}
+
+.tab-container {
+	margin-top: -50px;
+	height: 58px;
+	background-color: white;
+
+	.tab-content {
+		position: relative;
+
+		.tab-account-info {
+			position: absolute;
+			left: 30px;
+			top: -70px;
+
+			.tab-avatar {
+				margin-right: 20px;
+				width: 120px;
+				height: 70px;
+				float: left;
+
+				img {
+					z-index: 20;
+					border-radius: 120px;
+				}
+			}
+
+			.tab-detail {
+				margin-top: 30px;
+				float: left;
+
+				.tab-name {
+					color: #fff;
+					font-size: 20px;
+					line-height: 24px;
+				}
+			}
+
+		}
+
+		.tab-nav {
+			float: right;
+			margin-left: 220px;
+		}
+
+	}
+}
+
+.contact-container {
+	border: 1px solid @stroke-gray;
+	margin-bottom: 20px;
+}
+
+.order-container {
+	border: 1px solid @stroke-gray;
+	margin-bottom: 20px;
+}
