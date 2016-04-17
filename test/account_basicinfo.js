@@ -6,20 +6,24 @@ module.exports = {
 		'name': 'xiezhenzong',
 		'type': 0,
 		'status': 0,
-		'id': null,
+		'id': '35052519910618131X',
+		'idType': 0,
 		'email': 'zhenzong.peng@icloud.com',
 		'wxid': null,
 		'qqid': null,
-		'mobile': null
+		'mobile': '15001028030'
 	},
 	'accountSetting': {
 		'accountid': 1,
-		'nickname': null,
-		'wxname': null,
-		'qqname': null,
+		'nickname': 'xiaochong',
+		'wxname': '一个很长很长很长的名字',
+		'qqname': '我的qq名',
 		'wbname': null,
 		'gender': 0,
-		'birthday': null,
-		'avatar_url': null,
+		'birthday': '1991/06/18',
+		'address': '北京市海淀区',
+		'avatarUrl': './img/avatar.jpg',
+		'emergencyContact': 'xiezhenzong_1',
+        'emergencyMobile': '123456789'
 	}
 };

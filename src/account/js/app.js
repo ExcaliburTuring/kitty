@@ -2,68 +2,60 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Nav, NavItem } from 'react-bootstrap';
+import Reflux from 'reflux';
 
 import Navbar from 'navbar';
 import Footer from 'footer';
 import Banner from './banner';
-import {defaultValue} from 'config';
+import Tab from './tab';
+import NoAuth from './noauth';
+import NoLogin from './nologin';
 
-function makeUrl(accountid, url) {
-	return '/' + accountid + url;
-}
+import AccountBasicInfo from 'account_basicinfo';
 
 var App = React.createClass({
 
-	contextTypes: {
-		router: React.PropTypes.object
-	},
+    mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
 
-	getInitialState: function() {
-		var { accountid } = this.props.params;
-		var ordersUrl = makeUrl(accountid, '/orders');
-		var infoUrl = makeUrl(accountid, '/info');
-		var path = window.location.pathname.split('/')[3];
-		var activeKey = 0;
-		if (path == 'orders') {
-			activeKey = 1;
-		} else if (path == 'info') {
-			activeKey = 2;
-		}
+    getInitialState: function() {
+        var { accountid } = this.props.params;
         return {
-        	activeKey: activeKey,
-        	accountid: accountid,
-        	ordersUrl: ordersUrl,
-        	infoUrl: infoUrl
+            'accountid': accountid,
+            'basicInfo': {
+            	'login': false
+            }
         };
-	},
+    },
 
-	handleSelect: function(selectedKey) {
-		this.setState({
-			activeKey: selectedKey
-		});
-		if (selectedKey == 1) {
-			this.context.router.push(this.state.infoUrl);
-		} else {
-			this.context.router.push(this.state.ordersUrl);
-		}
-	},
+    componentDidMount: function() {
+        AccountBasicInfo.actions.get();
+    },
 
-	render: function() {
-		return (
-			<div >
-				<Navbar />
-				<Banner accountid={this.state.accountid}/>
-				<Nav bsStyle="tabs" justified onSelect={this.handleSelect} activeKey={this.state.activeKey}>
-					<NavItem eventKey={1}>个人信息</NavItem>
-					<NavItem eventKey={2}>订单</NavItem>
-					<NavItem eventKey={3}>联系人</NavItem>
-				</Nav>
-                {this.props.children}
-                <Footer />
+    render: function() {
+        var content = (<NoLogin/>);
+        if (this.state.basicInfo.login) {
+            if (this.state.basicInfo.accountInfo.accountid == this.state.accountid) {
+                content = (
+                    <div>
+                       <Tab accountInfo={this.state.basicInfo.accountInfo}
+                            accountSetting={this.state.basicInfo.accountSetting}
+                            activeKey={this.state.activeKey}/>
+                       {this.props.children} 
+                    </div>
+                );
+            } else {
+                content = (<NoAuth accountid={this.state.basicInfo.accountInfo.accountid}/>);
+            }
+        }
+        return ( 
+            <div>
+                <Navbar/>
+                <Banner/>
+                {content}
+                <Footer/>
             </div>
-		);
-	}
+        );
+    }
 });
 
 module.exports = App;

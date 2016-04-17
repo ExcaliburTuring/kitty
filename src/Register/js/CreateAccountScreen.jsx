@@ -67,7 +67,7 @@ var CreateAccountScreen = React.createClass({
                     }
                 } else {
                     var accountInfo = result.accountInfo;
-                    var redirect = result.redirect ? result.redirect : defaultValue.registerSuccessRedirect;
+                    var redirect = result.redirect ? result.redirect : defaultValue.accountUrl;
                     if (accountInfo && accountInfo.accountid) {
                         window.location.href = redirect + '/' + accountInfo.accountid;
                     } else {
