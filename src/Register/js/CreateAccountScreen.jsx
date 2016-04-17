@@ -113,7 +113,7 @@ var CreateAccountScreen = React.createClass({
             <div className="create_account_screen" style={bgStyle}>
                 <div className="create_account_form">
                     <h1>新建一个账户</h1>
-                    <form action="/account/login" method="post" onSubmit={this.saveAndContinue}>
+                    <form action="/account/register" method="post" onSubmit={this.saveAndContinue}>
                         <Input 
                             text="邮箱" 
                             ref="email"
@@ -146,7 +146,7 @@ var CreateAccountScreen = React.createClass({
                             onChange={this.handleConfirmPasswordInput} 
                             emptyMessage="请确认您的密码"
                             errorMessage="密码不匹配"/>
-                        <Button bsStyle="primary" bsSize="large" block type="submit">完  成</Button>
+                        <Button bsStyle="primary" bsSize="large" type="submit">完  成</Button>
                     </form>
                 </div>
             </div>

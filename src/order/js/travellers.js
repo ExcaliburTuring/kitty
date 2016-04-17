@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Button } from 'react-bootstrap';
+import { Button,  ButtonToolbar } from 'react-bootstrap';
 
 import AccountBaiscInfo from 'account_basicinfo';
 import AccountContacts from 'account_contacts';
@@ -52,7 +52,7 @@ var Travellers = React.createClass({
             <div className="traveller-container section-container"> 
                 <Contacts basicInfo={basicInfo} contacts={contacts}/>
                 <TravellerList basicInfo={basicInfo} contacts={contacts} order={mockOrder} travellers={mockTravellers}/>
-                <Button bsStyle="primary" bsSize="large" block type="submit">添加出行人</Button>
+                <Button bsStyle="primary" bsSize="large" type="submit">添加出行人</Button>
             </div>
         );
     }
@@ -83,7 +83,8 @@ var Contacts = React.createClass({
         var contactsList = candidates.map(function(candidate) {
             return (
                 <label className="checkbox-inline" key={candidate.id}>
-                    <input type="checkbox" id={candidate.id} value={candidate.value}> {candidate.name} </input>
+                    <input type="checkbox" id={candidate.id} value={candidate.value} />
+                    {candidate.name}
                 </label>
             );
         });
@@ -173,8 +174,10 @@ var TravellerItem = React.createClass({
             <div className="traveller-container section-container">
                 <div>{traveller.name}</div>
                 <div>
-                    <Button bsStyle="primary" bsSize="large" block type="submit">编辑</Button>
-                    <Button bsStyle="primary" bsSize="large" block type="submit">删除</Button>
+                    <ButtonToolbar>
+                        <Button bsStyle="primary" bsSize="large" type="submit">编辑</Button>
+                        <Button bsStyle="primary" bsSize="large" type="submit">删除</Button>
+                    </ButtonToolbar>
                 </div>
                 <hr />
                 <div>
