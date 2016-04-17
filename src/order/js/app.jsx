@@ -55,7 +55,7 @@ var App = React.createClass({
                 <Roommate />
                 <Discount />
                 <p>{agreement}</p>
-                <Button bsStyle="primary" bsSize="large" block type="submit">确认付款</Button>
+                <Button bsStyle="primary" bsSize="large" type="submit">确认付款</Button>
             </div>
         );
     }
