@@ -4,7 +4,7 @@
 import React from 'react';
 import { Button, Nav, NavItem } from 'react-bootstrap';
 
-import WxLogin from './wxlogin';
+import Wx from 'wx';
 import EmailLogin from './emaillogin';
 
 import { url, defaultValue, error } from 'config';
@@ -36,7 +36,7 @@ var App = React.createClass({
     },
 
     render: function() {
-        var loginType = (<WxLogin />);
+        var loginType = (<Wx />);
         if (this.state.activeKey == 2) {
             loginType = (<EmailLogin />);
         }
