@@ -7,6 +7,7 @@ import a from '../img/A.jpg';
 import b from '../img/B.jpg';
 import c from '../img/C.jpg';
 import d from '../img/D.jpg';
+import navigation from '../img/navigation.png';
 
 var Banner = React.createClass({
 
@@ -37,6 +38,7 @@ var Banner = React.createClass({
                 <div className="swiper-slide swiper-no-swiping" style={cbg}></div>
                 <div className="swiper-slide swiper-no-swiping" style={dbg}></div>
             </div>
+            <div className="navigation"><img src= {navigation} /></div>
             <div className="swiper-button-prev swiper-button-black" ref="prev"></div>
             <div className="swiper-button-next swiper-button-black" ref="next"></div>
           </div>

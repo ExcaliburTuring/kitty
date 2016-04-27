@@ -3,77 +3,74 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Button, Nav, NavItem, Grid, Row, Col } from 'react-bootstrap';
+import { Button, Nav, NavItem } from 'react-bootstrap';
+
+import BasicInfo from './info/basic_info';
+import Avatar from './info/avatar';
+import Social from './info/social';
+import Secure from './info/secure';
 
 import AccountBasicInfo from 'account_basicinfo';
-import BasicInfo from './info/basic';
-import Contact from './info/contact';
-import Password from './info/password';
-import Contacts from './info/contacts';
-import NoLogin from './nologin'; 
 
 var Info = React.createClass({
 
     mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
 
     getInitialState: function() {
-        AccountBasicInfo.actions.get();
         return {
-            'activeKey': 1,
-            'basicInfo': {
+           'activeKey': 1,
+           'basicInfo': {
                 'login': false
            }
         }
     },
 
+    componentDidMount: function() {
+        AccountBasicInfo.actions.get();
+    },
+
     handleSelect: function(selectedKey) {
-        this.setState({
+    	this.setState({
             activeKey: selectedKey
         });
     },
 
-    render: function() {
-        var basicInfo = this.state.basicInfo;
-        if (!basicInfo.login || !basicInfo.accountInfo) {
-            return (<NoLogin/>);
-        }
+	render: function() {
+		if (!this.state.basicInfo.login) {
+			return (<div></div>);
+		}
 
-        var activeKey = this.state.activeKey;
-        var content = <BasicInfo basicInfo={basicInfo}/>;
-        if (activeKey == 2) {
-            content = <Contact basicInfo={basicInfo}/>;
+		var activeKey = this.state.activeKey;
+		var content = <BasicInfo basicInfo={this.state.basicInfo}/>;
+		if (activeKey == 2) {
+            content = <Avatar basicInfo={this.state.basicInfo}/>;
         } else if (activeKey == 3) {
-            content = <Password basicInfo={basicInfo}/>;
+            content = <Social basicInfo={this.state.basicInfo}/>;
         } else if (activeKey == 4) {
-            content = <Contacts basicInfo={basicInfo}/>;
+            content = <Secure basicInfo={this.state.basicInfo}/>;
         }
-
-        return (
-            <div className="info-container">
-                <div className="container">
-                    <Grid>
-                        <Row className="show-grid">
-                            <Col md={2} mdOffset={1}>
-                                <div>
-                                    <Nav stacked bsStyle="pills" onSelect={this.handleSelect} activeKey={this.state.activeKey}>
-                                        <NavItem eventKey={1}> 基本信息 </NavItem> 
-                                        <NavItem eventKey={2}> 联系信息 </NavItem>
-                                        <NavItem eventKey={3}> 修改密码 </NavItem>
-                                        <NavItem eventKey={4}> 常用出行人 </NavItem>
-                                    </Nav>
-                                </div>
-                            </Col>
-                            <Col md={7}>
-                                <div>
-                                    {content}
-                                </div>
-                            </Col>
-                        </Row>
-                    </Grid>
-                </div>
+		return (
+			<div className="container">
+				<div className="row">
+					<div className="col-sm-2">
+						<div>
+							<Nav stacked bsStyle = "pills" onSelect = {this.handleSelect} activeKey = {this.state.activeKey}>
+								<NavItem eventKey = {1}> 基本信息 </NavItem> 
+                                <NavItem eventKey = {2}> 我的头像 </NavItem>
+                                <NavItem eventKey = {3}> 账户绑定 </NavItem>
+                                <NavItem eventKey = {4}> 账户安全 </NavItem>
+							</Nav>
+						</div>
+					</div>
+					<div className="col-sm-10">
+						<div>
+							{content}
+						</div>
+					</div>
+				</div>
             </div>
-        );
-    }
+		);
+	}
 });
 
 module.exports = Info;
