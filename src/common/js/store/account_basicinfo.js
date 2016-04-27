@@ -4,53 +4,51 @@
 import Reflux from 'reflux';
 import { url } from 'config';
 
-var accountBasicInfo = null; 
+var _accountBasicInfo = null;
 
 var AccountBasicInfoActions = Reflux.createActions([
     {
-        'get': {
+        'load': {
             asyncResult: true
         }
     },
+    'get',
     'clean'
 ]);
 
-AccountBasicInfoActions.get.listen(function() {
+AccountBasicInfoActions.load.listen(function() {
     var self = this;
-    if (accountBasicInfo) {
-        self.completed(accountBasicInfo);
-    } else {
-        $.getJSON(url.basicinfo)
-        .done(function(data) {
-            if (data.status == 0) {
-                accountBasicInfo = {
-                    'login': data.login,
-                    'accountInfo': data.accountInfo,
-                    'accountSetting': data.accountSetting
-                }
-                self.completed(accountBasicInfo)
-            } else {
-                self.fail();
+    $.getJSON(url.basicinfo)
+    .done(function(data) {
+        if (data.status == 0) {
+            _accountBasicInfo = {
+                'login': data.login,
+                'accountInfo': data.accountInfo,
+                'accountSetting': data.accountSetting
             }
-        })
-        .fail(function(jqxhr, textStatus, error) {
-            self.failed();
-        });
-    }
+            self.completed(_accountBasicInfo)
+        } else {
+            self.fail();
+        }
+    })
+    .fail(function(jqxhr, textStatus, error) {
+        self.failed();
+    });
 });
 
 var AccountBasicInfoStore = Reflux.createStore({
     listenables: AccountBasicInfoActions,
     onGet: function() {
+        this.trigger(_accountBasicInfo ? _accountBasicInfo : {'login': false});
     },
-    onGetCompleted: function(data) {
+    onLoadCompleted: function(data) {
         this.trigger(data);
     },
-    onGetFailed: function() {
+    onLoadFailed: function() {
         console.log('store failed');
     },
     onClean: function() {
-        accountBasicInfo = null;
+        _accountBasicInfo = null;
     }
 });
 

@@ -8,6 +8,8 @@ import { defaultValue } from 'config';
 
 import qr from './wx.png';
 
+require('./wx.less');
+
 var Wx = React.createClass({
 
     getInitialState: function() {
@@ -17,7 +19,7 @@ var Wx = React.createClass({
 
     render: function() {
         return (
-            <div>
+            <div className="wx-qr-container">
                 <Image src={qr} resposive/>
             </div>
         );

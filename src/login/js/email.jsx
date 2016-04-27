@@ -21,8 +21,8 @@ var Email = React.createClass({
     
     render: function() {
         return (
-             <div className="email-register">
-                <form action="/account/register" method="post" onSubmit={this.login}>
+             <div className="email-login">
+                <form action="/account/login" method="post" onSubmit={this.login}>
                     <Input
                         type="text"
                         placeholder="邮箱"
@@ -34,8 +34,8 @@ var Email = React.createClass({
                         value={this.state.password}
                         validator={validator.password}/>
                     <FormGroup>
-                        <Checkbox inline>同意海逍遥用户协议</Checkbox>
-                        <Button bsStyle="primary" type="submit" className="pull-right email-reigster-btn">组册</Button>
+                        <Checkbox inline>记住登录状态</Checkbox>
+                        <Button bsStyle="primary" type="submit" className="pull-right email-login-btn">登录</Button>
                     </FormGroup>
                 </form>
             </div>
