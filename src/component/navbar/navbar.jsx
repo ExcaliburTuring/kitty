@@ -6,6 +6,8 @@ import Reflux from 'reflux';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
 import AccountBasicInfo from 'account_basicinfo';
+import Logo from './logo2.png';
+import hxytravel from './hxytravel.png';
 
 require('./navbar.less');
 
@@ -15,7 +17,8 @@ var KittyNavbar = React.createClass({
 	},
     render: function() {
         return (
-            <Navbar staticTop inverse>
+            <Navbar staticTop>
+                <div className="navbar-middle" ><img src={Logo} /></div>
         		<Navbar.Header>
 					<Brand />
       				<Navbar.Toggle />
@@ -33,7 +36,7 @@ var Brand = React.createClass({
     render: function() {
         return (
         	<Navbar.Brand>
-        		<a href="/">kitty</a>
+        		<img src={hxytravel} />
       		</Navbar.Brand>
         );
     }
@@ -43,9 +46,6 @@ var MainMenu = React.createClass({
     render: function() {
         return (
             <Nav>
-				<NavItem eventKey={1} href="/">MainMenu 1</NavItem>
-				<NavItem eventKey={2} href="/">MainMenu 2</NavItem>
-				<NavItem eventKey={3} href="/">MainMenu 3</NavItem>
 			</Nav>
         );
     }
@@ -78,7 +78,7 @@ var AccountMenu = React.createClass({
         } else {
             return (
                 <Nav pullRight>
-                    <NavItem eventKey={1} href="/register">组册</NavItem>
+                    <NavItem eventKey={1} href="/register">注册</NavItem>
                     <NavItem eventKey={2} href="/login">登录</NavItem>
                 </Nav>
             );

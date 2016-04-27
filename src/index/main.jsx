@@ -9,8 +9,8 @@ require('./css/application.less');
 
 ReactDOM.render(
     <div>
-        <Navbar />
-        <App />
+    	<Navbar />
+    	<App />
         <Footer />
     </div>,
     document.getElementById('app')

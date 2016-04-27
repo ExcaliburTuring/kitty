@@ -7,5 +7,52 @@
 .navbar {
 	border-radius: 0;
 	margin-bottom: 0;
-	background: #111;
+	text-align: center;
+	line-height: 120px;
+}
+
+.navbar-middle{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	line-height: 120px;
+	img {
+		width: 100px;
+		height: 100px;
+	}
+}
+
+.navbar-default {
+	color: @white;
+	background-image: none;
+	border: 0px;
+}
+
+.navbar .container {
+	margin: 0 auto;
+	padding: 0;
+	position: relative;
+	max-width: 1800px;
+}
+
+.navbar-default .navbar-nav > li > a {
+	color: @white;
+	font-size: 24px;
+}
+
+.navbar-header img {
+	width: 256px;
+	height: 100px;
+}
+
+@media (min-width: 1920px){
+	.container {
+		width: 1800px; 
+	}
+}
+
+@media (min-width: 768px){
+	.navbar-right {
+	    margin: 7.5px -15px;
+	}
 }
