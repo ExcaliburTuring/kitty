@@ -1,5 +1,5 @@
 /*
- * @author xiezhenzong
+ * @author zhaowei
  */
 import React from 'react';
 import Swiper from 'swiper';
@@ -7,7 +7,6 @@ import a from '../img/A.jpg';
 import b from '../img/B.jpg';
 import c from '../img/C.jpg';
 import d from '../img/D.jpg';
-import navigation from '../img/navigation.png';
 
 var Banner = React.createClass({
 

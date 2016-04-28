@@ -16,6 +16,7 @@ IndexHotActions.load.listen(function() {
     var self = this;
     $.getJSON(url.indexHot)
     .done(function(data) {
+        console.log(data);
         if (data.status == 0) {
             self.completed(data.routes)
         } else {

@@ -15,7 +15,9 @@ export var url = {
 };
 
 export var defaultValue = {
-	'accountUrl': '/account'
+	'accountUrl': '/account',
+	'imgPath': './img/',
+	'routeImgPath': './img/route/'
 };
 
 export var error = {

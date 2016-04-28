@@ -4,7 +4,7 @@ var config = require('./config');
 const TEST_PATH = config.TEST_PATH;
 const ASSET_PATH = config.ASSET_PATH;
 var mockUrl = ['/', '/img/*', '/test', '/index', '/product', '/register', '/login', '/user', '/order/*'];
-var mockRequest = ['/account/*'];
+var mockRequest = ['/account/*', '/index/*'];
 
 var app = express();
 var mockHandler = function(req, res) {
