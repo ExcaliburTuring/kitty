@@ -1,2 +1,65 @@
 @import "~base.less";
-@import "app_scaffolding.less";
+
+.app-container {
+	position: absolute;
+	width:100%;
+	height: 100%;
+	padding-top: 60px;
+	background-size: 100% 100%;
+}
+
+.logo-container {
+	margin-left: 100px;
+	img {
+		width: 280px;
+	}
+}
+
+.register-container {
+	width: 480px;
+	min-height: 350px;
+	height: 350px;
+	margin-top: 10px;
+	float: right;
+	margin-right: 100px;
+	background-color: #fff;
+	border: 2px solid #eee;
+
+	hr {
+		margin: 0 0 10px 0;
+	}
+}
+
+.register-tab {
+	.nav-pills>li>a {
+		border-radius: 0;
+	}
+}
+
+.register-main {
+	height: 210px;
+	min-height: 230px;
+	padding-top: 30px;
+}
+
+.email-register {
+	margin: 0 50px;
+
+	.form-group {
+		margin-bottom: 5px;
+
+		.help-block {
+			min-height: 20px;
+			margin-bottom: 5px;
+		}
+	}
+
+	.email-register-btn {
+		float: right;
+		margin-top: -5px;
+	}
+}
+
+.tool-btn-container {
+	margin-right: 50px;
+}

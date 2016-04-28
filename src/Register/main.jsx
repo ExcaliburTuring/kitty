@@ -8,9 +8,5 @@ import App from './js/app';
 require('./css/application.less');
 
 ReactDOM.render(
- 	<div> 
-		<Navbar/>
-		<App/>
-		<Footer/>
-	</div>
+	<App/>
 , document.getElementById('app'));

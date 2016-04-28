@@ -2,7 +2,7 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Nav, NavItem } from 'react-bootstrap';
+import { Nav, NavItem, Image} from 'react-bootstrap';
 
 import { defaultValue } from 'config';
 
@@ -19,15 +19,12 @@ var Tab = React.createClass({
         var avatarUrl = this.props.accountSetting.avatarUrl;
         var infoUrl = `/${accountid}/info`;
         var ordersUrl = `/${accountid}/orders`;
-        var contactsUrl = `/${accountid}/contacts`;
         var path = window.location.pathname.split('/')[3];
         var activeKey = 0;
         if (path == 'info') {
             activeKey = 1;
         } else if (path == 'orders') {
             activeKey = 2;
-        } else if (path == 'contacts') {
-            activeKey = 3;
         }
         return {
             'name': name,
@@ -36,7 +33,6 @@ var Tab = React.createClass({
             'accountid': accountid,
             'infoUrl': infoUrl,
             'ordersUrl': ordersUrl,
-            'contactsUrl': contactsUrl,
             'activeKey': activeKey
         };
     },
@@ -49,8 +45,6 @@ var Tab = React.createClass({
             this.context.router.push(this.state.infoUrl);
         } else if (selectedKey == 2) {
             this.context.router.push(this.state.ordersUrl);
-        } else {
-            this.context.router.push(this.state.contactsUrl);
         }
     },
 
@@ -63,7 +57,7 @@ var Tab = React.createClass({
                         <div className="tab-account-info">
                             <div className="tab-avatar">
                                 <a href={accountUrl}>
-                                    <img width="120" height="120" alt="头像" src={this.state.avatarUrl}/>
+                                    <Image alt="头像" src={this.state.avatarUrl} circle/>
                                 </a>
                             </div>
                             <div className="tab-detail">
@@ -74,7 +68,6 @@ var Tab = React.createClass({
                             <Nav bsStyle = "pills" justified onSelect = {this.handleSelect} activeKey = {this.state.activeKey}>
                                 <NavItem eventKey = {1}> 个人信息 </NavItem> 
                                 <NavItem eventKey = {2}> 订单 </NavItem>
-                                <NavItem eventKey = {3}> 联系人 </NavItem>
                             </Nav>
                         </div>
                     </div>

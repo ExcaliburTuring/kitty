@@ -14,6 +14,7 @@ const TEST_PATH = path.join(projectRoot, 'test/');
 
 var commonJsPath = path.join(SRC_PATH, 'common/js/');
 var commonCssPath = path.join(SRC_PATH, 'common/css/');
+var commonImgPath = path.join(SRC_PATH, 'common/img/');
 var componentPath = path.join(SRC_PATH, 'component/');
 
 const PATH_MAP = (function () {
@@ -43,12 +44,16 @@ const PATH_MAP = (function () {
         }
     }
 
+    function addToPath(file, filePath) {
+        pathMap[file] = filePath;
+    }
+
     // src/common/js
     readFile(commonJsPath, addJsToPathMap);
     // src/common/css
-    readFile(commonCssPath, function(file, filePath) {
-        pathMap[file] = filePath;
-    });
+    readFile(commonCssPath, addToPath);
+    // src/common/img
+    readFile(commonImgPath, addToPath);
     // src/component
     readFile(componentPath, addJsToPathMap);
 

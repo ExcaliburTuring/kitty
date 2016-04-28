@@ -8,7 +8,5 @@ import App from './js/app';
 require('./css/application.less');
 
 ReactDOM.render(
- 	<div> 
-		<App/>
-	</div>
+	<App/>
 , document.getElementById('app'));

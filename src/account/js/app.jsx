@@ -22,7 +22,7 @@ var App = React.createClass({
         return {
             'accountid': accountid,
             'basicInfo': {
-            	'login': false
+                'login': false
             }
         };
     },
@@ -40,7 +40,7 @@ var App = React.createClass({
                        <Tab accountInfo={this.state.basicInfo.accountInfo}
                             accountSetting={this.state.basicInfo.accountSetting}
                             activeKey={this.state.activeKey}/>
-                       {this.props.children} 
+                       {this.props.children}
                     </div>
                 );
             } else {

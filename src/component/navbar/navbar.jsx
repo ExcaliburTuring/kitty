@@ -61,7 +61,7 @@ var AccountMenu = React.createClass({
         };
     },
     componentDidMount: function() {
-        AccountBasicInfo.actions.get();
+        AccountBasicInfo.actions.load();
     },
     render: function() {
         if (this.state.basicInfo.login) {

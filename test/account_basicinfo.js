@@ -9,14 +9,14 @@ module.exports = {
 		'id': '35052519910618131X',
 		'idType': 0,
 		'email': 'zhenzong.peng@icloud.com',
-		'wxid': null,
-		'qqid': null,
 		'mobile': '15001028030'
 	},
 	'accountSetting': {
 		'accountid': 1,
 		'nickname': 'xiaochong',
+		'wxid': 'zhenzong',
 		'wxname': '一个很长很长很长的名字',
+		'qqid': 19383729,
 		'qqname': '我的qq名',
 		'wbname': null,
 		'gender': 0,

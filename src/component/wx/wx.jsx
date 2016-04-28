@@ -2,25 +2,28 @@
  * @author xiezhenzong
  */
 import React from 'react';
+import { Image } from 'react-bootstrap';
 
 import { defaultValue } from 'config';
 
-var WxLogin = React.createClass({
+import qr from './wx.png';
+
+require('./wx.less');
+
+var Wx = React.createClass({
 
     getInitialState: function() {
         return {
-            'data': {
-            }
         }
     },
 
     render: function() {
         return (
-            <div> 
-                <p>这里是微信登录的二维码</p>
+            <div className="wx-qr-container">
+                <Image src={qr} resposive/>
             </div>
         );
     }
 });
 
-module.exports = WxLogin;
+module.exports = Wx;
