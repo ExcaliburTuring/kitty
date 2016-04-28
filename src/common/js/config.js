@@ -10,7 +10,8 @@ export var url = {
 	'contacts': '/account/contacts',
 	'accountOrders': '/account/orders',
 
-	'group': '/group'
+	'group': '/group',
+	'indexHot': '/index/hot'
 };
 
 export var defaultValue = {
