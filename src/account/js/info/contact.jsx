@@ -6,6 +6,7 @@ import { Panel, Form, FormGroup, FormControl, Col, ControlLabel, HelpBlock } fro
 
 import validator from 'validator';
 import Title from './title';
+import Input from './input';
 
 function _create(value, state, msg) {
     return {
@@ -157,7 +158,7 @@ var Contact = React.createClass({
             <div className="contact-container info-section">
                 <Panel header={title}>
                     <Form horizontal>
-                        <Item
+                        <Input
                             readOnly={this.state.readOnly}
                             controlId="contact-container-email"
                             validationState={emailState.state}
@@ -165,7 +166,7 @@ var Contact = React.createClass({
                             value={emailState.value}
                             onChange={this.onEmailChange}
                             msg={emailState.msg}/>
-                        <Item
+                        <Input
                             readOnly={this.state.readOnly}
                             controlId="contact-container-mobile"
                             validationState={mobileState.state}
@@ -173,7 +174,7 @@ var Contact = React.createClass({
                             value={mobileState.value}
                             onChange={this.onMobileChange}
                             msg={mobileState.msg}/>
-                        <Item
+                        <Input
                             readOnly={this.state.readOnly}
                             controlId="contact-container-wxid"
                             validationState={wxidState.state}
@@ -186,31 +187,6 @@ var Contact = React.createClass({
             </div>
         );
     }
-});
-
-var Item = React.createClass({
-
-    render: function() {
-        return (
-            <FormGroup
-                controlId={this.props.controlId}
-                validationState={this.props.validationState}>
-                <Col componentClass={ControlLabel} md={2}>
-                    {this.props.label}
-                </Col>
-                <Col componentClass={ControlLabel} md={5}>
-                    <FormControl
-                        type="input" 
-                        value={this.props.value}
-                        onChange={this.props.onChange}
-                        readOnly={this.props.readOnly}/>
-                    <FormControl.Feedback />
-                    <HelpBlock>{this.props.msg}</HelpBlock> 
-                </Col>
-            </FormGroup>
-        );
-    }
-
 });
 
 module.exports = Contact;

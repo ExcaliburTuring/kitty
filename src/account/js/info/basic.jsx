@@ -6,6 +6,7 @@ import { Panel, Form, FormGroup, FormControl, Col, ControlLabel, HelpBlock } fro
 
 import validator from 'validator';
 import Title from './title';
+import Input from './input';
 
 function _create(value, state, msg) {
     return {
@@ -185,7 +186,7 @@ var BasicInfo = React.createClass({
             <div className="basic-container info-section">
                 <Panel header={title}>
                     <Form horizontal>
-                        <Item
+                        <Input
                             readOnly={this.state.readOnly}
                             controlId="basic-container-name"
                             validationState={nameState.state}
@@ -193,7 +194,7 @@ var BasicInfo = React.createClass({
                             value={nameState.value}
                             onChange={this.onNameChange}
                             msg={nameState.msg}/>
-                        <Item
+                        <Input
                             readOnly={this.state.readOnly}
                             controlId="basic-container-id"
                             validationState={idState.state}
@@ -201,7 +202,7 @@ var BasicInfo = React.createClass({
                             value={idState.value}
                             onChange={this.onIdChange}
                             msg={idState.msg}/>
-                        <Item
+                        <Input
                             readOnly={this.state.readOnly}
                             controlId="basic-container-gender"
                             validationState={genderState.state}
@@ -209,7 +210,7 @@ var BasicInfo = React.createClass({
                             value={genderState.value}
                             onChange={this.onGenderChange}
                             msg={genderState.msg}/>
-                        <Item
+                        <Input
                             readOnly={this.state.readOnly}
                             controlId="basic-container-birthday"
                             validationState={birthdayState.state}
@@ -220,31 +221,6 @@ var BasicInfo = React.createClass({
                     </Form>
                 </Panel>
             </div>
-        );
-    }
-
-});
-
-var Item = React.createClass({
-
-    render: function() {
-        return (
-            <FormGroup
-                controlId={this.props.controlId}
-                validationState={this.props.validationState}>
-                <Col componentClass={ControlLabel} md={2}>
-                    {this.props.label}
-                </Col>
-                <Col componentClass={ControlLabel} md={5}>
-                    <FormControl
-                        type="input" 
-                        value={this.props.value}
-                        onChange={this.props.onChange}
-                        readOnly={this.props.readOnly}/>
-                    <FormControl.Feedback />
-                    <HelpBlock>{this.props.msg}</HelpBlock> 
-                </Col>
-            </FormGroup>
         );
     }
 
