@@ -38,7 +38,7 @@ var Banner = React.createClass({
                 <div className="swiper-slide swiper-no-swiping" style={cbg}></div>
                 <div className="swiper-slide swiper-no-swiping" style={dbg}></div>
             </div>
-            <div className="navigation"><img src= {navigation} /></div>
+            <div className="navigation"><i className="fa fa-angle-double-down"/></div>
             <div className="arrow-container">
                 <div className="arrows">
                     <div className="left-arrow" ref="prev">

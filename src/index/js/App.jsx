@@ -23,7 +23,8 @@ var App = React.createClass({
             		<div className="leftline" />
             		<div className="rightline" />
             		<div className="middle"><a>海逍遥旅行工作室</a></div>
-                    <div className="middle"><br/><i className="fa fa-angle-double-down"/></div>
+                    <div className="middle"><a>地方大师傅撒旦艰苦回复</a></div>
+                    <div className="middle"><a>海逍遥旅行工作室</a></div>
                     <div className="middle"><br/><img src="http://wpcms.cdnws.54traveler.com/wp-content/uploads/2016/04/2016041205185992.jpg" /></div>
 
             	</div>
@@ -33,27 +34,25 @@ var App = React.createClass({
         					<img src={p11} />
                             <div className="opacity"><img src={p12} /></div>
                             <div className="days"><img src={p13} /></div>
-                            <div className="info"><span className="bar" /><h5>【当季推荐】苍茫的天涯是我的爱~</h5><a>大！西！北！</a></div>
+                            <div className="info"><span className="bar" /><a>大！西！北！</a><h5>【当季推荐】苍茫的天涯是我的爱~</h5></div>
         				</div>
         				<div className="route-right">
         					<img src={p21} />
                             <div className="opacity"><img src={p22} /></div>
                             <div className="days"><img src={p23} /></div>
-                            <div className="info"><span className="bar" /><h5>【私心推荐】中国最美的夏天在这里~！</h5><a>呼伦贝尔</a></div>
+                            <div className="info"><span className="bar" /><a>呼伦贝尔</a><h5>【私心推荐】中国最美的夏天在这里~！</h5></div>
         				</div>
-        			</div>
-                    <div className="line1">
                         <div className="route-left">
                             <img src={p31} />
                             <div className="opacity"><img src={p12} /></div>
                             <div className="days"><img src={p13} /></div>
-                            <div className="info"><span className="bar" /><h5>【当季推荐】苍茫的天涯是我的爱~</h5><a>婺源</a></div>
+                            <div className="info"><span className="bar" /><a>婺源</a><h5>【当季推荐】苍茫的天涯是我的爱~</h5></div>
                         </div>
                         <div className="route-right">
                             <img src={p41} />
                             <div className="opacity"><img src={p22} /></div>
                             <div className="days"><img src={p23} /></div>
-                            <div className="info"><span className="bar" /><h5>【私心推荐】中国最美的夏天在这里~！</h5><a>蓬莱-青岛</a></div>
+                            <div className="info"><span className="bar" /><a>蓬莱-青岛</a><h5>【私心推荐】中国最美的夏天在这里~！</h5></div>
                         </div>
                     </div>
         		</div>
