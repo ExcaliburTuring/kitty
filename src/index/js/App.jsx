@@ -35,43 +35,57 @@ var App = React.createClass({
     getInitialState: function() {
         IndexHot.actions.load();
         return {
-            'hotRoutes': []
+            'hotRoutes': [],
+            'showDoubleDownBtn': true
         };
     },
 
+    onDoubleDownBtnClick: function() {
+        $('html, body').animate({
+            scrollTop: $('#anchor').offset().top
+        }, 800);
+        this.setState({
+            'showDoubleDownBtn': false
+        });
+    },
+
     render: function() {
-        if (this.state.hotRoutes.length == 0) {
-            return null;
+        var hotRoutes = (<div></div>);
+        if (this.state.hotRoutes.length != 0) {
+           hotRoutes = (
+                <Grid>
+                    <Row>
+                        <Col md={6}>
+                            <Route route={this.state.hotRoutes[0]}/>
+                        </Col>
+                        <Col md={6}>
+                            <Route route={this.state.hotRoutes[1]} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={6}>
+                            <Route route={this.state.hotRoutes[2]}/>
+                        </Col>
+                        <Col md={6}>
+                            <Route route={this.state.hotRoutes[3]} />
+                        </Col>
+                    </Row>
+                </Grid>
+            );
         }
         var world = {backgroundImage: "url(" + worldmap + ")"};
         return (
             <div className="content">
-                <Banner />
+                <Banner onDoubleDownBtnClick={this.onDoubleDownBtnClick} showDoubleDownBtn={this.state.showDoubleDownBtn}/>
                 <div className="hxy-desc">
-                    <Separator text="海逍遥旅行工作室"/>
+                    <div id="anchor" />
+                    <Separator text="海逍遥旅行工作室" ref="hxyDesc"/>
                     <div className="text-center hxy-desc-text">地方大师傅撒旦艰苦回复</div>
                     <div className="text-center hxy-desc-text">海逍遥旅行工作室</div>
                     <Image className="center-block hxy-desc-img " src="http://wpcms.cdnws.54traveler.com/wp-content/uploads/2016/04/2016041205185992.jpg" />
                 </div>
                 <div className="products">
-                    <Grid>
-                        <Row>
-                            <Col md={6}>
-                                <Route route={this.state.hotRoutes[0]}/>
-                            </Col>
-                            <Col md={6}>
-                                <Route route={this.state.hotRoutes[1]} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
-                                <Route route={this.state.hotRoutes[2]}/>
-                            </Col>
-                            <Col md={6}>
-                                <Route route={this.state.hotRoutes[3]} />
-                            </Col>
-                        </Row>
-                    </Grid>
+                    {hotRoutes}
                 </div>
                 <div className="activities">
                     <Grid>
@@ -86,7 +100,7 @@ var App = React.createClass({
                     </Grid>
                 </div>
                 <div className="others" style={world}>
-                    <Separator text="关于我们" />
+                    <Separator text="关于我们"/>
                     <div className="aboutus">
                         <div className="text-center about-text">
                             我们坚信，在我们的星球有着很多淳朴真实的奇妙地方

@@ -39,6 +39,7 @@
         z-index: 2;
 
         .fa {
+            cursor: pointer;
             margin: 0 auto;
             font-size: 48px;
             color: @white;
@@ -50,6 +51,9 @@
 
         .fa:hover{
             animation: updown 1s;
+            -moz-animation:updown 1s;/* Firefox */
+            -webkit-animation:updown 1s;/* Safari and Chrome */
+            -o-animation:updown 1s; /* Opera */
         }
 
         @keyframes updown
@@ -177,6 +181,14 @@
     position: relative;;
     margin-bottom: 28px;
 
+    &:hover {
+        box-shadow: 0 0 5px 0 @dark-gray;
+        animation: shadow 0.5s;
+        -moz-animation: shadow 0.5s; /* Firefox */
+        -webkit-animation: shadow 0.5s; /* Safari and Chrome */
+        -o-animation: shadow 0.5s; /* Opera */
+    }
+
     .days{
         position: absolute;
         left: -20px;
@@ -276,36 +288,14 @@
 
         &:hover {
             box-shadow: 0 0 5px 0 @dark-gray;
-            animation:shadow 0.5s;
-            -moz-animation:shadow 0.5s; /* Firefox */
-            -webkit-animation:shadow 0.5s; /* Safari and Chrome */
-            -o-animation:shadow 0.5s; /* Opera */
+            animation: shadow 0.5s;
+            -moz-animation: shadow 0.5s; /* Firefox */
+            -webkit-animation: shadow 0.5s; /* Safari and Chrome */
+            -o-animation: shadow 0.5s; /* Opera */
         }
     }
 
-    @keyframes shadow
-    {
-        from {box-shadow: 0 0 0 0 @dark-gray;;}
-        to {box-shadow: 0 0 5px 0 @dark-gray;}
-    }
-
-    @-moz-keyframes shadow /* Firefox */
-    {
-        from {box-shadow: 0 0 0 0 @dark-gray;;}
-        to {box-shadow: 0 0 5px 0 @dark-gray;}
-    }
-
-    @-webkit-keyframes shadow /* Safari and Chrome */
-    {
-        from {box-shadow: 0 0 0 0 @dark-gray;;}
-        to {box-shadow: 0 0 5px 0 @dark-gray;}
-    }
-
-    @-o-keyframes shadow /* Opera */
-    {
-        from {box-shadow: 0 0 0 0 @dark-gray;;}
-        to {box-shadow: 0 0 5px 0 @dark-gray;}
-    }
+   
 }
     
 .others{
@@ -326,3 +316,26 @@
     }
 }
 
+@keyframes shadow
+{
+    from {box-shadow: 0 0 0 0 @dark-gray;;}
+    to {box-shadow: 0 0 5px 0 @dark-gray;}
+}
+
+@-moz-keyframes shadow /* Firefox */
+{
+    from {box-shadow: 0 0 0 0 @dark-gray;;}
+    to {box-shadow: 0 0 5px 0 @dark-gray;}
+}
+
+@-webkit-keyframes shadow /* Safari and Chrome */
+{
+    from {box-shadow: 0 0 0 0 @dark-gray;;}
+    to {box-shadow: 0 0 5px 0 @dark-gray;}
+}
+
+@-o-keyframes shadow /* Opera */
+{
+    from {box-shadow: 0 0 0 0 @dark-gray;;}
+    to {box-shadow: 0 0 5px 0 @dark-gray;}
+}
