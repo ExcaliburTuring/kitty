@@ -185,7 +185,17 @@
     -o-transition: color 0.2s,border 0.2s; /* Opera */
   }
 
-  .scrollspy-nav a.am-active, .scrollspy-nav a:Hover{
+  .scrollspy-nav a.am-active, .scrollspy-nav a:hover{
+    background-color: transparent;
+    color: @light-red;
+    border-top: 5px solid #e75657;
+  }
+  .scrollspy-nav a.am-active, .scrollspy-nav a:focus{
+    background-color: transparent;
+    color: @light-red;
+    border-top: 5px solid #e75657;
+  }
+  .scrollspy-nav a.am-active, .scrollspy-nav a:active{
     background-color: transparent;
     color: @light-red;
     border-top: 5px solid #e75657;
