@@ -25,7 +25,11 @@ var plugins = [
     if (!debug) {
         plugins.push(new webpack.optimize.UglifyJsPlugin({
             minimize: true
-        }));
+        }), new webpack.DefinePlugin({
+            'process.env': {
+              'NODE_ENV': JSON.stringify('production')
+            }
+          }));
     } else {
         plugins.push(
             new webpack.HotModuleReplacementPlugin(),
