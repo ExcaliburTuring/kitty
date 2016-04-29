@@ -57,18 +57,18 @@ var App = React.createClass({
            hotRoutes = (
                 <Grid>
                     <Row>
-                        <Col md={6}>
+                        <Col md={6} lg={5} lgOffset={1}>
                             <Route route={this.state.hotRoutes[0]}/>
                         </Col>
-                        <Col md={6}>
+                        <Col md={6} lg={5}>
                             <Route route={this.state.hotRoutes[1]} />
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={6}>
+                        <Col md={6} lg={5} lgOffset={1}>
                             <Route route={this.state.hotRoutes[2]}/>
                         </Col>
-                        <Col md={6}>
+                        <Col md={6} lg={5}>
                             <Route route={this.state.hotRoutes[3]} />
                         </Col>
                     </Row>
