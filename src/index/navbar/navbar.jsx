@@ -3,10 +3,11 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Image } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
 import AccountBasicInfo from 'account_basicinfo';
-import logo from "./logo1.png"
+import Logo from './logo2.png';
+import hxytravel from './hxytravel.png';
 
 require('./navbar.less');
 
@@ -17,8 +18,9 @@ var KittyNavbar = React.createClass({
     render: function() {
         return (
             <Navbar staticTop>
+                <div className="navbar-middle" ><img src={Logo} /></div>
         		<Navbar.Header>
-                <Image src={logo} responsive/>
+					<Brand />
       				<Navbar.Toggle />
     			</Navbar.Header>
         		<Navbar.Collapse>
@@ -30,13 +32,20 @@ var KittyNavbar = React.createClass({
     }
 });
 
+var Brand = React.createClass({
+    render: function() {
+        return (
+        	<Navbar.Brand>
+        		<img src={hxytravel} />
+      		</Navbar.Brand>
+        );
+    }
+});
+
 var MainMenu = React.createClass({
     render: function() {
         return (
             <Nav>
-				<NavItem eventKey={1} href="/">首页</NavItem>
-				<NavItem eventKey={2} href="/">路线</NavItem>
-				<NavItem eventKey={3} href="/">活动</NavItem>
 			</Nav>
         );
     }
@@ -52,7 +61,7 @@ var AccountMenu = React.createClass({
         };
     },
     componentDidMount: function() {
-        AccountBasicInfo.actions.get();
+        AccountBasicInfo.actions.load();
     },
     render: function() {
         if (this.state.basicInfo.login) {
@@ -69,7 +78,7 @@ var AccountMenu = React.createClass({
         } else {
             return (
                 <Nav pullRight>
-                    <NavItem eventKey={1} href="/register">组册</NavItem>
+                    <NavItem eventKey={1} href="/register">注册</NavItem>
                     <NavItem eventKey={2} href="/login">登录</NavItem>
                 </Nav>
             );

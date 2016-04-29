@@ -5,14 +5,17 @@
 @import '~base.less';
 
 .navbar {
-	height: 80px;
+	border-radius: 0;
+	margin-bottom: 0;
 	text-align: center;
+	line-height: 120px;
 }
 
 .navbar-middle{
 	position: absolute;
 	width: 100%;
 	text-align: center;
+	line-height: 120px;
 	img {
 		width: 100px;
 		height: 100px;
@@ -25,28 +28,31 @@
 	border: 0px;
 }
 
-.nav{
+.navbar .container {
 	margin: 0 auto;
-	padding-left: 2em;
+	padding: 0;
 	position: relative;
-	li{
-		margin: 0 8px;
-	}
+	max-width: 1800px;
 }
 
 .navbar-default .navbar-nav > li > a {
-	line-height: 50px;
-	text-align: center;
 	color: @white;
-	font-size: 20px;
-	font-weight: 400;
-	&:hover {
-		color: @white;
+	font-size: 24px;
+}
+
+.navbar-header img {
+	width: 256px;
+	height: 100px;
+}
+
+@media (min-width: 1920px){
+	.container {
+		width: 1622px; 
 	}
 }
 
-.navbar-header {
-	img {
-		height: 80px;
+@media (min-width: 768px){
+	.navbar-right {
+	    margin: 7.5px -15px;
 	}
 }
