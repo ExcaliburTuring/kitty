@@ -16,27 +16,30 @@ function handler(path, res, config) {
 function config(url, page) {
     return {
         'url': url,
+        're': new RegExp(url),
         'page': page
     };
 }
 
 var mockConfig = [
-    config('/', 'index.html'),
-    config('/img/*'),
+    config('/', 'index.html'), // 下面是倒序便利的，所以/的拦截放在第一个
     config('/test', 'test.html'),
     config('/register', 'register.html'),
     config('/login', 'login.html'),
-    config('/account/*', 'account.html'),
-    config('/index/*', 'index.html'),
-    config('/travel/*', 'travel.html'),
-    config('/order/*', 'order.html'),
+    config('/account*', 'account.html'),
+    config('/index*', 'index.html'),
+    config('/travel*', 'travel.html'),
+    config('/order*', 'order.html'),
+    config('/product*', 'product.html'),
+    config('/img/*'),
 ];
 
 function mockHandler(req, res) {
     var path = req.path;
     for (var i = mockConfig.length - 1; i >= 0; i--) {
         var config = mockConfig[i];
-        if (path.match(new RegExp(config.url))) {
+        if (path.match(config.re)) {
+            console.log(config);
             handler(path, res, config);
             return;
         }

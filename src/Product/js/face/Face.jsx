@@ -1,11 +1,12 @@
+/**
+ * @author zhaowei
+ */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import logo from '../../img/logo.png';
 import Slider from './slider';
 import { Col,Navbar } from 'react-bootstrap';
 
-
-module.exports = React.createClass({
+var Face = React.createClass({
 	getInitialState: function() {
 		return{
 			duration: "",
@@ -52,3 +53,5 @@ module.exports = React.createClass({
 		)
 	}
 });
+
+ module.exports=Face;
