@@ -151,7 +151,7 @@ module.exports = React.createClass({
 				<div>
 				    <Col xs={12} md={12}>
 						<div className="am-sticky-placeholder">
-							<AutoAffix viewportOffsetTop={0} container={this}>
+							<AutoAffix viewportOffsetTop={0} container={this} affixClassName="stwork">
 								    <div className="scrollspy-nav">
 							            <Nav bsStyle="pills" activeKey={1} onSelect={this.handleSelect}>
 										    <NavItem eventKey={".navbar"} >路线简介</NavItem>

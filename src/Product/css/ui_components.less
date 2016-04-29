@@ -163,6 +163,7 @@
   }
 
   .scrollspy-nav li {
+    float: none;
     display: inline-block;
     list-style: none
   }
@@ -176,6 +177,8 @@
     margin: 0 10px;
     text-align: center;
     display: inline-block;
+    border-radius: 1px;
+    border-top: 5px solid rgba(0,0,0,0);
     transition: color 0.2s,border 0.2s;
     -moz-transition: color 0.2s,border 0.2s; /* Firefox 4 */
     -webkit-transition: color 0.2s,border 0.2s; /* Safari and Chrome */
@@ -183,20 +186,22 @@
   }
 
   .scrollspy-nav a.am-active, .scrollspy-nav a:Hover{
+    background-color: transparent;
     color: @light-red;
     border-top: 5px solid #e75657;
   }
 }
 
-.am-animation-stwork{
+.stwork{
   height: 100px;
+  background: rgba(255,255,255,0.6);
   animation-duration: 1s;
   animation-name: stwork;
 }
 
 @keyframes amactive
 {
-from {border-top: 5px solid rgba(0,0,0,0);color: @rice;}
+from {border-top: 5px solid rgba(0,0,0,0); color: @rice;}
 to {border-top: 5px solid @light-red;color: @light-red;}
 }
 
