@@ -39,6 +39,7 @@
         z-index: 2;
 
         .fa {
+            cursor: pointer;
             margin: 0 auto;
             font-size: 48px;
             color: @white;
@@ -50,6 +51,9 @@
 
         .fa:hover{
             animation: updown 1s;
+            -moz-animation:updown 1s;/* Firefox */
+            -webkit-animation:updown 1s;/* Safari and Chrome */
+            -o-animation:updown 1s; /* Opera */
         }
 
         @keyframes updown
@@ -143,256 +147,195 @@
     }
 }
 
-.activities{
-    width: 100%;
+.separator{
+    margin-top: 30px;
     position: relative;
-    background-color: @gray;
+    line-height: 40px;
 
-    .activity-container{
-        width: 1080px;
-        height: 225px;
-        margin: 0 auto;
-        position: relative;
-        padding: 12px 0;
+    .separator-line {
+        border-top: 1px dashed @orange;
+        margin-top: 20px;
+    }
 
-        .left-a {
-            position: absolute;
-            left: 0;
-            height: 225px;
+    .separator-text {
+        font-family: Microsoft YaHei;
+        font-size: 18px;
+        color: @orange;
+    }
+}
+
+.hxy-desc {
+    .hxy-desc-text {
+        font-family: Microsoft YaHei;
+        font-size: 18px;
+        color: @orange;
+    }
+
+    .hxy-desc-img {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+}
+
+.products .route-container {
+    position: relative;;
+    margin-bottom: 28px;
+
+    &:hover {
+        box-shadow: 0 0 5px 0 @dark-gray;
+        animation: shadow 0.5s;
+        -moz-animation: shadow 0.5s; /* Firefox */
+        -webkit-animation: shadow 0.5s; /* Safari and Chrome */
+        -o-animation: shadow 0.5s; /* Opera */
+    }
+
+    .days{
+        position: absolute;
+        left: -20px;
+        top: 10px;
+        z-index: 3;
+        width: 70px;
+        height: 70px;
+    }
+
+    .opacity {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        z-index: 2;
+
+        &:hover{
+            opacity: 0.5;
+            background-color: @orange;
+            animation:myfirst 0.5s;
+            -moz-animation:myfirst 0.5s; /* Firefox */
+            -webkit-animation:myfirst 0.5s; /* Safari and Chrome */
+            -o-animation:myfirst 0.5s; /* Opera */
         }
 
-        .right-a {
-            position: absolute;
-            right: 0;
-            height: 225px;
-        }
-
-        img {
-            cursor: pointer;
-            width: 512px;
-            height: 200px;
-        }
-
-        img:hover {
-            box-shadow: 0 0 5px 0 @dark-gray;
-            animation:shadow 0.5s;
-            -moz-animation:shadow 0.5s; /* Firefox */
-            -webkit-animation:shadow 0.5s; /* Safari and Chrome */
-            -o-animation:shadow 0.5s; /* Opera */
-        }
-
-        @keyframes shadow
+        @keyframes myfirst
         {
-            from {box-shadow: 0 0 0 0 @dark-gray;;}
-            to {box-shadow: 0 0 5px 0 @dark-gray;}
+            from {opacity:0}
+            to {opacity:0.5;background-color:@orange}
         }
 
-        @-moz-keyframes shadow /* Firefox */
+        @-moz-keyframes myfirst /* Firefox */
         {
-            from {box-shadow: 0 0 0 0 @dark-gray;;}
-            to {box-shadow: 0 0 5px 0 @dark-gray;}
+            from {opacity:0}
+            to {opacity:0.5;background-color:@orange}
         }
 
-        @-webkit-keyframes shadow /* Safari and Chrome */
+        @-webkit-keyframes myfirst /* Safari and Chrome */
         {
-            from {box-shadow: 0 0 0 0 @dark-gray;;}
-            to {box-shadow: 0 0 5px 0 @dark-gray;}
+            from {opacity:0}
+            to {opacity:0.5;background-color:@orange}
         }
 
-        @-o-keyframes shadow /* Opera */
+        @-o-keyframes myfirst /* Opera */
         {
-            from {box-shadow: 0 0 0 0 @dark-gray;;}
-            to {box-shadow: 0 0 5px 0 @dark-gray;}
+            from {opacity:0}
+            to {opacity:0.5;background-color:@orange}
+        }
+    }
+
+    .info {
+        height: 65px;
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 7px 0;
+
+        .bar {
+            width: 12px;
+            background: @orange;
+            float: left;
+            height: 43px;
+            margin: 5px 10px 10px 10px;
+        }
+
+        h5 {
+            margin: 3px 20px 0 0;
+            font-family: Microsoft YaHei;
+            font-size: 15px;
+            text-decoration: none;
+            color: @black;
+        }
+
+        a {
+            margin-left: 10px;
+            font-family: Microsoft YaHei;
+            font-size: 20px;
+            text-decoration: none;
+            color: @black;
         }
     }
 }
 
-.content {
-    width: 100%;
-    display: block;
+.activities{
+    position: relative;
+    background-color: @gray;
 
-    .Separator{
-        margin: 50px auto;
-        width: 1070px;
-        text-align: center;
-        position: relative;
-        line-height: 40px;
+    .container {
+        padding: 12px 0;
+    }
+        
+    img {
+        cursor: pointer;
+        width: 512px;
+        height: 200px;
+        margin-top: 10px;
+        margin-bottom: 10px;
 
-        .leftline {
-            width: 324px;
-            float: left;
-            border-top: 1px dashed @orange;
-            margin-top: 20px;
-        }
-
-        .rightline {
-            width: 324px;
-            float: right;
-            border-top: 1px dashed @orange;
-            margin-top: 20px;
-        }
-
-        .middle {
-            img{
-                width: 1070px;
-                height: 480px;
-            }
-            a {
-                font-family: Microsoft YaHei;
-                font-size: 18px;
-                color: @orange;
-                text-decoration: none;
-            }
-            .fa-angle-double-down {
-                font-size: 42px;
-                color: @orange;
-            }
+        &:hover {
+            box-shadow: 0 0 5px 0 @dark-gray;
+            animation: shadow 0.5s;
+            -moz-animation: shadow 0.5s; /* Firefox */
+            -webkit-animation: shadow 0.5s; /* Safari and Chrome */
+            -o-animation: shadow 0.5s; /* Opera */
         }
     }
 
-    .products {
-        text-align: center;
-
-        .line1{
-            margin: 20px auto;
-            width: 1070px;
-            height: 930px;
-
-            .route-left {
-                width: 512px;
-                margin-bottom: 28px;
-                position: relative;
-                float: left;
-                z-index: 1;
-            }
-            .route-right {
-                width: 512px;
-                margin-bottom: 28px;
-                position: relative;
-                float: right;
-                z-index: 1;
-            }
-            img{
-                width: 512px;
-                height: 375px;
-            }
-            .days{
-                position: absolute;
-                left: -20px;
-                top: 10px;
-                z-index: 3;
-
-                img {
-                    width: 70px;
-                    height: 70px;
-                }
-            }
-            .opacity {
-                position: absolute;
-                left: 0;
-                top: 0;
-                opacity: 0;
-                width: 512px;
-                height: 375px;
-                z-index: 2;
-
-
-                img{
-                    margin: 0 auto;
-                    width: 480px;
-                    height: 360px;
-                }
-            }
-            .opacity:hover{
-                opacity: 0.5;
-                background-color:@orange;
-                animation:myfirst 0.5s;
-                -moz-animation:myfirst 0.5s; /* Firefox */
-                -webkit-animation:myfirst 0.5s; /* Safari and Chrome */
-                -o-animation:myfirst 0.5s; /* Opera */
-            }
-
-            @keyframes myfirst
-            {
-                from {opacity:0}
-                to {opacity:0.5;background-color:@orange}
-            }
-
-            @-moz-keyframes myfirst /* Firefox */
-            {
-                from {opacity:0}
-                to {opacity:0.5;background-color:@orange}
-            }
-
-            @-webkit-keyframes myfirst /* Safari and Chrome */
-            {
-                from {opacity:0}
-                to {opacity:0.5;background-color:@orange}
-            }
-
-            @-o-keyframes myfirst /* Opera */
-            {
-                from {opacity:0}
-                to {opacity:0.5;background-color:@orange}
-            }
-        }
-
-        .info {
-            width: 512px;
-            height: 65px;
-            border: 1px solid #ddd;
-            text-align: left;
-            padding: 7px 0;
-
-            .bar {
-                width: 12px;
-                background: @orange;
-                float: left;
-                height: 43px;
-                margin: 5px 10px 10px 10px;
-            }
-
-            h5 {
-                margin: 3px 20px 0 0;
-                font-family: Microsoft YaHei;
-                font-size: 15px;
-                text-decoration: none;
-                color: @black;
-            }
-
-            a {
-                margin-left: 10px;
-                font-family: Microsoft YaHei;
-                font-size: 20px;
-                text-decoration: none;
-                color: @black;
-            }
-        }
-
-    }
+   
+}
     
-    .others{
-        width: 100%;
-        height: 600px;
-        position: relative;
-        background-position: bottom;
-        background-size: 1500px 600px;
-        background-repeat: no-repeat;
+.others{
+    background-size: 1500px 600px;
+    background-repeat: no-repeat;
+    margin-top: 30px;
 
-        .aboutus{
-            width: 1070px;
-            margin: 0 auto;
-            position: relative;
-            text-align: center;
+    .aboutus {
+        margin-bottom: 30px;
+
+         .about-text{
             line-height: 50px;
-
-            a {
-                font-family: Microsoft YaHei;
-                font-size: 20px;
-                color: @black;
-                text-decoration: none;
-            }
+            font-family: Microsoft YaHei;
+            font-size: 20px;
+            color: @black;
+            text-decoration: none;
         }
     }
+}
 
+@keyframes shadow
+{
+    from {box-shadow: 0 0 0 0 @dark-gray;;}
+    to {box-shadow: 0 0 5px 0 @dark-gray;}
+}
+
+@-moz-keyframes shadow /* Firefox */
+{
+    from {box-shadow: 0 0 0 0 @dark-gray;;}
+    to {box-shadow: 0 0 5px 0 @dark-gray;}
+}
+
+@-webkit-keyframes shadow /* Safari and Chrome */
+{
+    from {box-shadow: 0 0 0 0 @dark-gray;;}
+    to {box-shadow: 0 0 5px 0 @dark-gray;}
+}
+
+@-o-keyframes shadow /* Opera */
+{
+    from {box-shadow: 0 0 0 0 @dark-gray;;}
+    to {box-shadow: 0 0 5px 0 @dark-gray;}
 }
