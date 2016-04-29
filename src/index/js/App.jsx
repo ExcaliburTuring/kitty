@@ -5,8 +5,8 @@ import React from 'react';
 import Reflux from 'reflux';
 import { Grid, Row, Col, Image } from 'react-bootstrap';
 
-import { defaultValue } from 'config';
-import IndexHot from './index_hot';
+import { defaultValue, url } from 'config';
+import Rabbit from 'rabbit';
 import Banner from './banner';
 
 import activity1 from '../img/leader.jpg';
@@ -27,6 +27,8 @@ const daysImgConfig = {
 function _getDaysImg(days) {
     return daysImgConfig[days];
 }
+
+var IndexHot = Rabbit.create(url.indexHot); 
 
 var App = React.createClass({
 
@@ -129,12 +131,17 @@ var App = React.createClass({
 
 var Route = React.createClass({
 
+    onClick: function() {
+        var routeid = this.props.route.routeid;
+        window.location.pathname= `${url.travel}/${routeid}`;
+    },
+
     render: function() {
         var route = this.props.route;
         var imgs = route.imgs.split(',');
         var daysImg = _getDaysImg(route.days);
         return (
-            <div className="route-container">
+            <div className="route-container" onClick={this.onClick}>
                 <Image responsive src={_getRouteImgPath(imgs[0])} />
                 <div className="opacity">
                     <Image responsive src={_getRouteImgPath(imgs[1])} />

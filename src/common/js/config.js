@@ -9,8 +9,9 @@ export var url = {
 	'register': '/account/register',
 	'contacts': '/account/contacts',
 	'accountOrders': '/account/orders',
-
-	'group': '/group',
+	'travel': '/travel',
+	'route': '/travel/route',
+	'group': '/travel/group',
 	'indexHot': '/index/hot'
 };
 

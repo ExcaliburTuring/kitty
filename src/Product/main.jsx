@@ -18,4 +18,4 @@ ReactDOM.render(
 		</div>
 		<Footer />
 	</div>
-	, document.getElementById('app'));
+, document.getElementById('app'));
