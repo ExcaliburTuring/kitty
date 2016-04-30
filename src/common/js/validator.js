@@ -30,8 +30,8 @@ function _nothing() {
     return _state(null, '');
 }
 
-function _success(msg) {
-    return _state('success', msg);
+function _success() {
+    return _state('success');
 }
 
 function _warn(msg) {
@@ -45,40 +45,15 @@ function _error(msg) {
 const validator = {
 
     hasText: function(text, msg) {
-        var msg = msg ? msg : '不能是空字符串';
         return _.isEmpty(text) ? _error(msg): _success();
     },
 
-    email: function(email) {
-        if (_.isEmpty(email)) {
-            return _nothing();
-        }
-        if (_emailRe.test(email)) {
-            return _success();
-        } else {
-            return _error('邮箱错误');
-        }
-    },
-
-    password: function(password) {
-        if (_.isEmpty(password)) {
-            return _nothing();
-        }
-        if (!_passwordValidCharRe.test(password)) {
-            return _error('密码由数字，字母，特殊字符组成')
+    id: function(id, msg) {
+        var ret = this.hasText(id);
+        if (ret['state'] !== 'success') {
+            return ret;
         }
 
-        if (!_checkLength(password)) {
-            return _error('密码长度需要大于8位');
-        }
-
-        if (!_checkCapitals(password)) {
-            return _warn('密码至少包含一位大写字母');
-        }
-
-        if (!_checkNumbers(password)) {
-            return _warn('密码至少包含一位数字');
-        }
         return _success();
     }
 
