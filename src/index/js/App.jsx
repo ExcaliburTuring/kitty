@@ -32,12 +32,15 @@ var IndexHot = Rabbit.create(url.indexHot);
 
 var App = React.createClass({
 
-    mixins: [Reflux.connect(IndexHot.store, 'hotRoutes')],
+    mixins: [Reflux.connect(IndexHot.store, 'data')],
 
     getInitialState: function() {
         IndexHot.actions.load();
         return {
-            'hotRoutes': [],
+            'data': {
+                'status': 0,
+                'routes': []
+            },
             'showDoubleDownBtn': true
         };
     },
@@ -52,24 +55,26 @@ var App = React.createClass({
     },
 
     render: function() {
-        var hotRoutes = (<div></div>);
-        if (this.state.hotRoutes.length != 0) {
-           hotRoutes = (
+        var hotRoutes = this.state.data.routes;
+        console.log(hotRoutes);
+        var products = (<div></div>);
+        if (hotRoutes.length != 0) {
+           products = (
                 <Grid>
                     <Row>
                         <Col md={6} lg={5} lgOffset={1}>
-                            <Route route={this.state.hotRoutes[0]}/>
+                            <Route route={hotRoutes[0]}/>
                         </Col>
                         <Col md={6} lg={5}>
-                            <Route route={this.state.hotRoutes[1]} />
+                            <Route route={hotRoutes[1]} />
                         </Col>
                     </Row>
                     <Row>
                         <Col md={6} lg={5} lgOffset={1}>
-                            <Route route={this.state.hotRoutes[2]}/>
+                            <Route route={hotRoutes[2]}/>
                         </Col>
                         <Col md={6} lg={5}>
-                            <Route route={this.state.hotRoutes[3]} />
+                            <Route route={hotRoutes[3]} />
                         </Col>
                     </Row>
                 </Grid>
@@ -87,7 +92,7 @@ var App = React.createClass({
                     <Image className="center-block hxy-desc-img " src="http://wpcms.cdnws.54traveler.com/wp-content/uploads/2016/04/2016041205185992.jpg" />
                 </div>
                 <div className="products">
-                    {hotRoutes}
+                    {products}
                 </div>
                 <div className="activities">
                     <Grid>
@@ -144,7 +149,7 @@ var Route = React.createClass({
             <div className="route-container" onClick={this.onClick}>
                 <Image responsive src={_getRouteImgPath(imgs[0])} />
                 <div className="opacity">
-                    <Image responsive src={_getRouteImgPath(imgs[1])} />
+                    <Image responsive src={_getRouteImgPath(imgs[imgs.length - 1])} />
                 </div>
                 <div className="days">
                     <Image responsive src={daysImg} />

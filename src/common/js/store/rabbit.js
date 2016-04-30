@@ -16,7 +16,7 @@ function _createActions(url) {
         var getJSON = option ? $.getJSON(url, option) : $.getJSON(url);
         getJSON.done(function(data) {
             if (data.status == 0) {
-                self.completed(data.routes)
+                self.completed(data)
             } else {
                 self.fail();
             }

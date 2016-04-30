@@ -9,43 +9,59 @@ import { url } from 'config';
 import Navbar from 'navbar';
 import Footer from 'footer';
 import NotFound from 'notfound';
-import Head from './face/Face';
-import Body from './body/Body';
+import Face from './face';
+import Body from './body';
 
 var Route = Rabbit.create(url.route);
-var Groups = Rabbit.create(url.groups);
+var Groups = Rabbit.create(url.group);
 
 var App = React.createClass({
 
     mixins: [
         Reflux.connect(Route.store, 'route'),
         Reflux.connect(Groups.store, 'groups'),
-    ]
+    ],
 
     getInitialState: function() {
         var routeid = window.location.pathname.split('/')[2];
         var valid = true;
         if (/\d+/.test(routeid)) {
-            Route.actions.load({'routeid': routeid});
-            Groups.actions.load({'routeid': routeid});
+            Route.actions.load({'routeids': routeid, 'isImgtextRequired': true});
+            Groups.actions.load({'routeids': routeid});
         } else {
             valid = false;
         }
         return {
-            'route': [],
-            'groups': [],
+            'route': {
+                'status': 0,
+                'routes': [],
+                'imgtext': {}
+            },
+            'groups': {
+                'status': 0,
+                'groups': []
+            },
             'valid': valid // routeid是否正常
         }
     },
 
     render: function() {
+        var state = this.state;
+        var route = state.route;
+        var groups = state.groups;
         var content;
-        if (this.state.valid) {
+        if (state.valid 
+                && route.routes.length >= 1) {
             content = (
-                <Head route={this.state.route}/>
-                <div className="body" id="body">
-                    <div className="maininfo">
-                        <Body route={this.state.route} grops={this.state.groups}/>
+                <div>
+                    <Face route={route.routes[0]}/>
+                    <div className="body" id="body">
+                        <div className="maininfo">
+                            <Body 
+                                route={route.routes[0]}
+                                imgtext={route.imgtext}
+                                groups={groups.groups}/>
+                        </div>
                     </div>
                 </div>
             );

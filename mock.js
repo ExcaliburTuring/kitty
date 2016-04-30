@@ -30,7 +30,6 @@ var mockConfig = [
     config('/index*', 'index.html'),
     config('/travel*', 'travel.html'),
     config('/order*', 'order.html'),
-    config('/product*', 'product.html'),
     config('/img/*'),
 ];
 
@@ -39,7 +38,6 @@ function mockHandler(req, res) {
     for (var i = mockConfig.length - 1; i >= 0; i--) {
         var config = mockConfig[i];
         if (path.match(config.re)) {
-            console.log(config);
             handler(path, res, config);
             return;
         }
