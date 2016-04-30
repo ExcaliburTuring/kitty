@@ -8,6 +8,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var debug = process.env.NODE_ENV !== 'production';
+console.log(process.env.NODE_ENV);
 var config = require('./config');
 const SRC_PATH = config.SRC_PATH;
 const PUBLIC_PATH = config.PUBLIC_PATH;

@@ -1,0 +1,37 @@
+module.exports = {
+    'status': 0,
+    'groups': [{
+        'groupid': 1,
+        'startDate': 111,
+        'endDate': 111,
+        'title': '1队',
+        'price': 111,
+        'status': 1,
+        'minCount': 11,
+        'maxCount': 12,
+        'actualCount': 13,
+        'wxQrcode': 'dkdkd',
+    }, {
+        'groupid': 1,
+        'startDate': 111,
+        'endDate': 111,
+        'title': '1队',
+        'price': 111,
+        'status': 1,
+        'minCount': 11,
+        'maxCount': 12,
+        'actualCount': 13,
+        'wxQrcode': 'dkdkd',
+    }, {
+        'groupid': 1,
+        'startDate': 111,
+        'endDate': 111,
+        'title': '1队',
+        'price': 111,
+        'status': 1,
+        'minCount': 11,
+        'maxCount': 12,
+        'actualCount': 13,
+        'wxQrcode': 'dkdkd',
+    }]
+}
