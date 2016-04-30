@@ -18,6 +18,7 @@ var App = React.createClass({
     mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
 
     getInitialState: function() {
+        AccountBasicInfo.actions.get();
         var { accountid } = this.props.params;
         return {
             'accountid': accountid,
@@ -25,10 +26,6 @@ var App = React.createClass({
                 'login': false
             }
         };
-    },
-
-    componentDidMount: function() {
-        AccountBasicInfo.actions.get();
     },
 
     render: function() {

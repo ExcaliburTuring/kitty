@@ -43,8 +43,6 @@ var Info = React.createClass({
         if (activeKey == 2) {
             content = <Contact basicInfo={basicInfo}/>;
         } else if (activeKey == 3) {
-            content = <Password basicInfo={basicInfo}/>;
-        } else if (activeKey == 4) {
             content = <Contacts basicInfo={basicInfo}/>;
         }
 
@@ -58,8 +56,7 @@ var Info = React.createClass({
                                     <Nav stacked bsStyle="pills" onSelect={this.handleSelect} activeKey={this.state.activeKey}>
                                         <NavItem eventKey={1}> 基本信息 </NavItem> 
                                         <NavItem eventKey={2}> 联系信息 </NavItem>
-                                        <NavItem eventKey={3}> 修改密码 </NavItem>
-                                        <NavItem eventKey={4}> 常用出行人 </NavItem>
+                                        <NavItem eventKey={3}> 常用出行人 </NavItem>
                                     </Nav>
                                 </div>
                             </Col>
