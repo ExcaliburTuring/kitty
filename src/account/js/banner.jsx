@@ -11,7 +11,7 @@ var Banner = React.createClass({
             backgroundImage: `url(${bannerImg})`
         };
         return (
-            <div className="banner" style={bg}></div>
+            <div className="banner"></div>
         );
     }
 });

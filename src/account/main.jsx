@@ -19,6 +19,7 @@ ReactDom.render(
 	<Router history={browserHistory}>
 		<Route path="/:accountid" component={App}>
 			<IndexRoute component={Index}/>
+			<Route path="index" component={Index} />
 			<Route path="info" component={Info} />
 	    	<Route path="orders" component={Orders} />
   		</Route>
