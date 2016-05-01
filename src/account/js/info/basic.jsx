@@ -3,10 +3,9 @@
  */
 import React from 'react';
 import { Panel, Form, FormGroup, FormControl, Col, ControlLabel, HelpBlock } from 'react-bootstrap';
-
 import validator from 'validator';
 import Title from './title';
-import Input from './input';
+import info from  '../../img/person.png'
 
 function _create(value, state, msg) {
     return {
@@ -48,7 +47,7 @@ var BasicInfo = React.createClass({
             'name': _init(accountInfo.name),
             'id': _init(accountInfo.id),
             'gender': _init(accountSetting.gender),
-            'birthday': _init(accountSetting.birthday),
+            'birthday': _init(accountSetting.birthday)
         }
     },
 
@@ -173,6 +172,117 @@ var BasicInfo = React.createClass({
         var idState = state.id;
         var genderState = state.gender;
         var birthdayState = state.birthday;
+        var readOnly= state.readOnly;
+
+        var content = null;
+
+        if (readOnly == true) {
+            content = (
+                <div>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} md={2}>
+                            姓名:
+                        </Col>
+                        <Col md={5}>
+                            <p>{nameState.value}</p>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} md={2}>
+                            证件号:
+                        </Col>
+                        <Col md={5}>
+                            <p>{idState.value}</p>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} md={2}>
+                            性别:
+                        </Col>
+                        <Col md={5}>
+                            <p>{genderState.value}</p>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} md={2}>
+                            生日:
+                        </Col>
+                        <Col md={5}>
+                            <p>{birthdayState.value}</p>
+                        </Col>
+                    </FormGroup>
+                </div>
+            )
+        } else if (readOnly == false) {
+            content = (
+                <div>
+                    <FormGroup
+                        controlId="basic-container-name"
+                        validationState={nameState.state}>
+                        <Col componentClass={ControlLabel} md={2}>
+                            姓名:
+                        </Col>
+                        <Col md={5}>
+                            <FormControl
+                                type="input"
+                                value={nameState.value}
+                                onChange={this.onNameChange}
+                                readOnly={this.state.readOnly}/>
+                            <FormControl.Feedback />
+                            <HelpBlock>{nameState.msg}</HelpBlock> 
+                        </Col>
+                    </FormGroup>
+                    <FormGroup
+                        controlId="basic-container-id"
+                        validationState={idState.state}>
+                        <Col componentClass={ControlLabel} md={2}>
+                            证件号:
+                        </Col>
+                        <Col md={5}>
+                            <FormControl
+                                type="input"
+                                value={idState.value}
+                                onChange={this.onIdChange}
+                                readOnly={this.state.readOnly}/>
+                            <FormControl.Feedback />
+                            <HelpBlock>{idState.msg}</HelpBlock> 
+                        </Col>
+                    </FormGroup>
+                    <FormGroup
+                        controlId="basic-container-gender"
+                        validationState={genderState.state}>
+                        <Col componentClass={ControlLabel} md={2}>
+                            性别:
+                        </Col>
+                        <Col md={5}>
+                            <FormControl
+                                type="input"
+                                value={genderState.value}
+                                onChange={this.onGenderChange}
+                                readOnly={this.state.readOnly}/>
+                            <FormControl.Feedback />
+                            <HelpBlock>{genderState.msg}</HelpBlock> 
+                        </Col>
+                    </FormGroup>
+                    <FormGroup
+                        controlId="basic-container-birthday"
+                        validationState={birthdayState.state}>
+                        <Col componentClass={ControlLabel} md={2}>
+                            生日:
+                        </Col>
+                        <Col md={5}>
+                            <FormControl
+                                type="input"
+                                value={birthdayState.value}
+                                onChange={this.onBirthdayChange}
+                                readOnly={this.state.readOnly}/>
+                            <FormControl.Feedback />
+                            <HelpBlock>{birthdayState.msg}</HelpBlock> 
+                        </Col>
+                    </FormGroup>
+                </div>
+            )
+        }
 
         var title = (<Title
                         title="基本信息"
@@ -185,40 +295,16 @@ var BasicInfo = React.createClass({
         return (
             <div className="basic-container info-section">
                 <Panel header={title}>
-                    <Form horizontal>
-                        <Input
-                            readOnly={this.state.readOnly}
-                            controlId="basic-container-name"
-                            validationState={nameState.state}
-                            label="姓名"
-                            value={nameState.value}
-                            onChange={this.onNameChange}
-                            msg={nameState.msg}/>
-                        <Input
-                            readOnly={this.state.readOnly}
-                            controlId="basic-container-id"
-                            validationState={idState.state}
-                            label="证件号"
-                            value={idState.value}
-                            onChange={this.onIdChange}
-                            msg={idState.msg}/>
-                        <Input
-                            readOnly={this.state.readOnly}
-                            controlId="basic-container-gender"
-                            validationState={genderState.state}
-                            label="性别"
-                            value={genderState.value}
-                            onChange={this.onGenderChange}
-                            msg={genderState.msg}/>
-                        <Input
-                            readOnly={this.state.readOnly}
-                            controlId="basic-container-birthday"
-                            validationState={birthdayState.state}
-                            label="生日"
-                            value={birthdayState.value}
-                            onChange={this.onBirthdayChange}
-                            msg={birthdayState.msg}/>
-                    </Form>
+                    <Col md={2} >
+                        <div className="left-block">
+                            <img src={info}/>
+                        </div>
+                    </Col>
+                    <Col md={10}>
+                            <Form horizontal>
+                                {content}
+                            </Form>
+                    </Col>
                 </Panel>
             </div>
         );

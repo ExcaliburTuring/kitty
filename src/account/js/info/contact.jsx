@@ -6,7 +6,7 @@ import { Panel, Form, FormGroup, FormControl, Col, ControlLabel, HelpBlock } fro
 
 import validator from 'validator';
 import Title from './title';
-import Input from './input';
+import call from '../../img/call.png';
 
 function _create(value, state, msg) {
     return {
@@ -146,6 +146,94 @@ var Contact = React.createClass({
         var emailState = state.email;
         var mobileState = state.mobile;
         var wxidState = state.wxid;
+        var readOnly= state.readOnly;
+
+        var content = null;
+
+        if (readOnly == true) {
+            content = (
+                <div>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} md={2}>
+                            邮箱:
+                        </Col>
+                        <Col md={5}>
+                            <p>{emailState.value}</p>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} md={2}>
+                            手机:
+                        </Col>
+                        <Col md={5}>
+                            <p>{mobileState.value}</p>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} md={2}>
+                            微信号:
+                        </Col>
+                        <Col md={5}>
+                            <p>{wxidState.value}</p>
+                        </Col>
+                    </FormGroup>    
+                </div>
+            )
+        } else if (readOnly == false) {
+            content = (
+                <div>
+                    <FormGroup
+                        controlId="contact-container-email"
+                        validationState={emailState.state}>
+                        <Col componentClass={ControlLabel} md={2}>
+                            邮箱:
+                        </Col>
+                        <Col md={5}>
+                            <FormControl
+                                type="input"
+                                value={emailState.value}
+                                onChange={this.onEmailChange}
+                                readOnly={this.state.readOnly}/>
+                            <FormControl.Feedback />
+                            <HelpBlock>{emailState.msg}</HelpBlock> 
+                        </Col>
+                    </FormGroup>
+                    <FormGroup
+                        controlId="contact-container-mobile"
+                        validationState={mobileState.state}>
+                        <Col componentClass={ControlLabel} md={2}>
+                            手机:
+                        </Col>
+                        <Col md={5}>
+                            <FormControl
+                                type="input"
+                                value={mobileState.value}
+                                onChange={this.onMobileChange}
+                                readOnly={this.state.readOnly}/>
+                            <FormControl.Feedback />
+                            <HelpBlock>{mobileState.msg}</HelpBlock> 
+                        </Col>
+                    </FormGroup>
+                    <FormGroup
+                        controlId="contact-container-wxid"
+                        validationState={wxidState.state}>
+                        <Col componentClass={ControlLabel} md={2}>
+                            微信号:
+                        </Col>
+                        <Col md={5}>
+                            <FormControl
+                                type="input"
+                                value={wxidState.value}
+                                onChange={this.onWxidChange}
+                                readOnly={this.state.readOnly}/>
+                            <FormControl.Feedback />
+                            <HelpBlock>{wxidState.msg}</HelpBlock> 
+                        </Col>
+                    </FormGroup>
+                </div>
+            )
+        }
+
         var title = (<Title
                         title="联系信息"
                         readOnly={this.state.readOnly}
@@ -157,36 +245,46 @@ var Contact = React.createClass({
         return (
             <div className="contact-container info-section">
                 <Panel header={title}>
+                <Col md={2} >
+                    <div className="left-block">
+                        <img src={call} />
+                    </div>
+                </Col>
+                <Col md={10}>
                     <Form horizontal>
-                        <Input
-                            readOnly={this.state.readOnly}
-                            controlId="contact-container-email"
-                            validationState={emailState.state}
-                            label="邮箱"
-                            value={emailState.value}
-                            onChange={this.onEmailChange}
-                            msg={emailState.msg}/>
-                        <Input
-                            readOnly={this.state.readOnly}
-                            controlId="contact-container-mobile"
-                            validationState={mobileState.state}
-                            label="手机"
-                            value={mobileState.value}
-                            onChange={this.onMobileChange}
-                            msg={mobileState.msg}/>
-                        <Input
-                            readOnly={this.state.readOnly}
-                            controlId="contact-container-wxid"
-                            validationState={wxidState.state}
-                            label="微信号"
-                            value={wxidState.value}
-                            onChange={this.onWxidChange}
-                            msg={wxidState.msg}/>
+                        {content}
                     </Form>
+                </Col>
                 </Panel>
             </div>
         );
     }
 });
+
+
+function _create(value, state, msg) {
+    return {
+        'value': value,
+        'state': state,
+        'msg': msg
+    };
+}
+
+function _init(value) {
+    return _create(value, null, '');
+}
+
+function _revert(original) {
+    return {
+        'readOnly': false, // 是否可以编辑
+        'isChange': false, // 是否被编辑过
+        'name': _init(original.name),
+        'id': _init(original.id),
+        'gender': _init(original.gender),
+        'birthday': _init(original.birthday),
+        'mobile': _init(original.mobile),
+        'email': _init(original.email)
+    }
+}
 
 module.exports = Contact;

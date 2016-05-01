@@ -12,7 +12,8 @@ export var url = {
 	'travel': '/travel',
 	'route': '/travel/route',
 	'group': '/travel/group',
-	'indexHot': '/index/hot'
+	'indexHot': '/index/hot',
+    'info': '/account/info'
 };
 
 export var defaultValue = {
