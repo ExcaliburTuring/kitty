@@ -8,7 +8,6 @@ import { Button, Nav, NavItem, Grid, Row, Col } from 'react-bootstrap';
 import AccountBasicInfo from 'account_basicinfo';
 import BasicInfo from './info/basic';
 import Contact from './info/contact';
-import Password from './info/password';
 import Contacts from './info/contacts';
 import NoLogin from './nologin'; 
 
@@ -51,20 +50,11 @@ var Info = React.createClass({
                 <div className="container">
                     <Grid>
                         <Row className="show-grid">
-                            <Col md={2} mdOffset={1}>
                                 <div>
-                                    <Nav stacked bsStyle="pills" onSelect={this.handleSelect} activeKey={this.state.activeKey}>
-                                        <NavItem eventKey={1}> 基本信息 </NavItem> 
-                                        <NavItem eventKey={2}> 联系信息 </NavItem>
-                                        <NavItem eventKey={3}> 常用出行人 </NavItem>
-                                    </Nav>
+                                    <BasicInfo basicInfo={basicInfo}/>
+                                    <Contact basicInfo={basicInfo}/>
+                                    <Contacts basicInfo={basicInfo}/>
                                 </div>
-                            </Col>
-                            <Col md={7}>
-                                <div>
-                                    {content}
-                                </div>
-                            </Col>
                         </Row>
                     </Grid>
                 </div>
