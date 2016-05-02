@@ -26,21 +26,94 @@ module.exports = {
 		'emergencyContact': 'xiezhenzong_1',
         'emergencyMobile': '123456789'
 	},
-	'groupInfo': {
-		'travelid': '11',
-		'name': '横跨 大！西！北！',
-		'image': './img/p11.jpg',
-		'time': '2016/05/01-2016/05/07',
-		'countdown': '5',
-		'avatars': [
-			'./img/avatar.jpg',
-			'./img/avatar.jpg',
-			'./img/avatar.jpg',
-			'./img/avatar.jpg',
-			'./img/avatar.jpg'
-		],
-		'QR': './img/avatar.jpg'
-	},
+	'groupInfo': [
+		{
+			'routeid': '11',
+			'name': '横跨 大！西！北！',
+			'intro': '苍茫的天涯是我的爱~',
+			'image': './img/p11.jpg',
+			'time': '2016-05-01-2016-05-07',
+			'countdown': '112',
+			'orderid': 'DUM16050154574',
+			'status': '已付款',
+			'names': [
+				'赵伟'
+			],
+			'avatars': [
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg'
+			],
+			'QR': './img/QR.jpg'
+		},
+		{
+			'routeid': '12',
+			'name': '横跨 大！西！北！',
+			'intro': '苍茫的天涯是我的爱~',
+			'image': './img/p11.jpg',
+			'time': '2016-05-01-2016-05-07',
+			'countdown': '112',
+			'orderid': 'DUM16050154574',
+			'status': '已付款',
+			'names': [
+				'赵伟',
+				'董俊鹏',
+				'谢振宗',
+				'赵伟',
+				'董俊鹏'
+			],
+			'avatars': [
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg',
+				'./img/avatar.jpg'
+			],
+			'QR': './img/QR.jpg'
+		}
+	],
+	'unPayed': [
+		{
+			'routeid': '11',
+			'name': '横跨 大！西！北！',
+			'intro': '苍茫的天涯是我的爱~',
+			'image': './img/p11.jpg',
+			'time': '2016-05-01-2016-05-07',
+			'price': '3899',
+			'starttime': '2016年05月01日23时22分',
+			'countdown': '112',
+			'orderid': 'DUM16050154574',
+			'status': '未付款',
+			'names': [
+				'赵伟'
+			]
+		},
+		{
+			'routeid': '12',
+			'name': '横跨 大！西！北！',
+			'intro': '苍茫的天涯是我的爱~',
+			'image': './img/p11.jpg',
+			'time': '2016-05-01-2016-05-07',
+			'price': '3899',
+			'starttime': '2016年05月01日23时22分',
+			'countdown': '112',
+			'orderid': 'DUM16050154574',
+			'status': '未付款',
+			'names': [
+				'赵伟',
+				'董俊鹏',
+				'谢振宗',
+				'赵伟',
+				'董俊鹏'
+			]
+		}
+	],
 	'orderInfo': {
 		'unfinished': '2',
 		'histories': '10'
