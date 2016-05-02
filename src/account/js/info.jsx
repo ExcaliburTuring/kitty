@@ -47,17 +47,15 @@ var Info = React.createClass({
 
         return (
             <div className="info-container">
-                <div className="container">
-                    <Grid>
-                        <Row className="show-grid">
-                                <div>
-                                    <BasicInfo basicInfo={basicInfo}/>
-                                    <Contact basicInfo={basicInfo}/>
-                                    <Contacts basicInfo={basicInfo}/>
-                                </div>
-                        </Row>
-                    </Grid>
-                </div>
+                <Grid>
+                    <Row className="show-grid">
+                        <div>
+                            <BasicInfo basicInfo={basicInfo}/>
+                            <Contact basicInfo={basicInfo}/>
+                            <Contacts basicInfo={basicInfo}/>
+                        </div>
+                    </Row>
+                </Grid>
             </div>
         );
     }

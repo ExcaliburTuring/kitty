@@ -62,3 +62,34 @@ export var idType = {
     }
 
 }
+
+export var gender = {
+
+    /**
+     * 未知
+     */
+    UNKNOW: 'UNKNOW',
+
+    /**
+     * 男
+     */
+    MALE: 'MALE',
+
+    /**
+     * 女
+     */
+    FEMALE: 'FEMALE',
+
+    getDesc: function(gender) {
+        if (gender === this.UNKNOW) {
+            return '未知';
+        } else if (gender === this.MALE) {
+            return '男';
+        } else if (gender === this.FEMALE) {
+            return '女';
+        } else {
+            return null;
+        }
+    }
+
+}

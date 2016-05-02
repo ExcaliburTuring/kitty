@@ -2,291 +2,89 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Panel, Form, FormGroup, FormControl, Col, ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Panel, Form, FormGroup, FormControl, Grid, Row, Col, ControlLabel, HelpBlock, Image } from 'react-bootstrap';
+
+import { idType, gender } from 'config';
 import validator from 'validator';
+import Id from 'id';
+import Gender from 'gender';
+import Birthday from 'birthday';
 import Title from './title';
 import info from  '../../img/person.png'
-
-function _create(value, state, msg) {
-    return {
-        'value': value,
-        'state': state,
-        'msg': msg
-    };
-}
-
-function _init(value) {
-    return _create(value, null, '');
-}
-
-function _revert(original) {
-    return {
-        'readOnly': false, // 是否可以编辑
-        'isChange': false, // 是否被编辑过
-        'name': _init(original.name),
-        'id': _init(original.id),
-        'gender': _init(original.gender),
-        'birthday': _init(original.birthday),
-    }
-}
 
 var BasicInfo = React.createClass({
 
     getInitialState: function() {
-        var accountInfo = this.props.basicInfo.accountInfo;
-        var accountSetting = this.props.basicInfo.accountSetting;
         return {
-            'original': {
-                'name': accountInfo.name,
-                'id': accountInfo.id,
-                'gender': accountSetting.gender,
-                'birthday': accountSetting.birthday
-            },
-            'readOnly': true, // 是否可以编辑
+            'readOnly': true, // 是否不可编辑
             'isChange': false, // 是否被编辑过
-            'name': _init(accountInfo.name),
-            'id': _init(accountInfo.id),
-            'gender': _init(accountSetting.gender),
-            'birthday': _init(accountSetting.birthday)
         }
     },
 
-    isChange: function(option) {
-        if (option === undefined) { // 没有传option则比较全部
-            option = ['name', 'id', 'gender', 'birthday'];
-        }
-        var state = this.state;
-        var original = state.original;
-        for (var i = option.length - 1; i >= 0; i--) {
-            var key = option[i];
-            if (state[key].value != original[key]) {
-                return true;
-            }
-        }
-        return false;
+    isChange: function() {
+        return this.refs.nameInput.isChange()
+                || this.refs.idSelector.isChange()
+                || this.refs.genderSelector.isChange()
+                || this.refs.birthdaySelector.isChange();
     },
 
-    onNameChange: function(e) {
-        var value = e.target.value;
-        var original = this.state.original;
-        if (value === original.name) {
-            var isChange = this.isChange(['id', 'gender', 'birthday']);
-            if (isChange) {
-                this.setState({'name': _init(original.name)})
-            } else {
-                this.setState(_revert(original));
-            }
+    onChange: function() {
+        if (this.isChange) {
+            this.setState({'isChange': true});
         } else {
-            var ret = validator.hasText(value, '名字不能为空');
-            this.setState({
-                'isChange': true,
-                'name': {
-                    'value': value,
-                    'state': ret['state'],
-                    'msg': ret['msg']
-                }
-            });
-        }
+            this.revert();
+        } 
     },
 
-    onIdChange: function(e) {
-        var value = e.target.value;
-        var original = this.state.original;
-        if (value === original.id) {
-            var isChange = this.isChange();
-            if (isChange) {
-                this.setState({'id': _init(original.id)})
-            } else {
-                this.setState(_revert(original));
+    onIdChange: function() {
+        this.onChange();
+        var idSelector = this.refs.idSelector;
+        if (idSelector.getIdType() == idType.IDENTIFICATION) { // 只有身份证修改的时候，才会触发
+            console.log('IDENTIFICATION')
+            var birthday = idSelector.getBirthday();
+            console.log(birthday);
+            if (birthday) {
+                this.refs.birthdaySelector.setBirthday(birthday);
             }
-        } else {
-            var ret = validator.hasText(value, '证件不能为空');
-            this.setState({
-                'isChange': true,
-                'id': {
-                    'value': value,
-                    'state': ret['state'],
-                    'msg': ret['msg']
-                }
-            });
-        }
-    },
-
-    onGenderChange: function(e) {
-        var value = e.target.value;
-        var original = this.state.original;
-        if (value === original.gender) {
-            var isChange = this.isChange(['name', 'id', 'birthday']);
-            if (isChange) {
-                this.setState({'gender': _init(original.gender)})
-            } else {
-                this.setState(_revert(original));
+            var gender = idSelector.getGender();
+            console.log(gender);
+            if (gender) {
+                this.refs.genderSelector.setGender(gender);
             }
-        } else {
-            var ret = validator.hasText(value, '性别不能为空');
-            this.setState({
-                'isChange': true,
-                'gender': {
-                    'value': value,
-                    'state': ret['state'],
-                    'msg': ret['msg']
-                }
-            });
-        }
-    },
-
-    onBirthdayChange: function(e) {
-        var value = e.target.value;
-        var original = this.state.original;
-        if (value === original.birthday) {
-            var isChange = this.isChange(['name', 'id', 'gender']);
-            if (isChange) {
-                this.setState({'birthday': _init(original.birthday)})
-            } else {
-                this.setState(_revert(original));
-            }
-        } else {
-            var ret = validator.hasText(value, '生日不能为空');
-            this.setState({
-                'isChange': true,
-                'birthday': {
-                    'value': value,
-                    'state': ret['state'],
-                    'msg': ret['msg']
-                }
-            });
         }
     },
 
     onRevertBtnClick: function() {
-        this.setState(_revert(this.state.original));
+        this.revert();
     },
 
     onSubmitBtnClick: function() {
         console.log('kdkdk');
     },
 
+    revert: function() {
+        this.setState({
+            'readOnly': false,
+            'isChange': false
+        });
+        this.refs.nameInput.revert();
+        this.refs.idSelector.revert();
+        this.refs.genderSelector.revert();
+        this.refs.birthdaySelector.revert();
+    },
+
     render: function() {
-        var state = this.state;
-        var nameState = state.name;
-        var idState = state.id;
-        var genderState = state.gender;
-        var birthdayState = state.birthday;
-        var readOnly= state.readOnly;
-
-        var content = null;
-
-        if (readOnly == true) {
-            content = (
-                <div>
-                    <FormGroup>
-                        <Col componentClass={ControlLabel} md={2}>
-                            姓名:
-                        </Col>
-                        <Col md={5}>
-                            <p>{nameState.value}</p>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col componentClass={ControlLabel} md={2}>
-                            证件号:
-                        </Col>
-                        <Col md={5}>
-                            <p>{idState.value}</p>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col componentClass={ControlLabel} md={2}>
-                            性别:
-                        </Col>
-                        <Col md={5}>
-                            <p>{genderState.value}</p>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col componentClass={ControlLabel} md={2}>
-                            生日:
-                        </Col>
-                        <Col md={5}>
-                            <p>{birthdayState.value}</p>
-                        </Col>
-                    </FormGroup>
-                </div>
-            )
-        } else if (readOnly == false) {
-            content = (
-                <div>
-                    <FormGroup
-                        controlId="basic-container-name"
-                        validationState={nameState.state}>
-                        <Col componentClass={ControlLabel} md={2}>
-                            姓名:
-                        </Col>
-                        <Col md={5}>
-                            <FormControl
-                                type="input"
-                                value={nameState.value}
-                                onChange={this.onNameChange}
-                                readOnly={this.state.readOnly}/>
-                            <FormControl.Feedback />
-                            <HelpBlock>{nameState.msg}</HelpBlock> 
-                        </Col>
-                    </FormGroup>
-                    <FormGroup
-                        controlId="basic-container-id"
-                        validationState={idState.state}>
-                        <Col componentClass={ControlLabel} md={2}>
-                            证件号:
-                        </Col>
-                        <Col md={5}>
-                            <FormControl
-                                type="input"
-                                value={idState.value}
-                                onChange={this.onIdChange}
-                                readOnly={this.state.readOnly}/>
-                            <FormControl.Feedback />
-                            <HelpBlock>{idState.msg}</HelpBlock> 
-                        </Col>
-                    </FormGroup>
-                    <FormGroup
-                        controlId="basic-container-gender"
-                        validationState={genderState.state}>
-                        <Col componentClass={ControlLabel} md={2}>
-                            性别:
-                        </Col>
-                        <Col md={5}>
-                            <FormControl
-                                type="input"
-                                value={genderState.value}
-                                onChange={this.onGenderChange}
-                                readOnly={this.state.readOnly}/>
-                            <FormControl.Feedback />
-                            <HelpBlock>{genderState.msg}</HelpBlock> 
-                        </Col>
-                    </FormGroup>
-                    <FormGroup
-                        controlId="basic-container-birthday"
-                        validationState={birthdayState.state}>
-                        <Col componentClass={ControlLabel} md={2}>
-                            生日:
-                        </Col>
-                        <Col md={5}>
-                            <FormControl
-                                type="input"
-                                value={birthdayState.value}
-                                onChange={this.onBirthdayChange}
-                                readOnly={this.state.readOnly}/>
-                            <FormControl.Feedback />
-                            <HelpBlock>{birthdayState.msg}</HelpBlock> 
-                        </Col>
-                    </FormGroup>
-                </div>
-            )
-        }
-
+        var accountInfo = this.props.basicInfo.accountInfo;
+        var accountSetting = this.props.basicInfo.accountSetting;
+        var readOnly= this.state.readOnly;
+        var readOnly1 = this.refs.idSelector
+                        ? this.refs.idSelector.getIdType() === idType.IDENTIFICATION 
+                        : accountInfo.idType === idType.IDENTIFICATION;
+        console.log( this.refs.idSelector
+                        ? this.refs.idSelector.getIdType() : 'kdkdkd');
         var title = (<Title
                         title="基本信息"
-                        readOnly={this.state.readOnly}
+                        readOnly={readOnly}
                         isChange={this.state.isChange}
                         onEditBtnClick={() => {this.setState({'readOnly': false});}}
                         onCancelBtnClick={() => {this.setState({'readOnly': true});}}
@@ -295,18 +93,126 @@ var BasicInfo = React.createClass({
         return (
             <div className="basic-container info-section">
                 <Panel header={title}>
-                    <Col md={2} >
+                    <Col smHidden xsHidden md={2}>
                         <div className="left-block">
-                            <img src={info}/>
+                            <Image src={info}/>
                         </div>
                     </Col>
-                    <Col md={10}>
+                    <Col sm={12} xs={12} md={10}>
+                        <Grid>
                             <Form horizontal>
-                                {content}
+                                <Row>
+                                    <Name
+                                        ref="nameInput"
+                                        defaultName={accountInfo.name}
+                                        controlId="basic-container-name"
+                                        onChange={this.onChange}
+                                        readOnly={readOnly}/>
+                                </Row>
+                                <Row>
+                                    <Id 
+                                        ref="idSelector"
+                                        defaultIdType={accountInfo.idType}
+                                        defaultId={accountInfo.id}
+                                        controlId="basic-container-id"
+                                        readOnly={readOnly}
+                                        onChange={this.onIdChange}/>
+                                </Row>
+                                <Row>
+                                    <Gender
+                                        ref="genderSelector"
+                                        defaultGender={accountSetting.gender}
+                                        controlId="basic-container-gender"
+                                        readOnly={readOnly1}
+                                        onChange={this.onChange}/>
+                                </Row>
+                                <Row>
+                                    <Birthday 
+                                        ref="birthdaySelector"
+                                        defaultBirthday={accountSetting.birthday}
+                                        controlId="basic-container-birthday"
+                                        readOnly={readOnly1}
+                                        onChange={this.onChange}/>
+                                </Row>
                             </Form>
+                        </Grid>
                     </Col>
                 </Panel>
             </div>
+        );
+    }
+
+});
+
+var Name = React.createClass({
+
+    getName: function() {
+        return this.state.name;
+    },
+
+    isChange: function() {
+        return this.state.name !== this.props.defaultName;
+    },
+
+    onChange: function(e) {
+        var value = e.target.value;
+        if (this.state.name === value) {
+            return;
+        }
+        var ret = validator.name(value);
+        this.setState({
+            'name': e.target.value,
+            'validationState': ret['state'],
+            'msg': ret['msg']
+        })
+        this.props.onChange(e, name);
+    },
+
+    revert: function() {
+        this.setState({
+            'name': this.props.defaultName,
+            'validationState': null,
+            'msg': '',
+        });
+    },
+
+    getInitialState: function() {
+        return {
+            'name': this.props.defaultName,
+            'validationState': null,
+            'msg': '',
+        }
+    },
+
+    render: function() {
+        var content;
+        if (this.props.readOnly) {
+            content = (
+                <Col md={3}> <p>{this.state.name}</p> </Col>
+             );
+        } else {
+            content = (
+                <Col md={3}>
+                    <FormControl
+                        type="input"
+                        value={this.state.name}
+                        onChange={this.onChange}/>
+                    <FormControl.Feedback />
+                </Col>
+            );
+        }
+        return (
+            <FormGroup
+                controlId={this.props.controlId}
+                validationState={this.state.validationState}>
+                <Col componentClass={ControlLabel} md={2}>
+                    姓名
+                </Col>
+                {content}
+                <Col smHidden xsHidden md={2}>
+                    <HelpBlock>{this.state.msg}</HelpBlock> 
+                </Col>
+            </FormGroup>
         );
     }
 
