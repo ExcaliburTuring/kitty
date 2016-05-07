@@ -22,7 +22,6 @@ AccountBasicInfoActions.load.listen(function() {
     .done(function(data) {
         if (data.status == 0) {
             _accountBasicInfo = {
-                'login': data.login,
                 'accountInfo': data.accountInfo,
                 'accountSetting': data.accountSetting
             }

@@ -2,7 +2,7 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Nav, NavItem, Image} from 'react-bootstrap';
+import { Grid, Row, Col, Nav, NavItem, Image} from 'react-bootstrap';
 
 import { defaultValue } from 'config';
 
@@ -15,7 +15,6 @@ var Tab = React.createClass({
     getInitialState: function() {
         var accountid  = this.props.accountInfo.accountid;
         var name = this.props.accountInfo.name;
-        var status = this.props.accountInfo.status;
         var avatarUrl = this.props.accountSetting.avatarUrl;
         var indexUrl = `/${accountid}`;
         var infoUrl = `/${accountid}/info`;
@@ -28,10 +27,9 @@ var Tab = React.createClass({
             activeKey = 3;
         }
         return {
-            'name': name,
-            'status': status,
-            'avatarUrl': avatarUrl,
             'accountid': accountid,
+            'name': name,
+            'avatarUrl': avatarUrl,
             'indexUrl': indexUrl,
             'infoUrl': infoUrl,
             'ordersUrl': ordersUrl,
@@ -56,27 +54,31 @@ var Tab = React.createClass({
         
         return (
             <div className="tab-container">
-                <div className="container">
-                    <div className="tab-content">
-                        <div className="tab-account-info">
-                            <div className="tab-avatar">
-                                <a href={`${defaultValue.accountUrl}${this.state.indexUrl}`}>
-                                    <Image alt="头像" src={this.state.avatarUrl} circle/>
-                                </a>
+                <Grid>
+                    <Row className="tab-content">
+                        <Col smHidden xsHidden md={3}>
+                            <div className="tab-account-info">
+                                <div className="tab-avatar">
+                                    <a href={`${defaultValue.accountUrl}${this.state.indexUrl}`}>
+                                        <Image alt="头像" src={this.state.avatarUrl} circle/>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div className="tab-detail">
-                            <span className="tab-name">{this.state.name}</span>
-                        </div>
-                        <div className="tab-nav">
-                            <Nav bsStyle = "pills" justified onSelect = {this.handleSelect} activeKey = {this.state.activeKey}>
-                                <NavItem eventKey = {1}> 我 </NavItem> 
-                                <NavItem eventKey = {2}> 个人信息 </NavItem> 
-                                <NavItem eventKey = {3}> 订单 </NavItem>
-                            </Nav>
-                        </div>
-                    </div>
-                </div>
+                            <div className="tab-detail">
+                                <span className="tab-name">{this.state.name}</span>
+                            </div>
+                        </Col>
+                        <Col md={9}>
+                            <div className="tab-nav">
+                                <Nav bsStyle = "pills" justified onSelect = {this.handleSelect} activeKey = {this.state.activeKey}>
+                                    <NavItem eventKey = {1}> 我 </NavItem> 
+                                    <NavItem eventKey = {2}> 个人信息 </NavItem> 
+                                    <NavItem eventKey = {3}> 订单 </NavItem>
+                                </Nav>
+                            </div>
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         );
     }
