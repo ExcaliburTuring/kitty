@@ -40,7 +40,7 @@ var Contact = React.createClass({
     },
 
     onSubmitBtnClick: function() {
-        var basicInfo = {};
+        var basicInfo = {'accountid': this.props.basicInfo.accountInfo.accountid};
         if (this.refs.emailContainer.isChange()) {
             basicInfo['email'] = this.refs.emailContainer.getEmail();
         }

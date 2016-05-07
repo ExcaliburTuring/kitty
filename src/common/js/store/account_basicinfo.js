@@ -27,7 +27,7 @@ AccountBasicInfoActions.load.listen(function() {
             }
             self.completed(_accountBasicInfo)
         } else {
-            self.fail();
+            self.failed();
         }
     })
     .fail(function(jqxhr, textStatus, error) {
