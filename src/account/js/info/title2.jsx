@@ -14,7 +14,7 @@ var Title = React.createClass({
                 编辑
             </button>
         ); // 
-        if (!this.props.readOnly) {
+        if (!readOnly && isChange) {
             btn = (
                 <button className="edit" onClick={() => {this.props.onRevertBtnClick();}}>
                     还原

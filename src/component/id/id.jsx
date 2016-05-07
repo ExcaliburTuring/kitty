@@ -38,10 +38,10 @@ var Id = React.createClass({
     onIdTypeSelect: function(eventKey, e) {
         if (eventKey === this.state.idType) { // 和当前的一样
             return;
-        } else if (eventKey === this.props.idType) { // 和之前传进来的一样
+        } else if (eventKey === this.props.defaultIdType) { // 和之前传进来的一样
             this.setState({
-                'idType': this.props.idType,
-                'id': this.props.id,
+                'idType': this.props.defaultIdType,
+                'id': this.props.defaultId,
                 'validationState': null,
                 'errMsg': ''
             });
@@ -117,14 +117,14 @@ var Id = React.createClass({
         var idContainer;
         if (this.props.readOnly) {
             idTypeContainer = (
-                <Col componentClass={ControlLabel} md={2}>
+                <Col componentClass={ControlLabel} md={3}>
                     {idType.getDesc(this.state.idType)}
                 </Col>
             );
-            idContainer = (<Col md={3}> <p>{this.state.id}</p> </Col>);
+            idContainer = (<Col md={6}> <p>{this.state.id}</p> </Col>);
         } else {
             idTypeContainer = (
-                <Col md={2}>
+                <Col md={3}>
                     <div  className="idtype-selector">
                         <DropdownButton
                             componentClass={InputGroup.Button}
@@ -140,7 +140,7 @@ var Id = React.createClass({
                 </Col>
             );
             idContainer = (
-                <Col md={3}>
+                <Col md={6}>
                     <FormControl
                         type="input" 
                         value={this.state.id}
@@ -151,16 +151,15 @@ var Id = React.createClass({
             );
         }
 
-
         return (
-           <FormGroup
+            <FormGroup
                 controlId={this.props.controlId}
                 validationState={this.state.validationState}>
-                    {idTypeContainer}
-                    {idContainer}
-                    <Col smHidden xsHidden md={2}>
-                        <HelpBlock>{this.state.errMsg}</HelpBlock>
-                    </Col>
+                {idTypeContainer}
+                {idContainer}
+                <Col smHidden xsHidden md={3}>
+                    <HelpBlock>{this.state.errMsg}</HelpBlock>
+                </Col>
             </FormGroup>
         );
     }

@@ -4,56 +4,60 @@
 import React from 'react';
 import { Panel, Form, FormGroup, FormControl, Col, ControlLabel, HelpBlock } from 'react-bootstrap';
 
-var Address = React.createClass({
+import validator from 'validator';
 
-    getAddress: function() {
-        return this.state.address;
+var Name = React.createClass({
+
+    getName: function() {
+        return this.state.name;
     },
 
     isChange: function() {
-        return this.state.address !== this.props.defaultAddress;
+        return this.state.name !== this.props.defaultName;
     },
 
     onChange: function(e) {
         var value = e.target.value;
-        if (this.state.address === value) {
+        if (this.state.name === value) {
             return;
         }
+        var ret = validator.name(value);
         this.setState({
-            'address': e.target.value,
+            'name': e.target.value,
+            'validationState': ret['state'],
+            'msg': ret['msg']
         })
+        this.props.onChange(e, name);
     },
 
     revert: function() {
         this.setState({
-            'address': this.props.defaultAddress,
+            'name': this.props.defaultName,
+            'validationState': null,
+            'msg': '',
         });
     },
 
     getInitialState: function() {
         return {
-            'address': this.props.defaultAddress,
+            'name': this.props.defaultName,
+            'validationState': null,
+            'msg': '',
         }
-    },
-
-    componentDidUpdate: function(prevProps, prevState) {
-        if (this.state.address != prevState.address) { // 有时候state 不能立即更新，所以这里要这commponenetDidupdate
-            this.props.onChange(this.state.address);
-        }  
     },
 
     render: function() {
         var content;
         if (this.props.readOnly) {
             content = (
-                <Col md={6}> <p>{this.state.address}</p> </Col>
+                <Col md={6}> <p>{this.state.name}</p> </Col>
              );
         } else {
             content = (
                 <Col md={6}>
                     <FormControl
-                        type="input"
-                        value={this.state.address}
+                        type="text"
+                        value={this.state.name}
                         onChange={this.onChange}/>
                     <FormControl.Feedback />
                 </Col>
@@ -61,13 +65,14 @@ var Address = React.createClass({
         }
         return (
             <FormGroup
-                controlId={this.props.controlId}>
+                controlId={this.props.controlId}
+                validationState={this.state.validationState}>
                 <Col componentClass={ControlLabel} smHidden xsHidden md={3}>
-                    地址
+                    名字
                 </Col>
                 {content}
                 <Col smHidden xsHidden md={3}>
-                    <HelpBlock>{""}</HelpBlock> 
+                    <HelpBlock>{this.state.msg}</HelpBlock> 
                 </Col>
             </FormGroup>
         );
@@ -75,5 +80,4 @@ var Address = React.createClass({
 
 });
 
-module.exports = Address;
-
+module.exports = Name;

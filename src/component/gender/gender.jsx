@@ -63,10 +63,10 @@ var Gender = React.createClass({
         return (
            <FormGroup
                 controlId={this.props.controlId}>
-                <Col componentClass={ControlLabel} md={2}>
+                <Col componentClass={ControlLabel} smHidden xsHidden md={3}>
                     性别
                 </Col>
-                <Col md={3}>
+                <Col md={6}>
                     <Radio 
                         inline
                         checked={this.isChecked(gender.UNKNOW)}

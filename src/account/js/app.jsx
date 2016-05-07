@@ -30,7 +30,7 @@ var App = React.createClass({
 
     render: function() {
         var content = (<NoLogin/>);
-        if (this.state.basicInfo.login) {
+        if (this.state.basicInfo.accountInfo != null) {
             if (this.state.basicInfo.accountInfo.accountid == this.state.accountid) {
                 content = (
                     <div>

@@ -3,14 +3,11 @@
  */
 import React from 'react';
 import { FormGroup, ControlLabel,  HelpBlock, Col } from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import { DatePicker } from 'antd';
 
 import validator from 'validator';
 
-require('react-datepicker/dist/react-datepicker.css');
-
-var _dateFormate = 'YYYY-MM-DD';
+require('antd/lib/index.css');
 
 var Birthday = React.createClass({
 
@@ -29,7 +26,7 @@ var Birthday = React.createClass({
     },
 
     onChange: function( e) {
-        var birthday = e.format(_dateFormate);
+        var birthday = e;
         if (birthday == this.state.birthday) {
             return;
         }
@@ -66,20 +63,16 @@ var Birthday = React.createClass({
             <FormGroup
                 controlId={this.props.controlId}
                 validationState={this.state.validationState}>
-                <Col componentClass={ControlLabel} md={2}>
+                <Col componentClass={ControlLabel} smHidden xsHidden md={3}>
                     生日
                 </Col>
-                <Col md={3}>
+                <Col md={6}>
                     <DatePicker
-                        selected={moment(this.state.birthday, _dateFormate)}
+                        defaultValue={this.state.birthday}
                         onChange={this.onChange}
-                        showYearDropdown
-                        disabled={this.props.readOnly}
-                        placeholderText="选择您的生日"
-                        dateFormat="YYYY-MM-DD"
-                        dateFormatCalendar="MMMM" />
+                        disabled={this.props.readOnly} />
                 </Col>
-                <Col md={2}>
+                <Col smHidden xsHidden md={3}>
                     <HelpBlock>{this.state.msg}</HelpBlock> 
                 </Col>
             </FormGroup>

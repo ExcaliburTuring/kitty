@@ -59,11 +59,11 @@ var Mobile = React.createClass({
         var content;
         if (this.props.readOnly) {
             content = (
-                <Col md={3}> <p>{this.state.mobile}</p> </Col>
+                <Col md={6}> <p>{this.state.mobile}</p> </Col>
              );
         } else {
             content = (
-                <Col md={3}>
+                <Col md={6}>
                     <FormControl
                         type="input"
                         value={this.state.mobile}
@@ -76,11 +76,11 @@ var Mobile = React.createClass({
             <FormGroup
                 controlId={this.props.controlId}
                 validationState={this.state.validationState}>
-                <Col componentClass={ControlLabel} md={2}>
+                <Col componentClass={ControlLabel} smHidden xsHidden md={3}>
                     手机
                 </Col>
                 {content}
-                <Col smHidden xsHidden md={2}>
+                <Col smHidden xsHidden md={3}>
                     <HelpBlock>{this.state.msg}</HelpBlock> 
                 </Col>
             </FormGroup>

@@ -70,7 +70,7 @@ const validator = {
     },
 
     email: function(email, msg) {
-
+        return _success();
     },
 
     mobile: function(mobile, msg) {
