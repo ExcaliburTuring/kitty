@@ -27,7 +27,7 @@ AccountContactsActions.get.listen(function(option) {
                 accountContacts = data.contacts;
                 self.completed(accountContacts)
             } else {
-                self.fail();
+                self.failed();
             }
         })
         .fail(function(jqxhr, textStatus, error) {
