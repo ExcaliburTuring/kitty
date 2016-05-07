@@ -8,6 +8,8 @@ import AccountBaiscInfo from 'account_basicinfo';
 import AccountContacts from 'account_contacts';
 import AccountOrders from 'account_orders';
 
+import { Form, FormGroup, ControlLabel,FormControl,Col } from 'react-bootstrap';
+
 var Discount = React.createClass({
 
     mixins: [
@@ -48,42 +50,55 @@ var Discount = React.createClass({
         var mockOrder = order.orders[1]; // 假装只取到一个订单，因为应该是有orderid的，
         var mockDiscount = order.discounts[mockOrder.orderid] // 假装取到打折信息
 
-        var discountList = mockDiscount.map(function(discount) {
-            return (
-                <Item discount={discount} key={discount.discountid}/>
-            )
-        });
+
         return (
-            <div className="discount-container section-container"> 
-                <h3>优惠</h3>
-                <p>总价：{mockOrder.price}</p>
-                {discountList}
-                <p>实际：{mockOrder.actualPrice}</p>
+            <div className="discount-container section-container">
+                <Col md={12}><p className="right-price">总价：{mockOrder.price}</p></Col>
+                <Col md={8}>
+                    <Form horizontal>
+                        <FormGroup controlId="formControlsSelect" inline>
+                          <Col md={4} className="left-info">1.优惠策略</Col>
+                          <Col md={8}>
+                              <FormControl componentClass="select" placeholder="select">
+                                <option value="select">春季优惠</option>
+                                <option value="AAA">AAA</option>
+                                <option value="BBB">BBB</option>
+                                <option value="CCC">CCC</option>
+                              </FormControl>
+                          </Col>
+                        </FormGroup>
+
+                        <FormGroup controlId="formControlsSelect" inline>
+                          <Col md={4} className="left-info">2.优惠码</Col>
+                          <Col md={8}>
+                           <FormControl type="text" placeholder="填写优惠码" />
+                          </Col>
+                        </FormGroup>
+
+                        <FormGroup controlId="formControlsSelect" inline>
+                          <Col md={4} className="left-info">3.学生证优惠</Col>
+                          <Col md={8}>
+                              <FormControl componentClass="select" placeholder="0">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                              </FormControl>
+                          </Col>
+                        </FormGroup>
+                    </Form>
+                </Col>
+                <Col md={4}>
+                    <p className="desc-price">-{mockOrder.actualPrice}</p>
+                    <p className="desc-price">-{mockOrder.actualPrice}</p>
+                    <p className="desc-price">-{mockOrder.actualPrice}</p>
+                    <p className="right-price">结算价格：{mockOrder.actualPrice}</p>
+                </Col>
             </div>
         );
     }
 });
 
-var Item = React.createClass({
-
-    render: function() {
-        var discount = this.props.discount;
-        return (
-            <div>
-                <div>
-                    <p>优惠类型：{discount.type}</p>
-                </div>
-                <div>
-                    <p>优惠码：{discount.discountCode}</p>
-                </div>
-                <div>
-                    <p>优惠价格：{discount.discountPrice}</p>
-                </div>
-            </div>
-        );
-    }
-
-});
 
 
 module.exports = Discount;

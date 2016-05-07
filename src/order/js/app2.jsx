@@ -3,14 +3,13 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Button,Col } from 'react-bootstrap';
+import { Panel,Button,Col } from 'react-bootstrap';
 
 import GroupBrief from './group';
-import Travellers from './travellers';
-import Emergency from './emergency';
-import Roommate from './roommate';
 import Discount from './Discount'; 
 import NoAuth from './noauth';
+
+import alipay from '../img/alipay.png';
 import Contacts from './contacts/contacts'
 import AccountOrders from 'account_orders';
 
@@ -35,6 +34,7 @@ var App = React.createClass({
 
     render: function() {
         var data = this.state.data;
+
         if (data.status != 0) {
             if (data.status == 3) {
                 return <NoAuth />
@@ -51,15 +51,14 @@ var App = React.createClass({
         var travelers = ["谢振宗","赵伟"];
         return (
             <div className="container">
-
                 <div className="step">          
                     <ul>
-                        <Col md={4} componentClass="li" className="on">
+                        <Col md={4} componentClass="li">
                             <span className="num"><em className="f-r5"></em><i>1</i></span>                 
                             <span className="line_bg lbg-r"></span>
                             <p className="lbg-txt">报名信息</p>
                         </Col>
-                        <Col md={4} componentClass="li">
+                        <Col md={4} componentClass="li" className="on">
                             <span className="num"><em className="f-r5"></em><i>2</i></span>
                             <span className="line_bg lbg-l"></span>
                             <span className="line_bg lbg-r"></span>
@@ -73,7 +72,27 @@ var App = React.createClass({
                     </ul>
                 </div>
                 <Col md={9}>
-                    <Contacts />
+                    <div className="Discount-title">优惠政策</div>
+                    <div className="Discount-item">
+                        <Discount />
+                    </div>
+                    <div className="Pay-item">
+                        <Col md={3}>
+                            <div className="left">
+                                <img src={alipay} />
+                            </div>
+                        </Col>
+                        <Col md={7}>
+                            <div className="middle">
+                                扫一扫或登录帐号进行支付，部分用户有快捷支付单笔2000元的限额。
+                            </div>
+                        </Col>
+                        <Col md={2}>
+                            <div className="right">
+                                <div className="btn">马上支付</div>
+                            </div>
+                        </Col>
+                    </div>
                 </Col>
                 <Col md={3}>
                     <div className="travel-info">
@@ -81,12 +100,6 @@ var App = React.createClass({
                         <div className="total">
                             <p>总价：</p><div className="price-right">￥3980</div>
                         </div>
-                    </div>
-                </Col>
-                <Col md={5} mdOffset={4}>
-                    <div className="submit">
-                        <div><input type="checkbox" ></input>{agreement}</div>
-                        <Button bsStyle="primary" bsSize="large" type="submit">下一步</Button>
                     </div>
                 </Col>
             </div>

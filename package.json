@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "amazeui-react": "^1.0.1",
+    "antd": "^0.12.17",
     "classnames": "^2.2.1",
     "history": "^1.17.0",
     "immutable": "^3.7.6 ",
