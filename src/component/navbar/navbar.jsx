@@ -59,7 +59,7 @@ var AccountMenu = React.createClass({
             return (
                 <Nav pullRight>
                     <NavDropdown eventKey={3} title={this.state.basicInfo.accountInfo.name} id="kdkdkdkdkdkdk">
-                        <MenuItem eventKey={3.1}>我的行程</MenuItem>
+                        <MenuItem eventKey={3.1} href="/account/1">我的行程</MenuItem>
                         <MenuItem eventKey={3.2}>设置</MenuItem>
                         <MenuItem divider />
                         <MenuItem eventKey={3.3}>退出</MenuItem>

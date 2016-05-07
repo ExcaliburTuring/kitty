@@ -42,7 +42,7 @@ var server = new WebpackDevServer(compiler, {
     publicPath: config.PUBLIC_PATH,
     proxy: proxyConfig
 });
-server.listen(8080, 'localhost', function(err) {
+server.listen(8080, '0.0.0.0', function(err) {
     console.log(err ? err : 'Asserts server listening at http://localhost:8080');
     console.log();
 });
