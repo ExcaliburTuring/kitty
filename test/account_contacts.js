@@ -3,7 +3,7 @@ module.exports = {
     'contacts': [{
     	'contactid': 1,
         'accountid': 1,
-        'name': 'xiezhenzong_1',
+        'name': '谢振宗',
         'id': '35052519910618131X',
         'idType': 'IDENTIFICATION',
         'gender': 'MALE',
@@ -15,7 +15,7 @@ module.exports = {
     }, {
     	'contactid': 2,
         'accountid': 1,
-        'name': 'xiezhenzong_2',
+        'name': '赵伟',
         'id': '35052519910618131X',
         'idType': 'IDENTIFICATION',
         'gender': 'MALE',
