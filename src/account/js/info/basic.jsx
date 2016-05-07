@@ -51,7 +51,7 @@ var BasicInfo = React.createClass({
     },
 
     onSubmitBtnClick: function() {
-        var basicInfo = {};
+        var basicInfo = {'accountid': this.props.basicInfo.accountInfo.accountid};
         if (this.refs.nameInput.isChange()) {
             basicInfo['name'] = this.refs.nameInput.getName();
         }
