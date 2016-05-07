@@ -2,6 +2,7 @@
  * @author xiezhenzong
  */
 import _ from 'underscore';
+import IDValidator from 'id-validator';
 
 // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
 var _emailRe=/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -53,7 +54,26 @@ const validator = {
         if (ret['state'] !== 'success') {
             return ret;
         }
+        var validator = new IDValidator();
+        var ret;
+        if (validator.isValid(id)) {
+            ret = _success();
+            ret['info'] = validator.getInfo(id);
+        } else {
+            ret = _error('身份证信息有误');
+        }
+        return ret;
+    },
 
+    name: function(name, msg) {
+        return _success();
+    },
+
+    email: function(email, msg) {
+        return _success();
+    },
+
+    mobile: function(mobile, msg) {
         return _success();
     }
 

@@ -70,7 +70,7 @@ var AccountMenu = React.createClass({
             return (
                 <Nav pullRight>
                     <NavItem eventKey={1} href="/register">组册</NavItem>
-                    <NavItem eventKey={2} href="/login">登录</NavItem>
+                    <NavItem eventKey={2} href="/wx/login">登录</NavItem>
                 </Nav>
             );
         }
