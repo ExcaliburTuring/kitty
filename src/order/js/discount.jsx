@@ -6,7 +6,6 @@ import Reflux from 'reflux';
 
 import AccountBaiscInfo from 'account_basicinfo';
 import AccountContacts from 'account_contacts';
-import AccountOrders from 'account_orders';
 
 import { Form, FormGroup, ControlLabel,FormControl,Col } from 'react-bootstrap';
 
@@ -15,7 +14,6 @@ var Discount = React.createClass({
     mixins: [
         Reflux.connect(AccountBaiscInfo.store, 'basicInfo'),
         Reflux.connect(AccountContacts.store, 'contacts'),
-        Reflux.connect(AccountOrders.store, 'order')
     ],
 
     getInitialState: function() {
@@ -35,7 +33,6 @@ var Discount = React.createClass({
     componentDidMount: function() {
         AccountBaiscInfo.actions.get();
         AccountContacts.actions.get();
-        AccountOrders.actions.get();
     },
 
     render: function() {
