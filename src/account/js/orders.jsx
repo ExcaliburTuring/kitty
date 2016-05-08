@@ -4,24 +4,27 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import AccountOrders from 'account_orders';
+import { url } from 'config';
+import Rabbit from 'rabbit';
+import UnpayedList from './order/unpayeds';
+
+var OrderInfo = Rabbit.create(url.orderBrief); 
 
 var Orders = React.createClass({
 
-    mixins: [Reflux.connect(AccountOrders.store, 'data')],
+    mixins: [Reflux.connect(OrderInfo.store, 'data')],
 
     getInitialState: function() {
         return {
             'data': {
                 'status': 1,
-                'orders': [],
-                'travellers': {}
+                'orders': []
             }
         }
     },
 
     componentDidMount: function() {
-    	 AccountOrders.actions.get();
+    	 OrderInfo.actions.load({'accountid': 1});
     },
 
     render: function() {
@@ -34,13 +37,13 @@ var Orders = React.createClass({
             );
         }
         var orders = data.orders;
-        var travellers = data.travellers;
+
         var ordersList = orders.map(function(order) {
-        	var traveller = travellers[order.orderid];
             return (
-                <Item order={order} travellers={traveller} key={order.orderid}/>
+                <Item order={order} key={order.orderid}/>
             );
         });
+
         return (
             <div className="container"> 
                 {ordersList}
@@ -53,33 +56,9 @@ var Item = React.createClass({
 
     render: function() {
         var order = this.props.order;
-        var travellers = this.props.travellers;
         return (
             <div className="order-container">
-            	<div>
-                    <p>订单id: {order.orderid}</p>
-                </div>
-                <div>
-                    <p>账户id: {order.accountid}</p>
-                </div>
-                <div>
-                    <p>团id: {order.groupid}</p>
-                </div>
-                <div>
-                    <p>状态: {order.status}</p>
-                </div>
-                <div>
-                    <p>人数: {order.count}</p>
-                </div>
-                <div>
-                    <p>价格: {order.price}</p>
-                </div>
-                <div>
-                    <p>实际价格: {order.actualPrice}</p>
-                </div>
-                <div>
-                    <p>是否签订协议: {order.isArgeementOk}</p>
-                </div>
+                <UnpayedList order={order}/>
             </div>
         );
     }

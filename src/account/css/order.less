@@ -1,0 +1,244 @@
+.order-container {
+    font-family: "Microsoft Yahei";
+    margin-top: 5px;
+    padding-top: 20px;
+    background-color: #FDFDFD;
+
+
+    .profiles p {
+        font-size: 20px;
+
+        .fa {
+            margin-right: 3px;
+            font-size: 20px;
+        }
+    }
+
+    .title{
+        margin-bottom: 20px;
+        color: @dark-gray;
+        background-color: @white;
+        box-shadow: 0 0 5px @dark-gray;
+        border: 1px dashed @red;
+        height: 40px;
+        line-height: 40px;
+
+        .welcome {
+            font-size: 20px;
+        }
+
+        .messages {
+            text-align: right;
+            font-size: 18px;
+
+            .bar {
+                padding-left: 10px;
+                border-left: 3px solid @red;
+            }
+
+            .unfinished {
+                color: @red;
+            }
+            .histories {
+                color: @red;
+            }
+        }
+    }
+
+    .unfinisheds {
+        margin-bottom: 60px;
+    }
+
+    .starting {
+        margin-bottom: 20px;
+        padding: 5px 15px;
+        height: 460px;
+        background-color: @white;
+        border: 1px dashed @red;
+        box-shadow: 0 0 5px @dark-gray;
+
+        .start-title {
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            width: 100%;
+            height: 40px;
+            border-bottom: 1px dashed @dark-gray;
+            text-align: left;
+
+            .left {
+                line-height: 40px;
+                font-size: 28px;
+                color: @red;
+            }
+
+            .middle {
+                line-height: 40px;
+                font-size: 14px;
+                color: @light-gray;
+            }
+        }
+
+        .order-info {
+            margin-bottom: 15px;
+            padding-bottom: 5px; 
+            width: 100%;
+            height: 270px;
+            border-bottom: 1px dashed @dark-gray;
+
+            .travel-info {
+                height: 250px;
+                position: relative;
+
+                .travel-name {
+                    font-size: 24px;
+                    margin-bottom: 10px;
+                }
+                .travel-intro {
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                }
+                .travel-time {
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                }
+                .order-status {
+                    position: absolute;
+                    bottom: 0;
+                }
+            }
+
+            .travel-names {
+                overflow: hidden;
+                p .fa {
+                    color: @light-gray;
+                    margin-right: 5px;
+                }
+            }
+        }
+
+        .group-info{
+            margin-bottom: 15px;
+            padding-bottom: 5px; 
+            width: 100%;
+            height: 190px;
+            
+            .travel-countdown {
+                .countdown-title{
+                    color: @red;
+                    font-size: 24px;
+                    text-align: center;
+                }
+                .countdown {
+                    font-family: cursive;
+                    font-size: 80px;
+                    line-height: 80px;
+                    text-align: center;
+                }
+            }
+
+            .group-members {
+                height: 170px;
+                font-size: 18px;
+                
+                .avatars {
+                    height: 80px;
+                    overflow: hidden;
+
+                    img {
+                        width: 40px;
+                    }
+                }
+
+                .fa {
+                    margin-left: 20px;
+                    font-size: 20px;
+                }
+                .more {
+                    position: absolute;
+                    bottom: 10px;
+                }
+            }
+
+            .group-QR {
+                float:right;
+                width: 170px;
+            }
+        }   
+    }
+
+    .unpayed {
+        margin-bottom: 20px;
+        padding: 5px 15px;
+        height: 350px;
+        background-color: @white;
+        border: 1px dashed @red;
+        box-shadow: 0 0 5px @dark-gray;
+
+        .start-title {
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            width: 100%;
+            height: 40px;
+            border-bottom: 1px dashed @dark-gray;
+
+            .left {
+                font-size: 28px;
+                color: @red;
+            }
+
+            .middle {
+                line-height: 40px;
+                font-size: 14px;
+                color: @light-gray;
+            }
+
+            .right {
+                line-height: 40px;
+                font-size: 14px;
+                color: @light-gray;
+            }
+        }
+
+        .order-info {
+            margin-bottom: 15px;
+            padding-bottom: 5px; 
+            width: 100%;
+            height: 190px;
+
+            .travel-info {
+                height: 170px;
+                position: relative;
+
+                .travel-name {
+                    font-size: 24px;
+                    margin-bottom: 10px;
+                }
+                .travel-intro {
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                }
+                .travel-time {
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                }
+                .travel-price {
+                    color: @dark-gray;
+                    font-size: 16px;
+                    margin-bottom: 0;
+                }
+                .order-status {
+                    position: absolute;
+                    bottom: 0;
+                }
+            }
+
+            .traveller-names {
+                overflow: hidden;
+                p .fa {
+                    color: @light-gray;
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}

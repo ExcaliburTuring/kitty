@@ -39,21 +39,21 @@ var Discount = React.createClass({
     },
 
     render: function() {
-        var basicInfo = this.state.basicInfo;
-        var contacts = this.state.contacts;
-        var order = this.state.order;
-        if (!basicInfo.login || contacts.length == 0 || order.status !=0) {
-            return (
-                <div></div>
-            );
-        }
-        var mockOrder = order.orders[1]; // 假装只取到一个订单，因为应该是有orderid的，
-        var mockDiscount = order.discounts[mockOrder.orderid] // 假装取到打折信息
+        // var basicInfo = this.state.basicInfo;
+        // var contacts = this.state.contacts;
+        // var order = this.state.order;
+        // if (!basicInfo.login || contacts.length == 0 || order.status !=0) {
+        //     return (
+        //         <div></div>
+        //     );
+        // };
+        // var mockOrder = order.orders[1]; // 假装只取到一个订单，因为应该是有orderid的，
+        // var mockDiscount = order.discounts[mockOrder.orderid]; // 假装取到打折信息
 
 
         return (
             <div className="discount-container section-container">
-                <Col md={12}><p className="right-price">总价：{mockOrder.price}</p></Col>
+                <Col md={12}><p className="right-price">总价：1000</p></Col>
                 <Col md={8}>
                     <Form horizontal>
                         <FormGroup controlId="formControlsSelect" inline>
@@ -89,10 +89,10 @@ var Discount = React.createClass({
                     </Form>
                 </Col>
                 <Col md={4}>
-                    <p className="desc-price">-{mockOrder.actualPrice}</p>
-                    <p className="desc-price">-{mockOrder.actualPrice}</p>
-                    <p className="desc-price">-{mockOrder.actualPrice}</p>
-                    <p className="right-price">结算价格：{mockOrder.actualPrice}</p>
+                    <p className="desc-price">-100</p>
+                    <p className="desc-price">-100</p>
+                    <p className="desc-price">-100</p>
+                    <p className="right-price">结算价格：8000</p>
                 </Col>
             </div>
         );
