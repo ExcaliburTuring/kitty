@@ -33,23 +33,31 @@ var Contacts = React.createClass({
     },
 
     onContactMinusClick: function(index) {
-        var contacts = this.state.contacts;
-        contacts.splice(index, 1);
-        this.setState({'contacts': contacts});
-        //AccountContacts.actions.get();
+        var contact = this.state.contacts[index];
+        var contactid = contact.contactid;
+        var selectContacts = this.state.selectContacts;
+        delete selectContacts[contactid];
+        this.setState({'selectContacts': selectContacts});
     },
 
-    onChange: function() {
-
+    onChange: function(e, index) {
+        var checked = e.target.checked;
+        var contact = this.state.contacts[index];
+        var contactid = contact.contactid;
+        var selectContacts = this.state.selectContacts;
+        if (checked) {
+            selectContacts[contactid] = contact;
+        } else {
+            delete selectContacts[contactid];
+        }
+        this.setState({'selectContacts': selectContacts});
     },
 
     getInitialState: function() {
         return {
            'contacts': [],
            'newContacts': [],
-           'checked': [],
-           'ccc': [],
-           'visible': [],
+           'selectContacts': {}
         }
     },
 
@@ -62,43 +70,45 @@ var Contacts = React.createClass({
 
     render: function() {
         var contacts = this.state.contacts;
-        var checked = this.state.checked;
-        var self = this;
-
+        var selectContacts = this.state.selectContacts;
         if (contacts.length == 0) {
             return (<div></div>);
         }
         var self = this;
+        var names = contacts.map(function(contact, index) {
+            return (
+                <Name 
+                    key={contact.contactid} 
+                    index={index} 
+                    name={contact.name} 
+                    onChange={self.onChange}
+                    checked={selectContacts[contact.contactid] ? true : false}/>
+            );
+        });
+
         var newContactsList = this.state.newContacts.map(function(contact, index) {
             return (
                 <Contact 
-                    key={`new-contact-${index}`}
+                    key={`order-new-contact-${index}`}
                     index={index}
                     readOnly={false} 
                     contact={contact} 
                     onMinusClick={self.onNewContactMinusClick}/>
             );
         });
+
         var contactsList = contacts.map(function(contact, index) {
-            return (
-                <Contact 
-                    key={contact.contactid}
-                    index={index}
-                    contact={contact} 
-                    onMinusClick={self.onContactMinusClick}/>
-            );
-        });
-
-
-        var names = contacts.map(function(contact) {
-            return (
-                <label key={contact.contactid} className="order-contact-name">
-                    <Checkbox
-                        defaultChecked={false}
-                        disabled={false}/>
-                      {contact.name}
-                </label>
-            );
+            if (selectContacts[contact.contactid]) {
+                return (
+                    <Contact 
+                        key={`order-contact-${contact.contactid}`}
+                        index={index}
+                        contact={contact} 
+                        onMinusClick={self.onContactMinusClick}/>
+                );
+            } else {
+                return null;
+            }
         });
 
         return (
@@ -114,6 +124,23 @@ var Contacts = React.createClass({
             </div>
         );
     }
+});
+
+var Name = React.createClass({
+
+    render: function() {
+        return (
+            <label className="order-contact-name">
+                <Checkbox
+                    checked={this.props.checked}
+                    defaultChecked={false}
+                    disabled={false}
+                    onChange={(e)=>{this.props.onChange(e, this.props.index);}}/>
+                    {this.props.name}
+            </label>
+        );
+    }
+
 });
 
 module.exports = Contacts;

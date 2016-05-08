@@ -45,18 +45,15 @@ var Id = React.createClass({
         if (eventKey === this.state.idType) { // 和当前的一样
             return;
         } else if (eventKey === this.props.defaultIdType) { // 和之前传进来的一样
-            this.setState({
-                'idType': this.props.defaultIdType,
-                'id': this.props.defaultId,
-                'validationState': null,
-                'msg': ''
-            });
+            this.setState(this.getInitialState());
         } else {
             this.setState({
                 'idType': eventKey,
                 'id': '',
                 'validationState': 'error',
-                'msg': ''
+                'msg': '',
+                birthday: null,
+                gender: null,
             });
         }
     },
@@ -77,6 +74,7 @@ var Id = React.createClass({
             'validationState': ret['state'],
             'errMsg': ret['msg']
         };
+
         if (ret['info']) {
             newState['birthday'] = ret['info']['birth'];
             newState['gender'] = ret['info']['sex'] == 0 ? gender.FEMALE : gender.MALE;
@@ -89,16 +87,27 @@ var Id = React.createClass({
     }, 
 
     getInitialState: function() {
+        var defaultIdType = this.props.defaultIdType;
+        var defaultId = this.props.defaultId.toUpperCase();
+        var defaultBirthday = null , defaultGender = null;
+        if (defaultIdType == idType.IDENTIFICATION) {
+            var ret = validator.id(defaultId);
+            if (ret['info']) {
+                defaultBirthday = ret['info']['birth'];
+                defaultGender = ret['info']['sex'] == 0 ? gender.FEMALE : gender.MALE;
+            }
+        }
+
         return {
-            'idType':  this.props.defaultIdType,
-            'id': this.props.defaultId.toUpperCase(),
-            'birthday': null,
-            'gender': null,
+            'idType':  defaultIdType,
+            'id': defaultId,
+            'birthday': defaultBirthday,
+            'gender': defaultGender,
 
             'readOnly': this.props.readOnly ? true : false,
             'validationState': null,
             'msg': '',
-        }
+        };
     },
 
     componentDidUpdate: function(prevProps, prevState) {
@@ -111,6 +120,7 @@ var Id = React.createClass({
     render: function() {
         var select = (
             <Select 
+                value={this.state.idType}
                 disabled={this.props.readOnly}
                 defaultValue={this.props.defaultIdType} 
                 onChange={this.onIdTypeSelect}>

@@ -66,7 +66,8 @@ var Birthday = React.createClass({
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 16 }}>
                 <DatePicker
-                    defaultValue={this.state.birthday}
+                    value={this.state.birthday}
+                    defaultValue={this.props.defaultBirthday}
                     onChange={this.onChange}
                     disabled={this.props.readOnly} />
             </FormItem>
