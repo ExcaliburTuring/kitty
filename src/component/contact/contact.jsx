@@ -97,7 +97,7 @@ var Contact = React.createClass({
         var readOnly = this.state.readOnly;
         return (
             <div className="contacts-item-container clearfix">
-                <Title title={contact.name} className="contact-title clearfix">
+                <Title title={contact.name} className="contact-title">
                     <EditButtonGroup
                         readOnly={readOnly}
                         isChange={this.state.isChange}

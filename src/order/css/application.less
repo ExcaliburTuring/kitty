@@ -10,10 +10,6 @@ body {
 	-webkit-overflow-scrolling: touch;
 }
 
-.section-container {
-
-}
-
 .step{ 
 	margin: 20px auto; 
 	display:block; 
@@ -247,4 +243,35 @@ body {
 			color: @white;
 		}
 	}
+}
+
+
+.order-contact-container {
+
+	border-bottom: 3px solid @red;
+	border-radius: 3px;
+	box-shadow:  0 0 5px @light-gray;
+    padding: 20px;
+
+    .order-contact-title {
+    	height: 50px;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 3px #aeaeae;
+
+        .order-contact-name-container {
+        	margin-left: 20px;
+        	padding-top: 5px;
+
+        	.order-contact-name {
+        		margin-left: 8px;
+
+        		span {
+        			font-size: 14px;
+        		}
+        	}
+        }
+    }
+
 }
