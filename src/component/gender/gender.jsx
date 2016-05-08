@@ -73,7 +73,7 @@ var Gender = React.createClass({
                 <RadioGroup
                     value={this.state.gender}
                     defaultValue={this.props.defaultGender}
-                    disabled={this.state.readOnly}
+                    disabled={this.props.readOnly}
                     onChange={this.onChange}>
                     <Radio value={gender.UNKNOW}>{UNKNOW_DESC}</Radio>
                     <Radio value={gender.MALE}>{MALE_DESC}</Radio>

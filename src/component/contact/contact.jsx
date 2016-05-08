@@ -39,6 +39,21 @@ var Contact = React.createClass({
         } 
     },
 
+    onIdChange: function() {
+        this.onChange();
+        var idSelector = this.refs.idSelector;
+        if (idSelector.getIdType() == idType.IDENTIFICATION) { // 只有身份证修改的时候，才会触发
+            var birthday = idSelector.getBirthday();
+            if (birthday) {
+                this.refs.birthdaySelector.setBirthday(birthday);
+            }
+            var gender = idSelector.getGender();
+            if (gender) {
+                this.refs.genderSelector.setGender(gender);
+            }
+        }
+    },
+
     onRevertBtnClick: function() {
         this.revert();
     },
@@ -95,6 +110,9 @@ var Contact = React.createClass({
     render: function() {
         var contact = this.props.contact;
         var readOnly = this.state.readOnly;
+        var readOnly1 = this.refs.idSelector
+                        ? this.refs.idSelector.getIdType() === idType.IDENTIFICATION 
+                        : contact.idType === idType.IDENTIFICATION;
         return (
             <div className="contacts-item-container clearfix">
                 <Title title={contact.name} className="contact-title">
@@ -122,12 +140,12 @@ var Contact = React.createClass({
                             defaultId={contact.id ? contact.id : ''}
                             controlId={`contact-item-${contact.contactid}-container-id`}
                             readOnly={readOnly}
-                            onChange={this.onChange}/>
+                            onChange={this.onIdChange}/>
                         <Gender
                             ref="genderSelector"
                             defaultGender={contact.gender}
                             controlId={`contact-item-${contact.contactid}-container-gender`}
-                            readOnly={readOnly}
+                            readOnly={readOnly1}
                             onChange={this.onChange}/>
                     </Form>
                 </Col>
@@ -137,7 +155,7 @@ var Contact = React.createClass({
                             ref="birthdaySelector"
                             defaultBirthday={contact.birthday}
                             controlId={`contact-item-${contact.contactid}-container-birthday`}
-                            readOnly={readOnly}
+                            readOnly={readOnly1}
                             onChange={this.onChange}/>
                         <Email
                             ref="emailContainer"
