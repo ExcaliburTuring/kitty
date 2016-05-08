@@ -6,7 +6,7 @@ import Reflux from 'reflux';
 
 import { url } from 'config';
 import Rabbit from 'rabbit';
-import UnpayedList from './order/unpayeds';
+import OrderList from './order/orders';
 
 var OrderInfo = Rabbit.create(url.orderBrief); 
 
@@ -18,13 +18,13 @@ var Orders = React.createClass({
         return {
             'data': {
                 'status': 1,
-                'orders': []
+                'briefOrders': []
             }
         }
     },
 
     componentDidMount: function() {
-    	 OrderInfo.actions.load({'accountid': 1});
+    	 OrderInfo.actions.load({'accountid': '10001'});
     },
 
     render: function() {
@@ -36,29 +36,19 @@ var Orders = React.createClass({
                 </div>
             );
         }
-        var orders = data.orders;
+        var orders = data.briefOrders;
 
         var ordersList = orders.map(function(order) {
             return (
-                <Item order={order} key={order.orderid}/>
+                    <OrderList order={order} key={order.orderid}/>
             );
         });
 
         return (
             <div className="container"> 
-                {ordersList}
-            </div>
-        );
-    }
-});
-
-var Item = React.createClass({
-
-    render: function() {
-        var order = this.props.order;
-        return (
-            <div className="order-container">
-                <UnpayedList order={order}/>
+                <div className="order-container">
+                    {ordersList}
+                </div>
             </div>
         );
     }
