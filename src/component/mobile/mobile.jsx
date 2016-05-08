@@ -2,9 +2,13 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Panel, Form, FormGroup, FormControl, Col, ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Form, Input } from 'antd';
+const FormItem = Form.Item;
 
 import validator from 'validator';
+
+import 'antd/lib/index.css';
+import './mobile.less'
 
 var Mobile = React.createClass({
 
@@ -56,34 +60,26 @@ var Mobile = React.createClass({
     },
 
     render: function() {
-        var content;
-        if (this.props.readOnly) {
-            content = (
-                <Col md={6}> <p>{this.state.mobile}</p> </Col>
-             );
-        } else {
-            content = (
-                <Col md={6}>
-                    <FormControl
-                        type="input"
-                        value={this.state.mobile}
-                        onChange={this.onChange}/>
-                    <FormControl.Feedback />
-                </Col>
-            );
-        }
         return (
-            <FormGroup
-                controlId={this.props.controlId}
-                validationState={this.state.validationState}>
-                <Col componentClass={ControlLabel} smHidden xsHidden md={3}>
-                    手机
-                </Col>
-                {content}
-                <Col smHidden xsHidden md={3}>
-                    <HelpBlock>{this.state.msg}</HelpBlock> 
-                </Col>
-            </FormGroup>
+            <FormItem
+                className="mobile-input-container"
+                label="手机：" 
+                required={this.props.required}
+                validateStatus={this.state.validationState}
+                help={this.state.msg}
+                hasFeedback
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 16 }}>
+                {
+                    this.props.readOnly
+                    ? <p>{this.state.mobile}</p>
+                    : <Input
+                        value={this.state.mobile}
+                        defaultValue={this.props.defaultMobile}
+                        placeholder="请输入您的手机"
+                        onChange={this.onChange}/>
+                }
+            </FormItem>
         );
     }
 

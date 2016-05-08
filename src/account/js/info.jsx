@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Grid } from 'react-bootstrap';
+import { Grid, Row } from 'react-bootstrap';
 
 import AccountBasicInfo from 'account_basicinfo';
 import BasicInfo from './info/basic';
@@ -31,9 +31,15 @@ var Info = React.createClass({
         return (
             <div className="info-container">
                 <Grid>
-                    <BasicInfo basicInfo={basicInfo}/>
-                    <Contact basicInfo={basicInfo}/>
-                    <Contacts basicInfo={basicInfo}/>
+                    <Row>
+                        <BasicInfo basicInfo={basicInfo}/>
+                    </Row>
+                    <Row>
+                        <Contact basicInfo={basicInfo}/>
+                    </Row>
+                    <Row>
+                        <Contacts basicInfo={basicInfo}/>
+                    </Row>
                 </Grid>
             </div>
         );

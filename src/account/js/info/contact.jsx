@@ -2,13 +2,14 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Panel, Form, FormGroup, FormControl, Grid, Row, Col, ControlLabel, HelpBlock, Image } from 'react-bootstrap';
+import { Col, Image } from 'react-bootstrap';
+import { Form } from 'antd';
 
-import validator from 'validator';
+import Title from 'title';
+import EditButtonGroup from 'editbtngroup'; 
 import Email from 'email';
 import Mobile from 'mobile';
 import Address from 'address';
-import Title from './title';
 import call from '../../img/call.png';
 import { url } from 'config';
 
@@ -28,7 +29,7 @@ var Contact = React.createClass({
     },
 
     onChange: function() {
-        if (this.isChange) {
+        if (this.isChange()) {
             this.setState({'isChange': true});
         } else {
             this.revert();
@@ -75,45 +76,44 @@ var Contact = React.createClass({
         var accountSetting = this.props.basicInfo.accountSetting;
         var readOnly= this.state.readOnly;
 
-        var title = (<Title
-                        title="联系信息"
+        return (
+            <div className="contact-container info-section">
+                <Title title="联系信息" className="info-title">
+                    <EditButtonGroup 
                         readOnly={this.state.readOnly}
                         isChange={this.state.isChange}
                         onEditBtnClick={() => {this.setState({'readOnly': false});}}
                         onCancelBtnClick={() => {this.setState({'readOnly': true});}}
                         onRevertBtnClick={this.onRevertBtnClick}
-                        onSubmitBtnClick={this.onSubmitBtnClick}/>);
-        return (
-            <div className="contact-container info-section">
-                <Panel header={title}>
-                    <Col smHidden xsHidden md={2} >
-                        <div className="left-block">
-                            <Image src={call} />
-                        </div>
-                    </Col>
-                    <Col sm={12} xs={12} md={10}>
-                        <Form horizontal>
-                            <Email
-                                ref="emailContainer"
-                                defaultEmail={accountInfo.email}
-                                controlId="contact-container-email"
-                                onChange={this.onChange}
-                                readOnly={readOnly}/>
-                            <Mobile 
-                                ref="mobileContainer"
-                                defaultMobile={accountInfo.mobile}
-                                controlId="contact-container-mobile"
-                                onChange={this.onChange}
-                                readOnly={readOnly}/>
-                            <Address 
-                                ref="addressContainer"
-                                defaultAddress={accountSetting.address}
-                                controlId="contact-container-address"
-                                onChange={this.onChange}
-                                readOnly={readOnly}/>
-                        </Form>
-                    </Col>
-                </Panel>
+                        onSubmitBtnClick={this.onSubmitBtnClick}/>
+                </Title>
+                <Col smHidden xsHidden md={2} >
+                    <div className="left-block">
+                        <Image responsive src={call} />
+                    </div>
+                </Col>
+                <Col sm={12} xs={12} md={5}>
+                    <Form horizontal>
+                        <Email
+                            ref="emailContainer"
+                            defaultEmail={accountInfo.email}
+                            controlId="contact-container-email"
+                            onChange={this.onChange}
+                            readOnly={readOnly}/>
+                        <Mobile 
+                            ref="mobileContainer"
+                            defaultMobile={accountInfo.mobile}
+                            controlId="contact-container-mobile"
+                            onChange={this.onChange}
+                            readOnly={readOnly}/>
+                        <Address 
+                            ref="addressContainer"
+                            defaultAddress={accountSetting.address}
+                            controlId="contact-container-address"
+                            onChange={this.onChange}
+                            readOnly={readOnly}/>
+                    </Form>
+                </Col>
             </div>
         );
     }
