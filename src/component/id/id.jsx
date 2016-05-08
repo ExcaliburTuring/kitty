@@ -2,10 +2,16 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { FormGroup, FormControl, ControlLabel, HelpBlock,  InputGroup, DropdownButton, MenuItem, Col } from 'react-bootstrap';
+import { Form, Input, Select } from 'antd';
+const FormItem = Form.Item;
+const InputGroup = Input.Group;
+const Option = Select.Option;
 
 import { idType, gender } from 'config';
 import validator from 'validator';
+
+import 'antd/lib/index.css';
+import './id.less';
 
 const IDENTIFICATION_DESC = idType.getDesc(idType.IDENTIFICATION);
 const PASSPORT_DESC = idType.getDesc(idType.PASSPORT);
@@ -43,14 +49,14 @@ var Id = React.createClass({
                 'idType': this.props.defaultIdType,
                 'id': this.props.defaultId,
                 'validationState': null,
-                'errMsg': ''
+                'msg': ''
             });
         } else {
             this.setState({
                 'idType': eventKey,
                 'id': '',
                 'validationState': 'error',
-                'errMsg': ''
+                'msg': ''
             });
         }
     },
@@ -79,16 +85,7 @@ var Id = React.createClass({
     },
 
     revert: function() {
-        this.setState({
-            'idType':  this.props.defaultIdType,
-            'id': this.props.defaultId.toUpperCase(),
-            'birthday': null,
-            'gender': null,
-
-            'readOnly': this.props.readOnly ? true : false,
-            'validationState': null,
-            'errMsg': '',
-        });
+        this.setState(this.getInitialState());
     }, 
 
     getInitialState: function() {
@@ -100,8 +97,7 @@ var Id = React.createClass({
 
             'readOnly': this.props.readOnly ? true : false,
             'validationState': null,
-            'errMsg': '',
-            'placeholder': '请输入证件号',
+            'msg': '',
         }
     },
 
@@ -113,54 +109,36 @@ var Id = React.createClass({
     },
 
     render: function() {
-        var idTypeContainer;
-        var idContainer;
-        if (this.props.readOnly) {
-            idTypeContainer = (
-                <Col componentClass={ControlLabel} md={3}>
-                    {idType.getDesc(this.state.idType)}
-                </Col>
-            );
-            idContainer = (<Col md={6}> <p>{this.state.id}</p> </Col>);
-        } else {
-            idTypeContainer = (
-                <Col md={3}>
-                    <div  className="idtype-selector">
-                        <DropdownButton
-                            componentClass={InputGroup.Button}
-                            id="input-dropdown-addon"
-                            title={idType.getDesc(this.state.idType)}
-                            onSelect={this.onIdTypeSelect}>
-                            <MenuItem eventKey={idType.IDENTIFICATION}>{IDENTIFICATION_DESC}</MenuItem>
-                            <MenuItem eventKey={idType.PASSPORT}>{PASSPORT_DESC}</MenuItem>
-                            <MenuItem eventKey={idType.H_PASSER}>{H_PASSER_DESC}</MenuItem>
-                            <MenuItem eventKey={idType.T_PASSER}>{T_PASSER_DESC}</MenuItem>
-                        </DropdownButton>
-                    </div>
-                </Col>
-            );
-            idContainer = (
-                <Col md={6}>
-                    <FormControl
-                        type="input" 
-                        value={this.state.id}
-                        placeholder={this.state.placeholder}
-                        onChange={this.onIdChange}/>
-                    <FormControl.Feedback />
-                </Col>
-            );
-        }
-
+        var select = (
+            <Select 
+                disabled={this.props.readOnly}
+                defaultValue={this.props.defaultIdType} 
+                onChange={this.onIdTypeSelect}>
+                <Option value={idType.IDENTIFICATION}>{IDENTIFICATION_DESC}</Option>
+                <Option value={idType.PASSPORT}>{PASSPORT_DESC}</Option>
+                <Option value={idType.H_PASSER}>{H_PASSER_DESC}</Option>
+                <Option value={idType.T_PASSER}>{T_PASSER_DESC}</Option>
+            </Select>
+        );
         return (
-            <FormGroup
-                controlId={this.props.controlId}
-                validationState={this.state.validationState}>
-                {idTypeContainer}
-                {idContainer}
-                <Col smHidden xsHidden md={3}>
-                    <HelpBlock>{this.state.errMsg}</HelpBlock>
-                </Col>
-            </FormGroup>
+            <FormItem
+                className="id-select-container"
+                label="证件："
+                required={this.props.required}
+                validateStatus={this.state.validationState}
+                help={this.state.msg}
+                hasFeedback
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 16 }}>
+                <Input
+                    value={this.state.id}
+                    defaultValue={this.props.defaultId}
+                    disabled={this.props.readOnly}
+                    placeholder="请输入您的身份证号"
+                    onChange={this.onIdChange}
+                    addonBefore={select}/>
+            </FormItem> 
+
         );
     }
 });

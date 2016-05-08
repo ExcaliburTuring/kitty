@@ -2,17 +2,18 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Panel, Form, Col, Image } from 'react-bootstrap';
+import { Col, Image } from 'react-bootstrap';
+import { Form } from 'antd';
 
-import { idType, gender } from 'config';
-import validator from 'validator';
+import { idType, gender, url } from 'config';
+import Title from 'title';
+import EditButtonGroup from 'editbtngroup';
 import Name from 'name';
 import Id from 'id';
 import Gender from 'gender';
 import Birthday from 'birthday';
-import Title from './title';
+
 import info from  '../../img/person.png'
-import { url } from 'config';
 
 var BasicInfo = React.createClass({
 
@@ -24,7 +25,7 @@ var BasicInfo = React.createClass({
     },
 
     onChange: function() {
-        if (this.isChange) {
+        if (this.isChange()) {
             this.setState({'isChange': true});
         } else {
             this.revert();
@@ -65,7 +66,6 @@ var BasicInfo = React.createClass({
         if (this.refs.birthdaySelector.isChange()) {
             basicInfo['birthday'] = this.refs.birthdaySelector.getBirthday();
         }
-
         console.log(basicInfo);
         $.post(url.basicinfo, basicInfo)
         .done(function(data) {
@@ -100,53 +100,52 @@ var BasicInfo = React.createClass({
         var readOnly1 = this.refs.idSelector
                         ? this.refs.idSelector.getIdType() === idType.IDENTIFICATION 
                         : accountInfo.idType === idType.IDENTIFICATION;
-        var title = (<Title
-                        title="基本信息"
+        return (
+            <div className="basic-container info-section">
+                <Title title="基本信息" className="info-title">
+                    <EditButtonGroup
                         readOnly={readOnly}
                         isChange={this.state.isChange}
                         onEditBtnClick={() => {this.setState({'readOnly': false});}}
                         onCancelBtnClick={() => {this.setState({'readOnly': true});}}
                         onRevertBtnClick={this.onRevertBtnClick}
-                        onSubmitBtnClick={this.onSubmitBtnClick}/>);
-        return (
-            <div className="basic-container info-section">
-                <Panel header={title}>
-                    <Col smHidden xsHidden md={2}>
-                        <div className="left-block">
-                            <Image src={info}/>
-                        </div>
-                    </Col>
-                    <Col sm={12} xs={12} md={10}>
-                        <Form horizontal>
-                            <Name
-                                ref="nameInput"
-                                defaultName={accountInfo.name}
-                                controlId="basic-container-name"
-                                onChange={this.onChange}
-                                readOnly={readOnly}
-                                inlineErrMsg={true}/>
-                            <Id 
-                                ref="idSelector"
-                                defaultIdType={accountInfo.idType}
-                                defaultId={accountInfo.id}
-                                controlId="basic-container-id"
-                                readOnly={readOnly}
-                                onChange={this.onIdChange}/>
-                            <Gender
-                                ref="genderSelector"
-                                defaultGender={accountSetting.gender}
-                                controlId="basic-container-gender"
-                                readOnly={readOnly1}
-                                onChange={this.onChange}/>
-                            <Birthday 
-                                ref="birthdaySelector"
-                                defaultBirthday={accountSetting.birthday}
-                                controlId="basic-container-birthday"
-                                readOnly={readOnly1}
-                                onChange={this.onChange}/>
-                        </Form>
-                    </Col>
-                </Panel>
+                        onSubmitBtnClick={this.onSubmitBtnClick} />
+                </Title>
+                <Col smHidden xsHidden md={2}>
+                    <div className="left-block">
+                        <Image responsive src={info}/>
+                    </div>
+                </Col>
+                <Col sm={12} xs={12} md={5}>
+                    <Form horizontal>
+                        <Name
+                            ref="nameInput"
+                            defaultName={accountInfo.name}
+                            controlId="basic-container-name"
+                            onChange={this.onChange}
+                            readOnly={readOnly}
+                            inlineErrMsg={true}/>
+                        <Id 
+                            ref="idSelector"
+                            defaultIdType={accountInfo.idType}
+                            defaultId={accountInfo.id}
+                            controlId="basic-container-id"
+                            readOnly={readOnly}
+                            onChange={this.onIdChange}/>
+                        <Gender
+                            ref="genderSelector"
+                            defaultGender={accountSetting.gender}
+                            controlId="basic-container-gender"
+                            readOnly={readOnly1}
+                            onChange={this.onChange}/>
+                        <Birthday 
+                            ref="birthdaySelector"
+                            defaultBirthday={accountSetting.birthday}
+                            controlId="basic-container-birthday"
+                            readOnly={readOnly1}
+                            onChange={this.onChange}/>
+                    </Form>
+                </Col>
             </div>
         );
     }

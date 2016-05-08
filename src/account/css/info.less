@@ -6,117 +6,52 @@
 
 	.info-section {
 
-		.left-block {
-			background-color: @white;
-			margin-bottom: 20px;
-			img{
-				width: 100%;
-			}
-		}
+        margin-bottom: 30px;
 
-		.panel {
-		    margin-bottom: 20px;
-		    background-color: #fff;
-		    border: none;
-		    box-shadow: none;
-		}
-
-		.panel-default>.panel-heading {
+		.info-title {
 			background-image: none;
-		    background-color: @gray;
-		    box-shadow: 0 2px 3px @gray;
+            height: 50px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 3px #aeaeae;
+
+            h3 {
+                border-left: 5px solid @red;
+                padding-left: 20px;
+            }
+
+            span {
+                margin-left: 10px;
+                font-size: 28px;
+            }
+
+            .btn-group-xs>.btn, .btn-xs {
+                line-height: 1;
+                padding: 0 6px;
+                .fa{
+                    font-size: 20px;
+                }
+                span{
+                    margin: 0;
+                }
+            }
 		}
 
-		.panel-title {
-	    	border-left: 5px solid @red;
-	    	span {
-	    		margin-left: 10px;
-	    		font-size: 28px;
-	    	}
+        .left-block {
+            background-color: @white;
+            margin-bottom: 20px;
+        }
 
-	    	.btn-group-xs>.btn, .btn-xs {
-				line-height: 1;
-				padding: 0 6px;
-				.fa{
-					font-size: 20px;
-				}
-				span{
-					margin: 0;
-				}
-			}
-		}
+        label {
+            font-size: 20px;
+        }
 
-		.control-label {
-			padding-top: 0;
-			font-family: "Microsoft YaHei";
-			font-size: 24px;
-			font-weight: normal;
-		}
-
-		.form-control {
-			margin-bottom:  -7px;
-			color: @dark-gray;
-			font-family: "Microsoft YaHei";
-		    font-size: 18px;
-		}
-
-		p {
-			color: @light-gray;
-			margin-top: 5px;
-		    margin-bottom: 0;
-		    text-align: left;
-		    font-family: "Microsoft YaHei";
-		    font-size: 20px;
-		    font-weight: normal;
-		}
 	}
 
 }
 
 .contacts-container {
 
-	.contacts-item-container {
-
-        margin-bottom: 20px;
-
-		.control-label {
-			text-align: right;;
-		}
-
-        .contact-item-btn-group {
-            width: 200px;
-            margin: 0 auto;
-        }
-
-	}
+	
 }
-
-.item-head {
-    position: relative;
-    line-height: 40px;
-
-    .separator-line {
-        border-top: 1px dashed @light-gray;
-        margin-top: 20px;
-    }
-
-    .item-title {
-        font-family: "Microsoft YaHei";
-        font-size: 18px;
-        color: @red;
-    }
-    .edit {
-    	color: @dark-gray;
-    	font-family: "Microsoft YaHei";
-    	padding: 0 30px;
-    	text-align: center;
-    	border-radius: 18px;
-    	border: none;
-    	background-color: @gray;
-    }
-}
-
-.idtype-selector {
-	text-align: right;
-}
-

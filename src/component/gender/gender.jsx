@@ -2,10 +2,15 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { FormGroup, ControlLabel, HelpBlock, Radio, Col } from 'react-bootstrap';
+import { Form, Radio } from 'antd';
+const FormItem = Form.Item;
+const RadioGroup = Radio.Group;
 
 import { gender } from 'config';
 import validator from 'validator';
+
+import 'antd/lib/index.css';
+import './gender.less';
 
 const UNKNOW_DESC = gender.getDesc(gender.UNKNOW);
 const MALE_DESC = gender.getDesc(gender.MALE);
@@ -32,19 +37,17 @@ var Gender = React.createClass({
         return this.state.gender !== this.props.defaultGender;
     },
 
-    onChange: function(type, e) {
+    onChange: function(e) {
         if (this.props.readOnly) {
             return;
         }
         this.setState({
-            'gender': type,
+            'gender': e.target.value,
         });
     },
 
     revert: function() {
-        return this.setState({
-            'gender': this.props.defaultGender,
-        });
+        return this.setState(this.getInitialState());
     },
 
     getInitialState: function() {
@@ -61,32 +64,22 @@ var Gender = React.createClass({
 
     render: function() {
         return (
-           <FormGroup
-                controlId={this.props.controlId}>
-                <Col componentClass={ControlLabel} smHidden xsHidden md={3}>
-                    性别
-                </Col>
-                <Col md={6}>
-                    <Radio 
-                        inline
-                        checked={this.isChecked(gender.UNKNOW)}
-                        onChange={(e) => {this.onChange(gender.UNKNOW, e)}}>
-                        {UNKNOW_DESC}
-                    </Radio>
-                    <Radio 
-                        inline 
-                        checked={this.isChecked(gender.MALE)}
-                        onChange={(e) => {this.onChange(gender.MALE, e)}}>
-                        {MALE_DESC}
-                    </Radio>
-                    <Radio 
-                        inline 
-                        checked={this.isChecked(gender.FEMALE)}
-                        onChange={(e) => {this.onChange(gender.FEMALE, e)}}>
-                        {FEMALE_DESC}
-                    </Radio>
-                </Col>
-            </FormGroup>
+            <FormItem
+                className="gender-select-container"
+                label="性别："
+                required={this.props.required}
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 16 }}>
+                <RadioGroup
+                    value={this.state.gender}
+                    defaultValue={this.props.defaultGender}
+                    disabled={this.state.readOnly}
+                    onChange={this.onChange}>
+                    <Radio value={gender.UNKNOW}>{UNKNOW_DESC}</Radio>
+                    <Radio value={gender.MALE}>{MALE_DESC}</Radio>
+                    <Radio value={gender.FEMALE}>{FEMALE_DESC}</Radio>
+                </RadioGroup>
+            </FormItem>
         );
     }
 });
