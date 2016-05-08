@@ -11,7 +11,8 @@ var Banner = React.createClass({
             backgroundImage: `url(${bannerImg})`
         };
         return (
-            <div className="banner"></div>
+            <div className="banner"><iframe sandbox="allow-scripts allow-same-origin" id="mh" src="./canvas"></iframe></div>
+
         );
     }
 });

@@ -1,66 +1,38 @@
 module.exports = {
 	'status': 0,
 	'orders': [{
-		'orderid': 1,
-		'accountid': 1,
-		'groupid': 1,
-		'status': 0,
-		'count': 1,
-		'price': 10000,
-		'actualPrice': 9000,
-		'isArgeementOk': false
+		'routeid': '12',
+		'name': '横跨 大！西！北！',
+		'intro': '苍茫的天涯是我的爱~',
+		'image': './img/p11.jpg',
+		'time': '2016-05-01-2016-05-07',
+		'price': '3899',
+		'starttime': '2016年05月01日23时22分',
+		'orderid': 'DUM16050154574',
+		'status': '未付款',
+		'names': [
+			'赵伟',
+			'董俊鹏',
+			'谢振宗',
+			'赵伟',
+			'董俊鹏'
+		]
 	}, {
-		'orderid': 2,
-		'accountid': 1,
-		'groupid': 2,
-		'status': 1,
-		'count': 2,
-		'price': 10000,
-		'actualPrice': 7000,
-		'isArgeementOk': true
-	}],
-	'travellers': {
-		1: [{
-			'travellerid': 1,
-			'orderid': 1,
-			'accountid': 1,
-			'contactid': 0,
-			'status': 0,
-			'roommate': null,
-			'refound': 0
-		}],
-		2: [{
-			'travellerid': 2,
-			'orderid': 2,
-			'accountid': 1,
-			'contactid': 0,
-			'status': 0,
-			'roommate': "xiezhenzong_1",
-			'refound': 0
-		}, {
-			'travellerid': 3,
-			'orderid': 2,
-			'accountid': 1,
-			'contactid': 1,
-			'status': 4,
-			'roommate': 'xiezhenzong',
-			'refound': 8000
-		}]
-	},
-	'discounts': {
-		1: [],
-		2: [{
-			'discountid': 1,
-			'orderid': 2,
-			'type': 1,
-			'discountCode': 111,
-			'discountPrice': 2000
-		}, {
-			'discountid': 2,
-			'orderid': 2,
-			'type': 2,
-			'discountCode': 222,
-			'discountPrice': 1000
-		}]
-	}
+		'routeid': '12',
+		'name': '横跨 大！西！北！',
+		'intro': '苍茫的天涯是我的爱~',
+		'image': './img/p11.jpg',
+		'time': '2016-05-01-2016-05-07',
+		'price': '3899',
+		'starttime': '2016年05月01日23时22分',
+		'orderid': 'DUM16050158674',
+		'status': '未付款',
+		'names': [
+			'赵伟',
+			'董俊鹏',
+			'谢振宗',
+			'赵伟',
+			'董俊鹏'
+		]
+	}]
 };
