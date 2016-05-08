@@ -3,12 +3,12 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Panel, Button, Row, Col, Image } from 'react-bootstrap';
+import { Col, Button, Image } from 'react-bootstrap';
 
 import AccountContacts from 'account_contacts';
-import validator from 'validator';
-import Title from './title';
-import ContactItem from './contactItem';
+import Contact from 'contact';
+import Title from 'title';
+import FaButton from 'fabutton';
 import people from '../../img/people.png';
 
 var Contacts = React.createClass({
@@ -17,10 +17,30 @@ var Contacts = React.createClass({
         Reflux.connect(AccountContacts.store, 'contacts')
     ],
 
+    onAddBtnClick: function() {
+        var newContacts = this.state.newContacts;
+        newContacts.push({});
+        this.setState({'newContacts': newContacts});
+    },
+
+    onNewContactMinusClick: function(index) {
+        var newContacts = this.state.newContacts;
+        newContacts.splice(index, 1);
+        this.setState({'newContacts': newContacts});
+    },
+
+    onContactMinusClick: function(index) {
+        var contacts = this.state.contacts;
+        contacts.splice(index, 1);
+        this.setState({'contacts': contacts});
+        //AccountContacts.actions.get();
+    },
+
     getInitialState: function() {
         AccountContacts.actions.get();
         return {
-           'contacts': []
+           'contacts': [],
+           'newContacts': []
         }
     },
 
@@ -29,34 +49,41 @@ var Contacts = React.createClass({
         if (contacts.length == 0) {
             return (<div></div>);
         }
-        var contactsList = contacts.map(function(contact) {
+        var self = this;
+        var newContactsList = this.state.newContacts.map(function(contact, index) {
             return (
-                <ContactItem contact={contact} key={contact.contactid}/>
+                <Contact 
+                    key={`new-contact-${index}`}
+                    index={index}
+                    readOnly={false} 
+                    contact={contact} 
+                    onMinusClick={self.onNewContactMinusClick}/>
+            );
+        });
+        var contactsList = contacts.map(function(contact, index) {
+            return (
+                <Contact 
+                    key={contact.contactid}
+                    index={index}
+                    contact={contact} 
+                    onMinusClick={self.onContactMinusClick}/>
             );
         });
 
-        const title = (
-            <h3 className="panel-title">常用出行人
-                <Button className="pull-right title-btn" bsSize="xsmall" onClick={() => {}}>
-                    <i className="fa fa-plus" aria-hidden="true"/>{' '}
-                </Button>
-            </h3>
-        );
-
         return (
             <div className="contacts-container info-section">
-                <Panel header={title}>
-                    <Row>
-                        <Col smHidden xsHidden md={2} >
-                            <div className="left-block">
-                                <Image src={people}/>
-                            </div>
-                        </Col>
-                        <Col sm={12} xs={12} md={10} >
-                            {contactsList}
-                        </Col>
-                    </Row>
-                </Panel>
+                <Title title="常用出行人" className="info-title">
+                    <FaButton faClass="fa fa-plus" onClick={this.onAddBtnClick} />
+                </Title>
+                <Col smHidden xsHidden md={2} >
+                    <div className="left-block">
+                        <Image responsive src={people}/>
+                    </div>
+                </Col>
+                <Col sm={12} xs={12} md={10} >
+                    {newContactsList}
+                    {contactsList}
+                </Col>
             </div>
         );
     }

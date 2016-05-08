@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Navbar from 'navbar';
 import Footer from 'footer';
-import App from './js/app2';
+import App from './js/app';
 
 require('./css/application.less');
 

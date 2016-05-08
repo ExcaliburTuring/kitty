@@ -2,7 +2,13 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Panel, Form, FormGroup, FormControl, Col, ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Form, Input } from 'antd';
+const FormItem = Form.Item;
+
+import validator from 'validator';
+
+import 'antd/lib/index.css';
+import './address.less';
 
 var Address = React.createClass({
 
@@ -43,33 +49,26 @@ var Address = React.createClass({
     },
 
     render: function() {
-        var content;
-        if (this.props.readOnly) {
-            content = (
-                <Col md={6}> <p>{this.state.address}</p> </Col>
-             );
-        } else {
-            content = (
-                <Col md={6}>
-                    <FormControl
-                        type="input"
-                        value={this.state.address}
-                        onChange={this.onChange}/>
-                    <FormControl.Feedback />
-                </Col>
-            );
-        }
         return (
-            <FormGroup
-                controlId={this.props.controlId}>
-                <Col componentClass={ControlLabel} smHidden xsHidden md={3}>
-                    地址
-                </Col>
-                {content}
-                <Col smHidden xsHidden md={3}>
-                    <HelpBlock>{""}</HelpBlock> 
-                </Col>
-            </FormGroup>
+            <FormItem
+                className="address-input-container"
+                label="地址：" 
+                required={this.props.required}
+                validateStatus={this.state.validationState}
+                help={this.state.msg}
+                hasFeedback
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 16 }}>
+                {
+                    this.props.readOnly
+                    ? <p>{this.state.address}</p>
+                    : <Input
+                        value={this.state.address}
+                        defaultValue={this.props.defaultAddress}
+                        placeholder="请输入您的地址"
+                        onChange={this.onChange}/>
+                }
+            </FormItem>
         );
     }
 

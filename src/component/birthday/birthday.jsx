@@ -2,12 +2,13 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { FormGroup, ControlLabel,  HelpBlock, Col } from 'react-bootstrap';
-import { DatePicker } from 'antd';
+import { Form, DatePicker } from 'antd';
+const FormItem = Form.Item;
 
 import validator from 'validator';
 
-require('antd/lib/index.css');
+import 'antd/lib/index.css';
+import './birthday.less';
 
 var Birthday = React.createClass({
 
@@ -33,15 +34,10 @@ var Birthday = React.createClass({
         this.setState({
             'birthday': birthday
         });
-       // this.state.onChange(birthday); 在componentDidUpdate里调用
     },
 
     revert: function() {
-        this.setState({
-            'birthday': this.props.defaultBirthday,
-            'validationState': null,
-            'msg': '',
-        });
+        this.setState(this.getInitialState());
     },
 
     getInitialState: function() {
@@ -60,22 +56,20 @@ var Birthday = React.createClass({
 
     render: function() {
         return (
-            <FormGroup
-                controlId={this.props.controlId}
-                validationState={this.state.validationState}>
-                <Col componentClass={ControlLabel} smHidden xsHidden md={3}>
-                    生日
-                </Col>
-                <Col md={6}>
-                    <DatePicker
-                        defaultValue={this.state.birthday}
-                        onChange={this.onChange}
-                        disabled={this.props.readOnly} />
-                </Col>
-                <Col smHidden xsHidden md={3}>
-                    <HelpBlock>{this.state.msg}</HelpBlock> 
-                </Col>
-            </FormGroup>
+            <FormItem
+                className="birthday-select-container"
+                label="生日："
+                required={this.props.required}
+                validateStatus={this.state.validationState}
+                help={this.state.msg}
+                hasFeedback
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 16 }}>
+                <DatePicker
+                    defaultValue={this.state.birthday}
+                    onChange={this.onChange}
+                    disabled={this.props.readOnly} />
+            </FormItem>
         );
     }
 });
