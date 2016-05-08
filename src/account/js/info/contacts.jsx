@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Col, Button, Image } from 'react-bootstrap';
+import { Col, Image } from 'react-bootstrap';
 
 import AccountContacts from 'account_contacts';
 import Contact from 'contact';
@@ -80,7 +80,7 @@ var Contacts = React.createClass({
                         <Image responsive src={people}/>
                     </div>
                 </Col>
-                <Col sm={12} xs={12} md={10} >
+                <Col sm={12} xs={12} md={9} >
                     {newContactsList}
                     {contactsList}
                 </Col>
