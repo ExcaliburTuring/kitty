@@ -111,6 +111,7 @@ var Id = React.createClass({
     render: function() {
         var select = (
             <Select 
+                value={this.state.idType}
                 disabled={this.props.readOnly}
                 defaultValue={this.props.defaultIdType} 
                 onChange={this.onIdTypeSelect}>
