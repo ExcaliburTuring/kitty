@@ -47,9 +47,7 @@ var Contacts = React.createClass({
         return {
            'contacts': [],
            'newContacts': [],
-           'checked': [],
-           'ccc': [],
-           'visible': [],
+           'checked': {}
         }
     },
 
@@ -63,8 +61,6 @@ var Contacts = React.createClass({
     render: function() {
         var contacts = this.state.contacts;
         var checked = this.state.checked;
-        var self = this;
-
         if (contacts.length == 0) {
             return (<div></div>);
         }
@@ -94,6 +90,7 @@ var Contacts = React.createClass({
             return (
                 <label key={contact.contactid} className="order-contact-name">
                     <Checkbox
+                        contactid={contact.contactid}
                         defaultChecked={false}
                         disabled={false}/>
                       {contact.name}
