@@ -7,36 +7,46 @@ import { Col } from 'react-bootstrap';
 
 import Rabbit from 'rabbit';
 import { defaultValue, url } from 'config';
-import GroupList from './index/groups';
-import UnpayedList from './index/unpayeds';
+import OrderList from './order/orders';
 
-var AccountInfo = Rabbit.create(url.info); 
+var BasicInfo = Rabbit.create(url.info);
+var OrderInfo = Rabbit.create(url.orderBrief); 
 
 var Index = React.createClass({
 
-    mixins: [Reflux.connect(AccountInfo.store, 'info')],
+    mixins: [Reflux.connect(BasicInfo.store, 'info'),Reflux.connect(OrderInfo.store, 'data')],
 
     getInitialState: function() {
-        AccountInfo.actions.load();
+        BasicInfo.actions.load({'accountid': 1});
+        OrderInfo.actions.load({'accountid': 10001,'orderType':'CURRENT'});
         return {
             'info': {
                 'status': 0,
                 'login': false,
                 'accountInfo': [],
-                'accountSetting': [],
-                'orderInfo': [],
-                'groupInfo': [],
-                'unPayed': []
+                'accountSetting': []
+            },
+            'data': {
+                'status': 1,
+                'briefOrders': [],
+                'currentOrders': 0,
+                'historyOrders': 0
             }
         };
     },
 
     render: function() {
         var info = this.state.info;
+        var orders = this.state.data.briefOrders;
         var { accountid } = this.props.params;
         var ordersUrl = `${defaultValue.accountUrl}/${accountid}/orders`;
         var infoUrl = `${defaultValue.accountUrl}/${accountid}/info`;
        
+        var ordersList = orders.map(function(order) {
+            return (
+                    <OrderList order={order} key={order.orderid}/>
+            );
+        });
 
         return (
             <div className="my-container">
@@ -61,17 +71,18 @@ var Index = React.createClass({
                             <div className="messages">
                                 <Col md={3}>
                                     <span className="bar">未完成订单：</span>
-                                    <span className="unfinished">{info.orderInfo.unfinished}</span>
+                                    <span className="unfinished">{this.state.data.currentOrders}</span>
                                 </Col>
                                 <Col md={3}>
                                     <span className="bar">历史订单：</span>
-                                    <span className="histories">{info.orderInfo.histories}</span>
+                                    <span className="histories">{this.state.data.historyOrders}</span>
                                 </Col>
                             </div>
                         </div>
                         <div className="unfinisheds">
-                            <UnpayedList unPayed={info.unPayed}/>
-                            <GroupList groupInfo={info.groupInfo}/>
+                            <div className="order-container">
+                                {ordersList}
+                            </div>
                         </div>
                     </Col>
                 </div>

@@ -29,6 +29,19 @@ var proxyConfig =(function(){
         }, {});
     return tempProxyConfig;
 }());
+proxyConfig['/order*'] = {
+    target: 'http://192.168.1.104:8080',
+    secure: false
+}
+proxyConfig['/account*'] = {
+    target: 'http://192.168.1.104:8080',
+    secure: false
+}
+// proxyConfig['/account/info'] = {
+//     target: 'http://192.168.1.104:8080',
+//     secure: false
+// }
+// console.log(proxyConfig);
 var server = new WebpackDevServer(compiler, {
     hot: true,
     historyApiFallback: true,
