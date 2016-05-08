@@ -11,7 +11,7 @@ import Emergency from './emergency';
 import Roommate from './roommate';
 import Discount from './Discount'; 
 import NoAuth from './noauth';
-import Contacts from './contacts/contacts'
+import Contacts from './contacts'
 import AccountOrders from 'account_orders';
 
 var App = React.createClass({
@@ -51,7 +51,6 @@ var App = React.createClass({
         var travelers = ["谢振宗","赵伟"];
         return (
             <div className="container">
-
                 <div className="step">          
                     <ul>
                         <Col md={4} componentClass="li" className="on">
