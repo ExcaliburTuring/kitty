@@ -13,7 +13,7 @@ export var url = {
 	'route': '/travel/route',
 	'group': '/travel/group',
 	'indexHot': '/index/hot',
-    'info': '/account/info',
+    'info': '/account/basicinfo',
     'groupinfo': '/order/groupinfo',
     'orderBrief': '/order/brief'
 };
