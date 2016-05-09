@@ -31,7 +31,7 @@ var mockConfig = [
     config('/index*', 'index.html'),
     config('/travel*', 'travel.html'),
     config('/canvas*', 'canvas.html'),
-    // config('/order*', 'order.html'),
+    config('/order*', 'order.html'),
     config('/img/*'),
 ];
 

@@ -29,15 +29,11 @@ var proxyConfig =(function(){
         }, {});
     return tempProxyConfig;
 }());
-proxyConfig['/order*'] = {
-    target: 'http://192.168.1.104:8080',
-    secure: false
-}
-proxyConfig['/account*'] = {
-    target: 'http://192.168.1.104:8080',
-    secure: false
-}
-// proxyConfig['/account/info'] = {
+// proxyConfig['/order*'] = {
+//     target: 'http://192.168.1.104:8080',
+//     secure: false
+// }
+// proxyConfig['/account*'] = {
 //     target: 'http://192.168.1.104:8080',
 //     secure: false
 // }
