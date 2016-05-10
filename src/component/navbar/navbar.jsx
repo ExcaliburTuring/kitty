@@ -55,7 +55,8 @@ var AccountMenu = React.createClass({
         AccountBasicInfo.actions.load();
     },
     render: function() {
-        if (this.state.basicInfo.login) {
+        //this.state.basicInfo.login
+        if (true) {
             return (
                 <Nav pullRight>
                     <NavDropdown eventKey={3} title={this.state.basicInfo.accountInfo.name} id="kdkdkdkdkdkdk">
@@ -69,7 +70,7 @@ var AccountMenu = React.createClass({
         } else {
             return (
                 <Nav pullRight>
-                    <NavItem eventKey={1} href="/register">组册</NavItem>
+                    <NavItem eventKey={1} href="/register">注册</NavItem>
                     <NavItem eventKey={2} href="/wx/login">登录</NavItem>
                 </Nav>
             );

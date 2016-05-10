@@ -15,7 +15,8 @@ export var url = {
 	'indexHot': '/index/hot',
     'info': '/account/basicinfo',
     'groupinfo': '/order/groupinfo',
-    'orderBrief': '/order/brief'
+    'orderBrief': '/order/brief',
+    'routeList': '/routes/info'
 };
 
 export var defaultValue = {
