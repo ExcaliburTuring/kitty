@@ -27,7 +27,7 @@ var App = React.createClass({
         var valid = true;
         if (/\d+/.test(routeid)) {
             Route.actions.load({'routeids': routeid, 'isImgtextRequired': true});
-            Groups.actions.load({'routeids': routeid});
+            Groups.actions.load({'routeid': routeid});
         } else {
             valid = false;
         }
