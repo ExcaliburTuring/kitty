@@ -3,17 +3,11 @@
  */
 export var url = {
 	'basicinfo': '/account/basicinfo',
-	'validateEmail': '/account/validateEmail',
-	'validateTell': '/account/validateTell',
-	'login': '/account/login',
-	'register': '/account/register',
 	'contacts': '/account/contacts',
-	'accountOrders': '/account/orders',
 	'travel': '/travel',
 	'route': '/travel/route',
 	'group': '/travel/group',
 	'indexHot': '/index/hot',
-    'info': '/account/info',
     'groupinfo': '/order/groupinfo',
     'orderBrief': '/order/brief'
 };

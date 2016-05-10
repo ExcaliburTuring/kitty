@@ -8,7 +8,6 @@ function handler(path, res, config) {
     if (pathItem.length <= 2 || !isNaN(pathItem[2])) {
         res.sendFile(config.page, {root: TEST_PATH});
     } else {
-        console.log(path)
         var mockFile = TEST_PATH + path.replace(/\//g, '_').substring(1) + '.js';
         res.json(require(mockFile));
     }
@@ -31,7 +30,7 @@ var mockConfig = [
     config('/index*', 'index.html'),
     config('/travel*', 'travel.html'),
     config('/canvas*', 'canvas.html'),
-    // config('/order*', 'order.html'),
+    config('/order*', 'order.html'),
     config('/img/*'),
 ];
 
