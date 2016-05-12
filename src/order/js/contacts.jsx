@@ -7,12 +7,15 @@ import { Col } from 'react-bootstrap';
 import { Checkbox} from 'antd'; 
 const CheckboxGroup = Checkbox.Group;
 
-import AccountContacts from 'account_contacts';
+import { url } from 'config';
+import Rabbit from 'rabbit';
 import Contact from 'contact';
 import Title from 'title';
 import FaButton from 'fabutton';
 
 import 'antd/lib/index.css';
+
+var AccountContacts = Rabbit.create(url.contacts);
 
 var Contacts = React.createClass({
 

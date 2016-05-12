@@ -3,11 +3,13 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
+import { Form, FormGroup, ControlLabel,FormControl,Col } from 'react-bootstrap';
 
 import AccountBaiscInfo from 'account_basicinfo';
-import AccountContacts from 'account_contacts';
+import { url } from 'config';
+import Rabbit from 'rabbit';
 
-import { Form, FormGroup, ControlLabel,FormControl,Col } from 'react-bootstrap';
+var AccountContacts = Rabbit.create(url.contacts);
 
 var Discount = React.createClass({
 

@@ -4,12 +4,18 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Col, Image } from 'react-bootstrap';
+import { message } from 'antd'
 
-import AccountContacts from 'account_contacts';
+import { url, defaultValue } from 'config';
+import Rabbit from 'rabbit';
 import Contact from 'contact';
 import Title from 'title';
 import FaButton from 'fabutton';
 import people from '../../img/people.png';
+
+import 'antd/lib/index.css';
+
+var AccountContacts = Rabbit.create(url.contacts);
 
 var Contacts = React.createClass({
 
@@ -30,46 +36,83 @@ var Contacts = React.createClass({
     },
 
     onContactMinusClick: function(index) {
-        var contacts = this.state.contacts;
-        contacts.splice(index, 1);
-        this.setState({'contacts': contacts});
-        //AccountContacts.actions.get();
+        var contacts = this.state.contacts.contacts;
+        var contact = contacts.splice(index, 1);
+        var self = this;
+        $.ajax({
+            url: url.contacts,
+            type: 'post',
+            data: {'contactid': contact[0].contactid, '_method': 'delete'}
+        }).done(function(data) {
+            if (data.status != 0) {
+                 message.error(defaultValue.deleteContactsMsg);
+            } else {
+                self.setState({
+                    'contacts': {
+                        'contacts': contacts
+                    }
+                });
+                AccountContacts.actions.load({'accountid': self.props.accountInfo.accountid});
+                message.success('成功删除常用联系人');
+            }
+        }).fail(function() {
+            message.error(defaultValue.deleteContactsMsg);
+        })
+    },
+
+    onNewContactSuccessSubmit: function(index) {
+        message.success("成功添加新常用出行人");
+        this.onNewContactMinusClick(index);
+        AccountContacts.actions.load({'accountid': this.props.accountInfo.accountid});
+    },
+
+    onContactSuccessSubmit: function(index) {
+        message.success('成功更新常用出行人');
+        AccountContacts.actions.load({'accountid': this.props.accountInfo.accountid});
     },
 
     getInitialState: function() {
-        AccountContacts.actions.get();
+        AccountContacts.actions.load({'accountid': this.props.accountInfo.accountid});
         return {
-           'contacts': [],
+           'contacts': {
+                'contacts': []
+           },
            'newContacts': []
         }
     },
 
     render: function() {
-        var contacts = this.state.contacts;
-        if (contacts.length == 0) {
-            return (<div></div>);
-        }
+        var contacts = this.state.contacts.contacts;
         var self = this;
         var newContactsList = this.state.newContacts.map(function(contact, index) {
             return (
                 <Contact 
                     key={`new-contact-${index}`}
+                    accountid={self.props.accountInfo.accountid}
                     index={index}
                     readOnly={false} 
                     contact={contact} 
-                    onMinusClick={self.onNewContactMinusClick}/>
+                    onMinusClick={self.onNewContactMinusClick}
+                    onSuccessSubmit={self.onNewContactSuccessSubmit}/>
             );
         });
-        var contactsList = contacts.map(function(contact, index) {
-            return (
-                <Contact 
-                    key={contact.contactid}
-                    index={index}
-                    contact={contact} 
-                    onMinusClick={self.onContactMinusClick}/>
-            );
-        });
-
+        var contactsList;
+        if (contacts.length != 0) {
+            contactsList = contacts.map(function(contact, index) {
+                return (
+                    <Contact 
+                        key={contact.contactid}
+                        accountid={self.props.accountInfo.accountid}
+                        index={index}
+                        contact={contact} 
+                        onMinusClick={self.onContactMinusClick}
+                        onSuccessSubmit={self.onContactSuccessSubmit}/>
+                );
+            }); 
+        }
+        if (newContactsList.length == 0 && (!contactsList || contactsList.length == 0)) {
+            contactsList = (<div>没有常用出行人，可以点击上方加号进行添加</div>)
+        }
         return (
             <div className="contacts-container info-section">
                 <Title title="常用出行人" className="info-title">

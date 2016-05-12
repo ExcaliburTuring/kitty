@@ -3,24 +3,18 @@
  */
 import React from 'react';
 import { Col, Image } from 'react-bootstrap';
-import { Form } from 'antd';
+import { Form, message } from 'antd';
 
 import Title from 'title';
+import { accountStatus, url, defaultValue } from 'config';
+import AccountBasicInfo from 'account_basicinfo';
 import EditButtonGroup from 'editbtngroup'; 
 import Email from 'email';
 import Mobile from 'mobile';
 import Address from 'address';
 import call from '../../img/call.png';
-import { url } from 'config';
 
 var Contact = React.createClass({
-
-    getInitialState: function() {
-        return {
-            'readOnly': true, // 是否不可编辑
-            'isChange': false, // 是否被编辑过
-        }
-    },
 
     isChange: function() {
         return this.refs.emailContainer.isChange()
@@ -41,7 +35,7 @@ var Contact = React.createClass({
     },
 
     onSubmitBtnClick: function() {
-        var basicInfo = {'accountid': this.props.basicInfo.accountInfo.accountid};
+        var basicInfo = {'accountid': this.props.accountInfo.accountid};
         if (this.refs.emailContainer.isChange()) {
             basicInfo['email'] = this.refs.emailContainer.getEmail();
         }
@@ -51,13 +45,17 @@ var Contact = React.createClass({
         if (this.refs.addressContainer.isChange()) {
             basicInfo['address'] = this.refs.addressContainer.getAddress();
         }
-        console.log(basicInfo);
+        var self = this;
         $.post(url.basicinfo, basicInfo)
         .done(function(data) {
-            console.log('kdkdkdk')
-            console.log(data);
-        }).fail(function(data) {
-            console.log(data);
+            AccountBasicInfo.actions.load();
+            self.setState({
+                'readOnly': true,
+                'isChange': false
+            })
+            message.success('更新成功');
+        }).fail(function() {
+            message.error(defaultValue.updateAccountMsg);
         });
     },
 
@@ -71,9 +69,16 @@ var Contact = React.createClass({
         this.refs.addressContainer.revert();
     },
 
+    getInitialState: function() {
+        return {
+            'readOnly': this.props.accountInfo.status !== accountStatus.WAIT_COMPLETE_INFO, // 是否不可编辑
+            'isChange': false, // 是否被编辑过
+        }
+    },
+
     render: function() {
-        var accountInfo = this.props.basicInfo.accountInfo;
-        var accountSetting = this.props.basicInfo.accountSetting;
+        var accountInfo = this.props.accountInfo;
+        var accountSetting = this.props.accountSetting;
         var readOnly= this.state.readOnly;
 
         return (
@@ -97,19 +102,16 @@ var Contact = React.createClass({
                         <Email
                             ref="emailContainer"
                             defaultEmail={accountInfo.email}
-                            controlId="contact-container-email"
                             onChange={this.onChange}
                             readOnly={readOnly}/>
                         <Mobile 
                             ref="mobileContainer"
                             defaultMobile={accountInfo.mobile}
-                            controlId="contact-container-mobile"
                             onChange={this.onChange}
                             readOnly={readOnly}/>
                         <Address 
                             ref="addressContainer"
                             defaultAddress={accountSetting.address}
-                            controlId="contact-container-address"
                             onChange={this.onChange}
                             readOnly={readOnly}/>
                     </Form>

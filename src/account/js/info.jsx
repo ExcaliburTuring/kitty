@@ -32,13 +32,13 @@ var Info = React.createClass({
             <div className="info-container">
                 <Grid>
                     <Row>
-                        <BasicInfo basicInfo={basicInfo}/>
+                        <BasicInfo accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
                     </Row>
                     <Row>
-                        <Contact basicInfo={basicInfo}/>
+                        <Contact accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
                     </Row>
                     <Row>
-                        <Contacts basicInfo={basicInfo}/>
+                        <Contacts accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
                     </Row>
                 </Grid>
             </div>
