@@ -22,9 +22,7 @@ var App = React.createClass({
         var { accountid } = this.props.params;
         return {
             'accountid': accountid,
-            'basicInfo': {
-                'login': false
-            }
+            'basicInfo': {}
         };
     },
 

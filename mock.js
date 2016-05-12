@@ -8,7 +8,6 @@ function handler(path, res, config) {
     if (pathItem.length <= 2 || !isNaN(pathItem[2])) {
         res.sendFile(config.page, {root: TEST_PATH});
     } else {
-        console.log(path)
         var mockFile = TEST_PATH + path.replace(/\//g, '_').substring(1) + '.js';
         res.json(require(mockFile));
     }
@@ -23,7 +22,7 @@ function config(url, page) {
 }
 
 var mockConfig = [
-    config('/', 'index.html'), // 下面是倒序便利的，所以/的拦截放在第一个
+    config('/', 'index.html'),
     config('/test', 'test.html'),
     config('/register', 'register.html'),
     config('/login', 'login.html'),
