@@ -9,7 +9,8 @@ export var url = {
 	'group': '/travel/group',
 	'indexHot': '/index/hot',
     'groupinfo': '/order/groupinfo',
-    'orderBrief': '/order/brief'
+    'orderBrief': '/order/brief',
+    'routeList': '/routes/info'
 };
 
 export var defaultValue = {
