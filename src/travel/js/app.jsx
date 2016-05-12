@@ -71,7 +71,7 @@ var App = React.createClass({
 
         return (
             <div>
-                <Navbar />
+                <Navbar name="routes" />
                 {content}
                 <Footer />
             </div>
