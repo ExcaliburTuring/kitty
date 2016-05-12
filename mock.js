@@ -26,7 +26,7 @@ var mockConfig = [
     config('/test', 'test.html'),
     config('/register', 'register.html'),
     config('/login', 'login.html'),
-    config('/account*', 'account.html'),
+    //config('/account*', 'account.html'),
     config('/index*', 'index.html'),
     config('/travel*', 'travel.html'),
     config('/canvas*', 'canvas.html'),

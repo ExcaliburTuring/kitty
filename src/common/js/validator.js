@@ -6,7 +6,7 @@ import IDValidator from 'id-validator';
 
 // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
 var _emailRe=/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-var _passwordValidCharRe = /^[a-zA-Z\d!@#$%^&*]+$/;
+var _mobileRe=/^0?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/;
 function _checkLength(value) {
     return value.length >= 8;
 }
@@ -66,15 +66,35 @@ const validator = {
     },
 
     name: function(name, msg) {
-        return _success();
+        return this.hasText(name, msg);
     },
 
     email: function(email, msg) {
-        return _success();
+        if (_emailRe.test(email)) {
+            return _success();
+        } else {
+            return _error(msg);
+        } 
     },
 
     mobile: function(mobile, msg) {
-        return _success();
+         if (_mobileRe.test(mobile)) {
+            return _success();
+        } else {
+            return _error(msg);
+        } 
+    },
+
+    birthday: function(birthday, msg) {
+        if (Date.parse(birthday) < Date.now()) {
+            return _success();
+        } else {
+            return _error(birthday);
+        }
+    }, 
+
+    address: function(address, msg) {
+        return this.hasText(address, msg);
     }
 
 }

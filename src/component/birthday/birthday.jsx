@@ -12,6 +12,15 @@ import './birthday.less';
 
 var Birthday = React.createClass({
 
+    validate: function() {
+        var ret = validator.birthday(this.state.birthday, '输入的日期有误');
+        this.setState({
+            'validationState': ret['state'],
+            'msg': ret['msg']
+        });
+        return ret['state'];
+    },
+
     getBirthday: function() {
         return  this.state.birthday;
     },
@@ -31,8 +40,18 @@ var Birthday = React.createClass({
         if (birthday == this.state.birthday) {
             return;
         }
+        var ret = validator.birthday(value, '输入的日期有误');
         this.setState({
-            'birthday': birthday
+            'birthday': birthday,
+            'validationState': ret['state'],
+            'msg': ret['msg']
+        });
+    },
+
+    cleanValidate: function() {
+        this.setState({
+            'validationState': null,
+            'msg': ''
         });
     },
 

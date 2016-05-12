@@ -20,6 +20,26 @@ const T_PASSER_DESC = idType.getDesc(idType.T_PASSER);
 
 var Id = React.createClass({
 
+    validate: function() {
+        var ret;
+        if (this.state.idType == idType.IDENTIFICATION) {
+            ret = validator.id(this.state.id);
+        } else {
+            ret = validator.hasText(this.state.id);
+        }
+        var newState = {
+            'validationState': ret['state'],
+            'errMsg': ret['msg']
+        };
+
+        if (ret['info']) {
+            newState['birthday'] = ret['info']['birth'];
+            newState['gender'] = ret['info']['sex'] == 0 ? gender.FEMALE : gender.MALE;
+        }
+        this.setState(newState);
+        return ret['state'];
+    },
+
     getIdType: function() {
         return this.state.idType;
     },
@@ -80,6 +100,13 @@ var Id = React.createClass({
             newState['gender'] = ret['info']['sex'] == 0 ? gender.FEMALE : gender.MALE;
         }
         this.setState(newState);
+    },
+
+    cleanValidate: function() {
+        this.setState({
+            'validationState': null,
+            'msg': ''
+        });
     },
 
     revert: function() {

@@ -12,6 +12,15 @@ import './email.less';
 
 var Email = React.createClass({
 
+    validate: function() {
+        var ret = validator.email(this.state.email);
+        this.setState({
+            'validationState': ret['state'],
+            'msg': ret['msg']
+        });
+        return ret['state'];
+    },
+
     getEmail: function() {
         return this.state.email;
     },
@@ -33,12 +42,15 @@ var Email = React.createClass({
         })
     },
 
-    revert: function() {
+    cleanValidate: function() {
         this.setState({
-            'email': this.props.defaultEmail,
             'validationState': null,
-            'msg': '',
+            'msg': ''
         });
+    },
+
+    revert: function() {
+        this.setState(this.getInitialState());
     },
 
     getInitialState: function() {

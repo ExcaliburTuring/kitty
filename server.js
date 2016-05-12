@@ -33,10 +33,10 @@ var proxyConfig =(function(){
 //     target: 'http://192.168.1.104:8080',
 //     secure: false
 // }
-// proxyConfig['/account*'] = {
-//     target: 'http://192.168.1.104:8080',
-//     secure: false
-// }
+proxyConfig['/account*'] = {
+    target: 'http://localhost:8083',
+    secure: false
+}
 // proxyConfig['/account/info'] = {
 //     target: 'http://192.168.1.104:8080',
 //     secure: false
