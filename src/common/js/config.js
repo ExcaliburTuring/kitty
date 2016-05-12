@@ -3,17 +3,11 @@
  */
 export var url = {
 	'basicinfo': '/account/basicinfo',
-	'validateEmail': '/account/validateEmail',
-	'validateTell': '/account/validateTell',
-	'login': '/account/login',
-	'register': '/account/register',
 	'contacts': '/account/contacts',
-	'accountOrders': '/account/orders',
 	'travel': '/travel',
 	'route': '/travel/route',
 	'group': '/travel/group',
 	'indexHot': '/index/hot',
-    'info': '/account/basicinfo',
     'groupinfo': '/order/groupinfo',
     'orderBrief': '/order/brief',
     'routeList': '/routes/info'
@@ -22,7 +16,10 @@ export var url = {
 export var defaultValue = {
 	'accountUrl': '/account',
 	'imgPath': './img/',
-	'routeImgPath': './img/route/'
+	'routeImgPath': './img/route/',
+    'updateAccountMsg': '更新用户信息失败，请稍后重试',
+    'updateContactsMsg': '更新常用出行人信息失败，请稍后重试',
+    'deleteContactsMsg': '删除常用出行人失败，请稍候重试'
 };
 
 export var error = {
@@ -95,4 +92,21 @@ export var gender = {
         }
     }
 
+}
+
+export var accountStatus = {
+     /**
+     * 刚注册
+     */
+    WAIT_COMPLETE_INFO: 'WAIT_COMPLETE_INFO',
+
+    /**
+     * 账户正常
+     */
+    OK: 'OK',
+
+    /**
+     * 账户注销
+     */
+    DELETE: 'DELETE'
 }

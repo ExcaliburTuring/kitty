@@ -18,6 +18,10 @@ const FEMALE_DESC = gender.getDesc(gender.FEMALE);
 
 var Gender = React.createClass({
 
+    validate: function() {
+        return 'success';
+    },
+
     getGender: function() {
         return  this.state.gender;
     },
@@ -43,6 +47,13 @@ var Gender = React.createClass({
         }
         this.setState({
             'gender': e.target.value,
+        });
+    },
+
+    cleanValidate: function() {
+        this.setState({
+            'validationState': null,
+            'msg': ''
         });
     },
 

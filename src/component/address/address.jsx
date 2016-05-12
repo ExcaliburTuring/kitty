@@ -12,6 +12,15 @@ import './address.less';
 
 var Address = React.createClass({
 
+    validate: function() {
+        var ret = validator.address(this.state.address, '地址输入有误');
+        this.setState({
+            'validationState': ret['state'],
+            'msg': ret['msg']
+        });
+        return ret['state'];
+    },
+
     getAddress: function() {
         return this.state.address;
     },
@@ -25,20 +34,30 @@ var Address = React.createClass({
         if (this.state.address === value) {
             return;
         }
+        var ret = validator.address(value, '地址输入有误');
         this.setState({
             'address': e.target.value,
-        })
+            'validationState': ret['state'],
+            'msg': ret['msg']
+        });
+    },
+
+    cleanValidate: function() {
+        this.setState({
+            'validationState': null,
+            'msg': ''
+        });
     },
 
     revert: function() {
-        this.setState({
-            'address': this.props.defaultAddress,
-        });
+        this.setState(this.getInitialState());
     },
 
     getInitialState: function() {
         return {
             'address': this.props.defaultAddress,
+            'validationState': null,
+            'msg': ''
         }
     },
 

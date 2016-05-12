@@ -3,9 +3,9 @@
  */
 import React from 'react';
 import { Col, Image } from 'react-bootstrap';
-import { Form } from 'antd';
+import { Form, message } from 'antd';
 
-import { idType, gender, url } from 'config';
+import { idType, gender, accountStatus, url, defaultValue } from 'config';
 import Title from 'title';
 import EditButtonGroup from 'editbtngroup';
 import Name from 'name';
@@ -52,7 +52,7 @@ var BasicInfo = React.createClass({
     },
 
     onSubmitBtnClick: function() {
-        var basicInfo = {'accountid': this.props.basicInfo.accountInfo.accountid};
+        var basicInfo = {'accountid': this.props.accountInfo.accountid};
         if (this.refs.nameInput.isChange()) {
             basicInfo['name'] = this.refs.nameInput.getName();
         }
@@ -66,12 +66,17 @@ var BasicInfo = React.createClass({
         if (this.refs.birthdaySelector.isChange()) {
             basicInfo['birthday'] = this.refs.birthdaySelector.getBirthday();
         }
-        console.log(basicInfo);
+        var self = this;
         $.post(url.basicinfo, basicInfo)
         .done(function(data) {
-            console.log(data);
-        }).fail(function(data) {
-            console.log(data);
+            AccountBasicInfo.actions.load();
+            self.setState({
+                'readOnly': true,
+                'isChange': false
+            })
+            message.success('更新成功');
+        }).fail(function() {
+            message.error(defaultValue.updateAccountMsg);
         });
     },
 
@@ -88,14 +93,14 @@ var BasicInfo = React.createClass({
 
     getInitialState: function() {
         return {
-            'readOnly': true, // 是否不可编辑
+            'readOnly': this.props.accountInfo.status !== accountStatus.WAIT_COMPLETE_INFO, // 是否不可编辑
             'isChange': false, // 是否被编辑过
         }
     },
 
     render: function() {
-        var accountInfo = this.props.basicInfo.accountInfo;
-        var accountSetting = this.props.basicInfo.accountSetting;
+        var accountInfo = this.props.accountInfo;
+        var accountSetting = this.props.accountSetting;
         var readOnly= this.state.readOnly;
         var readOnly1 = this.refs.idSelector
                         ? this.refs.idSelector.getIdType() === idType.IDENTIFICATION 
@@ -121,27 +126,22 @@ var BasicInfo = React.createClass({
                         <Name
                             ref="nameInput"
                             defaultName={accountInfo.name}
-                            controlId="basic-container-name"
                             onChange={this.onChange}
-                            readOnly={readOnly}
-                            inlineErrMsg={true}/>
+                            readOnly={readOnly}/>
                         <Id 
                             ref="idSelector"
                             defaultIdType={accountInfo.idType}
                             defaultId={accountInfo.id}
-                            controlId="basic-container-id"
                             readOnly={readOnly}
                             onChange={this.onIdChange}/>
                         <Gender
                             ref="genderSelector"
                             defaultGender={accountSetting.gender}
-                            controlId="basic-container-gender"
                             readOnly={readOnly1}
                             onChange={this.onChange}/>
                         <Birthday 
                             ref="birthdaySelector"
                             defaultBirthday={accountSetting.birthday}
-                            controlId="basic-container-birthday"
                             readOnly={readOnly1}
                             onChange={this.onChange}/>
                     </Form>

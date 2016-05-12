@@ -4,7 +4,7 @@
 import Reflux from 'reflux';
 import { url } from 'config';
 
-var _accountBasicInfo = null;
+var _accountBasicInfo = {};
 
 var AccountBasicInfoActions = Reflux.createActions([
     {
@@ -38,7 +38,7 @@ AccountBasicInfoActions.load.listen(function() {
 var AccountBasicInfoStore = Reflux.createStore({
     listenables: AccountBasicInfoActions,
     onGet: function() {
-        this.trigger(_accountBasicInfo ? _accountBasicInfo : {'login': false});
+        this.trigger(_accountBasicInfo);
     },
     onLoadCompleted: function(data) {
         this.trigger(data);
@@ -47,7 +47,8 @@ var AccountBasicInfoStore = Reflux.createStore({
         console.log('store failed');
     },
     onClean: function() {
-        _accountBasicInfo = null;
+        _accountBasicInfo = {};
+        this.trigger(_accountBasicInfo);
     }
 });
 

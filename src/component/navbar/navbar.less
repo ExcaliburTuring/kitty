@@ -5,9 +5,9 @@
 @import '~base.less';
 
 .navbar {
-	height: 80px;
+	height: 53px;
 	text-align: center;
-	background-color: @red;
+	background-color: @white;
 }
 
 .navbar-middle{
@@ -21,7 +21,7 @@
 }
 
 .navbar-default {
-	color: @white;
+	color: @black;
 	background-image: none;
 	border: 0px;
 }
@@ -33,18 +33,27 @@
 }
 
 .navbar-default .navbar-nav > li > a {
-	line-height: 50px;
 	text-align: center;
-	color: @white;
+	color: @black;
+	text-shadow: none;
+	font-family: "Microsoft YaHei";
 	font-size: 20px;
 	font-weight: 400;
+	border-bottom: 3px solid @white;;
 	&:hover {
-		color: @white;
+		color: @orange;
+		border-bottom: 3px solid @orange;
 	}
+}
+
+.navbar-default .navbar-nav .activity > a {
+	color: @white;
+	background-color: @orange;
+	border-bottom: 3px solid @orange;
 }
 
 .navbar-header {
 	img {
-		height: 80px;
+		height: 50px;
 	}
 }

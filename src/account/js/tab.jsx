@@ -15,7 +15,6 @@ var Tab = React.createClass({
     getInitialState: function() {
         var accountid  = this.props.accountInfo.accountid;
         var name = this.props.accountInfo.name;
-        var avatarUrl = this.props.accountSetting.avatarUrl;
         var indexUrl = `/${accountid}`;
         var infoUrl = `/${accountid}/info`;
         var ordersUrl = `/${accountid}/orders`;
@@ -29,7 +28,7 @@ var Tab = React.createClass({
         return {
             'accountid': accountid,
             'name': name,
-            'avatarUrl': avatarUrl,
+            'avatarUrl': this.props.accountSetting.avatarUrl,
             'indexUrl': indexUrl,
             'infoUrl': infoUrl,
             'ordersUrl': ordersUrl,

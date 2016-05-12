@@ -6,26 +6,24 @@ import Reflux from 'reflux';
 import { Col } from 'react-bootstrap';
 
 import Rabbit from 'rabbit';
+import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url } from 'config';
 import OrderList from './order/orders';
 
-var BasicInfo = Rabbit.create(url.info);
 var OrderInfo = Rabbit.create(url.orderBrief); 
 
 var Index = React.createClass({
 
-    mixins: [Reflux.connect(BasicInfo.store, 'info'),Reflux.connect(OrderInfo.store, 'data')],
+    mixins: [
+        Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
+        Reflux.connect(OrderInfo.store, 'data')
+    ],
 
     getInitialState: function() {
-        BasicInfo.actions.load({'accountid': 1});
+        AccountBasicInfo.actions.get();
         OrderInfo.actions.load({'accountid': 10001,'orderType':'CURRENT'});
         return {
-            'info': {
-                'status': 0,
-                'login': false,
-                'accountInfo': [],
-                'accountSetting': []
-            },
+            'basicInfo': {},
             'data': {
                 'status': 1,
                 'briefOrders': [],
@@ -36,7 +34,7 @@ var Index = React.createClass({
     },
 
     render: function() {
-        var info = this.state.info;
+        var basicInfo = this.state.basicInfo;
         var orders = this.state.data.briefOrders;
         var { accountid } = this.props.params;
         var ordersUrl = `${defaultValue.accountUrl}/${accountid}/orders`;
@@ -54,9 +52,9 @@ var Index = React.createClass({
                     <Col md={3}>
                         <div className="profiles">
                             <div className="">
-                                <p><i className="fa fa-male"/>{info.accountInfo.name}</p>
-                                <p><i className="fa fa-mobile"/>{info.accountInfo.mobile}</p>
-                                <p><i className="fa fa-birthday-cake"/>{info.accountSetting.birthday}</p>
+                                <p><i className="fa fa-male"/>{basicInfo.accountInfo.name}</p>
+                                <p><i className="fa fa-mobile"/>{basicInfo.accountInfo.mobile}</p>
+                                <p><i className="fa fa-birthday-cake"/>{basicInfo.accountSetting.birthday}</p>
                             </div>
                             <a href={infoUrl} activeClassName="active">编辑资料</a>
                         </div>
@@ -65,7 +63,7 @@ var Index = React.createClass({
                         <div className="title">
                             <Col md={5}>
                                 <div className="welcome">
-                                    欢迎回来，{info.accountInfo.name}
+                                    欢迎回来，{basicInfo.accountInfo.name}
                                 </div>
                             </Col>
                             <div className="messages">

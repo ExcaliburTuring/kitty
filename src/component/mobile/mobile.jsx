@@ -12,6 +12,15 @@ import './mobile.less'
 
 var Mobile = React.createClass({
 
+    validate: function() {
+        var ret = validator.mobile(this.state.mobile, '手机号输入有误');
+        this.setState({
+            'validationState': ret['state'],
+            'msg': ret['msg']
+        });
+        return ret['state'];
+    },
+
     getMobile: function() {
         return this.state.mobile;
     },
@@ -25,7 +34,7 @@ var Mobile = React.createClass({
         if (this.state.mobile === value) {
             return;
         }
-        var ret = validator.mobile(value);
+        var ret = validator.mobile(value, '手机号输入有误');
         this.setState({
             'mobile': e.target.value,
             'validationState': ret['state'],
@@ -33,29 +42,28 @@ var Mobile = React.createClass({
         })
     },
 
-    revert: function() {
+    cleanValidate: function() {
         this.setState({
-            'mobile': this.props.defaultMobile,
             'validationState': null,
-            'msg': '',
+            'msg': ''
         });
+    },
+
+    revert: function() {
+        this.setState(this.getInitialState());
     },
 
     getInitialState: function() {
         return {
             'mobile': this.props.defaultMobile,
-
-            'controlId': this.props.controlId,
             'validationState': null,
             'msg': '',
-
-            'onChange': this.props.onChange
         }
     },
 
     componentDidUpdate: function(prevProps, prevState) {
         if (this.state.mobile != prevState.mobile) { // 有时候state 不能立即更新，所以这里要这commponenetDidupdate
-            this.state.onChange(this.state.mobile);
+            this.props.onChange(this.state.mobile);
         }  
     },
 

@@ -12,6 +12,15 @@ import './name.less';
 
 var Name = React.createClass({
 
+    validate: function() {
+        var ret = validator.name(this.state.name);
+        this.setState({
+            'validationState': ret['state'],
+            'msg': ret['msg']
+        });
+        return ret['state'];
+    },
+
     getName: function() {
         return this.state.name;
     },
@@ -30,6 +39,13 @@ var Name = React.createClass({
             'name': e.target.value,
             'validationState': ret['state'],
             'msg': ret['msg']
+        });
+    },
+
+    cleanValidate: function() {
+        this.setState({
+            'validationState': null,
+            'msg': ''
         });
     },
 

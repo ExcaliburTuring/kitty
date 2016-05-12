@@ -9,7 +9,7 @@ require('./css/application.less');
 
 ReactDOM.render(
  	<div> 
-		<Navbar/>
+		<Navbar name="routes"/>
 		<App/>
 		<Footer/>
 	</div>
