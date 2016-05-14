@@ -6,7 +6,7 @@ import Reflux from 'reflux';
 import { Panel,Button,Col } from 'react-bootstrap';
 
 import GroupBrief from './group';
-import Discount from './Discount'; 
+import Discount from './discount'; 
 import NoAuth from './noauth';
 
 import alipay from '../img/alipay.png';
