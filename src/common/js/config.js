@@ -4,12 +4,16 @@
 export var url = {
 	'basicinfo': '/account/basicinfo',
 	'contacts': '/account/contacts',
-	'travel': '/travel',
+
 	'route': '/travel/route',
 	'group': '/travel/group',
+
 	'indexHot': '/index/hot',
+
+    'order': '/order/info',
     'groupinfo': '/order/groupinfo',
     'orderBrief': '/order/brief',
+
     'routeList': '/routes/info'
 };
 
@@ -110,3 +114,62 @@ export var accountStatus = {
      */
     DELETE: 'DELETE'
 }
+
+export var orderStatus = {
+
+    /**
+     * 新订单
+     */
+    NEW: 'NEW',
+
+    /**
+     * 生成等待付款
+     */
+    WAITING: 'WAITING',
+
+    /**
+     * 取消
+     */
+    CANCEl: 'CANCEl',
+
+    /**
+     * 超时
+     */
+    TIMEOUT: 'TIMEOUT',
+
+    /**
+     * 取消支付
+     */
+    CANCELPAYMENT: 'CANCELPAYMENT',
+
+    /**
+     * 已退款
+     */
+    REFOUNDED: 'REFOUNDED',
+
+    /**
+     * 付款中
+     */
+    PAYING: 'PAYING',
+
+    /**
+     * 付款到账
+     */
+    PAID: 'PAID',
+
+    /**
+     * 退款中
+     */
+    REFOUNDING: 'REFOUNDING',
+
+    /**
+     * 开始旅行
+     */
+    FINISH: 'FINISH',
+
+    /**
+     * 行程取消
+     */
+    CLOSED: 'CLOSED'
+}
+

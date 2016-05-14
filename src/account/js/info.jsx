@@ -29,8 +29,8 @@ var Info = React.createClass({
         }
 
         return (
-            <div className="info-container">
-                <Grid>
+            <Grid>
+                <div className="info-container">
                     <Row>
                         <BasicInfo accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
                     </Row>
@@ -40,8 +40,8 @@ var Info = React.createClass({
                     <Row>
                         <Contacts accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
                     </Row>
-                </Grid>
-            </div>
+                </div>
+            </Grid>
         );
     }
 });

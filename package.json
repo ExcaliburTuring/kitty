@@ -44,12 +44,10 @@
     "whatwg-fetch": "^0.10.1"
   },
   "dependencies": {
-    "amazeui-react": "^1.0.1",
-    "antd": "^0.12.17",
+    "antd": "^1.0.1",
     "classnames": "^2.2.1",
     "history": "^1.17.0",
     "id-validator": "^1.2.1",
-    "immutable": "^3.7.6 ",
     "marked": "^0.3.5",
     "moment": "^2.13.0",
     "react": "^0.14.3",

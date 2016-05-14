@@ -3,10 +3,9 @@ import { Col, Image } from 'react-bootstrap';
 
 import TravellerList from './travellers';
 
-var OrderList = React.createClass({
+var OrderItem = React.createClass({
 
     render: function() {
-        console.log(this.props.order);
         var order = this.props.order;
         var title = "";
         var status ="";
@@ -18,22 +17,22 @@ var OrderList = React.createClass({
         var avatars = "";
 
         if(order.status=="WAITING"){
-            title = "未完成订单",
-            status = "未支付",
-            minutecount = (<p className="right">支付剩余时间:{order.minuteCount}分钟</p>),
-            price = `￥${order.actualPrice}`,
+            title = "未完成订单";
+            status = "未支付";
+            minutecount = (<p className="right">支付剩余时间:{order.minuteCount}分钟</p>);
+            price = `￥${order.actualPrice}`;
             pay = ( 
                 <div>
                     <a className="pay">去支付</a>
                     <a className="cancel">取消</a>
                 </div>
-            )
+            );
         }else if(order.status=="PAYING"){
-            title="支付中订单",
-            status ="支付中"
+            title="支付中订单";
+            status ="支付中";
         }else if(order.status=="PAID"){
-            title="即将出行",
-            status ="已支付",
+            title="即将出行";
+            status ="已支付";
             orderclass = "order startorder",
             avatars = order.avatars.map(function(avatar, index) {
                 return (
@@ -64,17 +63,17 @@ var OrderList = React.createClass({
                 </div>
             )
         }else if(order.status=="REFOUNDING"){
-            title="退款订单",
-            status ="退款中"
+            title="退款订单";
+            status ="退款中";
         }else if(order.status=="REFOUNDED"){
-            title="退款订单",
-            status ="退款完成"
+            title="退款订单";
+            status ="退款完成";
         }else if(order.status=="FINISH"){
-            title="历史订单",
-            status ="已完成",
-            orderclass ="order history"
+            title="历史订单";
+            status ="已完成";
+            orderclass ="order history";
         }else{
-            orderclass ="invisible"
+            orderclass ="invisible";
         }
 
         return (
@@ -134,4 +133,4 @@ var OrderList = React.createClass({
     }
 });
 
-module.exports = OrderList;
+module.exports = OrderItem;
