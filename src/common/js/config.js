@@ -2,16 +2,23 @@
  * @author xiezhenzong 
  */
 export var url = {
+
+    'wxLogin': '/wx/login',
+
+    'account': '/account',
 	'basicinfo': '/account/basicinfo',
 	'contacts': '/account/contacts',
 
-    'travel': '/travel'
+    'travel': '/travel',
 	'route': '/travel/route',
 	'group': '/travel/group',
 
 	'indexHot': '/index/hot',
 
-    'order': '/order/info',
+    'order': '/order',
+    'orderNew': '/order/new',
+    'orderDetail': '/order/detail',
+    'orderDiscount': '/order/discount',
     'groupinfo': '/order/groupinfo',
     'orderBrief': '/order/brief',
 
@@ -19,12 +26,12 @@ export var url = {
 };
 
 export var defaultValue = {
-	'accountUrl': '/account',
 	'imgPath': './img/',
 	'routeImgPath': './img/route/',
     'updateAccountMsg': '更新用户信息失败，请稍后重试',
     'updateContactsMsg': '更新常用出行人信息失败，请稍后重试',
-    'deleteContactsMsg': '删除常用出行人失败，请稍候重试'
+    'deleteContactsMsg': '删除常用出行人失败，请稍候重试',
+    'newOrderMsg': '创建订单失败，请稍候重试'
 };
 
 export var error = {
