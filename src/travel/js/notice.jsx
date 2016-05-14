@@ -17,16 +17,16 @@ var Notice = React.createClass({
                 <div className="content">
                     <Col xs={12} md={6}>
                         <Col xs={12} md={12}>
-                            <h1><i className="fa fa-compass"/>关于当地</h1>
+                            <h2><i className="fa fa-compass"/>关于当地</h2>
                             <div dangerouslySetInnerHTML={{__html: local}}></div>
                         </Col>
                         <Col xs={12} md={12}>
-                            <h1><i className="fa fa-subway"/>交通信息</h1>
+                            <h2><i className="fa fa-subway"/>交通信息</h2>
                             <div dangerouslySetInnerHTML={{__html: traffic}}></div>
                         </Col>
                     </Col>
                     <Col xs={12} md={6}>
-                        <h1><i className="fa fa-cubes"/>物资准备</h1>
+                        <h2><i className="fa fa-cubes"/>物资准备</h2>
                         <div dangerouslySetInnerHTML={{__html: prepare}}></div>
                     </Col>
                 </div>

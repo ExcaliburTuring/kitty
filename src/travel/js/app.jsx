@@ -56,12 +56,10 @@ var App = React.createClass({
                 <div>
                     <Face route={route.routes[0]}/>
                     <div className="body" id="body">
-                        <div className="maininfo">
-                            <Body 
-                                route={route.routes[0]}
-                                imgtext={route.imgtext}
-                                groups={groups.groups}/>
-                        </div>
+                        <Body 
+                            route={route.routes[0]}
+                            imgtext={route.imgtext}
+                            groups={groups.groups}/>
                     </div>
                 </div>
             );

@@ -18,7 +18,7 @@ var Face = React.createClass({
                         <Col xs={6} md={3}>
                             <div className="relative">
                                 <div className="duration inline">{route.days}<br/>
-                                    <span className="day">DAYS</span>
+                                    <span className="day">DAY</span>
                                 </div>
                                 <h1 className="title inline">{route.name}</h1>
                                 <h3 className="intro">{route.title}</h3>

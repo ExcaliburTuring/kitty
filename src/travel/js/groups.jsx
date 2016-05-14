@@ -53,7 +53,7 @@ var Groups = React.createClass({
         }
         return (
             <div className="teaminfo">
-                <h1>报名</h1>
+                <h2>报名</h2>
                 <Table responsive condensed hover>
                     <thead>
                         <tr>
