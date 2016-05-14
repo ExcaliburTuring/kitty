@@ -41,7 +41,9 @@ var Day1 = React.createClass({
         return (
             <div className="day1">
                 <div className="content">
-                    <h1>{day.title}</h1>
+                    <Col xs={12} md={12}>
+                        <h2>{day.title}</h2>
+                    </Col>
                     <Col xs={12} md={6}>
                         <Image responsive src={_getRouteImgPath(day.imgs[0])}/>
                     </Col>
@@ -50,7 +52,9 @@ var Day1 = React.createClass({
                         <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
                     </Col>
                 </div>
-                <hr/>
+                <Col xs={12} md={12}>
+                    <hr/>
+                </Col>
             </div>
         );
     }
@@ -62,7 +66,7 @@ var Day = React.createClass({
     createAddInfo: function(fa, text) {
         var className = `fa ${fa}`;
         return (
-            <h2><i className={className} />{text}</h2>
+            <h4><i className={className} />{text}</h4>
         );
     },
 
@@ -77,7 +81,9 @@ var Day = React.createClass({
         return (
             <div className="days">
                 <div className="content">
-                    <h1>{day.title}</h1>
+                    <Col xs={12} md={12}>
+                        <h2>{day.title}</h2>
+                    </Col>
                     <Col xs={12} md={6}>
                         <Image responsive src={_getRouteImgPath(day.imgs[0])}/>
                         <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
@@ -91,7 +97,9 @@ var Day = React.createClass({
                         {star}
                     </Col>
                 </div>
-                <hr/>
+                <Col xs={12} md={12}>
+                    <hr/>
+                </Col>
             </div>
         );
     }

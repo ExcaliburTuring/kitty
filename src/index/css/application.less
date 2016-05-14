@@ -7,14 +7,6 @@
     height: 500px;
 }
 
-.navbar {
-    width: 100%;
-    height: 120px;
-    position: absolute;
-    background-color: rgba( 255, 255, 255, 0.1);
-    top: 0;
-}
-
 .swiper-container {
     width: 100%;
     height: 800px;
@@ -161,6 +153,7 @@
 
 .separator{
     margin-top: 30px;
+    display: flex;
     position: relative;
     line-height: 40px;
 
@@ -177,6 +170,13 @@
 }
 
 .hxy-desc {
+    .text {
+        font-family: "Microsoft YaHei";
+        font-size: 18px;
+        text-align: center;
+        color: @black;
+    }
+
     .hxy-desc-text {
         font-family: "Microsoft YaHei";
         font-size: 18px;
@@ -286,16 +286,10 @@
 
 .activities{
     position: relative;
-    background-color: @gray;
-
-    .container {
-        padding: 12px 0;
-    }
+    background-color: @light-gray;
         
     img {
         cursor: pointer;
-        width: 512px;
-        height: 200px;
         margin-top: 10px;
         margin-bottom: 10px;
 
@@ -312,7 +306,9 @@
 }
     
 .others{
+    height: 600px;
     background-size: 1500px 600px;
+    background-position: center;
     background-repeat: no-repeat;
     margin-top: 30px;
 
