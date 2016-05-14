@@ -33,7 +33,7 @@ var Face = React.createClass({
                             </div>
                         </Col>
                         <Col xs={6} md={9}>
-                            <Slider route={route}/>
+                            <Slider route={route} imgtext={this.props.imgtext}/>
                         </Col>
                     </Row>
                 </Grid>

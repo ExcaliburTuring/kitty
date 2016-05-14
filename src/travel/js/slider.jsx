@@ -25,9 +25,8 @@ var Slider = React.createClass({
         });
     },
 
-    render: function() {
-        var imgs = this.props.route.imgs.split(',');
-        imgs = imgs.slice(0, imgs.length - 1);
+    render: function() { 
+        var imgs = this.props.imgtext.sliderImgs;
         var slideItemList = imgs.map(function(img, index) {
             var bg = {backgroundImage: `url(${_getRouteImgPath(img)})`};
             return (

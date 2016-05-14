@@ -65,13 +65,7 @@ var Contacts = React.createClass({
             delete selectContacts[contactid];
         }
         this.setState({'selectContacts': selectContacts});
-        var names = [];
-        for (var i = 0, n = contacts.length; i < n; i++) {
-            if (selectContacts[contacts[i].contactid]) {
-                names.push(contacts[i].name);
-            }
-        }
-        this.props.onContactChange(names);
+        this.props.onContactChange(selectContacts);
     },
 
     getInitialState: function() {
