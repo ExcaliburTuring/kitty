@@ -5,6 +5,7 @@ export var url = {
 	'basicinfo': '/account/basicinfo',
 	'contacts': '/account/contacts',
 
+    'travel': '/travel'
 	'route': '/travel/route',
 	'group': '/travel/group',
 
