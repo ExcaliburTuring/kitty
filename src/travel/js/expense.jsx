@@ -17,16 +17,16 @@ var Expense = React.createClass({
                 <div className="content">
                     <Col xs={12} md={6}>
                         <Col xs={12} md={12}>
-                            <h1><i className="fa fa-exclamation-circle"/>费用包含</h1>
+                            <h2><i className="fa fa-exclamation-circle"/>费用包含</h2>
                              <div dangerouslySetInnerHTML={{__html: include}}></div>
                         </Col>
                         <Col xs={12} md={12}>
-                            <h1><i className="fa fa-exclamation-circle"/>退款政策</h1>
+                            <h2><i className="fa fa-exclamation-circle"/>退款政策</h2>
                             <div dangerouslySetInnerHTML={{__html: cancel}}></div>
                         </Col>
                     </Col>
                     <Col xs={12} md={6}>
-                        <h1><i className="fa fa-exclamation-circle"/>费用不包含</h1>
+                        <h2><i className="fa fa-exclamation-circle"/>费用不包含</h2>
                         <div dangerouslySetInnerHTML={{__html: exclude}}></div>
                     </Col>
                 </div>

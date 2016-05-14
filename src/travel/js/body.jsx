@@ -18,10 +18,12 @@ var Body = React.createClass({
         return (
             <div>
                 <BodyNav container={this}/>
-                <Days days={imgtext.days}/>
-                <Notice notice={imgtext.notice}/>
-                <Expense expense={imgtext.expense}/>
-                <Groups groups={this.props.groups}/>
+                <div className="maininfo">
+                    <Days days={imgtext.days}/>
+                    <Notice notice={imgtext.notice}/>
+                    <Expense expense={imgtext.expense}/>
+                    <Groups groups={this.props.groups}/>
+                </div>
             </div>
         );
     }

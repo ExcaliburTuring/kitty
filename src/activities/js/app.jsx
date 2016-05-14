@@ -51,8 +51,8 @@ var App = React.createClass({
                             </div>
                         </div>
                     </div>
-                    <div className="swiper-slide" style={bg3}>
-                        <div className="activity-container">
+                    <div className="swiper-slide">
+                        <div className="activity-container" style={bg3}>
                         </div>
                     </div>
                 </div>
