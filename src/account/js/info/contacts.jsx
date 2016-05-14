@@ -84,20 +84,22 @@ var Contacts = React.createClass({
     render: function() {
         var contacts = this.state.contacts.contacts;
         var self = this;
-        var newContactsList = this.state.newContacts.map(function(contact, index) {
-            return (
-                <Contact 
-                    key={`new-contact-${index}`}
-                    accountid={self.props.accountInfo.accountid}
-                    index={index}
-                    readOnly={false} 
-                    contact={contact} 
-                    onMinusClick={self.onNewContactMinusClick}
-                    onSuccessSubmit={self.onNewContactSuccessSubmit}/>
-            );
-        });
-        var contactsList;
-        if (contacts.length != 0) {
+        var contactsList = [], newContactsList = [];
+        if (this.state.newContacts.length > 0) {
+            newContactsList = this.state.newContacts.map(function(contact, index) {
+                return (
+                    <Contact 
+                        key={`new-contact-${index}`}
+                        accountid={self.props.accountInfo.accountid}
+                        index={index}
+                        readOnly={false} 
+                        contact={contact} 
+                        onMinusClick={self.onNewContactMinusClick}
+                        onSuccessSubmit={self.onNewContactSuccessSubmit}/>
+                );
+            });
+        }
+        if (contacts.length > 0) {
             contactsList = contacts.map(function(contact, index) {
                 return (
                     <Contact 
@@ -110,7 +112,7 @@ var Contacts = React.createClass({
                 );
             }); 
         }
-        if (newContactsList.length == 0 && (!contactsList || contactsList.length == 0)) {
+        if (newContactsList.length == 0 && contactsList.length == 0) {
             contactsList = (<div>没有常用出行人，可以点击上方加号进行添加</div>)
         }
         return (

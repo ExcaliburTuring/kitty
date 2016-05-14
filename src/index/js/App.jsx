@@ -56,7 +56,6 @@ var App = React.createClass({
 
     render: function() {
         var hotRoutes = this.state.data.routes;
-        console.log(hotRoutes);
         var products = (<div></div>);
         if (hotRoutes.length != 0) {
            products = (

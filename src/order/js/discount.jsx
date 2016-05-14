@@ -5,25 +5,16 @@ import React from 'react';
 import Reflux from 'reflux';
 import { Form, FormGroup, ControlLabel,FormControl,Col } from 'react-bootstrap';
 
-import AccountBaiscInfo from 'account_basicinfo';
 import { url } from 'config';
 import Rabbit from 'rabbit';
-
-var AccountContacts = Rabbit.create(url.contacts);
 
 var Discount = React.createClass({
 
     mixins: [
-        Reflux.connect(AccountBaiscInfo.store, 'basicInfo'),
-        Reflux.connect(AccountContacts.store, 'contacts'),
     ],
 
     getInitialState: function() {
         return {
-            'basicInfo': {
-                'login': false
-            },
-            'contacts': [],
             'order': {
                 'status': 1,
                 'orders': [],
@@ -32,24 +23,7 @@ var Discount = React.createClass({
         }
     },
 
-    componentDidMount: function() {
-        AccountBaiscInfo.actions.get();
-        AccountContacts.actions.get();
-    },
-
     render: function() {
-        // var basicInfo = this.state.basicInfo;
-        // var contacts = this.state.contacts;
-        // var order = this.state.order;
-        // if (!basicInfo.login || contacts.length == 0 || order.status !=0) {
-        //     return (
-        //         <div></div>
-        //     );
-        // };
-        // var mockOrder = order.orders[1]; // 假装只取到一个订单，因为应该是有orderid的，
-        // var mockDiscount = order.discounts[mockOrder.orderid]; // 假装取到打折信息
-
-
         return (
             <div className="discount-container section-container">
                 <Col md={12}><p className="right-price">总价：1000</p></Col>

@@ -30,9 +30,9 @@ var mockConfig = [
     config('/canvas*', 'canvas.html'),
     config('/routes*', 'routes.html'),
     config('/activities*', 'activities.html'),
-    // config('/travel*', 'travel.html'),
-    // config('/account*', 'account.html'),
-    // config('/order*', 'order.html'),
+    config('/travel*', 'travel.html'),
+    config('/account*', 'account.html'),
+    config('/order*', 'order.html'),
     config('/img/*'),
 ];
 
