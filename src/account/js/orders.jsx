@@ -3,28 +3,26 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
+import { Grid } from 'react-bootstrap';
 
 import { url } from 'config';
 import Rabbit from 'rabbit';
-import OrderList from './order/orders';
+import OrderItem from './order/order';
 
-var OrderInfo = Rabbit.create(url.orderBrief); 
+var OrderBrief = Rabbit.create(url.orderBrief); 
 
 var Orders = React.createClass({
 
-    mixins: [Reflux.connect(OrderInfo.store, 'data')],
+    mixins: [Reflux.connect(OrderBrief.store, 'data')],
 
     getInitialState: function() {
+        OrderBrief.actions.load();
         return {
             'data': {
                 'status': 1,
                 'briefOrders': []
             }
         }
-    },
-
-    componentDidMount: function() {
-    	 OrderInfo.actions.load({'accountid': '10001'});
     },
 
     render: function() {
@@ -36,20 +34,18 @@ var Orders = React.createClass({
                 </div>
             );
         }
-        var orders = data.briefOrders;
-
-        var ordersList = orders.map(function(order) {
+        var ordersList = data.briefOrders.map(function(order) {
             return (
-                    <OrderList order={order} key={order.orderid}/>
+                    <OrderItem order={order} key={order.orderid}/>
             );
         });
 
         return (
-            <div className="container"> 
+            <Grid> 
                 <div className="order-container">
                     {ordersList}
                 </div>
-            </div>
+            </Grid>
         );
     }
 });
