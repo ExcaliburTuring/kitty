@@ -54,7 +54,7 @@ var App = React.createClass({
                 && route.routes.length >= 1) {
             content = (
                 <div>
-                    <Face route={route.routes[0]}/>
+                    <Face route={route.routes[0]} imgtext={route.imgtext}/>
                     <div className="body" id="body">
                         <Body 
                             route={route.routes[0]}

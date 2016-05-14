@@ -2,12 +2,42 @@
  * @authro xiezhenzong
  */
 import React from 'react';
+import Reflux from 'reflux';
 import { Col, Table, Button } from 'react-bootstrap';
+import { message } from 'antd';
+import 'antd/lib/index.css';
+
+import { url, defaultValue } from 'config';
+import AccountBasicInfo from 'account_basicinfo';
 
 var Groups = React.createClass({
 
-    onClick: function() {
+    mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
 
+    getInitialState: function() {
+        AccountBasicInfo.actions.get();
+        return {
+            'basicInfo': {}
+        }
+    },
+
+    onClick: function(group) {
+        if (this.state.basicInfo.accountInfo == null) {
+            window.location.pathname = url.wxLogin;
+            return;
+        }
+
+        $.post(url.orderNew, {'routeid': group.routeid, 'groupid': group.groupid})
+        .done(function(data) {
+            if (data.status != 0) {
+                message.error(defaultValue.newOrderMsg);
+            } else {
+                window.location.pathname = `${url.order}/${data.orderid}`;
+            }
+        })
+        .fail(function() {
+            message.error(defaultValue.newOrderMsg);
+        });
     },
 
     render: function() {
@@ -20,15 +50,16 @@ var Groups = React.createClass({
                 </div>
             );
         }
+        var self = this;
         var groupList = this.props.groups.map(function (group, index) {
             var btn;
             var status;
-            var startDate = new Date(parseInt(group.startDate)).toLocaleString().replace(/\//g, "-").replace(/日/g, " ").substr(0,9);  
-            var endDate = new Date(parseInt(group.endDate)).toLocaleString().replace(/\//g, "-").replace(/日/g, " ").substr(0,9); 
+            var startDate = group.startDate;
+            var endDate = group.endDate;
             if(group.status == 'OPEN'){
                 status="报名中";
                 btn=(
-                    <Button className="able">报名</Button>
+                    <Button className="able" onClick={()=>{self.onClick(group)}}>报名</Button>
                 );
             }else if(group.status == 'FULL'){
                 status="已报满";
