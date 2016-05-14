@@ -42,6 +42,8 @@ module.exports = {
         'wxLink': 'ldldl'
     }],
     'imgtext': {
+        'sliderImgs': ["p11.jpg", "p12.png"],
+        'descriptions': [],
         'days': [{
             'title': 'Day1 (集合日) 西双版纳',
             'imgs': ['p01_000.jpg'],

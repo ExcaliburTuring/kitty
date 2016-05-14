@@ -8,18 +8,6 @@ var GroupBrief = React.createClass({
 
     render: function() {
         var groupinfo = this.props.group;
-        var travelers = this.props.travelers.map(function(traveler, index) {
-            return (
-                <div key={`${index}`}>
-                    <p>
-                        {traveler}
-                    </p>
-                    <div className="price-right">
-                        {groupinfo.price}
-                    </div>
-                </div>
-            );
-        });
         return (
             <div className="travel-info">
                 <div className="group-brief-container section-container"> 
@@ -28,7 +16,6 @@ var GroupBrief = React.createClass({
                         <h2>{groupinfo.name}</h2>
                         <h3>{groupinfo.title}</h3>
                         <h4>{groupinfo.time}</h4>
-                        {travelers}
                     </div>
                 </div>
                 <div className="total">

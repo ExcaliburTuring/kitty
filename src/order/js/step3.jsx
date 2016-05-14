@@ -6,7 +6,8 @@ import Reflux from 'reflux';
 import { Panel,Button,Col } from 'react-bootstrap';
 
 import GroupBrief from './group';
-import Discount from './Discount'; 
+import Discount from './discount'; 
+import Contacts from './contacts'
 import NoAuth from './noauth';
 
 import alipay from '../img/alipay.png';
@@ -30,7 +31,8 @@ var Step3 = React.createClass({
         return (
             <div>
                 <Col md={12}>
-                    <div className="Discount-title">优惠政策</div>
+                    <Contacts 
+                            />
                 </Col>
             </div>
         );
