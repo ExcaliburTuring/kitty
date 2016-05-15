@@ -2,15 +2,14 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Button } from 'react-bootstrap';
 
 var FaButton = React.createClass({
 
     render: function() {
         return (
-            <Button className="title-btn" bsSize="xsmall" onClick={this.props.onClick}>
-                <i className={this.props.faClass} aria-hidden="true"/>{' '}
-            </Button>
+            <div className="title-btn" onClick={this.props.onClick}>
+                <i className={this.props.faClass} aria-hidden="true"/>
+            </div>
         );
     }
 

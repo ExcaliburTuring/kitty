@@ -14,25 +14,29 @@
 }
 
 .main-footer {
-    background: @red;
-    color: @white;
+    border-top: 3px solid @currency;
+    background: @rice;
+    color: @black;
     padding: 35px 0 0;
     
     .footer-content {
         margin-bottom: 35px;
         padding: 0 30px;
+        font-family: "Microsoft YaHei";
 
-        .title {
+        .footer-title {
             border-bottom: 1px solid #303030;
-            color: #FFF;
+            color: @black;
             margin-bottom: 21px;
             margin-top: 0;
+            font-size: 18px;
+            font-weight: 400;
             padding-bottom: 7px;
             position: relative;
         }
 
-        .title:after {
-            background: #FF9966;
+        .footer-title:after {
+            background: @currency;
             bottom: -1px;
             content: "";
             height: 1px;
@@ -54,7 +58,7 @@
                 padding: 0;
 
                 a, p {
-                    color: @white;
+                    color: @black;
                 }
 
                 a:HOVER {
@@ -78,13 +82,16 @@
 }
 
 .footer-copyright {
-    background: @red;
-    border-top: 1px solid #303030;
+    background: @light-gray;
     color: #555;
     font-size: 13px;
-    padding-bottom: 20px;
-    padding-top: 14px;
     text-align: center;
+
+    .container {
+        padding-bottom: 14px;
+        padding-top: 10px;
+        border-top: 2px solid @currency;
+    }
 
     a {
         color: #555;

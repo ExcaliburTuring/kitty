@@ -5,6 +5,8 @@ import React from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import FaButton from './fabutton';
 
+import './buttongroup.less';
+
 var EditButtonGroup = React.createClass({
 
     render: function() {

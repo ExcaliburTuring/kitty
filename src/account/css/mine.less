@@ -2,7 +2,6 @@
 	font-family: "Microsoft Yahei";
 	margin-top: 5px;
 	padding-top: 20px;
-	background-color: #FDFDFD;
 
 
 	.profiles p {
@@ -16,15 +15,17 @@
 
 	.title{
 		margin-bottom: 20px;
+        padding: 6px 10px;
 		color: @dark-gray;
 		background-color: @white;
+        border-radius: 5px;
     	box-shadow: 0 0 3px @light-gray;
-		height: 40px;
-		line-height: 40px;
+		height: 39px;
+		line-height: 27px;
 
 		.welcome {
-			padding-left:10px;
-			border-left: 5px solid @red;
+            border-left: 5px solid @currency;
+			padding-left: 20px;
 			font-size: 20px;
 		}
 
@@ -34,14 +35,14 @@
 
 			.bar {
 				padding-left: 10px;
-				border-left: 3px solid @red;
+				border-left: 3px solid @currency;
 			}
 
 			.unfinished {
-				color: @red;
+				color: @currency;
 			}
 			.histories {
-				color: @red;
+				color: @currency;
 			}
 		}
 	}
@@ -56,7 +57,7 @@
 		height: 460px;
 		background-color: @white;
 		border: 1px dashed @red;
-    	box-shadow: 0 0 5px @dark-gray;
+    	box-shadow: 0 0 5px @gray;
 
     	.start-title {
     		margin-bottom: 15px;
@@ -69,13 +70,13 @@
             .left {
                 line-height: 40px;
                 font-size: 28px;
-                color: @red;
+                color: @currency;
             }
 
             .middle {
                 line-height: 40px;
                 font-size: 14px;
-                color: @light-gray;
+                color: @gray;
             }
     	}
 
@@ -111,7 +112,7 @@
 			.travel-names {
 				overflow: hidden;
 				p .fa {
-					color: @light-gray;
+					color: @gray;
 					margin-right: 5px;
 				}
 			}
@@ -125,7 +126,7 @@
 			
 			.travel-countdown {
 				.countdown-title{
-					color: @red;
+					color: @currency;
 					font-size: 24px;
 					text-align: center;
 				}
