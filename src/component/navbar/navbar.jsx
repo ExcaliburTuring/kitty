@@ -6,7 +6,7 @@ import Reflux from 'reflux';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Image } from 'react-bootstrap';
 
 import AccountBasicInfo from 'account_basicinfo';
-import logo from "./logo1.png"
+import logo from "./logo.png"
 
 require('./navbar.less');
 
