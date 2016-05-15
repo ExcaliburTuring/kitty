@@ -23,8 +23,8 @@ var Days = React.createClass({
             );
         });
         return (
-            <div>
-                <Day1 day={firstDay} />
+            <div className="xingcheng">
+                <Day1 day={firstDay}/>
                 <Col xs={12} md={12}>
                     <hr/>
                 </Col>

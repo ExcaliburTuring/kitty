@@ -69,7 +69,7 @@ var Routes =React.createClass({
         return (
             <div className="route-container">
                 <div className="header">
-                    <div>
+                    <div className="head-title">
                         {route.name}
                     </div>
                 </div>
