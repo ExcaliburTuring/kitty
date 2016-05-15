@@ -9,8 +9,8 @@ import { defaultValue, url } from 'config';
 import Rabbit from 'rabbit';
 import Banner from './banner';
 
-import activity1 from '../img/leader.jpg';
-import activity2 from '../img/postcard.jpg';
+import activity1 from '../img/postcard.jpg';
+import activity2 from '../img/leader.jpg';
 import worldmap from "../img/worldmap.png";
 
 function _getRouteImgPath(routeImgPath) {
@@ -103,7 +103,9 @@ var App = React.createClass({
                     <Grid>
                         <Row>
                             <Col lg={5} lgOffset={1} md={6}>
-                                <Image responsive className="center-block" src={activity1} />
+                            <a href="/activities">
+                                <Image responsive className="center-block" src={activity1}/>
+                            </a>
                             </Col>
                             <Col lg={5} md={6}>
                                 <Image responsive className="center-block" src={activity2} />
