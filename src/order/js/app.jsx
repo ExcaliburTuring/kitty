@@ -19,12 +19,12 @@ import Contacts from './contacts'
 
 import 'antd/lib/index.css';
 
-var OrderInfo = Rabbit.create(url.orderDetail); 
+var OrderDetail = Rabbit.create(url.orderDetail); 
 var App = React.createClass({
 
     mixins: [
         Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
-        Reflux.connect(OrderInfo.store, 'data')
+        Reflux.connect(OrderDetail.store, 'data')
     ],
 
     // step1的回调函数
@@ -89,7 +89,7 @@ var App = React.createClass({
     getInitialState: function() {
         AccountBasicInfo.actions.get();
         var orderid = window.location.pathname.split('/')[2];
-        OrderInfo.actions.load({'orderid': orderid});
+        OrderDetail.actions.load({'orderid': orderid});
         return {
             'basicInfo': {},
             'data': {
@@ -125,33 +125,39 @@ var App = React.createClass({
             );
         }
         var content;
+        var step;
         var status = data.orderInfo.status;
-        if (status == orderStatus.NEW) {
+        status = orderStatus.REFOUNDED;
+        if (status === orderStatus.NEW) {
+            step = 1;
             content = (<Step1
                             quota={data.quota}
                             orderInfo={data.orderInfo} 
                             onContactChange={this.onContactChange}
                             onAgreementCheck={this.onAgreementCheck}
                             onNextBtnClick={this.onNextBtnClick}/>);
-        } else if (status == orderStatus.WAITING) {
+        } else if (status === orderStatus.WAITING) {
+            step = 2;
             content = (<Step2
                             count={this.state.order.travellerCount}
                             orderInfo={data.orderInfo}
                             onCreateOrderSubmit={this.onCreateOrderSubmit}
                             onOrderPaySubmit={this.onOrderPaySubmit} />);
-        } else  {
+        } else {
+            step = 3;
             content = (<Step3 
                             orderInfo={data.orderInfo} 
-                            travelGroup={this.state.travelGroup}
-                            travelRoute={this.state.travelRoute}
-                            orderTravellers={this.state.orderTravellers}
-                            code={this.state.code}
-                            student={this.state.student}
-                            orderRefound={this.state.orderRefound}/>);
-        }
+                            travelGroup={data.travelGroup}
+                            travelRoute={data.travelRoute}
+                            orderTravellers={data.orderTravellers}
+                            policy={data.policy}
+                            code={data.code}
+                            student={data.student}
+                            orderRefound={data.orderRefound}/>);
+       }
         return (
             <Grid>
-                <StepBar />
+                <StepBar step={step}/>
                 <Row>
                     <Col md={9}>
                         {content}
@@ -170,22 +176,25 @@ var App = React.createClass({
 var StepBar = React.createClass({
 
     render: function() {
+        var step1Class = this.props.step == 1 ? 'on' : '';
+        var step2Class = this.props.step == 2 ? 'on' : '';
+        var step3Class = this.props.step == 3 ? 'on' : '';
         return (
             <Row>
                 <div className="step">          
                     <ul>
-                        <Col md={4} componentClass="li" className="on">
+                        <Col md={4} componentClass="li" className={step1Class}>
                             <span className="num"><em className="f-r5"></em><i>1</i></span>                 
                             <span className="line_bg lbg-r"></span>
                             <p className="lbg-txt">报名信息</p>
                         </Col>
-                        <Col md={4} componentClass="li">
+                        <Col md={4} componentClass="li" className={step2Class}>
                             <span className="num"><em className="f-r5"></em><i>2</i></span>
                             <span className="line_bg lbg-l"></span>
                             <span className="line_bg lbg-r"></span>
                             <p className="lbg-txt">优惠&支付</p>
                         </Col>
-                        <Col md={4} componentClass="li">
+                        <Col md={4} componentClass="li" className={step3Class}>
                             <span className="num"><em className="f-r5"></em><i>3</i></span>
                             <span className="line_bg lbg-l"></span>
                             <p className="lbg-txt">报名成功</p>
