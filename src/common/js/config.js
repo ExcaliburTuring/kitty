@@ -19,7 +19,8 @@ export var url = {
     'orderNew': '/order/new',
     'orderDetail': '/order/detail',
     'orderDiscount': '/order/discount',
-    'groupinfo': '/order/groupinfo',
+    'orderDiscountCode': '/order/discountcode',
+    'orderOrder': '/order/order',
     'orderBrief': '/order/brief',
 
     'routeList': '/routes/info'

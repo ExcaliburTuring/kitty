@@ -59,13 +59,24 @@ var Contacts = React.createClass({
         var contact = contacts[index];
         var contactid = contact.contactid;
         var selectContacts = this.state.selectContacts;
+        var selectContactsSize = this.state.selectContactsSize;
         if (checked) {
-            selectContacts[contactid] = contact;
+            if (selectContactsSize > this.props.quota) {
+                message.warn(`本团最多还可以报${this.props.quota}人`)
+                return;
+            } else {
+                selectContacts[contactid] = contact;
+                selectContactsSize = selectContactsSize + 1;
+            }
         } else {
             delete selectContacts[contactid];
+            selectContactsSize = selectContactsSize - 1;
         }
-        this.setState({'selectContacts': selectContacts});
-        this.props.onContactChange(selectContacts);
+         this.setState({
+                'selectContacts': selectContacts,
+                'selectContactsSize': selectContactsSize 
+            });
+        this.props.onContactChange(selectContacts, selectContactsSize);
     },
 
     getInitialState: function() {
@@ -75,7 +86,8 @@ var Contacts = React.createClass({
                 'contacts': []
            },
            'newContacts': [],
-           'selectContacts': {}
+           'selectContacts': {},
+           'selectContactsSize': 0
         }
     },
 
@@ -133,6 +145,7 @@ var Contacts = React.createClass({
         return (
             <div className="order-contact-container">
                 <Title title="常用出行人" className="order-contact-title">
+                    <p className="order-contact-tip">本团还可报{this.props.quota}人</p>
                     <div className="order-contact-name-container">
                         {nameList}
                     </div>
@@ -150,6 +163,7 @@ var Name = React.createClass({
     render: function() {
         return (
             <Checkbox
+                className="order-contact-name"
                 checked={this.props.checked}
                 defaultChecked={false}
                 disabled={false}

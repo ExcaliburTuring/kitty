@@ -2,39 +2,24 @@
  * @author xiezhenzong 
  */
 import React from 'react';
-import Reflux from 'reflux';
-import { Col, Button } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import { Button } from 'antd';
 
-import { url } from 'config';
-import Rabbit from 'rabbit';
-import GroupBrief from './group';
 import Discount from './discount'; 
-import NoAuth from './noauth';
-
 import alipay from '../img/alipay.png';
+import 'antd/lib/index.css';
 
-var OrderDiscount = Rabbit.create(url.orderDiscount);
 var Step2 = React.createClass({
 
-    getInitialState: function() {
-        OrderDiscount.actions.load();
-        return {
-           'data': {
-                'status': 1,
-                'orders': [],
-                'staffs': {}
-            }
-        }
-    },
-
     render: function() {
-        var groupid = 4;
-        var travelers = ["谢振宗","赵伟"];
         return (
             <div className="order-step2">
                 <div className="discount-title">优惠政策</div>
                 <div className="discount-item">
-                    <Discount />
+                    <Discount 
+                        count={this.props.count}
+                        orderInfo={this.props.orderInfo} 
+                        onCreateOrderSubmit={this.props.onCreateOrderSubmit}/>
                 </div>
                 <div className="pay-item">
                     <Col md={3}>
@@ -49,7 +34,9 @@ var Step2 = React.createClass({
                     </Col>
                     <Col md={2}>
                         <div className="right">
-                            <div className="btn">马上支付</div>
+                            <Button type="primary" onClick={this.props.onOrderPaySubmit}>
+                                马上支付
+                            </Button>
                         </div>
                     </Col>
                 </div>
