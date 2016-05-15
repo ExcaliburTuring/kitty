@@ -2,13 +2,9 @@
  * @author xiezhenzong 
  */
 import React from 'react';
-import Reflux from 'reflux';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { Checkbox, message } from 'antd';
 
-import GroupBrief from './group';
-import Discount from './discount'; 
-import NoAuth from './noauth';
 import Contacts from './contacts'
 
 import 'antd/lib/index.css';
@@ -19,10 +15,11 @@ var Step1 = React.createClass({
         return (
             <div className="order-step1">
                 <Contacts 
+                    quota={this.props.quota}
                     onContactChange={this.props.onContactChange}/>
                 <div className="submit">
                     <Agreement 
-                        isAgreed={this.props.order.isAgreed}
+                        isAgreed={this.props.orderInfo.isAgreed}
                         onAgreementCheck={this.props.onAgreementCheck} />
                     <Button 
                         bsStyle="primary"

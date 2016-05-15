@@ -27,9 +27,12 @@ var App = React.createClass({
         Reflux.connect(OrderInfo.store, 'data')
     ],
 
-    onContactChange: function(selectContacts) {
+    // step1的回调函数
+
+    onContactChange: function(selectContacts, selectContactsSize) {
         var order = this.state.order;
-        order.traveller = selectContacts;
+        order.travellers = selectContacts;
+        order.travellerCount = selectContactsSize;
         this.setState({'order': order});
     },
 
@@ -40,15 +43,47 @@ var App = React.createClass({
     },
 
     onNextBtnClick: function() {
-        if (this.state.order.traveller.length == 0) {
+        if (this.state.order.travellerCount == 0) {
             message.error('必须选择出行人');
         } else if (this.state.order.isAgreed) {
             var data = this.state.data;
-            data.order.status = orderStatus.WAITING;
+            data.orderInfo.status = orderStatus.WAITING;
             this.setState({'data': data});
         } else {
             message.error('必须先同意安全协议');
         }
+    },
+
+    // step2的回调函数
+
+    onCreateOrderSubmit: function(discountData) {
+        var self = this;
+        var request = {
+            'routeid': this.state.data.orderInfo.routeid,
+            'groupid': this.state.data.orderInfo.groupid,
+            'travellers': this.state.order.travellers,
+            'policyDiscountid': discountData.policyDiscountid,
+            'discountCode': discountData.discountCode,
+            'studentDiscountid': discountData.studentDiscountid,
+            'studentCount': discountData.studentCount,
+            'isAgreed': this.state.order.isAgreed,
+            'actualPrice': discountData.actualPrice,
+        }
+        $.post(url.orderOrder, request)
+        .done(function(data) {
+            if (data.status != 0) {
+                message.error('订单创建失败，您可以联系15001028030');
+            } else {
+                message.success('订单创建成功，您可以使用支付宝进行支付');
+            }
+        })
+        .fail(function() {
+            message.error('订单创建失败，您可以联系15001028030');
+        });
+    },
+
+    onOrderPaySubmit: function() {
+
     },
 
     getInitialState: function() {
@@ -59,11 +94,19 @@ var App = React.createClass({
             'basicInfo': {},
             'data': {
                 'status': 1,
-                'order': {},
+                'orderInfo': {},
+                'travelGroup': {},
+                'travelRoute': {},
+                'orderTravellers': [],
+                'code': {},
+                'student': {},
+                'orderRefound': {},
+                'quota': 0
             },
             'order': {
                 'isAgreed': false,
-                'traveller': []
+                'travellers': [],
+                'travellerCount': 0
             }
         }
     },
@@ -82,20 +125,29 @@ var App = React.createClass({
             );
         }
         var content;
-        var status = data.order.status;
-        status = orderStatus.NEW;
+        var status = data.orderInfo.status;
         if (status == orderStatus.NEW) {
-            content = (<Step1 
-                            order={data.order} 
+            content = (<Step1
+                            quota={data.quota}
+                            orderInfo={data.orderInfo} 
                             onContactChange={this.onContactChange}
                             onAgreementCheck={this.onAgreementCheck}
                             onNextBtnClick={this.onNextBtnClick}/>);
         } else if (status == orderStatus.WAITING) {
-            content = <Step2 order={data.order} />
-        } else if (status == orderStatus.PAID) {
-            content = <Step3 order={data.order} />
-        } else {
-            content = <Step3 order={data.order} />
+            content = (<Step2
+                            count={this.state.order.travellerCount}
+                            orderInfo={data.orderInfo}
+                            onCreateOrderSubmit={this.onCreateOrderSubmit}
+                            onOrderPaySubmit={this.onOrderPaySubmit} />);
+        } else  {
+            content = (<Step3 
+                            orderInfo={data.orderInfo} 
+                            travelGroup={this.state.travelGroup},
+                            travelRoute={this.state.travelRoute},
+                            orderTravellers={this.state.orderTravellers},
+                            code={this.state.code},
+                            student={this.state.student},
+                            orderRefound={this.state.orderRefound}/>);
         }
         return (
             <Grid>
@@ -105,7 +157,9 @@ var App = React.createClass({
                         {content}
                     </Col>
                     <Col md={3}>
-                        <GroupBrief group={data.order.group}/>
+                        <GroupBrief 
+                            travelRoute={data.travelRoute} 
+                            travelGroup={data.travelGroup}/>
                     </Col>
                 </Row>
             </Grid>
