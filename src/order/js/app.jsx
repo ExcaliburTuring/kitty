@@ -124,31 +124,32 @@ var App = React.createClass({
                 </div>
             );
         }
-        var content;
+         var content;
         var status = data.orderInfo.status;
-        if (status == orderStatus.NEW) {
+        status = orderStatus.REFOUNDED;
+        if (status === orderStatus.NEW) {
             content = (<Step1
                             quota={data.quota}
                             orderInfo={data.orderInfo} 
                             onContactChange={this.onContactChange}
                             onAgreementCheck={this.onAgreementCheck}
                             onNextBtnClick={this.onNextBtnClick}/>);
-        } else if (status == orderStatus.WAITING) {
+        } else if (status === orderStatus.WAITING) {
             content = (<Step2
                             count={this.state.order.travellerCount}
                             orderInfo={data.orderInfo}
                             onCreateOrderSubmit={this.onCreateOrderSubmit}
                             onOrderPaySubmit={this.onOrderPaySubmit} />);
-        } else  {
+        } else {
             content = (<Step3 
                             orderInfo={data.orderInfo} 
-                            travelGroup={this.state.travelGroup},
-                            travelRoute={this.state.travelRoute},
-                            orderTravellers={this.state.orderTravellers},
-                            code={this.state.code},
-                            student={this.state.student},
+                            travelGroup={this.state.travelGroup}
+                            travelRoute={this.state.travelRoute}
+                            orderTravellers={this.state.orderTravellers}
+                            code={this.state.code}
+                            student={this.state.student}
                             orderRefound={this.state.orderRefound}/>);
-        }
+       }
         return (
             <Grid>
                 <StepBar />

@@ -3,14 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Panel,Button,Col } from 'react-bootstrap';
-
-import GroupBrief from './group';
-import Discount from './discount'; 
-import Contacts from './contacts'
-import NoAuth from './noauth';
-
-import alipay from '../img/alipay.png';
+import { Col } from 'react-bootstrap';
 
 var Step3 = React.createClass({
 
@@ -27,10 +20,8 @@ var Step3 = React.createClass({
     render: function() {
         
         return (
-            <div>
-                <Col md={12}>
-                    
-                </Col>
+            <div className="order-step3">
+                
             </div>
         );
     }
