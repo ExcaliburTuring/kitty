@@ -25,14 +25,11 @@ var Step3 = React.createClass({
     },
 
     render: function() {
-        var groupid = 4;
-        var agreement = true ? '我已经同意安全协议' : '同意安全协议';
-        var travelers = ["谢振宗","赵伟"];
+        
         return (
             <div>
                 <Col md={12}>
-                    <Contacts 
-                            />
+                    
                 </Col>
             </div>
         );

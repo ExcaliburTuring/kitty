@@ -7,19 +7,22 @@ import Reflux from 'reflux';
 var GroupBrief = React.createClass({
 
     render: function() {
-        var groupinfo = this.props.group;
+        var travelRoute = this.props.travelRoute;
+        var travelGroup = this.props.travelGroup;
         return (
             <div className="travel-info">
                 <div className="group-brief-container section-container"> 
                     <div className="infos">
-                        <img src={groupinfo.img} />
-                        <h2>{groupinfo.name}</h2>
-                        <h3>{groupinfo.title}</h3>
-                        <h4>{groupinfo.time}</h4>
+                        <img src={travelRoute.headImg} />
+                        <h2>{travelRoute.name}</h2>
+                        <h3>{travelRoute.title}</h3>
+                        <h4>{travelRoute.route}</h4>
+                        <h4>{travelGroup.startDate}</h4>
+                        <h4>{travelGroup.endDate}</h4>
                     </div>
                 </div>
                 <div className="total">
-                    <p>总价：</p><div className="price-right">￥3980</div>
+                    <p>总价：</p><div className="price-right">￥{travelGroup.price}</div>
                 </div>
             </div>
         );

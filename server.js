@@ -37,6 +37,10 @@ var proxyConfig =(function(){
 //     target: 'http://localhost:8083',
 //     secure: false
 // }
+// proxyConfig['/travel*'] = {
+//     target: 'http://192.168.1.104:8080',
+//     secure: false
+// }
 var server = new WebpackDevServer(compiler, {
     hot: true,
     historyApiFallback: true,
