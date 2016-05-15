@@ -4,7 +4,7 @@
 import React from 'react';
 import { Grid, Row, Col, Nav, NavItem, Image} from 'react-bootstrap';
 
-import { defaultValue } from 'config';
+import { url } from 'config';
 
 var Tab = React.createClass({
 
@@ -58,7 +58,7 @@ var Tab = React.createClass({
                         <Col smHidden xsHidden md={3}>
                             <div className="tab-account-info">
                                 <div className="tab-avatar">
-                                    <a href={`${defaultValue.accountUrl}${this.state.indexUrl}`}>
+                                    <a href={`${url.account}${this.state.indexUrl}`}>
                                         <Image alt="头像" src={this.state.avatarUrl} circle/>
                                     </a>
                                 </div>
