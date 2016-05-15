@@ -49,6 +49,7 @@ var Step3 = React.createClass({
     getTravellersTableData: function() {
         return this.props.orderTravellers.map(function(traveller) {
             return {
+                'key': `order-step-discount-${traveller.travellerid}`,
                 'name': traveller.name,
                 'idType': idType.getDesc(traveller.idType),
                 'id': traveller.id,
@@ -89,7 +90,6 @@ var Step3 = React.createClass({
                 <OrderStatus orderInfo={this.props.orderInfo}/>
                 <Table
                     className="step3-section"
-                    rowKey={traveller => traveller.travellerid}
                     columns={_travellerTableColumn}
                     dataSource={this.getTravellersTableData()}
                     bordered 
