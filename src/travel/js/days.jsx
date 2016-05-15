@@ -25,6 +25,9 @@ var Days = React.createClass({
         return (
             <div>
                 <Day1 day={firstDay} />
+                <Col xs={12} md={12}>
+                    <hr/>
+                </Col>
                 {daysList}
                 <Day1 day={lastDay}/>
             </div>
@@ -52,9 +55,6 @@ var Day1 = React.createClass({
                         <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
                     </Col>
                 </div>
-                <Col xs={12} md={12}>
-                    <hr/>
-                </Col>
             </div>
         );
     }
@@ -90,11 +90,13 @@ var Day = React.createClass({
                     </Col>
                     <Col xs={12} md={6}>
                         <Image responsive src={_getRouteImgPath(day.imgs[1])}/>
-                        {distance}
-                        {latitude}
-                        {hotel}
-                        {food}
-                        {star}
+                        <div className="icons">
+                            {star}
+                            {food}
+                            {distance}
+                            {latitude}
+                            {hotel}
+                        </div>
                     </Col>
                 </div>
                 <Col xs={12} md={12}>

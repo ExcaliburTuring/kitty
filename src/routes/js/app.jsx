@@ -79,7 +79,7 @@ var Routes =React.createClass({
                     </Col>
                     <Col md={8}>
                         <div className="days">
-                            <span className="up">{route.days}</span><span className="down">DAYS</span>
+                            <span className="up">{route.days}</span><span className="down">DAY</span>
                         </div>
                         <div className="name">
                             {route.name}
