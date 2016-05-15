@@ -10,6 +10,7 @@ import Days from './days';
 import Notice from './notice';
 import Expense from './expense';
 import Groups from './groups';
+import Brief from './brief';
 
 var Body = React.createClass({
 
@@ -19,6 +20,7 @@ var Body = React.createClass({
             <div>
                 <BodyNav container={this}/>
                 <div className="maininfo">
+                    <Brief brief={imgtext.introduction}/>
                     <Days days={imgtext.days}/>
                     <Notice notice={imgtext.notice}/>
                     <Expense expense={imgtext.expense}/>

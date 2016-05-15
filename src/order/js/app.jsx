@@ -142,11 +142,11 @@ var App = React.createClass({
         } else  {
             content = (<Step3 
                             orderInfo={data.orderInfo} 
-                            travelGroup={this.state.travelGroup},
-                            travelRoute={this.state.travelRoute},
-                            orderTravellers={this.state.orderTravellers},
-                            code={this.state.code},
-                            student={this.state.student},
+                            travelGroup={this.state.travelGroup}
+                            travelRoute={this.state.travelRoute}
+                            orderTravellers={this.state.orderTravellers}
+                            code={this.state.code}
+                            student={this.state.student}
                             orderRefound={this.state.orderRefound}/>);
         }
         return (
