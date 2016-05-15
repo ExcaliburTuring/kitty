@@ -45,16 +45,16 @@
     "file-loader": "^0.8.5"
   },
   "dependencies": {
-    "antd": "^1.0.1",
+    "antd": "^0.12.17",
     "classnames": "^2.2.1",
     "history": "^1.17.0",
     "id-validator": "^1.2.1",
     "marked": "^0.3.5",
     "moment": "^2.13.0",
-    "react": "^15.0.2",
+    "react": "^0.14.5",
     "react-bootstrap": "^0.29.2",
     "react-datepicker": "^0.27.0",
-    "react-dom": "^15.0.2",
+    "react-dom": "^0.14.5",
     "react-overlays": "^0.6.3",
     "react-router": "^2.0.1",
     "reflux": "^0.4.1"
