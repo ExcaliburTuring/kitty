@@ -35,13 +35,14 @@
     "less-loader": "^2.2.2",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
-    "redbox-react": "^1.2.2",
     "rimraf": "^2.4.3",
     "style-loader": "^0.13.0",
     "underscore": "^1.8.3",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.1",
-    "whatwg-fetch": "^0.10.1"
+    "whatwg-fetch": "^0.10.1",
+    "url-loader": "^0.5.7",
+    "file-loader": "^0.8.5"
   },
   "dependencies": {
     "antd": "^1.0.1",
@@ -50,12 +51,12 @@
     "id-validator": "^1.2.1",
     "marked": "^0.3.5",
     "moment": "^2.13.0",
-    "react": "^0.14.3",
+    "react": "^15.0.2",
     "react-bootstrap": "^0.29.2",
     "react-datepicker": "^0.27.0",
-    "react-dom": "^0.14.3",
+    "react-dom": "^15.0.2",
     "react-overlays": "^0.6.3",
     "react-router": "^2.0.1",
-    "reflux": "^0.3.0"
+    "reflux": "^0.4.1"
   }
 }
