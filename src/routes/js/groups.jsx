@@ -23,6 +23,11 @@ var Groups = React.createClass({
         };
     },
 
+    onClick: function() {
+        var routeid = this.props.routeid;
+        window.location.pathname= `${url.travel}/${routeid}`;
+    },
+
     componentDidMount: function() {
          GroupInfo.actions.load({'routeid':`${this.props.routeid}`});
     },
@@ -34,6 +39,7 @@ var Groups = React.createClass({
         var status;
         var startDate;
         var endDate;
+        var self = this;
 
         if (groups && groups.length >= 1) {
             groupList = groups.map(function (group, index) {
@@ -47,7 +53,7 @@ var Groups = React.createClass({
                         <td className="left">{group.title}</td>
                         <td>{status}</td>
                         <td>{group.price}</td>
-                        <td><Button className="able">{"详情"}</Button></td>
+                        <td><Button className="able" onClick={self.onClick}>{"详情"}</Button></td>
                     </tr>   
                 );                                    
             });
