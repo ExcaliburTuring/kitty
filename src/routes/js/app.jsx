@@ -51,6 +51,11 @@ var Routes =React.createClass({
         }
     },
 
+    onClick: function() {
+        var routeid = this.props.route.routeid;
+        window.location.pathname= `${url.travel}/${routeid}`;
+    },
+
     onhandleChange: function() {
         var detailVisible = !this.state.detailVisible;
         this.setState({'detailVisible': detailVisible})
@@ -69,19 +74,19 @@ var Routes =React.createClass({
         return (
             <div className="route-container">
                 <div className="header">
-                    <div className="head-title">
+                    <div className="head-title" onClick={this.onClick}>
                         {route.name}
                     </div>
                 </div>
                 <div className="content">
                     <Col md={4}>
-                        <img src={route.img} />
+                        <img src={route.img} onClick={this.onClick}/>
                     </Col>
                     <Col md={8}>
                         <div className="days">
                             <span className="up">{route.days}</span><span className="down">DAY</span>
                         </div>
-                        <div className="name">
+                        <div className="name" onClick={this.onClick}>
                             {route.name}
                         </div>
                         <div className="title">
