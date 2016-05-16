@@ -13,15 +13,16 @@ import activity1 from '../img/postcard.jpg';
 import activity2 from '../img/leader.jpg';
 import worldmap from "../img/worldmap.png";
 
-function _getRouteImgPath(routeImgPath) {
-    return defaultValue.routeImgPath + routeImgPath;
-}
-
 const daysImgConfig = {
-    1: _getRouteImgPath('p13.png'),
-    2: _getRouteImgPath('p23.png'),
-    3: _getRouteImgPath('p13.png'),
-    7: _getRouteImgPath('p23.png')
+    1: defaultValue.getRouteImgPath('p13.png'),
+    2: defaultValue.getRouteImgPath('p23.png'),
+    3: defaultValue.getRouteImgPath('p13.png'),
+    4: defaultValue.getRouteImgPath('p13.png'),
+    5: defaultValue.getRouteImgPath('p23.png'),
+    6: defaultValue.getRouteImgPath('p13.png'),
+    7: defaultValue.getRouteImgPath('p23.png'),
+    8: defaultValue.getRouteImgPath('p13.png'),
+    9: defaultValue.getRouteImgPath('p23.png')
 }
 
 function _getDaysImg(days) {
@@ -84,17 +85,17 @@ var App = React.createClass({
             <div className="content">
                 <Banner onDoubleDownBtnClick={this.onDoubleDownBtnClick} showDoubleDownBtn={this.state.showDoubleDownBtn}/>
                 <div className="hxy-desc">
-                    <div className="container">
-                        <div className="row">
+                    <Grid>
+                        <Row>
                             <Col lg={10} lgOffset={1} md={12} >
                                 <div id="anchor" />
                                 <Separator text="海逍遥旅行" ref="hxyDesc"/>
                                 <div className="text">haixiaoyao</div>
                                 <div className="text">诗与远方</div>
-                                <Image responsive className="center-block hxy-desc-img " src="http://wpcms.cdnws.54traveler.com/wp-content/uploads/2016/04/2016041205185992.jpg" />
+                                <Image responsive className="hxy-desc-img " src="http://wpcms.cdnws.54traveler.com/wp-content/uploads/2016/04/2016041205185992.jpg" />
                             </Col>
-                        </div>
-                    </div>
+                        </Row>
+                    </Grid>
                 </div>
                 <div className="products">
                     {products}
@@ -103,12 +104,12 @@ var App = React.createClass({
                     <Grid>
                         <Row>
                             <Col lg={5} lgOffset={1} md={6}>
-                            <a href="/activities">
-                                <Image responsive className="center-block" src={activity1}/>
-                            </a>
+                                <a href="/activities">
+                                    <Image responsive src={activity1}/>
+                                </a>
                             </Col>
                             <Col lg={5} md={6}>
-                                <Image responsive className="center-block" src={activity2} />
+                                <Image responsive src={activity2}/>
                             </Col>
                         </Row>
                     </Grid>
@@ -156,13 +157,12 @@ var Route = React.createClass({
 
     render: function() {
         var route = this.props.route;
-        var imgs = route.imgs.split(',');
         var daysImg = _getDaysImg(route.days);
         return (
             <div className="route-container" onClick={this.onClick}>
-                <Image responsive src={_getRouteImgPath(imgs[0])} />
+                <Image responsive src={defaultValue.getRouteImgPath(route.headImg)} />
                 <div className="opacity">
-                    <Image responsive src={_getRouteImgPath(imgs[imgs.length - 1])} />
+                    <Image responsive src={defaultValue.getRouteImgPath(route.mapImg)} />
                 </div>
                 <div className="days">
                     <Image responsive src={daysImg} />

@@ -3,39 +3,47 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Col } from 'react-bootstrap';
 
 import Slider from './slider';
-import { Grid, Row, Col,Navbar } from 'react-bootstrap';
 
 var Face = React.createClass({
 
     render: function() {
         var route = this.props.route;
         return (
-            <div className="face" id="face">
+            <div className="face-container">
                 <Col xs={6} md={3}>
                     <div className="relative">
-                        <div className="duration inline">{route.days}<br/>
-                            <span className="day">DAY</span>
+                        <div>
+                            <div className="duration pull-left">
+                                <span>{route.days}</span>
+                                <div className="days">
+                                    DAY
+                                </div>
+                            </div>
+                            <h1 className="title pull-left">{route.name}</h1>
                         </div>
-                        <h1 className="title inline">{route.name}</h1>
-                        <h3 className="intro">{route.title}</h3>
-                        <h4 className="intro inline">行程  </h4>
-                        <h4 className="route inline">{route.route}</h4>
-
+                        <div className="intro">
+                            <h5>{route.title}</h5>
+                        </div>
+                        <div className="route">
+                            <span className="pull-left"> 行程:</span>
+                            <h5 className="pull-left">{route.route}</h5>
+                        </div>
                         <div className="bottom">
                             <div className="share"></div>
-                            <h2 className="price">￥{`${route.minPrice} - ${route.maxPrice}`}</h2>
+                            <h2 className="price">￥{`${route.minPrice} — ${route.maxPrice}`}</h2>
                             <button className="time">时间&价格</button>
                         </div>
                     </div>
                 </Col>
                 <Col xs={6} md={9}>
-                    <Slider route={route} imgtext={this.props.imgtext}/>
+                    <Slider sliderImgs={this.props.sliderImgs}/>
                 </Col>
             </div>
         );
     }
 });
 
- module.exports=Face;
+module.exports=Face;

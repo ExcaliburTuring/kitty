@@ -13,7 +13,7 @@ var Brief = React.createClass({
 
         var spotlights = brief.spotlights.map(function(spotlight, index) {
             return (
-                <Col md={6}>
+                <Col md={6} key={`travel-brief-${index}`}>
                     <div className="liangdian" key={`${index}`}>
                         亮点 <span className="light-title">{`${index+1}`}</span>： 
                         <span className="spot-light"> {spotlight}</span>
@@ -24,23 +24,14 @@ var Brief = React.createClass({
 
         return (
              <div className="brief">
-                <div className="content">
-                    <div>
-                        <Col xs={12} md={12}>
-                            <hr />
-                            <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
-                        </Col>
-                    </div>
-                    <div>  
-                        <Col xs={12} md={12}>
-                            <hr />
-                            {spotlights}
-                        </Col>
-                        <Col xs={12} md={12}>
-                            <hr />
-                        </Col>
-                    </div>
-                </div>
+                <Col xs={12} md={12}>
+                    <hr />
+                    <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
+                </Col>
+                <Col xs={12} md={12}>
+                    <hr />
+                    {spotlights}
+                </Col>
             </div>
         );
     }

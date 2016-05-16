@@ -2,34 +2,88 @@
  * @authro xiezhenzong
  */
 import React from 'react';
-import { Nav, NavItem, Col } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { AutoAffix } from 'react-overlays';
 
-import Rabbit from 'rabbit';
+var _config = {
+    '.brief': 0,
+    '.day1': 1,
+    '.notice': 2,
+    '.expense': 3,
+    '.teaminfo': 4
+}
 
 var BodyNav = React.createClass({
 
+    addOnScroll: function() {
+        var briefTop = $('.brief').offset().top;
+        var day1Top = $('.day1').offset().top;
+        var noticeTop = $('.notice').offset().top;
+        var expenseTop = $('.expense').offset().top;
+        var teaminfoTop = $('.teaminfo').offset().top;
+        var $navbar = $('.am-sticky-placeholder .navbar');
+        var $navItems = $navbar.find('ul li');
+
+        window.onscroll = function(){
+            var t = document.documentElement.scrollTop || document.body.scrollTop; 
+            t += 80; // 80的offset
+            $navbar.removeClass('affixed');
+            $navItems.removeClass('select');
+            if (t >= teaminfoTop) {
+                $navbar.addClass('affixed');
+                $navItems.eq(4).addClass('select');
+            } else if (t >= expenseTop) {
+                $navbar.addClass('affixed');
+                $navItems.eq(3).addClass('select');
+            } else if (t >= noticeTop) {
+                $navbar.addClass('affixed');
+                $navItems.eq(2).addClass('select');
+            } else if (t >= day1Top) {
+                $navbar.addClass('affixed');
+                $navItems.eq(1).addClass('select');
+            } else if (t >= briefTop) {
+                $navbar.addClass('affixed');
+                $navItems.eq(0).addClass('select');
+            }
+        };
+    },
+
+    componentDidUpdate: function() {
+        this.addOnScroll();
+    },
+
+    componentWillUnmount: function() {
+        window.onscroll = null;
+    },
+
     handleSelect: function (selectedKey) {
+        window.onscroll = null;
         $('html, body').animate({
-            scrollTop: $(selectedKey).offset().top
-        }, 800);
+            'scrollTop': $(selectedKey).offset().top - 60
+        }, {
+            'speed': 800,
+            'complete': this.addOnScroll
+        });
+        var $navItems = $('.am-sticky-placeholder .navbar ul li');
+        $navItems.removeClass('select');
+        $navItems.eq(_config[selectedKey]).addClass('select');
     },
 
     render: function() {
         return (
-                <div className="am-sticky-placeholder">
-                    <AutoAffix viewportOffsetTop={0} container={this.props.container} affixClassName="stwork">
-                        <div className="scrollspy-nav">
-                            <Nav className="container" bsStyle="pills" activeKey={1} onSelect={this.handleSelect}>
-                                <NavItem eventKey={".navbar"} >路线简介</NavItem>
-                                <NavItem eventKey={".day1"} >行程</NavItem>
-                                <NavItem eventKey={".notice"} >注意事项</NavItem>
-                                <NavItem eventKey={".expense"} >费用说明</NavItem>
-                                <NavItem eventKey={".teaminfo"} >报名</NavItem>
-                            </Nav>
-                        </div>
-                    </AutoAffix>
-                </div>
+            <div className="am-sticky-placeholder">
+                <AutoAffix viewportOffsetTop={0} container={this.props.container}>
+                    <Navbar>
+                        <Nav pullRight activeKey={1} onSelect={this.handleSelect}>
+                            <NavItem eventKey={".brief"} >路线简介</NavItem>
+                            <NavItem eventKey={".day1"} >行程</NavItem>
+                            <NavItem eventKey={".notice"} >注意事项</NavItem>
+                            <NavItem eventKey={".expense"} >费用说明</NavItem>
+                            <NavItem eventKey={".teaminfo"} >报名</NavItem>
+                        </Nav>
+                    </Navbar>
+                </AutoAffix>
+            </div>
         );
     }
 

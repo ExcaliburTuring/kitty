@@ -32,7 +32,12 @@ export var defaultValue = {
     'updateAccountMsg': '更新用户信息失败，请稍后重试',
     'updateContactsMsg': '更新常用出行人信息失败，请稍后重试',
     'deleteContactsMsg': '删除常用出行人失败，请稍候重试',
-    'newOrderMsg': '创建订单失败，请稍候重试'
+    'newOrderMsg': '创建订单失败，请稍候重试',
+
+    getRouteImgPath: function(routeImgPath) {
+        return this.routeImgPath + routeImgPath;
+    }
+
 };
 
 export var error = {
@@ -182,3 +187,26 @@ export var orderStatus = {
     CLOSED: 'CLOSED'
 }
 
+export var groupStatus = {
+
+    OPEN: 'OPEN',
+
+    FULL: 'FULL',
+
+    TRAVELLING: 'TRAVELLING',
+
+    FINISH: 'FINISH',
+
+    getDesc: function(status) {
+        if(status == 'OPEN'){
+            return "报名中";
+        } else if(status == 'FULL'){
+            return "已报满";
+        } else if(status == 'TRAVELLING') {
+            return "已出发";
+        } else if(status == 'FINISHED') {
+            return "报名结束";
+        }
+    }
+
+}
