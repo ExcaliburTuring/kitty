@@ -3,28 +3,76 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Col, Table, Button } from 'react-bootstrap';
-import { message } from 'antd';
+import { Col } from 'react-bootstrap';
+import { message, Table, Button } from 'antd';
 import 'antd/lib/index.css';
 
-import { url, defaultValue } from 'config';
+import { url, defaultValue, groupStatus } from 'config';
 import AccountBasicInfo from 'account_basicinfo';
 
 var Groups = React.createClass({
 
     mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
 
-    getInitialState: function() {
-        AccountBasicInfo.actions.get();
-        return {
-            'basicInfo': {}
-        }
+    getTableColumn: function() {
+        var self = this;
+        return [{
+            title: '日期',
+            dataIndex: 'date',
+            colSpan: 2
+        }, {
+            title: '',
+            dataIndex: 'title',
+            colSpan: 0
+        }, {
+            title: '状态',
+            dataIndex: 'status',
+        }, {
+            title: '价格',
+            dataIndex: 'price',
+        }, {
+            title: '报名',
+            dataIndex: 'newOrder',
+            render: function(group) {
+                if (group.status == groupStatus.OPEN) {
+                    return (
+                        <Button size="large" type="primary" onClick={() => {self.onClick(group)}}>
+                            报名
+                        </Button>
+                    );
+                } else {
+                    return (
+                        <Button size="large" type="primary" disabled>
+                            报名
+                        </Button>
+                    );
+                }
+            }
+        }];
+    },
+
+    getTableData: function() {
+        return this.props.groups.map(function(group, index) {
+            return {
+                'key': `travel-new-order-${index}`, 
+                'date': `${group.startDate}到${group.endDate}`,
+                'title': group.title,
+                'status': groupStatus.getDesc(group.status),
+                'price': `${group.price}元`,
+                'newOrder': group 
+            };
+        });
     },
 
     onClick: function(group) {
         if (this.state.basicInfo.accountInfo == null) {
             window.location.pathname = url.wxLogin;
             return;
+        }
+
+        if (group.status != groupStatus.OPEN) {
+            message.error('本团可不可报名');
+            return ;
         }
 
         $.post(url.orderNew, {'routeid': group.routeid, 'groupid': group.groupid})
@@ -40,6 +88,13 @@ var Groups = React.createClass({
         });
     },
 
+    getInitialState: function() {
+        AccountBasicInfo.actions.get();
+        return {
+            'basicInfo': {}
+        }
+    },
+
     render: function() {
         var groups = this.props.groups;
         if (groups.length == 0) {
@@ -50,57 +105,17 @@ var Groups = React.createClass({
                 </div>
             );
         }
-        var self = this;
-        var groupList = this.props.groups.map(function (group, index) {
-            var btn;
-            var status;
-            var startDate = group.startDate;
-            var endDate = group.endDate;
-            if(group.status == 'OPEN'){
-                status="报名中";
-                btn=(
-                    <Button className="able" onClick={()=>{self.onClick(group)}}>报名</Button>
-                );
-            }else if(group.status == 'FULL'){
-                status="已报满";
-                btn=(
-                    <Button className="enable" disabled>已报满</Button>
-                );
-            }else if(group.status == 'TRAVELLING') {
-                status="已出发";
-                btn=(
-                    <Button className="enable" disabled>出团中</Button>
-                );
-            }else if(group.status == 'FINISHED') {
-                status="报名结束";
-                btn=(
-                    <Button className="enable" disabled>已结束</Button>
-            )}
-            return (
-                <tr key={`group-${index}`}>
-                    <td>{startDate} 到 {endDate}</td>
-                    <td className="left">{group.title}</td>
-                    <td>{status}</td>
-                    <td>{group.price}</td>
-                    <td>{btn}</td>
-                </tr>   
-            );                                    
-        });
         return (
             <div className="teaminfo">
-                <h2>报名</h2>
-                <Table responsive condensed hover>
-                    <thead>
-                        <tr>
-                            <th>日期</th>
-                            <th> </th>
-                            <th>状态</th>
-                            <th>价格</th>
-                            <th>报名</th>
-                        </tr>
-                    </thead>
-                    <tbody>{groupList}</tbody>
-                </Table>
+                <Col xs={12} md={12}>
+                    <h2>报名</h2>
+                    <Table 
+                        columns={this.getTableColumn()} 
+                        dataSource={this.getTableData()} 
+                        bordered 
+                        pagination={false} />
+                </Col>
+                
             </div>
         );
     }

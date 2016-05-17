@@ -15,21 +15,30 @@ var Days = React.createClass({
 
     render: function() {
         var days = this.props.days;
-        var firstDay = days[0];
-        var lastDay = days[days.length - 1];
-        var daysList = days.slice(1, days.length -1).map(function(day, index) {
-            return (
-                <Day day={day} key={`day-${index}`}/>
-            );
-        });
+        var firstDay, lastDay, daysList;
+        if (days.length != 0) {
+            firstDay = (<Day1 day={days[0]}/>) ;
+            lastDay = (<Day1 day={days[days.length - 1]}/>);
+            daysList = days.slice(1, days.length -1).map(function(day, index) {
+                return (
+                    <Day day={day} key={`day-${index}`}/>
+                );
+            });
+        }
         return (
             <div className="xingcheng">
-                <Day1 day={firstDay}/>
+                <Col xs={12} md={12}>
+                    <hr/>
+                </Col>
+                {firstDay}
                 <Col xs={12} md={12}>
                     <hr/>
                 </Col>
                 {daysList}
-                <Day1 day={lastDay}/>
+                <Col xs={12} md={12}>
+                    <hr/>
+                </Col>
+                {lastDay}
             </div>
         );
     }
@@ -43,18 +52,16 @@ var Day1 = React.createClass({
         var mdtext = marked(day.mdtext);
         return (
             <div className="day1">
-                <div className="content">
-                    <Col xs={12} md={12}>
-                        <h2>{day.title}</h2>
-                    </Col>
-                    <Col xs={12} md={6}>
-                        <Image responsive src={_getRouteImgPath(day.imgs[0])}/>
-                    </Col>
-                    <Col xs={12} md={6}>
-                        <i className="fa fa-bookmark"/>
-                        <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
-                    </Col>
-                </div>
+                <Col xs={12} md={12}>
+                    <h2>{day.title}</h2>
+                </Col>
+                <Col xs={12} md={6}>
+                    <Image responsive src={_getRouteImgPath(day.imgs[0])}/>
+                </Col>
+                <Col xs={12} md={6}>
+                    <i className="fa fa-bookmark"/>
+                    <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
+                </Col>
             </div>
         );
     }
@@ -80,25 +87,23 @@ var Day = React.createClass({
         var star = day.star ? this.createAddInfo('fa-star', day.star) : null; 
         return (
             <div className="days">
-                <div className="content">
-                    <Col xs={12} md={12}>
-                        <h2>{day.title}</h2>
-                    </Col>
-                    <Col xs={12} md={6}>
-                        <Image responsive src={_getRouteImgPath(day.imgs[0])}/>
-                        <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
-                    </Col>
-                    <Col xs={12} md={6}>
-                        <Image responsive src={_getRouteImgPath(day.imgs[1])}/>
-                        <div className="icons">
-                            {star}
-                            {food}
-                            {distance}
-                            {latitude}
-                            {hotel}
-                        </div>
-                    </Col>
-                </div>
+                <Col xs={12} md={12}>
+                    <h2>{day.title}</h2>
+                </Col>
+                <Col xs={12} md={6}>
+                    <Image responsive src={_getRouteImgPath(day.imgs[0])}/>
+                    <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
+                </Col>
+                <Col xs={12} md={6}>
+                    <Image responsive src={_getRouteImgPath(day.imgs[1])}/>
+                    <div className="icons">
+                        {star}
+                        {food}
+                        {distance}
+                        {latitude}
+                        {hotel}
+                    </div>
+                </Col>
                 <Col xs={12} md={12}>
                     <hr/>
                 </Col>

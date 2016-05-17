@@ -1,460 +1,320 @@
-.hair{
-  text-align: center;
-  width: 100%;
-  background: @light-red;
-  margin-bottom: 10px;
+@face-height: 535px;
+@body-nav-height: 60px;
+@face-margin-top: 5px;
+
+.face-container {
+    height: @face-height;
+    margin-top: @face-margin-top;
+    margin-bottom: 10px;
+
+    .relative {
+        height: @face-height;
+
+        .duration {
+            text-align: center;
+            padding: 1px 2px; 
+            width: 36px; 
+            height: 36px;
+            color: @white;
+            background: @currency; 
+            font-size: 20px;
+            line-height: 20px;
+            margin-bottom: 10px;
+
+            .border-radius(5px);
+
+            .days {
+                font-size: 12px;
+                line-height: 13px;
+                margin: 0;
+            }
+        }
+
+        .title {
+            margin: 0 10px 10px 10px;
+            font-size: 33px!important;
+            display: inline-block;
+        }
+
+        .route {
+            margin: 5px 0;
+            font-size: 18px!important;
+            color: @dark-blue;
+
+            span {
+                color: @dark-gray;
+                margin-right: 8px;
+            }
+
+            h5 {
+              font-size: 16px;
+              line-height: 28px!important;
+            }
+        }
+
+        .bottom {
+            bottom: 0;
+            position: absolute;
+
+            .price {
+                margin: 5px 0;
+                font-size: 28px!important;
+                font-weight: 700;
+            }
+
+            .time {
+                width: 250px;
+                height: @body-nav-height;
+                background: @currency;
+                border: none;
+                font-size: 25px!important;
+                font-weight: 700;
+                color: @white;
+            }
+        }
+    }
+
+    .swiper-container{
+        width: 100%;
+        height: @face-height;
+        float: right;
+        z-index: 1;
+
+        .swiper-slide {
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .body-nav-mask {
+            bottom: 0;
+            position: absolute;
+            height: @body-nav-height;
+            width: 100%;
+            z-index: 2;
+            background-color: @white;
+            margin-right: 15px;
+            opacity: 0.5;
+        }
+    }
 }
 
-.profile{
-  text-align: right;
-  float: right;
-  display: inline;
+.am-sticky-placeholder {
+    width: 100%;
+    position: absolute;
+    text-align: right;
+    top: 13 + @face-height + @face-margin-top;
+    left: 0;
+    right: 0;
+    z-index: 2;
+
+    .navbar {
+        margin: 0;
+        height: @body-nav-height;
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+
+        .navbar-nav.navbar-right {
+            margin-right: 40px;
+        }
+
+        .navbar-nav.navbar-right > li > a {
+            width: 130px;
+            font-size: 25px;
+            color: @dark-gray;
+            text-align: center;
+            border-radius: 1px;
+            border-top: 5px solid transparent;
+            border-bottom: none;
+            transition: color 0.2s,border 0.2s;
+            -moz-transition: color 0.2s,border 0.2s; /* Firefox 4 */
+            -webkit-transition: color 0.2s,border 0.2s; /* Safari and Chrome */
+            -o-transition: color 0.2s,border 0.2s; /* Opera */
+            outline: none;
+
+            &:hover {
+                background-color: transparent;
+                color: @currency;
+            }
+
+            &:focus {
+                border-top: 5px solid transparent;
+            }
+        }
+    }
+
+    .navbar.affixed {
+        box-shadow: 0 0 5px @gray;
+        background-color: @white;
+
+        .navbar-nav.navbar-right > li > a {
+            &:hover {
+                border-top: 5px solid @currency;
+            }
+        }
+
+        .navbar-nav.navbar-right > li.select > a {
+            background-color: transparent;
+            color: @currency;
+            border-top: 5px solid @currency;
+
+            &:focus {
+                border-top: 5px solid @currency;
+            }
+        }
+    }
 }
 
-.searchLocation, .avatar{
-  display: inline-block;
-  padding: 0 10px;
-}
+.brief,
+.xingcheng,
+.notice,
+.expense {
 
-.am-form-field{
-  width: 200px;
-  font-size: 10px!important;
-  fond-weight: 300;
-}
+    p {
+        margin: 20px 0;
+    }
 
-.userName{
-  text-align: right;
-  display: inline-block;
-  font-family:"Hiragino Sans GB","Microsoft YaHei",SimHei,SimSun,sans-serif;
-  font-size: 0.8em;
-  font-weight: 300;
-  color: @nav;
-}
+    h2 {
+      line-height: 68px;
+      font-weight: 600;
+      color: @dark-gray;
+    }
 
-.userName:hover {
-  color: @green;
-  cursor: pointer;
+    h5 {
+      font: normal 200 16px/24px "Microsoft YaHei" !important;
+    }
 }
 
 .brief {
-  padding-top: 30px;
-  margin-bottom: 50px;
-
-  .content{
-    width: 1170px;
-    display: inline-block;
-    position: relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
 
     .liangdian {
-      line-height: 60px;
-      font-family: "Microsoft YaHei";
-      font-weight: normal;
-      font-size: 24px;
-      color:@dark-gray;
+        line-height: 60px;
+        font-family: "Microsoft YaHei";
+        font-weight: normal;
+        font-size: 24px;
+        color:@dark-gray;
     }
 
     .light-title {
-      font-family: cursive;
-      font-size: 45px;
-      color:@currency;
+        font-family: cursive;
+        font-size: 45px;
+        color:@currency;
     }
 
     .spot-light {
-      font-size: 24px;
+        font-size: 24px;
     }
-  }
 }
 
-.face{
-  width: 1170px;
-  height: 535px;
-  margin: 0 auto;
-  position: relative;
+.xingcheng {
 
-  .brief{
-    width: 250px;
-    height: 535px;
-    float: left;
-  }
+    .day1,
+    .days {
+        margin: 10px 0;
+        .fa-bookmark{
+            font-size: 5em;
+            color: @dark-red;
+        }
+    }
+
+    .days{
+
+        .fa{
+            font-size: 2em;
+            width: 55px;
+            color: @light-blue;
+            margin: 5px 5px;
+        }
+        img{
+            width: 100%;
+        }
+    }
+
+    .icons {
+        margin-top: 20px;
+    }
 }
 
-.relative{
-  position: relative;
-  height: 535px;
+.notice {
+    margin-bottom: 20px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 5px solid @dark-gray;
+    font: normal 200 16px/20px "Microsoft YaHei" !important;
+
+    .fa {
+        font-size: 1em;
+        color: @dark-gray;
+        margin: 5px 5px;
+    }
+
 }
 
-.duration{
-  text-align: center;
-  display: inline-block;
-  padding: 5px; 
-  width: 3em; 
-  height: 3em;
-  font-weight: 700;
-  font-size: 0.7em;
-  line-height: 100%;
-  color: @white;
-  background: @currency; 
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
+.expense {
+    margin-bottom: 20px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 5px solid @dark-gray;
+    font: normal 200 16px/20px "Microsoft YaHei" !important;
+
+    .table {
+        th {
+          text-align: center;
+        }
+    }
 }
 
-.day{
-  font-size: 0.5em;
-}
-
-.title{
-  margin: 5px 10px;
-  font-size: 33px!important;
-  display: inline-block;
-}
-
-.intro{
-  margin: 5px 0;
-  font-size: 16px!important;
-  color: @dark-gray;
-}
-
-.route{
-  margin: 5px 0;
-  font-size: 14px!important;
-  color: @dark-blue;
-}
-
-
-.bottom{
-  bottom: 0;
-  position: absolute;
-}
-
-.limit{
-  margin: 5px 0;
-  font-size: 14px!important;
-  font-weight: 200;
-}
-
-.price{
-  margin: 5px 0;
-  font-size: 28px!important;
-  font-weight: 700;
-}
-
-.time{
-  width: 250px;
-  height: 60px;
-  background: @currency;
-  border: none;
-  font-size: 25px!important;
-  font-weight: 700;
-  color: @white;
-}
-
-.swiper-container{
-  width: 100%;
-  height: 535px;
-  float: right;
-  z-index: 1;
-  .swiper-slide {
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-}
-
-.am-sticky-placeholder{
-  width: 100%;
-  height: 50px;
-  position: absolute;
-  text-align: right;
-  margin-top: -60px;
-  line-height: 10px;
-  float: right;
-  z-index: 2;
-
-  .scrollspy-nav {
-    top: 0;
-    z-index: 100;
-    width: 100%;
-    padding: 0 10px;
-  }
-
-  .scrollspy-nav li {
-    float: none;
-    display: inline-block;
-    list-style: none
-  }
-
-  .scrollspy-nav a {
-    color: @dark-gray;
-    font-size: 23px!important;
-    font-weight: 500;
-    width: 120px;
-    padding: 20px 0;
-    margin: 0 10px;
+.teaminfo {
+    font-size: 20px;
     text-align: center;
-    display: inline-block;
-    border-radius: 1px;
-    border-top: 5px solid rgba(0,0,0,0);
-    transition: color 0.2s,border 0.2s;
-    -moz-transition: color 0.2s,border 0.2s; /* Firefox 4 */
-    -webkit-transition: color 0.2s,border 0.2s; /* Safari and Chrome */
-    -o-transition: color 0.2s,border 0.2s; /* Opera */
-  }
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-top: 5px solid @dark-gray;
 
-  .scrollspy-nav a.am-active, .scrollspy-nav a:hover{
-    background-color: transparent;
-    color: @currency;
-    border-top: 5px solid @currency;
-  }
-  .scrollspy-nav a.am-active, .scrollspy-nav a:focus{
-    background-color: transparent;
-    color: @currency;
-    border-top: 5px solid @currency;
-  }
-  .scrollspy-nav a.am-active, .scrollspy-nav a:active{
-    background-color: transparent;
-    color: @currency;
-    border-top: 5px solid @currency;
-  }
-}
-
-.stwork{
-  width: 100%;
-  height: 60px;
-  box-shadow: 0 0 5px @gray;
-  background: @white;
-  animation-duration: 1s;
-  animation-name: stwork;
-}
-
-@keyframes amactive
-{
-from {border-top: 5px solid @currency; color: @rice;}
-to {border-top: 5px solid @light-red;color: @currency;}
-}
-
-@-moz-keyframes amactive /* Firefox */
-{
-from {border-top: 5px solid @currency;color: @rice;}
-to {border-top: 5px solid @light-red;color: @currency;}
-}
-
-@-webkit-keyframes amactive /* Safari 和 Chrome */
-{
-from {border-top: 5px solid @currency;color: @rice;}
-to {border-top: 5px solid @light-red;color: @currency;}
-}
-
-@-o-keyframes amactive /* Opera */
-{
-from {border-top: 5px solid @currency;color: @rice;}
-to {border-top: 5px solid @light-red;color: @currency;}
-}
-
-
-@keyframes stwork
-{
-from   {background:none;}
-to {background: @white;}
-}
-
-@-moz-keyframes stwork /* Firefox */
-{
-from {background:none;}
-to {background: @white;}
-}
-
-@-webkit-keyframes stwork /* Safari 和 Chrome */
-{
-from {background:none;}
-to {background: @white;}
-}
-
-@-o-keyframes stwork /* Opera */
-{
-from {background:none;}
-to {background: @white;}
-}
-
-.body{
-  width: 100%;
-  margin-top: 10px;
-}
-
-.maininfo{
-  margin: auto;
-  width: 1170px;
-}
-
-.day1{
-  margin: 30px 0;
-  left: 0;
-  .fa-bookmark{
-    font-size: 5em;
-    color: @dark-red;
-  }
-  .content{
-    width: 1170px;
-    display: inline-block;
-    position: relative;
-    .left{
-      float: left;
-      display: inline-block;
-      width: 650px;
-      img{
-        width: 100%;
-      }
+    h2 {
+        text-align: center;
+        font-size: 1.8em!important;
+        margin-bottom: 30px;
+        margin-top: 20px;
     }
 
-    .right{
-      float: right;
-      display: inline-block;
-      width: 570px;
+    table {
+        margin-bottom: 50px;
     }
-  }
-}
 
-.days{
-  margin: 30px 0;
-  left: 0;
-  .fa{
-    font-size: 2em;
-    width: 55px;
-    color: @light-blue;
-    margin: 5px 5px;
-  }
-  img{
-    width: 100%;
-  }
-  .content{
-    width: 1170px;
-    display: inline-block;
-    position: relative;
-    .left{
-      float: left;
-      display: inline-block;
-      width: 610px;
-      
+    th, tr {
+        text-align:  center;
     }
-    .right{
-      float: right;
-      display: inline-block;
-      width: 610px;
+
+    thead span {
+        font-size: 20px;
     }
-  }
-}
 
-.icons {
-  margin-top: 20px;
-}
-
-.notice{
-  margin-bottom: 30px;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 5px solid @dark-gray;
-  font: normal 200 16px/20px "Microsoft YaHei" !important;
-
-  .fa{
-    font-size: 1em;
-    color: @dark-gray;
-    margin: 5px 5px;
-  }
-  .content{
-    width: 1170px;
-    display: inline-block;
-    position: relative;
-    .left{
-      float: left;
-      display: inline-block;
-      width: 610px;
-      
+    tbody span {
+        font-size: 16px;
     }
-    .right{
-      float: right;
-      display: inline-block;
-      width: 610px;
+
+    button {
+        width: 50%;
+        background-color: @red;
+        background-image: none;
+        border: none;
+        border-radius: 5px;
+        text-shadow: none;
+        color: @white;
     }
-  }
-}
 
-.expense{
-  margin-top: 30px;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 5px solid @dark-gray;
-  font: normal 200 16px/20px "Microsoft YaHei" !important;
-
-  .content{
-    width: 1170px;
-    display: inline-block;
-    position: relative;
-    .left{
-      float: left;
-      display: inline-block;
-      width: 610px;
-      
+    button:hover {
+        width: 50%;
+        background-color: @light-red;
+        background-image: none;
+        border: none;
+        border-radius: 5px;
+        text-shadow: none;
+        color: @white;
     }
-    .right{
-      float: right;
-      display: inline-block;
-      width: 610px;
-    }
-  }
 
-
-  .table {
-    th{
-      text-align: center;
-    }
-  }
-}
-
-.teaminfo{
-  font-size:20px;
-  text-align: center;
-  margin-bottom: 20px;
-
-  h1{
-    text-align: left;
-    font-size: 1.8em!important;
-    margin-bottom: 30px;
-  }
-  
-  th{
-    text-align: center;
-  }
-
-  td{
-    padding: 20px 0!important;
-  }
-
-  .left{
-    text-align: left;
-  }
-
-  .able {
-    width: 50%;
-    background-color: @red;
-    background-image: none;
-    border: none;
-    border-radius: 5px;
-    text-shadow: none;
-    color: @white;
-  }
-
-  .enable {
-    width: 50%;
-    background-color: @light-red;
-    background-image: none;
-    border: none;
-    border-radius: 5px;
-    text-shadow: none;
-    color: @white;
-  }
-
-  .enable:hover {
-    background-color: @light-red;
-    background-image: none;
-  }
 }

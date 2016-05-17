@@ -3,74 +3,103 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 import Rabbit from 'rabbit';
 import { url } from 'config';
 import Navbar from 'navbar';
 import Footer from 'footer';
-import NotFound from 'notfound';
 import Face from './face';
-import Body from './body';
+import BodyNav from './body_nav';
+import Brief from './brief';
+import Days from './days';
+import Notice from './notice';
+import Expense from './expense';
+import Groups from './groups';
 
-var Route = Rabbit.create(url.route);
-var Groups = Rabbit.create(url.group);
+var RouteFlux = Rabbit.create(url.route);
+var GroupsFlux = Rabbit.create(url.group);
 
 var App = React.createClass({
 
     mixins: [
-        Reflux.connect(Route.store, 'route'),
-        Reflux.connect(Groups.store, 'groups'),
+        Reflux.connect(RouteFlux.store, 'routes'),
+        Reflux.connect(GroupsFlux.store, 'groups'),
     ],
 
     getInitialState: function() {
         var routeid = window.location.pathname.split('/')[2];
-        var valid = true;
-        if (/\d+/.test(routeid)) {
-            Route.actions.load({'routeids': routeid, 'isImgtextRequired': true});
-            Groups.actions.load({'routeid': routeid});
-        } else {
-            valid = false;
-        }
+        RouteFlux.actions.load({
+            'routeids': [routeid], 
+            'isImgtextRequired': true
+        });
+        GroupsFlux.actions.load({'routeid': routeid});
         return {
-            'route': {
-                'status': 0,
-                'routes': [],
-                'imgtext': {}
+            'routes': {
+                'status': 1,
+                'routes': [{
+                    'days': 0,
+                    'name': '',
+                    'title': '',
+                    'route': '',
+                    'minPrice': 0,
+                    'maxPrice': 0
+                }],
+                'imgtext': {
+                    'sliderImgs': [],
+                    'introduction': {
+                        'mdtext': '',
+                        'spotlights':[]
+                    },
+                    'days': [],
+                    'notice': {
+                        'local': '',
+                        'prepare': '',
+                        'traffic': ''
+                    },
+                    'expense': {
+                        'include': '',
+                        'exclude': '',
+                        'cancel': ''
+                    }
+                }
             },
             'groups': {
-                'status': 0,
+                'status': 1,
                 'groups': []
-            },
-            'valid': valid // routeid是否正常
+            }
         }
     },
 
     render: function() {
         var state = this.state;
-        var route = state.route;
+        var routes = state.routes;
+        var imgtext = routes.imgtext;
         var groups = state.groups;
-        var content;
-        if (state.valid 
-                && route.routes.length >= 1) {
-            content = (
-                <div>
-                    <Face route={route.routes[0]} imgtext={route.imgtext}/>
-                    <div className="body" id="body">
-                        <Body 
-                            route={route.routes[0]}
-                            imgtext={route.imgtext}
-                            groups={groups.groups}/>
-                    </div>
-                </div>
-            );
-        } else {
-            content = (<NotFound />);
-        }
-
         return (
             <div>
                 <Navbar name="routes" />
-                {content}
+                <BodyNav container={this}/>
+                <Grid>
+                    <Row>
+                        <Face route={routes.routes[0]} sliderImgs={imgtext.sliderImgs}/>
+                    </Row>
+                    <Row>
+                        <Brief brief={imgtext.introduction}/>
+                    </Row>
+                    <Row>
+                        <Days days={imgtext.days}/>
+                    </Row>
+                    <Row>
+                        <Notice notice={imgtext.notice}/>
+                    </Row>
+                    <Row>
+                        <Expense expense={imgtext.expense}/>
+                    </Row>
+                    <Row>
+                        <Groups groups={groups.groups}/>
+                    </Row>
+                </Grid>
                 <Footer />
             </div>
         );
@@ -79,3 +108,5 @@ var App = React.createClass({
 });
 
 module.exports = App;
+
+
