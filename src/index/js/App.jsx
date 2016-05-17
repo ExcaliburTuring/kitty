@@ -90,8 +90,10 @@ var App = React.createClass({
                             <Col lg={10} lgOffset={1} md={12} >
                                 <div id="anchor" />
                                 <Separator text="海逍遥旅行" ref="hxyDesc"/>
-                                <div className="text">haixiaoyao</div>
-                                <div className="text">诗与远方</div>
+                                <div className="text">信仰满满的公司，带你逃离生活的苟且，大胆寻找诗与远方</div>
+                                <div className="text">出发是一种可能，年轻是一场盛宴</div>
+                                <div className="text">等待一路狂欢</div>
+                                <div className="text"><i className="fa fa-angle-double-down" /></div>
                                 <Image responsive className="hxy-desc-img " src="http://wpcms.cdnws.54traveler.com/wp-content/uploads/2016/04/2016041205185992.jpg" />
                             </Col>
                         </Row>
@@ -121,22 +123,19 @@ var App = React.createClass({
                                 <Separator text="关于我们"/>
                                 <div className="aboutus">
                                     <div className="text-center about-text">
-                                        我们坚信，在我们的星球有着很多淳朴真实的奇妙地方
+                                        我们坚信，在这个星球上有很多淳朴真实的奇妙地方
                                     </div>
                                     <div className="text-center about-text">
-                                        我们要做的不仅是发现这些地方,同时希望更多的人走出去，体验这样真实的旅行
+                                        我们要做的不仅是发现这些地方，同时希望更多的人走出去，体验这样真实的旅行
                                     </div>
                                     <div className="text-center about-text">
-                                        只要你愿意敞开心扉，带着接纳这个世界的心,旅行就会带给你未所期待的东西
+                                        如果愿意敞开心扉，带着接纳这个世界的心，旅行就会带给你前所未有的期待
                                     </div>
                                     <div className="text-center about-text">
-                                        未来的某一天,我们希望和你一起徒步在仙乃日神山的朝圣之路,在拉街头的茶馆里喝着甜茶,或是在内蒙古草原上一同仰望星空
+                                        未来的某一天，我们希望和你一起徒步在仙乃日神山的朝圣之路，或是在内蒙古草原上一同仰望星空
                                     </div>
                                     <div className="text-center about-text">
                                         这一切的一切，都在于旅行
-                                    </div>
-                                    <div className="text-center about-text">
-                                        只有旅行才能让我们充满光和热.
                                     </div>
                                 </div>
                             </Col>
