@@ -5,10 +5,6 @@ import React from 'react';
 import Swiper from 'swiper';
 import { defaultValue } from 'config';
 
-function _getRouteImgPath(routeImgPath) {
-    return defaultValue.routeImgPath + routeImgPath;
-} 
-
 var Slider = React.createClass({
 
     componentDidMount: function(){
@@ -26,9 +22,8 @@ var Slider = React.createClass({
     },
 
     render: function() { 
-        var imgs = this.props.imgtext.sliderImgs;
-        var slideItemList = imgs.map(function(img, index) {
-            var bg = {backgroundImage: `url(${_getRouteImgPath(img)})`};
+        var slideItemList = this.props.sliderImgs.map(function(img, index) {
+            var bg = {backgroundImage: `url(${defaultValue.getRouteImgPath(img)})`};
             return (
                 <div className="swiper-slide swiper-no-swiping" style={bg} key={index}></div>
             );
@@ -40,6 +35,7 @@ var Slider = React.createClass({
                 </div>
                 <div className="swiper-button-prev swiper-button-black" ref="prev"></div>
                 <div className="swiper-button-next swiper-button-black" ref="next"></div>
+                <div className="body-nav-mask"></div>
             </div>
         );
     }
