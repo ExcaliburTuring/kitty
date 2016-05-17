@@ -30,14 +30,6 @@ var Banner = React.createClass({
         var bbg = {backgroundImage: "url(" + b + ")"};
         var cbg = {backgroundImage: "url(" + c + ")"};
         var dbg = {backgroundImage: "url(" + d + ")"};
-        var doubleDownBtn = null;
-        if (this.props.showDoubleDownBtn) {
-            doubleDownBtn = (
-                <div className="navigation">
-                    <i className="fa fa-angle-double-down" aria-hidden="true" onClick={this.props.onDoubleDownBtnClick}/>
-                </div>
-            );
-        }
 
         return(
             <div className="swiper-container" ref="swiper">
@@ -47,7 +39,6 @@ var Banner = React.createClass({
                     <div className="swiper-slide swiper-no-swiping" style={cbg}></div>
                     <div className="swiper-slide swiper-no-swiping" style={dbg}></div>
                 </div>
-                {doubleDownBtn}
                 <div className="arrow-container">
                     <div className="arrows">
                         <div className="left-arrow" ref="prev">

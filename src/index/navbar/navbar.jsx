@@ -3,10 +3,9 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem,Image } from 'react-bootstrap';
 
 import AccountBasicInfo from 'account_basicinfo';
-import Logo from './logo.png';
 import hxytravel from './hxytravel.png';
 
 require('./navbar.less');
@@ -18,13 +17,11 @@ var KittyNavbar = React.createClass({
     render: function() {
         return (
             <Navbar staticTop>
-                <div className="navbar-middle" ><img src={Logo} /></div>
         		<Navbar.Header>
 					<Brand />
       				<Navbar.Toggle />
     			</Navbar.Header>
         		<Navbar.Collapse>
-					<MainMenu />
 					<AccountMenu />
 				</Navbar.Collapse>
         	</Navbar>
@@ -42,36 +39,63 @@ var Brand = React.createClass({
     }
 });
 
-var MainMenu = React.createClass({
-    render: function() {
-        return (
-            <Nav>
-			</Nav>
-        );
-    }
-});
-
 var AccountMenu = React.createClass({
     mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
     getInitialState: function() {
         return {
-            'basicInfo': {}
+            'basicInfo': {
+                'accountSetting': {
+                    'avatarUrl': ""
+                }
+            },
+            'dropdown': false
         };
     },
+
+    openDropdown: function() {
+        var dropdown = !this.state.dropdown;
+        this.setState({'dropdown': dropdown})
+    },
+
+    closeDropdown: function() {
+        var dropdown = !this.state.dropdown;
+        this.setState({'dropdown': dropdown})
+    },
+
     componentDidMount: function() {
         AccountBasicInfo.actions.load();
     },
+
     render: function() {
+        var dropdown = this.state.dropdown;
+        var basicInfo = this.state.basicInfo;
+        var mydrop = "my-drop";
+        var mydown = "my-down";
+
         if (this.state.basicInfo.accountInfo != null) {
+            if (dropdown == false) {
+                mydrop = "my-drop";
+                mydown = "my-down";
+            }else{
+                mydrop = "my-drop drop";
+                mydown = "my-down down";
+            }
+
             return (
-                <Nav pullRight>
-                    <NavDropdown eventKey={3} title={this.state.basicInfo.accountInfo.name} id="navbar-account-info">
-                        <MenuItem eventKey={3.1} href="/account/10001">我的行程</MenuItem>
-                        <MenuItem eventKey={3.2}>设置</MenuItem>
-                        <MenuItem divider />
-                        <MenuItem eventKey={3.3}>退出</MenuItem>
-                    </NavDropdown>
-                </Nav>
+                <div className="my-dropdown" onMouseOut={this.closeDropdown} onMouseOver={this.openDropdown}>
+                    <Image className="avatar" src={basicInfo.accountSetting.avatarUrl} circle/>
+                    <span className={mydrop} onMouseOut={this.closeDropdown} onMouseOver={this.openDropdown}>
+                        {basicInfo.accountInfo.name} <i className="fa fa-angle-down" />
+                    </span>
+                    <div className={mydown}>
+                        <div className="triangle"></div>
+                        <div className="square">
+                            <div className="orders line">我的行程</div>
+                            <div className="whiteline" />
+                            <div className="config line">设置</div>
+                        </div>
+                    </div>
+                </div>
             );
         } else {
             return (
