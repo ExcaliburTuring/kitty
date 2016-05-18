@@ -17,7 +17,11 @@ var Slider = React.createClass({
             autoplayDisableOnInteraction : false,
             prevButton: this.refs.prev,
             nextButton: this.refs.next,
-            mousewheelControl : false
+            mousewheelControl : false,
+            effect : 'fade',
+            fade: {
+              crossFade: true,
+            }
         });
     },
 
@@ -33,8 +37,8 @@ var Slider = React.createClass({
                 <div className="swiper-wrapper">
                     {slideItemList}
                 </div>
-                <div className="swiper-button-prev swiper-button-black" ref="prev"></div>
-                <div className="swiper-button-next swiper-button-black" ref="next"></div>
+                <div className="swiper-button-prev swiper-button-white" ref="prev"></div>
+                <div className="swiper-button-next swiper-button-white" ref="next"></div>
                 <div className="body-nav-mask"></div>
             </div>
         );

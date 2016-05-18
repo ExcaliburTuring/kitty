@@ -15,7 +15,7 @@ var Face = React.createClass({
             <div className="face-container">
                 <Col xs={6} md={3}>
                     <div className="relative">
-                        <div>
+                        <div className="pull-left">
                             <div className="duration pull-left">
                                 <span>{route.days}</span>
                                 <div className="days">
@@ -24,12 +24,12 @@ var Face = React.createClass({
                             </div>
                             <h1 className="title pull-left">{route.name}</h1>
                         </div>
-                        <div className="intro">
+                        <div className="intro pull-left">
                             <h5>{route.title}</h5>
                         </div>
-                        <div className="route">
-                            <span className="pull-left"> 行程:</span>
-                            <h5 className="pull-left">{route.route}</h5>
+                        <div className="route pull-left">
+                            <span>行程:</span>
+                            <h5>{route.route}</h5>
                         </div>
                         <div className="bottom">
                             <div className="share"></div>
