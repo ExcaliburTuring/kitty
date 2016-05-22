@@ -28,16 +28,17 @@ var Days = React.createClass({
         return (
             <div className="xingcheng">
                 <Col xs={12} md={12}>
+                    <br/>
                     <hr/>
+                    <br/>
                 </Col>
                 {firstDay}
                 <Col xs={12} md={12}>
+                    <br/>
                     <hr/>
+                    <br/>
                 </Col>
                 {daysList}
-                <Col xs={12} md={12}>
-                    <hr/>
-                </Col>
                 {lastDay}
             </div>
         );
@@ -105,7 +106,9 @@ var Day = React.createClass({
                     </div>
                 </Col>
                 <Col xs={12} md={12}>
+                    <br/>
                     <hr/>
+                    <br/>
                 </Col>
             </div>
         );

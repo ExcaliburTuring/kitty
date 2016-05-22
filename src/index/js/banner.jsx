@@ -5,9 +5,9 @@ import React from 'react';
 
 import Swiper from 'swiper';
 import a from '../img/A.jpg';
-import b from '../img/B.jpg';
-import c from '../img/C.jpg';
-import d from '../img/D.jpg';
+import d from '../img/d.jpg';
+import e from '../img/e.jpg';
+import f from '../img/f.jpg';
 
 var Banner = React.createClass({
 
@@ -27,17 +27,17 @@ var Banner = React.createClass({
 
     render: function() {
         var abg = {backgroundImage: "url(" + a + ")"};
-        var bbg = {backgroundImage: "url(" + b + ")"};
-        var cbg = {backgroundImage: "url(" + c + ")"};
         var dbg = {backgroundImage: "url(" + d + ")"};
+        var ebg = {backgroundImage: "url(" + e + ")"};
+        var fbg = {backgroundImage: "url(" + f + ")"};
 
         return(
             <div className="swiper-container" ref="swiper">
                 <div className="swiper-wrapper">
                     <div className="swiper-slide swiper-no-swiping" style={abg}></div>
-                    <div className="swiper-slide swiper-no-swiping" style={bbg}></div>
-                    <div className="swiper-slide swiper-no-swiping" style={cbg}></div>
+                    <div className="swiper-slide swiper-no-swiping" style={ebg}></div>
                     <div className="swiper-slide swiper-no-swiping" style={dbg}></div>
+                    <div className="swiper-slide swiper-no-swiping" style={fbg}></div>
                 </div>
                 <div className="arrow-container">
                     <div className="arrows">
