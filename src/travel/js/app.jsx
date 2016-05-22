@@ -30,7 +30,7 @@ var App = React.createClass({
     getInitialState: function() {
         var routeid = window.location.pathname.split('/')[2];
         RouteFlux.actions.load({
-            'routeids': routeid, 
+            'routeid': routeid, 
             'isImgtextRequired': true
         });
         GroupsFlux.actions.load({'routeid': routeid});
