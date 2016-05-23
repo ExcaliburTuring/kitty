@@ -75,7 +75,7 @@ var Groups = React.createClass({
             return ;
         }
 
-        $.post(url.orderNew, {'routeid': group.routeid, 'groupid': group.groupid, 'accountid':10001})
+        $.post(url.orderNew, {'routeid': group.routeid, 'groupid': group.groupid})
         .done(function(data) {
             if (data.status != 0) {
                 message.error(defaultValue.newOrderMsg);
