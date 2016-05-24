@@ -18,6 +18,7 @@
             color: @white;
             background: @currency; 
             font-size: 20px;
+            font-weight: 700;
             line-height: 20px;
             margin-bottom: 10px;
 
@@ -32,13 +33,19 @@
 
         .title {
             margin: 0 10px 10px 10px;
+            font-weight: 700;
             font-size: 33px!important;
+            line-height: 30px;
             display: block;
         }
 
         .intro {
-            font-size: 33px!important;
             display: block;
+
+            h5{
+                font-size: 18px!important;
+                line-height: 30px;
+            }
         }
 
         .route {
@@ -47,7 +54,8 @@
             span {
                 display: inline;
                 color: @dark-gray;
-                font-size: 18px!important;
+                font-weight: normal;
+                font-size: 16px!important;
                 margin-right: 8px;
             }
 
@@ -99,7 +107,7 @@
             height: @body-nav-height;
             width: 100%;
             z-index: 2;
-            background-color: @white;
+            background-color: #000;
             margin-right: 15px;
             opacity: 0.5;
         }
@@ -129,7 +137,7 @@
         .navbar-nav.navbar-right > li > a {
             width: 130px;
             font-size: 25px;
-            color: @dark-gray;
+            color: @gray;
             text-align: center;
             border-radius: 1px;
             border-top: 5px solid transparent;

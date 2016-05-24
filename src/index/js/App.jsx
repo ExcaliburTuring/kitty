@@ -9,6 +9,7 @@ import { defaultValue, url } from 'config';
 import Rabbit from 'rabbit';
 import Banner from './banner';
 
+import activity from '../img/activity.jpg';
 import activity1 from '../img/postcard.jpg';
 import activity2 from '../img/leader.jpg';
 import worldmap from "../img/worldmap.png";
@@ -94,7 +95,7 @@ var App = React.createClass({
                                 <div className="text">出发是一种可能，年轻是一场盛宴</div>
                                 <div className="text">等待一路狂欢</div>
                                 <div className="text"><i className="fa fa-angle-double-down" /></div>
-                                <Image responsive className="hxy-desc-img " src="http://wpcms.cdnws.54traveler.com/wp-content/uploads/2016/04/2016041205185992.jpg" />
+                                <Image responsive className="hxy-desc-img " src={activity} />
                             </Col>
                         </Row>
                     </Grid>
@@ -159,9 +160,11 @@ var Route = React.createClass({
         var daysImg = _getDaysImg(route.days);
         return (
             <div className="route-container" onClick={this.onClick}>
-                <Image responsive src={defaultValue.getRouteImgPath(route.headImg)} />
-                <div className="opacity">
-                    <Image responsive src={defaultValue.getRouteImgPath(route.mapImg)} />
+                <div className="headImg-container">
+                    <Image responsive src={defaultValue.getRouteImgPath(route.headImg)} />
+                    <div className="opacity">
+                        <img className="mapImg" src={defaultValue.getRouteImgPath(route.mapImg)} />
+                    </div>
                 </div>
                 <div className="days">
                     <Image responsive src={daysImg} />
