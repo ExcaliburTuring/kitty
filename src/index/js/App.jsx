@@ -15,15 +15,15 @@ import activity2 from '../img/leader.jpg';
 import worldmap from "../img/worldmap.png";
 
 const daysImgConfig = {
-    1: defaultValue.getRouteImgPath('p13.png'),
-    2: defaultValue.getRouteImgPath('p23.png'),
-    3: defaultValue.getRouteImgPath('p13.png'),
-    4: defaultValue.getRouteImgPath('p13.png'),
-    5: defaultValue.getRouteImgPath('p23.png'),
-    6: defaultValue.getRouteImgPath('p13.png'),
-    7: defaultValue.getRouteImgPath('p23.png'),
-    8: defaultValue.getRouteImgPath('p13.png'),
-    9: defaultValue.getRouteImgPath('p23.png')
+    1: defaultValue.getRouteImgPath('1.png'),
+    2: defaultValue.getRouteImgPath('2.png'),
+    3: defaultValue.getRouteImgPath('3.png'),
+    4: defaultValue.getRouteImgPath('4.png'),
+    5: defaultValue.getRouteImgPath('5.png'),
+    6: defaultValue.getRouteImgPath('6.png'),
+    7: defaultValue.getRouteImgPath('7.png'),
+    8: defaultValue.getRouteImgPath('8.png'),
+    9: defaultValue.getRouteImgPath('9.png')
 }
 
 function _getDaysImg(days) {
