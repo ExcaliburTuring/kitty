@@ -37,7 +37,7 @@ var App = React.createClass({
     mixins: [Reflux.connect(IndexHot.store, 'data')],
 
     getInitialState: function() {
-        IndexHot.actions.load();
+        IndexHot.actions.load({'date': '2014-01-01', 'routeids': 123});
         return {
             'data': {
                 'status': 0,
@@ -161,9 +161,9 @@ var Route = React.createClass({
         return (
             <div className="route-container" onClick={this.onClick}>
                 <div className="headImg-container">
-                    <Image responsive src={defaultValue.getRouteImgPath(route.headImg)} />
+                    <Image responsive src={route.headImg} />
                     <div className="opacity">
-                        <img className="mapImg" src={defaultValue.getRouteImgPath(route.mapImg)} />
+                        <img className="mapImg" src={route.mapImg} />
                     </div>
                 </div>
                 <div className="days">

@@ -29,16 +29,25 @@ var proxyConfig =(function(){
         }, {});
     return tempProxyConfig;
 }());
+var target = 'http://localhost:8083';
 proxyConfig['/order*'] = {
-    target: 'http://192.168.1.104:8080',
+    target: target,
     secure: false
 }
 proxyConfig['/account*'] = {
-    target: 'http://192.168.1.104:8080',
+    target: target,
     secure: false
 }
 proxyConfig['/travel*'] = {
-    target: 'http://192.168.1.104:8080',
+    target: target,
+    secure: false
+}
+proxyConfig['/index*'] = {
+    target: target,
+    secure: false
+}
+proxyConfig['/wx*'] = {
+    target: target,
     secure: false
 }
 var server = new WebpackDevServer(compiler, {

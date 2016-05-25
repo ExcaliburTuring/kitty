@@ -17,11 +17,10 @@ export var url = {
 
     'order': '/order',
     'orderNew': '/order/new',
-    'orderDetail': '/order/detail',
-    'orderDiscount': '/order/discount',
-    'orderDiscountCode': '/order/discountcode',
     'orderOrder': '/order/order',
     'orderBrief': '/order/brief',
+    'orderDiscount': '/order/discount',
+    'orderDiscountCode': '/order/discountcode',
 
     'routeList': '/routes/info'
 };

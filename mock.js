@@ -24,8 +24,6 @@ function config(url, page) {
 var mockConfig = [
     config('/', 'index.html'),
     config('/test', 'test.html'),
-    config('/register', 'register.html'),
-    config('/login', 'login.html'),
     config('/index*', 'index.html'),
     config('/canvas*', 'canvas.html'),
     config('/routes*', 'routes.html'),
