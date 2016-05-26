@@ -19,12 +19,12 @@ import Contacts from './contacts'
 
 import 'antd/lib/index.css';
 
-var OrderDetail = Rabbit.create(url.orderDetail); 
+var OrderInfo = Rabbit.create(url.orderOrder); 
 var App = React.createClass({
 
     mixins: [
         Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
-        Reflux.connect(OrderDetail.store, 'data')
+        Reflux.connect(OrderInfo.store, 'data')
     ],
 
     // step1的回调函数
@@ -89,7 +89,7 @@ var App = React.createClass({
     getInitialState: function() {
         AccountBasicInfo.actions.get();
         var orderid = window.location.pathname.split('/')[2];
-        OrderDetail.actions.load({'orderid': orderid});
+        OrderInfo.actions.load({'orderid': orderid});
         return {
             'basicInfo': {},
             'data': {
