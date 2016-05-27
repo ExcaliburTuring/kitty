@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import Swiper from 'swiper';
-import { defaultValue } from 'config';
 
 var Slider = React.createClass({
 
@@ -27,7 +26,7 @@ var Slider = React.createClass({
 
     render: function() { 
         var slideItemList = this.props.sliderImgs.map(function(img, index) {
-            var bg = {backgroundImage: `url(${defaultValue.getRouteImgPath(img)})`};
+            var bg = {backgroundImage: `url(${img})`};
             return (
                 <div className="swiper-slide swiper-no-swiping" style={bg} key={index}></div>
             );
