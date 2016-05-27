@@ -5,12 +5,6 @@ import React from 'react';
 import { Col, Image } from 'react-bootstrap';
 import marked from 'marked';
 
-import { defaultValue } from 'config';
-
-function _getRouteImgPath(routeImgPath) {
-    return defaultValue.routeImgPath + routeImgPath;
-} 
-
 var Days = React.createClass({
 
     render: function() {
@@ -57,7 +51,7 @@ var Day1 = React.createClass({
                     <h2>{day.title}</h2>
                 </Col>
                 <Col xs={12} md={6}>
-                    <Image responsive src={_getRouteImgPath(day.imgs[0])}/>
+                    <Image responsive src={day.imgs[0]}/>
                 </Col>
                 <Col xs={12} md={6}>
                     <i className="fa fa-bookmark"/>
@@ -92,11 +86,11 @@ var Day = React.createClass({
                     <h2>{day.title}</h2>
                 </Col>
                 <Col xs={12} md={6}>
-                    <Image responsive src={_getRouteImgPath(day.imgs[0])}/>
+                    <Image responsive src={day.imgs[0]}/>
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
                 </Col>
                 <Col xs={12} md={6}>
-                    <Image responsive src={_getRouteImgPath(day.imgs[1])}/>
+                    <Image responsive src={day.imgs[1]}/>
                     <div className="icons">
                         {star}
                         {food}

@@ -33,7 +33,7 @@ var Face = React.createClass({
                         </div>
                         <div className="bottom">
                             <div className="share"></div>
-                            <h2 className="price">￥{`${route.minPrice} — ${route.maxPrice}`}</h2>
+                            <h2 className="price">{`${route.minPrice} — ${route.maxPrice}`}</h2>
                             <button className="time">时间&价格</button>
                         </div>
                     </div>
