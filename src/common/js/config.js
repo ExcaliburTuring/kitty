@@ -6,6 +6,7 @@ export var url = {
     'wxLogin': '/wx/login',
 
     'account': '/account',
+    'accountInfo': '/account/info',
 	'basicinfo': '/account/basicinfo',
 	'contacts': '/account/contacts',
 

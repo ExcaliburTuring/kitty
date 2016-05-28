@@ -127,7 +127,6 @@ var App = React.createClass({
         var content;
         var step;
         var status = data.orderInfo.status;
-        status = orderStatus.REFOUNDED;
         if (status === orderStatus.NEW) {
             step = 1;
             content = (<Step1

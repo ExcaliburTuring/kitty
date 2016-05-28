@@ -61,22 +61,32 @@ var Step3 = React.createClass({
     },
 
     getDiscountTableData: function() {
-        return [{
-            'key': 'order-step3-discount-1',
-            'discountName': '优惠政策',
-            'discountDesc': this.props.policy.desc,
-            'discountPrice': this.props.policy.value
-        }, {
-            'key': 'order-step3-discount-2',
-            'discountName': '优惠码优惠',
-            'discountDesc': '优惠码： ' + this.props.code.discountCode,
-            'discountPrice': this.props.code.value
-        }, {
-            'key': 'order-step3-discount-3',
-            'discountName': '学生优惠',
-            'discountDesc': `共有${this.props.orderInfo.count}名学生`,
-            'discountPrice': this.props.student.value * this.props.orderInfo.count
-        }];
+        var tableData = [];
+        if (this.props.policy != null) {
+            tableData.push({
+                'key': 'order-step3-discount-1',
+                'discountName': '优惠政策',
+                'discountDesc': this.props.policy.desc,
+                'discountPrice': this.props.policy.value
+            });
+        }
+        if (this.props.discountCode != null) {
+            tableData.push( {
+                'key': 'order-step3-discount-2',
+                'discountName': '优惠码优惠',
+                'discountDesc': '优惠码： ' + this.props.code.discountCode,
+                'discountPrice': this.props.code.value
+            });
+        }
+        if (this.props.orderInfo.studentCount > 0) {
+            tableData.push( {
+                'key': 'order-step3-discount-3',
+                'discountName': '学生优惠',
+                'discountDesc': `共有${this.props.orderInfo.studentCount}名学生`,
+                'discountPrice': this.props.student.value * this.props.orderInfo.studentCount
+            });
+        }
+        return tableData;
     },
 
     getInitialState: function() {

@@ -54,7 +54,7 @@ var Day1 = React.createClass({
                     <Image responsive src={day.imgs[0]}/>
                 </Col>
                 <Col xs={12} md={6}>
-                    <i className="fa fa-bookmark"/>
+                    <i className="fa fa-bookmark fa-5x"/>
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
                 </Col>
             </div>
