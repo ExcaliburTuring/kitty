@@ -6,6 +6,7 @@ import Reflux from 'reflux';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Image } from 'react-bootstrap';
 
 import AccountBasicInfo from 'account_basicinfo';
+import { url } from 'config';
 import logo from "./logo.png"
 
 require('./navbar.less');
@@ -31,7 +32,7 @@ var KittyNavbar = React.createClass({
         return (
             <Navbar className={name} staticTop>
         		<Navbar.Header>
-                <Image src={logo} responsive/>
+                    <Image src={logo} responsive/>
       				<Navbar.Toggle />
     			</Navbar.Header>
         		<Navbar.Collapse>
@@ -52,6 +53,9 @@ var AccountMenu = React.createClass({
     getInitialState: function() {
         return {
             'basicInfo': {
+                'accountInfo': {
+                    'name': ''
+                },
                 'accountSetting': {
                     'avatarUrl': ""
                 }
@@ -91,7 +95,9 @@ var AccountMenu = React.createClass({
 
             return (
                 <div className="my-dropdown" onMouseOut={this.closeDropdown} onMouseOver={this.openDropdown}>
-                    <Image className="avatar" src={basicInfo.accountSetting.avatarUrl} circle/>
+                    <a href={`${url.account}/${basicInfo.accountInfo.accountid}`}>
+                        <Image className="avatar" src={basicInfo.accountSetting.avatarUrl} circle/>
+                    </a>
                     <span className={mydrop}>
                          {basicInfo.accountInfo.name} <i className="fa fa-angle-down" />
                     </span>

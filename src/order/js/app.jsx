@@ -7,7 +7,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { message } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
-import { url, orderStatus } from 'config';
+import { url, orderStatus, priceUtil } from 'config';
 import Rabbit from 'rabbit';
 import Step1 from './step1';
 import Step2 from './step2';
@@ -23,31 +23,65 @@ var OrderInfo = Rabbit.create(url.orderOrder);
 var App = React.createClass({
 
     mixins: [
-        Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
+        Reflux.ListenerMixin,
         Reflux.connect(OrderInfo.store, 'data')
     ],
 
+    createAccountTraveller: function(info) {
+        if (info.accountInfo == null) {
+            return null;
+        }
+        var accountInfo = info.accountInfo;
+        var accountSetting = info.accountSetting;
+        return  {
+            'accountid': accountInfo.accountid,
+            'contactid': 0,
+            'name': accountInfo.name,
+            'id': accountInfo.id,
+            'idType': accountInfo.idType,
+            'gender': accountSetting.gender,
+            'birthday': accountSetting.birthday,
+            'email': accountInfo.email,
+            'mobile': accountInfo.mobile
+        };
+    },
+
+    onAccountBasicInfoChange: function(info) {
+        this.setState({
+            'basicInfo': info,
+            'accountTraveller': this.createAccountTraveller(info)
+        });
+    },
+
     // step1的回调函数
 
+    onAccountChange: function(checked, account) {
+        this.setState({
+            'isAccountSelect': checked,
+            'accountTraveller': account,
+            'travellerCount': checked ? this.state.travellers.length + 1 : this.state.travellerCount - 1
+        });
+    },
+
     onContactChange: function(selectContacts, selectContactsSize) {
-        var order = this.state.order;
-        order.travellers = selectContacts;
-        order.travellerCount = selectContactsSize;
-        this.setState({'order': order});
+        this.setState({
+            'travellers': selectContacts,
+            'travellerCount': this.state.isAccountSelect ? selectContactsSize + 1: selectContactsSize
+        });
     },
 
     onAgreementCheck: function(e) {
-        var order = this.state.order;
-        order.isAgreed = e.target.checked;
-        this.setState({'order': order});
+        this.setState({'isAgreed': e.target.checked});
     },
 
     onNextBtnClick: function() {
-        if (this.state.order.travellerCount == 0) {
+        if (this.state.travellersCount == 0) {
             message.error('必须选择出行人');
-        } else if (this.state.order.isAgreed) {
+        } else if (this.state.isAgreed) {
             var data = this.state.data;
-            data.orderInfo.status = orderStatus.WAITING;
+            data.orderInfo.status = orderStatus.DISCOUNT_SELECT;
+            var price = priceUtil.getPrice(this.state.data.travelGroup.price) * this.state.travellerCount;
+            data.orderInfo.price = priceUtil.getPriceStr(price);
             this.setState({'data': data});
         } else {
             message.error('必须先同意安全协议');
@@ -61,13 +95,16 @@ var App = React.createClass({
         var request = {
             'routeid': this.state.data.orderInfo.routeid,
             'groupid': this.state.data.orderInfo.groupid,
-            'travellers': this.state.order.travellers,
+            'travellers': this.state.travellers,
             'policyDiscountid': discountData.policyDiscountid,
             'discountCode': discountData.discountCode,
             'studentDiscountid': discountData.studentDiscountid,
             'studentCount': discountData.studentCount,
             'isAgreed': this.state.order.isAgreed,
             'actualPrice': discountData.actualPrice,
+        }
+        if (this.state.isAccountSelect) {
+            request.travellers.unshift(this.state.accountTraveller);
         }
         $.post(url.orderOrder, request)
         .done(function(data) {
@@ -86,12 +123,23 @@ var App = React.createClass({
 
     },
 
+    onPreBtnClick: function() {
+        var data = this.state.data;
+        data.orderInfo.status = orderStatus.NEW;
+        this.setState({'data': data});
+    },
+
     getInitialState: function() {
         AccountBasicInfo.actions.get();
         var orderid = window.location.pathname.split('/')[2];
         OrderInfo.actions.load({'orderid': orderid});
         return {
             'basicInfo': {},
+            'isAgreed': false,
+            'isAccountSelect': true,
+            'accountTraveller': null,
+            'travellers': [],
+            'travellerCount': 1, // travellers.length + (isAccountSelect ? 1 : 0)
             'data': {
                 'status': 1,
                 'orderInfo': {},
@@ -102,13 +150,12 @@ var App = React.createClass({
                 'student': {},
                 'orderRefound': {},
                 'quota': 0
-            },
-            'order': {
-                'isAgreed': false,
-                'travellers': [],
-                'travellerCount': 0
             }
         }
+    },
+
+    componentDidMount: function() {
+        this.listenTo(AccountBasicInfo.store, this.onAccountBasicInfoChange);
     },
 
     render: function() {
@@ -127,22 +174,28 @@ var App = React.createClass({
         var content;
         var step;
         var status = data.orderInfo.status;
-        status = orderStatus.REFOUNDED;
         if (status === orderStatus.NEW) {
             step = 1;
             content = (<Step1
+                            accountInfo={basicInfo.accountInfo}
+                            accountSetting={basicInfo.accountSetting}
+                            isAccountSelect={this.state.isAccountSelect}
                             quota={data.quota}
                             orderInfo={data.orderInfo} 
+                            onAccountChange={this.onAccountChange}
                             onContactChange={this.onContactChange}
                             onAgreementCheck={this.onAgreementCheck}
                             onNextBtnClick={this.onNextBtnClick}/>);
-        } else if (status === orderStatus.WAITING) {
+        } else if (status === orderStatus.DISCOUNT_SELECT) {
             step = 2;
             content = (<Step2
-                            count={this.state.order.travellerCount}
+                            count={this.state.travellerCount}
                             orderInfo={data.orderInfo}
+                            accountTraveller={this.state.accountTraveller}
+                            travellers={this.state.travellers}
                             onCreateOrderSubmit={this.onCreateOrderSubmit}
-                            onOrderPaySubmit={this.onOrderPaySubmit} />);
+                            onOrderPaySubmit={this.onOrderPaySubmit}
+                            onPreBtnClick={this.onPreBtnClick}/>);
         } else {
             step = 3;
             content = (<Step3 
@@ -160,7 +213,9 @@ var App = React.createClass({
                 <StepBar step={step}/>
                 <Row>
                     <Col md={9}>
-                        {content}
+                        <div className="order-content-container">
+                            {content}
+                        </div>
                     </Col>
                     <Col md={3}>
                         <GroupBrief 

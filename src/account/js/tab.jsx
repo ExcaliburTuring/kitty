@@ -50,7 +50,6 @@ var Tab = React.createClass({
     },
 
     render: function() {
-        
         return (
             <div className="tab-container">
                 <Grid>
@@ -59,7 +58,7 @@ var Tab = React.createClass({
                             <div className="tab-account-info">
                                 <div className="tab-avatar">
                                     <a href={`${url.account}${this.state.indexUrl}`}>
-                                        <Image alt="头像" src={this.state.avatarUrl} circle/>
+                                        <Image alt="头像" src={this.state.avatarUrl} circle responsive/>
                                     </a>
                                 </div>
                             </div>

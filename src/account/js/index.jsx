@@ -47,15 +47,21 @@ var Index = React.createClass({
         var accountInfo = basicInfo.accountInfo;
         var accountSetting = basicInfo.accountSetting;
         var accountid = accountInfo.accountid;
-        var infoUrl = `${defaultValue.accountUrl}/${accountid}/info`;
-        var ordersUrl = `${defaultValue.accountUrl}/${accountid}/orders`;
+        var infoUrl = `${url.account}/${accountid}/info`;
+        var ordersUrl = `${url.account}/${accountid}/orders`;
        
-        var ordersList = data.briefOrders.map(function(order) {
-            return (
-                    <OrderList order={order} key={order.orderid}/>
+        var ordersList = null;
+        if (data.briefOrders != null && data.briefOrders.length > 0) {
+            ordersList = data.briefOrders.map(function(order) {
+                return (
+                        <OrderList order={order} key={order.orderid}/>
+                );
+            });
+        } else {
+            ordersList = (
+                <div>暂时没有任何订单</div>
             );
-        });
-
+        }
         return (
             <Grid>
                 <Row>
