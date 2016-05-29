@@ -59,7 +59,6 @@ var Contact = React.createClass({
     },
 
     onSubmitBtnClick: function() {
-
         if (this.refs.nameInput.validate() != 'success'
             || this.refs.idSelector.validate()!= 'success'
             || this.refs.genderSelector.validate() != 'success'
@@ -94,7 +93,7 @@ var Contact = React.createClass({
             contact['mobile'] = this.refs.mobileContainer.getMobile();
         }
         var self = this;
-        $.post(url.contacts, contact)
+        $.post(this.props.isAccount ? url.accountInfo : url.contacts, contact)
         .done(function(data) {
             if (data.status != 0) {
                 message.error(defaultValue.updateContactsMsg);

@@ -137,6 +137,11 @@ export var orderStatus = {
     NEW: 'NEW',
 
     /**
+     * 选择优惠, 前端使用的临时状态
+     */
+    DISCOUNT_SELECT: 'DISCOUNT_SELECT',
+
+    /**
      * 生成等待付款
      */
     WAITING: 'WAITING',

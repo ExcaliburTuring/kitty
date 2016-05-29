@@ -29,25 +29,31 @@ var App = React.createClass({
 
     // step1的回调函数
 
+    onAccountChange: function(checked, account) {
+        this.setState({
+            'isAccountSelect': checked,
+            'accountTraveller': account,
+            'travellerCount': checked ? this.state.travellers.length + 1 : this.state.travellerCount - 1
+        });
+    },
+
     onContactChange: function(selectContacts, selectContactsSize) {
-        var order = this.state.order;
-        order.travellers = selectContacts;
-        order.travellerCount = selectContactsSize;
-        this.setState({'order': order});
+        this.setState({
+            'travellers': selectContacts,
+            'travellerCount': this.state.isAccountSelect ? selectContactsSize + 1: selectContactsSize
+        });
     },
 
     onAgreementCheck: function(e) {
-        var order = this.state.order;
-        order.isAgreed = e.target.checked;
-        this.setState({'order': order});
+        this.setState({'isAgreed': e.target.checked});
     },
 
     onNextBtnClick: function() {
-        if (this.state.order.travellerCount == 0) {
+        if (this.state.travellersCount == 0) {
             message.error('必须选择出行人');
-        } else if (this.state.order.isAgreed) {
+        } else if (this.state.isAgreed) {
             var data = this.state.data;
-            data.orderInfo.status = orderStatus.WAITING;
+            data.orderInfo.status = orderStatus.DISCOUNT_SELECT;
             this.setState({'data': data});
         } else {
             message.error('必须先同意安全协议');
@@ -61,13 +67,16 @@ var App = React.createClass({
         var request = {
             'routeid': this.state.data.orderInfo.routeid,
             'groupid': this.state.data.orderInfo.groupid,
-            'travellers': this.state.order.travellers,
+            'travellers': this.state.travellers,
             'policyDiscountid': discountData.policyDiscountid,
             'discountCode': discountData.discountCode,
             'studentDiscountid': discountData.studentDiscountid,
             'studentCount': discountData.studentCount,
             'isAgreed': this.state.order.isAgreed,
             'actualPrice': discountData.actualPrice,
+        }
+        if (this.state.isAccountSelect) {
+            request.travellers.unshift(this.state.accountTraveller);
         }
         $.post(url.orderOrder, request)
         .done(function(data) {
@@ -86,12 +95,23 @@ var App = React.createClass({
 
     },
 
+    onPreBtnClick: function() {
+        var data = this.state.data;
+        data.orderInfo.status = orderStatus.NEW;
+        this.setState({'data': data});
+    },
+
     getInitialState: function() {
         AccountBasicInfo.actions.get();
         var orderid = window.location.pathname.split('/')[2];
         OrderInfo.actions.load({'orderid': orderid});
         return {
             'basicInfo': {},
+            'isAgreed': false,
+            'isAccountSelect': true,
+            'accountTraveller': null,
+            'travellers': [],
+            'travellerCount': 1, // travellers.length + (isAccountSelect ? 1 : 0)
             'data': {
                 'status': 1,
                 'orderInfo': {},
@@ -102,11 +122,6 @@ var App = React.createClass({
                 'student': {},
                 'orderRefound': {},
                 'quota': 0
-            },
-            'order': {
-                'isAgreed': false,
-                'travellers': [],
-                'travellerCount': 0
             }
         }
     },
@@ -130,18 +145,25 @@ var App = React.createClass({
         if (status === orderStatus.NEW) {
             step = 1;
             content = (<Step1
+                            accountInfo={basicInfo.accountInfo}
+                            accountSetting={basicInfo.accountSetting}
+                            isAccountSelect={this.state.isAccountSelect}
                             quota={data.quota}
                             orderInfo={data.orderInfo} 
+                            onAccountChange={this.onAccountChange}
                             onContactChange={this.onContactChange}
                             onAgreementCheck={this.onAgreementCheck}
                             onNextBtnClick={this.onNextBtnClick}/>);
-        } else if (status === orderStatus.WAITING) {
+        } else if (status === orderStatus.DISCOUNT_SELECT) {
             step = 2;
             content = (<Step2
-                            count={this.state.order.travellerCount}
+                            count={this.state.travellerCount}
                             orderInfo={data.orderInfo}
+                            accountTraveller={this.state.accountTraveller}
+                            travellers={this.state.travellers}
                             onCreateOrderSubmit={this.onCreateOrderSubmit}
-                            onOrderPaySubmit={this.onOrderPaySubmit} />);
+                            onOrderPaySubmit={this.onOrderPaySubmit}
+                            onPreBtnClick={this.onPreBtnClick}/>);
         } else {
             step = 3;
             content = (<Step3 
@@ -159,7 +181,9 @@ var App = React.createClass({
                 <StepBar step={step}/>
                 <Row>
                     <Col md={9}>
-                        {content}
+                        <div className="order-content-container">
+                            {content}
+                        </div>
                     </Col>
                     <Col md={3}>
                         <GroupBrief 

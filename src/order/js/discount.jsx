@@ -160,7 +160,7 @@ var Discount = React.createClass({
                     <Form horizontal  onSubmit={this.onCreateOrderSubmit}>
                         <FormItem
                             label="优惠策略:"
-                            labelCol={{ span: 6 }}
+                            labelCol={{ span: 5 }}
                             wrapperCol={{ span: 14 }}>
                             <Select 
                                 size="large"
@@ -172,7 +172,7 @@ var Discount = React.createClass({
                         </FormItem>
                         <FormItem
                             label="优惠码:"
-                            labelCol={{ span: 6 }}
+                            labelCol={{ span: 5 }}
                             wrapperCol={{ span: 14 }}
                             validateStatus={this.state.discountCode.validateStatus}
                             help={this.state.discountCode.msg}
@@ -184,7 +184,7 @@ var Discount = React.createClass({
                         </FormItem>
                         <FormItem
                             label="学生证优惠:"
-                            labelCol={{ span: 6 }}
+                            labelCol={{ span: 5 }}
                             wrapperCol={{ span: 14 }}>
                             {studentDiscount}
                         </FormItem>
@@ -197,7 +197,7 @@ var Discount = React.createClass({
                     <p className="desc-price">-{this.state.studentDiscount.discountPrice}</p>
                     <p className="right-price">
                         结算价格：{ 
-                            this.props.orderInfo.price - this.state.policyDiscount.discountPrice
+                            orderInfo.price - this.state.policyDiscount.discountPrice
                             - this.state.discountCode.discountPrice
                             - this.state.studentDiscount.discountPrice
                         }

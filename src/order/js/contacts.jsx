@@ -6,6 +6,7 @@ import Reflux from 'reflux';
 import { Col } from 'react-bootstrap';
 import { Checkbox, message } from 'antd'; 
 
+import AccountBasicInfo from 'account_basicinfo';
 import { url } from 'config';
 import Rabbit from 'rabbit';
 import Contact from 'contact';
@@ -21,6 +22,22 @@ var Contacts = React.createClass({
     mixins: [
         Reflux.connect(AccountContacts.store, 'contacts')
     ],
+
+    createAccountTraveller: function(props) {
+        var accountInfo = props.accountInfo;
+        var accountSetting = props.accountSetting;
+        return  {
+            'accountid': accountInfo.accountid,
+            'contactid': 0,
+            'name': accountInfo.name,
+            'id': accountInfo.id,
+            'idType': accountInfo.idType,
+            'gender': accountSetting.gender,
+            'birthday': accountSetting.birthday,
+            'email': accountInfo.email,
+            'mobile': accountInfo.mobile
+        };
+    },
 
     onAddBtnClick: function() {
         var newContacts = this.state.newContacts;
@@ -39,7 +56,17 @@ var Contacts = React.createClass({
         var contactid = contact.contactid;
         var selectContacts = this.state.selectContacts;
         delete selectContacts[contactid];
-        this.setState({'selectContacts': selectContacts});
+        selectContactsSize = selectContactsSize - 1;
+        this.setState({
+            'selectContacts': selectContacts,
+            'selectContactsSize': selectContactsSize 
+        });
+        this.props.onContactChange(selectContacts, selectContactsSize);
+    },
+
+    onAccountSuccessSubmit: function() {
+        message.success('成功更新用户信息');
+        AccountBasicInfo.actions.load();
     },
 
     onNewContactSuccessSubmit: function(index) {
@@ -51,6 +78,10 @@ var Contacts = React.createClass({
     onContactSuccessSubmit: function(index) {
         message.success('成功更新常用出行人');
         AccountContacts.actions.load();
+    },
+
+    onAccountChange: function(checked) {
+        this.props.onAccountChange(checked, this.state.accountTraveller);
     },
 
     onChange: function(e, index) {
@@ -72,45 +103,71 @@ var Contacts = React.createClass({
             delete selectContacts[contactid];
             selectContactsSize = selectContactsSize - 1;
         }
-         this.setState({
-                'selectContacts': selectContacts,
-                'selectContactsSize': selectContactsSize 
-            });
+        this.setState({
+            'selectContacts': selectContacts,
+            'selectContactsSize': selectContactsSize 
+        });
         this.props.onContactChange(selectContacts, selectContactsSize);
     },
 
     getInitialState: function() {
         AccountContacts.actions.load();
+        this.props.onAccountChange(true, this.createAccountTraveller(this.props));
         return {
            'contacts': {
                 'contacts': []
            },
+           'accountTraveller': this.createAccountTraveller(this.props),
            'newContacts': [],
            'selectContacts': {},
            'selectContactsSize': 0
         }
     },
 
+    componentWillReceiveProps: function(nextProps) {
+        this.setState({
+            'accountTraveller': this.createAccountTraveller(nextProps)
+        });
+    },
+
     render: function() {
+        var accountTraveller = this.state.accountTraveller;
         var contacts = this.state.contacts.contacts;
         var selectContacts = this.state.selectContacts;
         var self = this;
-        var nameList = [], contactsList = [], newContactsList = [];
+        var nameList = [(
+            <Name 
+                key={`account-${accountTraveller.accountid}`} 
+                index={0} 
+                name={accountTraveller.name} 
+                onChange={(e)=>{self.onAccountChange(e.target.checked)}}
+                checked={this.props.isAccountSelect}/>
+        )];
+        var contactsList = [];
+        if (self.props.isAccountSelect) {
+            contactsList.push((
+                <Contact 
+                    key={`order-account-${accountTraveller.accountid}`}
+                    isAccount={true}
+                    index={0}
+                    contact={this.state.accountTraveller} 
+                    onMinusClick={()=>{self.onAccountChange(false)}}
+                    onSuccessSubmit={self.onAccountSuccessSubmit}/>
+            ));
+        }
+        var newContactsList = [];
 
         if (contacts.length > 0 ) {
-            nameList = contacts.map(function(contact, index) {
-                return (
+            for (var i = 0, n = contacts.length; i < n; i++) {
+                var contact = contacts[i];
+                nameList.push(
                     <Name 
-                        key={contact.contactid} 
-                        index={index} 
+                        key={`contact-${contact.contactid}`} 
+                        index={i} 
                         name={contact.name} 
                         onChange={self.onChange}
                         checked={selectContacts[contact.contactid] ? true : false}/>
                 );
-            });
-
-            for (var i = 0, n = contacts.length; i < n; i++) {
-                var contact = contacts[i];
                 if (selectContacts[contact.contactid]) {
                     contactsList.push(
                         <Contact 
@@ -162,14 +219,15 @@ var Name = React.createClass({
 
     render: function() {
         return (
-            <Checkbox
-                className="order-contact-name"
-                checked={this.props.checked}
-                defaultChecked={false}
-                disabled={false}
-                onChange={(e)=>{this.props.onChange(e, this.props.index);}}>
-                {this.props.name}
-            </Checkbox>
+            <label>
+                <Checkbox
+                    className="order-contact-name"
+                    checked={this.props.checked}
+                    defaultChecked={false}
+                    disabled={false}
+                    onChange={(e)=>{this.props.onChange(e, this.props.index);}}/>
+                {this.props.name} 
+            </label>
         );
     }
 
