@@ -7,7 +7,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { message } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
-import { url, orderStatus } from 'config';
+import { url, orderStatus, priceUtil } from 'config';
 import Rabbit from 'rabbit';
 import Step1 from './step1';
 import Step2 from './step2';
@@ -23,9 +23,35 @@ var OrderInfo = Rabbit.create(url.orderOrder);
 var App = React.createClass({
 
     mixins: [
-        Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
+        Reflux.ListenerMixin,
         Reflux.connect(OrderInfo.store, 'data')
     ],
+
+    createAccountTraveller: function(info) {
+        if (info.accountInfo == null) {
+            return null;
+        }
+        var accountInfo = info.accountInfo;
+        var accountSetting = info.accountSetting;
+        return  {
+            'accountid': accountInfo.accountid,
+            'contactid': 0,
+            'name': accountInfo.name,
+            'id': accountInfo.id,
+            'idType': accountInfo.idType,
+            'gender': accountSetting.gender,
+            'birthday': accountSetting.birthday,
+            'email': accountInfo.email,
+            'mobile': accountInfo.mobile
+        };
+    },
+
+    onAccountBasicInfoChange: function(info) {
+        this.setState({
+            'basicInfo': info,
+            'accountTraveller': this.createAccountTraveller(info)
+        });
+    },
 
     // step1的回调函数
 
@@ -54,6 +80,8 @@ var App = React.createClass({
         } else if (this.state.isAgreed) {
             var data = this.state.data;
             data.orderInfo.status = orderStatus.DISCOUNT_SELECT;
+            var price = priceUtil.getPrice(this.state.data.travelGroup.price) * this.state.travellerCount;
+            data.orderInfo.price = priceUtil.getPriceStr(price);
             this.setState({'data': data});
         } else {
             message.error('必须先同意安全协议');
@@ -124,6 +152,10 @@ var App = React.createClass({
                 'quota': 0
             }
         }
+    },
+
+    componentDidMount: function() {
+        this.listenTo(AccountBasicInfo.store, this.onAccountBasicInfoChange);
     },
 
     render: function() {

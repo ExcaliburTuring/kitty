@@ -112,7 +112,6 @@ var Contacts = React.createClass({
 
     getInitialState: function() {
         AccountContacts.actions.load();
-        this.props.onAccountChange(true, this.createAccountTraveller(this.props));
         return {
            'contacts': {
                 'contacts': []
@@ -121,7 +120,7 @@ var Contacts = React.createClass({
            'newContacts': [],
            'selectContacts': {},
            'selectContactsSize': 0
-        }
+        };
     },
 
     componentWillReceiveProps: function(nextProps) {

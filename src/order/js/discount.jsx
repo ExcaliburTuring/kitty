@@ -8,7 +8,7 @@ import { Form, Select, Input, InputNumber, Button } from 'antd';
 var FormItem = Form.Item;
 var SelectOption = Select.Option;
 
-import { url } from 'config';
+import { url, priceUtil } from 'config';
 import Rabbit from 'rabbit';
 
 import 'antd/lib/index.css';
@@ -16,7 +16,26 @@ import 'antd/lib/index.css';
 var OrderDiscount = Rabbit.create(url.orderDiscount);
 var Discount = React.createClass({
 
-    mixins: [Reflux.connect(OrderDiscount.store, 'data')],
+    mixins: [Reflux.ListenerMixin, Reflux.connect(OrderDiscount.store, 'data')],
+
+    onOrderDiscountChange: function(discount) {
+        if (discount != null) {
+            var discountPrice = '￥0.00';
+            for (var i = discount.policy.length - 1; i >= 0; i--) {
+                if (discount.policy[i].discountid == discount.defaultDiscountid) {
+                    discountPrice = discount.policy[i].value;
+                    break;
+                }
+            }
+            this.setState({
+                'data': discount,
+                'policyDiscount': {
+                    'discountid': discount.defaultDiscountid,
+                    'discountPrice': discountPrice
+                }
+            });
+        }
+    },
 
     onPolicyDiscountChange: function(eventKey) {
         if (eventKey !== this.state.policyDiscount.discountid) { // 和当前的一样
@@ -43,23 +62,43 @@ var Discount = React.createClass({
             return;
         }
         var self = this;
-        $.post(url.orderDiscountCode, {'code': discountCode})
+        $.get(url.orderDiscountCode, {'code': discountCode})
         .done(function(data) {
-            self.setState({
-                'discountCode': {
-                    'discountPrice': data.value,
-                    'validateStatus': data.status == 0 ? 'success' : 'error',
-                    'msg': data.msg
-                }
-            })
+            console.log(data);
+            if (data.status == 0 ){
+                self.setState({
+                    'discountCode': {
+                        'discountPrice': data.value,
+                        'validateStatus': 'success',
+                        'msg': '此优惠码可以使用'
+                    }
+                });
+            } else if (data.status == 1100) {
+                self.setState({
+                    'discountCode': {
+                        'discountPrice': '￥0.00',
+                        'validateStatus': 'error',
+                        'msg': data.errors[0].message
+                    }
+                });
+            } else {
+                self.setState({
+                    'discountCode': {
+                        'discountPrice': '￥0.00',
+                        'validateStatus': 'error',
+                        'msg': '优惠码校验失败，请联系15001028030'
+                    }
+                });
+            }
         })
         .fail(function() {
             self.setState({
                 'discountCode': {
+                    'discountPrice': '￥0.00',
                     'validateStatus': 'error',
                     'msg': '优惠码校验失败，请联系15001028030'
                 }
-            })
+            });
         });
     },
 
@@ -68,11 +107,11 @@ var Discount = React.createClass({
         if (count == this.state.studentDiscount.count) {
             return;
         }
-        var discountPrice = count * this.state.data.studentDiscount.value;
+        var discountPrice = count * priceUtil.getPrice(this.state.data.studentDiscount.value);
         this.setState({
             'studentDiscount': {
                 'count': count,
-                'discountPrice': discountPrice
+                'discountPrice': priceUtil.getPriceStr(discountPrice)
             }
         });
     },
@@ -80,14 +119,19 @@ var Discount = React.createClass({
     onCreateOrderSubmit: function(e) {
         e.preventDefault();
         this.props.onCreateOrderSubmit({
-            'actualPrice': this.props.orderInfo.price - this.state.policyDiscount.discountPrice
-                            - this.state.discountCode.discountPrice
-                            - this.state.studentDiscount.discountPrice,
+            'actualPrice': this.getActualPrice(),
             'policyDiscountid': this.state.policyDiscount.discountid,
             'discountCode': this.state.discountCode.code,
             'studentDiscountid': this.state.data.studentDiscount.discountid,
             'studentCount': this.state.studentDiscount.count
         });
+    },
+
+    getActualPrice: function() {
+        return priceUtil.getPrice(this.props.orderInfo.price)
+                - priceUtil.getPrice(this.state.policyDiscount.discountPrice)
+                - priceUtil.getPrice(this.state.discountCode.discountPrice)
+                - priceUtil.getPrice(this.state.studentDiscount.discountPrice);
     },
 
     getInitialState: function() {
@@ -106,19 +150,23 @@ var Discount = React.createClass({
             },
             'policyDiscount': {
                 'discountid': 0,
-                'discountPrice': 0
+                'discountPrice':'￥0.00'
             },
             'discountCode': {
                 'code': '',
-                'discountPrice': 0,
+                'discountPrice': '￥0.00',
                 'validateStatus': null,
                 'msg': ''
             },
             'studentDiscount': {
                 'count': 0,
-                'discountPrice': 0
+                'discountPrice': '￥0.00'
             }
         }
+    },
+
+    componentDidMount: function() {
+        this.listenTo(OrderDiscount.store, this.onOrderDiscountChange);
     },
 
     render: function() {
@@ -152,9 +200,9 @@ var Discount = React.createClass({
             );
         }
         return (
-            <div className="discount-container">
-                <Col md={12}>
-                    <p className="right-price">总价：{orderInfo.price}</p>
+            <div className="discount-container clearfix">
+                <Col md={12} className="total-price-container">
+                    <p className="pull-right">总价：{orderInfo.price}</p>
                 </Col>
                 <Col md={8}>
                     <Form horizontal  onSubmit={this.onCreateOrderSubmit}>
@@ -187,20 +235,18 @@ var Discount = React.createClass({
                             labelCol={{ span: 5 }}
                             wrapperCol={{ span: 14 }}>
                             {studentDiscount}
+                            <span>每名学生可优惠{this.state.data.studentDiscount.value}</span>
                         </FormItem>
-                        <Button type="primary" htmlType="submit">我要下单</Button>
                    </Form>
                 </Col>
                 <Col md={4}>
                     <p className="desc-price">-{this.state.policyDiscount.discountPrice}</p>
                     <p className="desc-price">-{this.state.discountCode.discountPrice}</p>
                     <p className="desc-price">-{this.state.studentDiscount.discountPrice}</p>
-                    <p className="right-price">
-                        结算价格：{ 
-                            orderInfo.price - this.state.policyDiscount.discountPrice
-                            - this.state.discountCode.discountPrice
-                            - this.state.studentDiscount.discountPrice
-                        }
+                </Col>
+                <Col md={12}>
+                    <p className="pull-right">
+                        结算价格：{priceUtil.getPriceStr(this.getActualPrice())}
                     </p>
                 </Col>
             </div>

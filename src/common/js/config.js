@@ -215,3 +215,15 @@ export var groupStatus = {
     }
 
 }
+
+export var priceUtil = {
+
+    getPrice: function(priceStr) {
+        return +priceStr.slice(1) * 1000;
+    },
+
+    getPriceStr: function(price) {
+        return `￥${price / 1000}`
+    }
+
+}

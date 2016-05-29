@@ -166,7 +166,6 @@ body {
 
 }
 
-
 .order-step2 {
 
 	.discount-title {
@@ -180,25 +179,7 @@ body {
 	    border-bottom: 3px solid @red;
 	}
 
-	.discount-name-list-container {
-		font-size: 20px;
-		height: 50px;
-	    padding-top: 13px;
-	    padding-left: 20px;
-	    margin-bottom: 20px;
-	    color: #666;
-	    border-radius: 8px 8px 0 0;
-	    box-shadow: 0 0 3px @light-gray;
-
-	    .discount-name {
-	    	margin-left: 10px;
-	    	margin-top: -5px;
-	    }
-	}
-
 	.discount-item {
-		margin-bottom: 20px;
-		height: 350px;
 		border-radius: 8px;
 		border-bottom: 3px solid @red;
 		box-shadow: 0 0 3px @light-gray;
@@ -210,20 +191,62 @@ body {
 			color: @dark-gray;
 		}
 
-		.right-price {
-			text-align: right;
-		}
-		.desc-price {
-			line-height: 34px;
-			margin-bottom: 15px;
-			text-align: right;
-			color: @blue;
+		.discount-name-list-container {
+			font-size: 20px;
+			height: 50px;
+		    padding-top: 13px;
+		    padding-left: 20px;
+		    color: #666;
+		    border-radius: 8px 8px 0 0;
+		    box-shadow: 0 0 3px @light-gray;
+
+		    .discount-name {
+		    	margin-left: 10px;
+		    	margin-top: -5px;
+		    }
 		}
 
 		.discount-container {
+			padding: 20px;
 
 			.ant-form-item label {
+				font-size: 15px;
 				margin-right: 20px;
+			}
+
+			.total-price-container {
+				margin-bottom: 24px;
+			}
+
+			.desc-price {
+				height: 39px;
+				margin-top: 10px;
+				margin-bottom: 20px;
+				text-align: right;
+				color: @blue;
+			}
+		}
+
+		.pay-container {
+			padding: 10px 20px;
+	    	border-radius: 0 0 8px 8px;
+	    	box-shadow: 0 0 3px @light-gray;
+
+			.pay-left {
+				width: 100px;
+				margin-top: 10px;
+			}
+
+			.pay-middle {
+				font-size: 18px;
+				line-height: 30px;
+			}
+
+			.pay-right {
+
+				button:first-child {
+					margin-bottom: 10px;
+				}
 			}
 		}
 	}
@@ -252,6 +275,7 @@ body {
 			font-size: 18px;
 			vertical-align: middle;
 		}
+
 		.right {
 			line-height: 90px;
 			vertical-align: middle;
@@ -261,6 +285,20 @@ body {
 				background-color: @red;
 				color: @white;
 			}
+		}
+	}
+
+	.pre-btn-container {
+		height: 100px;
+		margin: 20px 0;
+		font-size: 18px;
+
+		button {
+			width: 86px;
+			height: 44px;
+			background-color: @red;
+			border: none;
+			color: @white;
 		}
 	}
 }
