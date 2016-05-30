@@ -22,7 +22,7 @@ var GroupBrief = React.createClass({
                     </div>
                 </div>
                 <div className="total">
-                    <p>总价：</p><div className="price-right">￥{travelGroup.price}</div>
+                    <p>总价：</p><div className="price-right">{travelGroup.price}</div>
                 </div>
             </div>
         );

@@ -6,6 +6,7 @@ export var url = {
     'wxLogin': '/wx/login',
 
     'account': '/account',
+    'accountInfo': '/account/info',
 	'basicinfo': '/account/basicinfo',
 	'contacts': '/account/contacts',
 
@@ -136,6 +137,11 @@ export var orderStatus = {
     NEW: 'NEW',
 
     /**
+     * 选择优惠, 前端使用的临时状态
+     */
+    DISCOUNT_SELECT: 'DISCOUNT_SELECT',
+
+    /**
      * 生成等待付款
      */
     WAITING: 'WAITING',
@@ -206,6 +212,18 @@ export var groupStatus = {
         } else if(status == 'FINISHED') {
             return "报名结束";
         }
+    }
+
+}
+
+export var priceUtil = {
+
+    getPrice: function(priceStr) {
+        return +priceStr.slice(1) * 1000;
+    },
+
+    getPriceStr: function(price) {
+        return `￥${price / 1000}`
     }
 
 }

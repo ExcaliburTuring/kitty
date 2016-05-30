@@ -15,9 +15,13 @@ var Step1 = React.createClass({
         return (
             <div className="order-step1">
                 <Contacts 
+                    accountInfo={this.props.accountInfo}
+                    accountSetting={this.props.accountSetting}
+                    isAccountSelect={this.props.isAccountSelect}
                     quota={this.props.quota}
+                    onAccountChange={this.props.onAccountChange}
                     onContactChange={this.props.onContactChange}/>
-                <div className="submit">
+                <div className="submit pull-right">
                     <Agreement 
                         isAgreed={this.props.orderInfo.isAgreed}
                         onAgreementCheck={this.props.onAgreementCheck} />
@@ -37,11 +41,12 @@ var Agreement = React.createClass({
     render: function() {
         var text = this.props.isAgreed ? '我已经同意安全协议' : '同意安全协议';
         return (
-            <Checkbox
-                defaultChecked={this.props.isAgreed} 
-                onChange={ this.props.onAgreementCheck}>
+            <label>
+                <Checkbox
+                    defaultChecked={this.props.isAgreed} 
+                    onChange={ this.props.onAgreementCheck}/>
                 {text}
-            </Checkbox>
+            </label>
         );
     }
 

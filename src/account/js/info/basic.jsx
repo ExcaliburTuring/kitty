@@ -5,6 +5,7 @@ import React from 'react';
 import { Col, Image } from 'react-bootstrap';
 import { Form, message } from 'antd';
 
+import AccountBasicInfo from 'account_basicinfo';
 import { idType, gender, accountStatus, url, defaultValue } from 'config';
 import Title from 'title';
 import EditButtonGroup from 'editbtngroup';
@@ -67,13 +68,17 @@ var BasicInfo = React.createClass({
             basicInfo['birthday'] = this.refs.birthdaySelector.getBirthday();
         }
         var self = this;
-        $.post(url.basicinfo, basicInfo)
+        $.post(url.accountInfo, basicInfo)
         .done(function(data) {
             AccountBasicInfo.actions.load();
             self.setState({
                 'readOnly': true,
                 'isChange': false
             })
+            self.refs.nameInput.cleanValidate();
+            self.refs.idSelector.cleanValidate();
+            self.refs.genderSelector.cleanValidate();
+            self.refs.birthdaySelector.cleanValidate();
             message.success('更新成功');
         }).fail(function() {
             message.error(defaultValue.updateAccountMsg);
