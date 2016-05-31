@@ -7,7 +7,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { message } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
-import { url, orderStatus, priceUtil } from 'config';
+import { defaultValue, url, orderStatus, priceUtil } from 'config';
 import Rabbit from 'rabbit';
 import Step1 from './step1';
 import Step2 from './step2';
@@ -58,31 +58,29 @@ var App = React.createClass({
     onAccountChange: function(checked, account) {
         this.setState({
             'isAccountSelect': checked,
-            'accountTraveller': account,
-            'travellerCount': checked ? this.state.travellers.length + 1 : this.state.travellerCount - 1
-        });
-    },
-
-    onContactChange: function(selectContacts, selectContactsSize) {
-        this.setState({
-            'travellers': selectContacts,
-            'travellerCount': this.state.isAccountSelect ? selectContactsSize + 1: selectContactsSize
+            'accountTraveller': account
         });
     },
 
     onAgreementCheck: function(e) {
-        this.setState({'isAgreed': e.target.checked});
+        var data = this.state.data;
+        data.orderInfo.isAgreed = e.target.checked;
+        this.setState({'data': data});
     },
 
-    onNextBtnClick: function() {
-        if (this.state.travellersCount == 0) {
+    onNextBtnClick: function(travellers) {
+        var travellerCount = this.getTravellerCount(this.state.isAccountSelect, travellers);
+        if (travellerCount == 0) {
             message.error('必须选择出行人');
-        } else if (this.state.isAgreed) {
+        } else if (this.state.data.orderInfo.isAgreed) {
             var data = this.state.data;
             data.orderInfo.status = orderStatus.DISCOUNT_SELECT;
-            var price = priceUtil.getPrice(this.state.data.travelGroup.price) * this.state.travellerCount;
+            var price = priceUtil.getPrice(this.state.data.travelGroup.price) * travellerCount;
             data.orderInfo.price = priceUtil.getPriceStr(price);
-            this.setState({'data': data});
+            this.setState({
+                'data': data,
+                'travellers': travellers
+            });
         } else {
             message.error('必须先同意安全协议');
         }
@@ -91,31 +89,39 @@ var App = React.createClass({
     // step2的回调函数
 
     onCreateOrderSubmit: function(discountData) {
+        var travellers = this.copyArray(this.state.travellers);
+        if (this.state.isAccountSelect) {
+            travellers.unshift(this.state.accountTraveller);
+        }
         var self = this;
         var request = {
-            'routeid': this.state.data.orderInfo.routeid,
-            'groupid': this.state.data.orderInfo.groupid,
-            'travellers': this.state.travellers,
+            'orderid': this.state.data.orderInfo.orderid,
+            'travellers': travellers,
             'policyDiscountid': discountData.policyDiscountid,
             'discountCode': discountData.discountCode,
             'studentDiscountid': discountData.studentDiscountid,
             'studentCount': discountData.studentCount,
-            'isAgreed': this.state.order.isAgreed,
             'actualPrice': discountData.actualPrice,
-        }
-        if (this.state.isAccountSelect) {
-            request.travellers.unshift(this.state.accountTraveller);
-        }
-        $.post(url.orderOrder, request)
-        .done(function(data) {
-            if (data.status != 0) {
-                message.error('订单创建失败，您可以联系15001028030');
-            } else {
-                message.success('订单创建成功，您可以使用支付宝进行支付');
-            }
-        })
-        .fail(function() {
-            message.error('订单创建失败，您可以联系15001028030');
+        };
+        $.ajax({
+            'url': url.orderOrder,
+            'type': 'post',
+            'data': JSON.stringify(request),
+            'dataType': 'json',
+            'contentType': 'application/json;charset=UTF-8',
+            'success': function(data) {
+                            if (data.status != 0) {
+                                self.refs.step2.enableBtn();
+                                message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                            } else {
+                                message.success('订单创建成功，您可以使用支付宝进行支付');
+                                setTimeout('location.reload(true);', 500);
+                            }
+                        },
+            'error': function() {
+                        self.refs.step2.enableBtn();
+                        message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                    }
         });
     },
 
@@ -129,17 +135,27 @@ var App = React.createClass({
         this.setState({'data': data});
     },
 
+    copyArray: function(array) {
+        var copy = [];
+        for (var i = 0; i < array.length; i++) {
+            copy.push(array[i]);
+        }
+        return copy;
+    },
+
+    getTravellerCount: function(isAccountSelect, travellers) {
+        return isAccountSelect ? travellers.length + 1 : travellers.length;
+    },
+
     getInitialState: function() {
         AccountBasicInfo.actions.get();
         var orderid = window.location.pathname.split('/')[2];
         OrderInfo.actions.load({'orderid': orderid});
         return {
             'basicInfo': {},
-            'isAgreed': false,
             'isAccountSelect': true,
             'accountTraveller': null,
             'travellers': [],
-            'travellerCount': 1, // travellers.length + (isAccountSelect ? 1 : 0)
             'data': {
                 'status': 1,
                 'orderInfo': {},
@@ -177,21 +193,23 @@ var App = React.createClass({
         if (status === orderStatus.NEW) {
             step = 1;
             content = (<Step1
-                            accountInfo={basicInfo.accountInfo}
-                            accountSetting={basicInfo.accountSetting}
+                            accountTraveller={this.state.accountTraveller}
                             isAccountSelect={this.state.isAccountSelect}
+                            travellers={this.state.travellers}
+                            isAgreed={this.state.data.orderInfo.isAgreed}
                             quota={data.quota}
                             orderInfo={data.orderInfo} 
                             onAccountChange={this.onAccountChange}
-                            onContactChange={this.onContactChange}
                             onAgreementCheck={this.onAgreementCheck}
                             onNextBtnClick={this.onNextBtnClick}/>);
         } else if (status === orderStatus.DISCOUNT_SELECT) {
             step = 2;
             content = (<Step2
+                            ref="step2"
                             count={this.state.travellerCount}
                             orderInfo={data.orderInfo}
                             accountTraveller={this.state.accountTraveller}
+                            isAccountSelect={this.state.isAccountSelect}
                             travellers={this.state.travellers}
                             onCreateOrderSubmit={this.onCreateOrderSubmit}
                             onOrderPaySubmit={this.onOrderPaySubmit}

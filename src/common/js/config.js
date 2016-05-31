@@ -33,6 +33,7 @@ export var defaultValue = {
     'updateContactsMsg': '更新常用出行人信息失败，请稍后重试',
     'deleteContactsMsg': '删除常用出行人失败，请稍候重试',
     'newOrderMsg': '创建订单失败，请稍候重试',
+    'hotline': 15001028030,
 
     getRouteImgPath: function(routeImgPath) {
         return this.routeImgPath + routeImgPath;
@@ -149,7 +150,7 @@ export var orderStatus = {
     /**
      * 取消
      */
-    CANCEl: 'CANCEl',
+    CANCEL: 'CANCEL',
 
     /**
      * 超时
@@ -189,7 +190,34 @@ export var orderStatus = {
     /**
      * 行程取消
      */
-    CLOSED: 'CLOSED'
+    CLOSED: 'CLOSED',
+
+    getDesc: function(orderStatus) {
+        switch(orderStatus) {
+            case 'NEW':
+                return '新订单';
+            case 'WAITING':
+                return '等待付款';
+            case 'CANCEL':
+                return '取消订单';
+            case 'TIMEOUT':
+                return '付款超时，请重新下订单';
+            case 'CANCELPAYMENT':
+                return '取消付款';
+            case 'REFOUNDED':
+                return '退款';
+            case 'PAYING':
+                return '付款中';
+            case 'PAID':
+                return '付款完成';
+            case 'REFOUNDING':
+                return '新订单';
+            case 'FINISH':
+                return '开始旅行了';
+            case 'CLOSED':
+                return '行程取消'; 
+        };
+    }
 }
 
 export var groupStatus = {
@@ -223,7 +251,8 @@ export var priceUtil = {
     },
 
     getPriceStr: function(price) {
-        return `￥${price / 1000}`
+        var rawPrice = price / 1000;
+        return `￥${rawPrice.toFixed(2)}`
     }
 
 }

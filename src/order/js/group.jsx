@@ -17,8 +17,7 @@ var GroupBrief = React.createClass({
                         <h2>{travelRoute.name}</h2>
                         <h3>{travelRoute.title}</h3>
                         <h4>{travelRoute.route}</h4>
-                        <h4>{travelGroup.startDate}</h4>
-                        <h4>{travelGroup.endDate}</h4>
+                        <h4>{travelGroup.startDate} 至 {travelGroup.endDate}</h4>
                     </div>
                 </div>
                 <div className="total">
