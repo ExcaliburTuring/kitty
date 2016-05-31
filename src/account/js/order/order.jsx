@@ -1,6 +1,7 @@
 import React from 'react'; 
 import { Col, Image } from 'react-bootstrap';
 
+import { orderStatus } from 'config';
 import TravellerList from './travellers';
 
 var OrderItem = React.createClass({
@@ -16,21 +17,21 @@ var OrderItem = React.createClass({
         var orderclass="order";
         var avatars = "";
 
-        if(order.status=="WAITING"){
+        if(order.status == orderStatus.WAITING){
             title = "未完成订单";
             status = "未支付";
             minutecount = (<p className="right">支付剩余时间:{order.minuteCount}分钟</p>);
-            price = `￥${order.actualPrice}`;
+            price = order.actualPrice;
             pay = ( 
                 <div>
                     <a className="pay">去支付</a>
                     <a className="cancel">取消</a>
                 </div>
             );
-        }else if(order.status=="PAYING"){
+        }else if(order.status == orderStatus.PAYING){
             title="支付中订单";
             status ="支付中";
-        }else if(order.status=="PAID"){
+        }else if(order.status == orderStatus.PAID){
             title="即将出行";
             status ="已支付";
             orderclass = "order startorder",
@@ -62,13 +63,13 @@ var OrderItem = React.createClass({
                     </Col>
                 </div>
             )
-        }else if(order.status=="REFOUNDING"){
+        }else if(order.status == orderStatus.REFOUNDING){
             title="退款订单";
             status ="退款中";
-        }else if(order.status=="REFOUNDED"){
+        }else if(order.status == orderStatus.REFOUNDED){
             title="退款订单";
             status ="退款完成";
-        }else if(order.status=="FINISH"){
+        }else if(order.status == orderStatus.FINISH){
             title="历史订单";
             status ="已完成";
             orderclass ="order history";

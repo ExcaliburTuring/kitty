@@ -38,7 +38,7 @@ var Orders = React.createClass({
         if (data.briefOrders != null && data.briefOrders.length > 0) {
             ordersList = data.briefOrders.map(function(order) {
                 return (
-                        <OrderList order={order} key={order.orderid}/>
+                        <OrderItem order={order} key={order.orderid}/>
                 );
             });
         } else {

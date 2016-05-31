@@ -16,7 +16,7 @@ import 'antd/lib/index.css';
 var OrderDiscount = Rabbit.create(url.orderDiscount);
 var Discount = React.createClass({
 
-    mixins: [Reflux.ListenerMixin, Reflux.connect(OrderDiscount.store, 'data')],
+    mixins: [Reflux.ListenerMixin],
 
     onOrderDiscountChange: function(discount) {
         if (discount != null) {
@@ -64,7 +64,6 @@ var Discount = React.createClass({
         var self = this;
         $.get(url.orderDiscountCode, {'code': discountCode})
         .done(function(data) {
-            console.log(data);
             if (data.status == 0 ){
                 self.setState({
                     'discountCode': {
@@ -116,22 +115,24 @@ var Discount = React.createClass({
         });
     },
 
-    onCreateOrderSubmit: function(e) {
-        e.preventDefault();
-        this.props.onCreateOrderSubmit({
+    getDiscount: function() {
+        var studentDiscount = this.state.data.studentDiscount; 
+        return {
             'actualPrice': this.getActualPrice(),
             'policyDiscountid': this.state.policyDiscount.discountid,
             'discountCode': this.state.discountCode.code,
-            'studentDiscountid': this.state.data.studentDiscount.discountid,
+            'studentDiscountid': studentDiscount != null ? studentDiscount.discountid : null,
             'studentCount': this.state.studentDiscount.count
-        });
+        };
     },
 
     getActualPrice: function() {
-        return priceUtil.getPrice(this.props.orderInfo.price)
-                - priceUtil.getPrice(this.state.policyDiscount.discountPrice)
-                - priceUtil.getPrice(this.state.discountCode.discountPrice)
-                - priceUtil.getPrice(this.state.studentDiscount.discountPrice);
+        return priceUtil.getPriceStr(
+                    priceUtil.getPrice(this.props.orderInfo.price)
+                    - priceUtil.getPrice(this.state.policyDiscount.discountPrice)
+                    - priceUtil.getPrice(this.state.discountCode.discountPrice)
+                    - priceUtil.getPrice(this.state.studentDiscount.discountPrice)
+                );
     },
 
     getInitialState: function() {
@@ -176,7 +177,7 @@ var Discount = React.createClass({
         var orderInfo = this.props.orderInfo;
         var data = this.state.data;
 
-        var selectOptionList = null, studentDiscount = null;
+        var selectOptionList = null, studentDiscount = null, studentDiscountTip = null;
         if (data.policy.length == 0) {
             selectOptionList = (<SelectOption value="0">无任何可选优惠策略</SelectOption>)
         } else {
@@ -198,6 +199,9 @@ var Discount = React.createClass({
             studentDiscount = (
                 <InputNumber min={0} max={this.props.count} onChange={this.onStudentDiscountChange}/>
             );
+            studentDiscountTip = (
+                <span>每名学生可优惠{this.state.data.studentDiscount.value}</span>
+            );
         }
         return (
             <div className="discount-container clearfix">
@@ -205,7 +209,7 @@ var Discount = React.createClass({
                     <p className="pull-right">总价：{orderInfo.price}</p>
                 </Col>
                 <Col md={8}>
-                    <Form horizontal  onSubmit={this.onCreateOrderSubmit}>
+                    <Form horizontal>
                         <FormItem
                             label="优惠策略:"
                             labelCol={{ span: 5 }}
@@ -235,7 +239,7 @@ var Discount = React.createClass({
                             labelCol={{ span: 5 }}
                             wrapperCol={{ span: 14 }}>
                             {studentDiscount}
-                            <span>每名学生可优惠{this.state.data.studentDiscount.value}</span>
+                            {studentDiscountTip}
                         </FormItem>
                    </Form>
                 </Col>
@@ -246,7 +250,7 @@ var Discount = React.createClass({
                 </Col>
                 <Col md={12}>
                     <p className="pull-right">
-                        结算价格：{priceUtil.getPriceStr(this.getActualPrice())}
+                        结算价格：{this.getActualPrice()}
                     </p>
                 </Col>
             </div>

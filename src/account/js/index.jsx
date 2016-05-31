@@ -8,7 +8,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import Rabbit from 'rabbit';
 import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url } from 'config';
-import OrderList from './order/order';
+import OrderItem from './order/order';
 import NoLogin from './nologin'; 
 
 var OrderBrief = Rabbit.create(url.orderBrief); 
@@ -27,8 +27,8 @@ var Index = React.createClass({
             'data': {
                 'status': 1,
                 'briefOrders': [],
-                'currentOrders': 0,
-                'historyOrders': 0
+                'currentOrderCount': 0,
+                'historyOrderCount': 0
             }
         };
     },
@@ -54,7 +54,7 @@ var Index = React.createClass({
         if (data.briefOrders != null && data.briefOrders.length > 0) {
             ordersList = data.briefOrders.map(function(order) {
                 return (
-                        <OrderList order={order} key={order.orderid}/>
+                        <OrderItem order={order} key={order.orderid}/>
                 );
             });
         } else {
@@ -86,11 +86,11 @@ var Index = React.createClass({
                                 <div className="messages">
                                     <Col md={3}>
                                         <span className="bar">未完成订单：</span>
-                                        <span className="unfinished">{data.currentOrders}</span>
+                                        <span className="unfinished">{data.currentOrderCount}</span>
                                     </Col>
                                     <Col md={3}>
                                         <span className="bar">历史订单：</span>
-                                        <span className="histories">{data.historyOrders}</span>
+                                        <span className="histories">{data.historyOrderCount}</span>
                                     </Col>
                                 </div>
                             </div>

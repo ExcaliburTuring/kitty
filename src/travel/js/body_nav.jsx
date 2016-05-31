@@ -17,7 +17,7 @@ var BodyNav = React.createClass({
 
     addOnScroll: function() {
         var briefTop = $('.brief').offset().top;
-        var day1Top = $('.day1').offset().top;
+        var day1Top = $('.day1').eq(0).offset().top;
         var noticeTop = $('.notice').offset().top;
         var expenseTop = $('.expense').offset().top;
         var teaminfoTop = $('.teaminfo').offset().top;
