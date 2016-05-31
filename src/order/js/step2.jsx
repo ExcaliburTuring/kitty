@@ -3,17 +3,49 @@
  */
 import React from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
-import { Button, Checkbox } from 'antd';
+import { Button, Checkbox, Tooltip } from 'antd';
 
+import { defaultValue } from 'config';
 import Discount from './discount'; 
 import alipay from '../img/alipay.png';
 import 'antd/lib/index.css';
 
 var Step2 = React.createClass({
 
+    onCreateOrderSubmit: function() {
+        this.disabledBtn();
+        var discount = this.refs.discount.getDiscount();
+        this.props.onCreateOrderSubmit(discount);
+    },
+
+    onOrderPaySubmit: function() {
+
+    },
+
+    disabledBtn: function() {
+        this.setState({
+            'createBtnDisabled': true,
+            'orderPayBtnDisabled': true
+        });
+    },
+
+    enableBtn: function() {
+        this.setState({
+            'createBtnDisabled': false,
+            'orderPayBtnDisabled': false
+        });
+    },
+
+    getInitialState: function() {
+        return {
+            'createBtnDisabled': false,
+            'orderPayBtnDisabled': false
+        };
+    },
+
     render: function() {
         var nameListContainer = null, nameList = [];
-        if (this.props.accountTraveller != null) {
+        if (this.props.accountTraveller != null && this.props.isAccountSelect) {
             nameList.push(<Name key="account-traveller-name" name={this.props.accountTraveller.name}/>);
         }
         if (this.props.travellers.length > 0) {
@@ -34,10 +66,10 @@ var Step2 = React.createClass({
                 <div className="discount-title">优惠政策</div>
                 <div className="discount-item">
                     {nameListContainer}
-                    <Discount 
+                    <Discount
+                        ref="discount"
                         count={this.props.count}
-                        orderInfo={this.props.orderInfo} 
-                        onCreateOrderSubmit={this.props.onCreateOrderSubmit}/>
+                        orderInfo={this.props.orderInfo}/>
                     <div className="pay-container">
                         <Row>
                             <Col md={2}>
@@ -52,10 +84,21 @@ var Step2 = React.createClass({
                             </Col>
                             <Col md={2}>
                                 <div className="pay-right">
-                                    <Button type="primary" htmlType="submit">保存订单</Button>
-                                    <Button type="primary" onClick={this.props.onOrderPaySubmit}>
-                                        马上支付
+                                    <Button
+                                        type="primary" 
+                                        disabled={this.state.createBtnDisabled} 
+                                        onClick={this.onCreateOrderSubmit}>
+                                        保存订单
                                     </Button>
+                                    <Tooltip placement="top" 
+                                        title={`我们的工程师们正日夜加班，开放接入支付宝支付的功能，为您提供更可靠，更便捷的支付方式，在此之前请联系${defaultValue.hotline}进行线下支付。`}>
+                                        <Button 
+                                            type="primary" 
+                                            disabled={this.state.orderPayBtnDisabled}
+                                            onClick={this.onOrderPaySubmit}>
+                                            马上支付
+                                        </Button>
+                                    </Tooltip>
                                 </div>
                             </Col>
                         </Row>

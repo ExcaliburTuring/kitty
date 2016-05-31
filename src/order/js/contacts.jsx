@@ -23,22 +23,6 @@ var Contacts = React.createClass({
         Reflux.connect(AccountContacts.store, 'contacts')
     ],
 
-    createAccountTraveller: function(props) {
-        var accountInfo = props.accountInfo;
-        var accountSetting = props.accountSetting;
-        return  {
-            'accountid': accountInfo.accountid,
-            'contactid': 0,
-            'name': accountInfo.name,
-            'id': accountInfo.id,
-            'idType': accountInfo.idType,
-            'gender': accountSetting.gender,
-            'birthday': accountSetting.birthday,
-            'email': accountInfo.email,
-            'mobile': accountInfo.mobile
-        };
-    },
-
     onAddBtnClick: function() {
         var newContacts = this.state.newContacts;
         newContacts.push({});
@@ -61,7 +45,6 @@ var Contacts = React.createClass({
             'selectContacts': selectContacts,
             'selectContactsSize': selectContactsSize 
         });
-        this.props.onContactChange(selectContacts, selectContactsSize);
     },
 
     onAccountSuccessSubmit: function() {
@@ -93,7 +76,10 @@ var Contacts = React.createClass({
         var selectContactsSize = this.state.selectContactsSize;
         if (checked) {
             if (selectContactsSize > this.props.quota) {
-                message.warn(`本团最多还可以报${this.props.quota}人`)
+                message.warn(`本团最多还可以报${this.props.quota}人`);
+                return;
+            } else if (selectContactsSize > 5) {
+                message.warn('每个订单最多可以报5人');
                 return;
             } else {
                 selectContacts[contactid] = contact;
@@ -107,7 +93,6 @@ var Contacts = React.createClass({
             'selectContacts': selectContacts,
             'selectContactsSize': selectContactsSize 
         });
-        this.props.onContactChange(selectContacts, selectContactsSize);
     },
 
     getInitialState: function() {
@@ -116,16 +101,17 @@ var Contacts = React.createClass({
            'contacts': {
                 'contacts': []
            },
-           'accountTraveller': this.createAccountTraveller(this.props),
+           'accountTraveller': this.props.accountTraveller,
            'newContacts': [],
-           'selectContacts': {},
+           'selectContacts': this.props.selectContacts,
            'selectContactsSize': 0
         };
     },
 
     componentWillReceiveProps: function(nextProps) {
         this.setState({
-            'accountTraveller': this.createAccountTraveller(nextProps)
+            'accountTraveller': nextProps.accountTraveller,
+            'selectContacts': nextProps.selectContacts,
         });
     },
 
@@ -134,27 +120,29 @@ var Contacts = React.createClass({
         var contacts = this.state.contacts.contacts;
         var selectContacts = this.state.selectContacts;
         var self = this;
-        var nameList = [(
-            <Name 
-                key={`account-${accountTraveller.accountid}`} 
-                index={0} 
-                name={accountTraveller.name} 
-                onChange={(e)=>{self.onAccountChange(e.target.checked)}}
-                checked={this.props.isAccountSelect}/>
-        )];
-        var contactsList = [];
-        if (self.props.isAccountSelect) {
-            contactsList.push((
-                <Contact 
-                    key={`order-account-${accountTraveller.accountid}`}
-                    isAccount={true}
-                    index={0}
-                    contact={this.state.accountTraveller} 
-                    onMinusClick={()=>{self.onAccountChange(false)}}
-                    onSuccessSubmit={self.onAccountSuccessSubmit}/>
-            ));
+        var nameList = [], contactsList = [], newContactsList = [];
+        if (accountTraveller != null) {
+            nameList.push(
+                <Name 
+                    key={`account-${accountTraveller.accountid}`} 
+                    index={0} 
+                    name={accountTraveller.name} 
+                    onChange={(e)=>{self.onAccountChange(e.target.checked)}}
+                    checked={this.props.isAccountSelect}/>
+            );
+
+            if (self.props.isAccountSelect) {
+                contactsList.push(
+                    <Contact 
+                        key={`order-account-${accountTraveller.accountid}`}
+                        isAccount={true}
+                        index={0}
+                        contact={this.state.accountTraveller} 
+                        onMinusClick={()=>{self.onAccountChange(false)}}
+                        onSuccessSubmit={self.onAccountSuccessSubmit}/>
+                );
+            }
         }
-        var newContactsList = [];
 
         if (contacts.length > 0 ) {
             for (var i = 0, n = contacts.length; i < n; i++) {

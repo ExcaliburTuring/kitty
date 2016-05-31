@@ -4,9 +4,9 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Col } from 'react-bootstrap';
-import { Table } from 'antd';
+import { Table, Button, Tooltip } from 'antd';
 
-import { idType } from 'config';
+import { idType, priceUtil, orderStatus, defaultValue } from 'config';
 
 import 'antd/lib/index.css';
 
@@ -25,9 +25,6 @@ const _travellerTableColumn = [{
 }, {
     'title': '睡友',
     'dataIndex': 'roomate',
-}, {
-    'title': '紧急联系电话',
-    'dataIndex': 'emergencyMobile'
 }];
 
 const _discountTableColumn = [{
@@ -54,8 +51,7 @@ var Step3 = React.createClass({
                 'idType': idType.getDesc(traveller.idType),
                 'id': traveller.id,
                 'mobile': traveller.mobile,
-                'roomate': traveller.roomate ? traveller.roomate : '服从安排',
-                'emergencyMobile': traveller.emergencyMobile
+                'roomate': traveller.roomate ? traveller.roomate : '服从安排'
             };
         });
     },
@@ -70,7 +66,7 @@ var Step3 = React.createClass({
                 'discountPrice': this.props.policy.value
             });
         }
-        if (this.props.discountCode != null) {
+        if (this.props.code != null) {
             tableData.push( {
                 'key': 'order-step3-discount-2',
                 'discountName': '优惠码优惠',
@@ -83,10 +79,24 @@ var Step3 = React.createClass({
                 'key': 'order-step3-discount-3',
                 'discountName': '学生优惠',
                 'discountDesc': `共有${this.props.orderInfo.studentCount}名学生`,
-                'discountPrice': this.props.student.value * this.props.orderInfo.studentCount
+                'discountPrice': priceUtil.getPriceStr(priceUtil.getPrice(this.props.student.value) * this.props.orderInfo.studentCount)
             });
         }
         return tableData;
+    },
+
+    getFooter: function() {
+        var totalDiscount = 0;
+        if (this.props.policy != null) {
+            totalDiscount += priceUtil.getPrice(this.props.policy.value);
+        }
+        if (this.props.code != null) {
+            totalDiscount += priceUtil.getPrice(this.props.code.value);
+        }
+        if (this.props.student != null) {
+            totalDiscount += priceUtil.getPrice(this.props.student.value) * this.props.orderInfo.studentCount;
+        }
+        return `实际共优惠了：${priceUtil.getPriceStr(totalDiscount)}`;
     },
 
     getInitialState: function() {
@@ -104,19 +114,13 @@ var Step3 = React.createClass({
                     dataSource={this.getTravellersTableData()}
                     bordered 
                     pagination={false} />
-
                 <Table
                     className="step3-section"
                     columns={_discountTableColumn} 
                     dataSource={this.getDiscountTableData()} 
                     bordered 
                     pagination={false}
-                    footer={() => `实际共优惠了： ${
-                        this.props.policy.value 
-                        + this.props.code.value
-                        + this.props.student.value * this.props.orderInfo.count
-                    }` } />
-
+                    footer={this.getFooter} />
             </div>
         );
     }
@@ -125,9 +129,25 @@ var Step3 = React.createClass({
 var OrderStatus = React.createClass({
 
     render: function() {
+        var payBtn = null;
+        if (this.props.orderInfo.status == orderStatus.WAITING) {
+            payBtn = (
+                <Tooltip placement="top" 
+                    title={`我们的工程师们正日夜加班，开放接入支付宝支付的功能，为您提供更可靠，更便捷的支付方式，在此之前请联系${defaultValue.hotline}进行线下支付。`}>
+                    <Button 
+                        type="primary">
+                        马上支付
+                    </Button>
+                </Tooltip>
+            );
+        }
         return (
             <div className="step3-section">
-                <p>订单状态:{this.props.orderInfo.status}</p>
+                <div className="order-status-title">
+                    <p className="order-status-text pull-left">订单状态: </p>
+                    <p className="order-status-content pull-left">{ orderStatus.getDesc(this.props.orderInfo.status)}</p>
+                    {payBtn}
+                </div>
             </div>
         );
     }

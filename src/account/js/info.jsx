@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Grid, Row, Panel } from 'react-bootstrap';
-import { QueueAnim } from 'antd';
+import { Grid, Row } from 'react-bootstrap';
+import { Alert } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
 import { accountStatus } from 'config';
@@ -24,8 +24,7 @@ var Info = React.createClass({
     getInitialState: function() {
         AccountBasicInfo.actions.get();
         return {
-            'basicInfo': {},
-            'newAccountTipShow': true
+            'basicInfo': {}
         }
     },
 
@@ -36,25 +35,19 @@ var Info = React.createClass({
         }
 
         var newAccountTip = null;
-        if (basicInfo.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO && this.state.newAccountTipShow) {
-            var title = (
-                <Title title="新用户提醒信息" className="info-title">
-                    <FaButton faClass="fa fa-times" onClick={()=>{this.setState({'newAccountTipShow': false})}}/>
-                </Title>
-            )
+        if (basicInfo.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
             newAccountTip = (
-                <Panel header={title} bsStyle="info">
-                    您还是新用户，可以完善信息，方便以后下单。
-                </Panel>
+                <Alert message="新用户提醒信息"
+                    description="您还是新用户，强烈建议您完善个人信息，方便以后下单。"
+                    type="info"
+                    closable/>
             );
         }
 
         return (
             <Grid>
                 <div className="info-container">
-                    <QueueAnim>
-                        {newAccountTip}
-                    </QueueAnim>
+                    {newAccountTip}
                     <Row>
                         <BasicInfo accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
                     </Row>
