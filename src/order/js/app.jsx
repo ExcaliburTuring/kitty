@@ -35,6 +35,7 @@ var App = React.createClass({
         var accountSetting = info.accountSetting;
         return  {
             'accountid': accountInfo.accountid,
+            'status': accountInfo.status,
             'contactid': 0,
             'name': accountInfo.name,
             'id': accountInfo.id,
@@ -71,19 +72,26 @@ var App = React.createClass({
     onNextBtnClick: function(travellers) {
         var travellerCount = this.getTravellerCount(this.state.isAccountSelect, travellers);
         if (travellerCount == 0) {
-            message.error('必须选择出行人');
-        } else if (this.state.data.orderInfo.isAgreed) {
-            var data = this.state.data;
-            data.orderInfo.status = orderStatus.DISCOUNT_SELECT;
-            var price = priceUtil.getPrice(this.state.data.travelGroup.price) * travellerCount;
-            data.orderInfo.price = priceUtil.getPriceStr(price);
-            this.setState({
-                'data': data,
-                'travellers': travellers
-            });
-        } else {
-            message.error('必须先同意安全协议');
+            message.error('请选择出行人');
+            return;
+        } 
+        if (!this.state.data.orderInfo.isAgreed) {
+            message.error('请同意安全协议');
+            return;
         }
+        if (this.state.isAccountSelect 
+            && this.state.accountTraveller.status == orderStatus.WAIT_COMPLETE_INFO) {
+            message.error('请先完善个人信息');
+            return;
+        }
+        var data = this.state.data;
+        data.orderInfo.status = orderStatus.DISCOUNT_SELECT;
+        var price = priceUtil.getPrice(this.state.data.travelGroup.price) * travellerCount;
+        data.orderInfo.price = priceUtil.getPriceStr(price);
+        this.setState({
+            'data': data,
+            'travellers': travellers
+        });
     },
 
     // step2的回调函数

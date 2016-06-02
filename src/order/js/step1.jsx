@@ -5,10 +5,10 @@ import React from 'react';
 import Reflux from 'reflux';
 import { Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import { Checkbox, message } from 'antd';
+import { Alert, Checkbox, message } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
-import { url } from 'config';
+import { url, orderStatus } from 'config';
 import Rabbit from 'rabbit';
 import Contact from 'contact';
 import Title from 'title';
@@ -25,15 +25,16 @@ var Step1 = React.createClass({
     ],
 
     onAddBtnClick: function() {
-        var newContacts = this.state.newContacts;
-        newContacts.push({});
-        this.setState({'newContacts': newContacts});
+        var newContact = this.state.newContact;
+        if (newContact != null) {
+            message.warning('您有一个新建的联系人还没有添加完毕，请先完成添加！');
+        } else {
+            this.setState({'newContact': {}});
+        }
     },
 
-    onNewContactMinusClick: function(index) {
-        var newContacts = this.state.newContacts;
-        newContacts.splice(index, 1);
-        this.setState({'newContacts': newContacts});
+    onNewContactMinusClick: function() {
+        this.setState({'newContact': null});
     },
 
     onContactMinusClick: function(index) {
@@ -55,7 +56,7 @@ var Step1 = React.createClass({
 
     onNewContactSuccessSubmit: function(index) {
         message.success("成功添加新常用出行人");
-        this.onNewContactMinusClick(index);
+        this.onNewContactMinusClick();
         AccountContacts.actions.load();
     },
 
@@ -124,14 +125,22 @@ var Step1 = React.createClass({
     getInitialState: function() {
         AccountContacts.actions.load();
         return {
-           'contacts': {
+            'contacts': {
                 'contacts': []
-           },
-           'accountTraveller': this.props.accountTraveller,
-           'newContacts': [],
-           'selectContacts': this.convertTravellers(this.props.travellers),
-           'selectContactsSize': 0
+            },
+            'newContact': null,
+            'accountTraveller': this.props.accountTraveller,
+            'selectContacts': this.convertTravellers(this.props.travellers),
+            'selectContactsSize': this.props.travellers.length
         };
+    },
+
+    componentWillReceiveProps: function(nextProps) {
+        this.setState({
+            'accountTraveller': nextProps.accountTraveller,
+            'selectContacts': this.convertTravellers(nextProps.travellers),
+            'selectContactsSize': nextProps.travellers.length
+        })
     },
 
     render: function() {
@@ -139,18 +148,26 @@ var Step1 = React.createClass({
         var contacts = this.state.contacts.contacts;
         var selectContacts = this.state.selectContacts;
         var self = this;
-        var nameList = [], contactsList = [], newContactsList = [];
+        var newAccountTip = null, nameList = [], contactsList = [], newContact = [], addBtnTip = null;
         if (accountTraveller != null) {
             nameList.push(
                 <Name 
                     key={`account-${accountTraveller.accountid}`} 
                     index={0} 
-                    name={accountTraveller.name} 
+                    name={accountTraveller.name == null ? '您自己' : accountTraveller.name} 
                     onChange={(e)=>{self.onAccountChange(e.target.checked)}}
                     checked={this.props.isAccountSelect}/>
             );
 
             if (self.props.isAccountSelect) {
+                if (accountTraveller.status == orderStatus.WAIT_COMPLETE_INFO) {
+                    newAccountTip = (
+                        <Alert message="新用户提醒信息"
+                            description="您还是新用户，强烈建议您完善个人信息，方便以后下单。"
+                            type="info"
+                            closable/>
+                    );
+                }
                 contactsList.push(
                     <Contact 
                         key={`order-account-${accountTraveller.accountid}`}
@@ -187,21 +204,21 @@ var Step1 = React.createClass({
             }
         }
 
-        if (this.state.newContacts.length > 0 ) {
-            newContactsList = this.state.newContacts.map(function(contact, index) {
-                return (
-                    <Contact 
-                        key={`order-new-contact-${index}`}
-                        index={index}
-                        readOnly={false} 
-                        contact={contact} 
-                        onMinusClick={self.onNewContactMinusClick}
-                        onSuccessSubmit={self.onNewContactSuccessSubmit}/>
-                );
-            });
+        if (this.state.newContact != null ) {
+            addBtnTip = '您有一个新建的联系人正在编辑中，请先完成添加！';
+            newContact = (
+                <Contact 
+                    key="order-new-contact"
+                    readOnly={false} 
+                    contact={this.state.newContact} 
+                    onMinusClick={self.onNewContactMinusClick}
+                    onSuccessSubmit={self.onNewContactSuccessSubmit}/>
+            );
+        } else {
+            addBtnTip = '添加一个联系人到您的帐户中，方便以后下单使用!'
         }
 
-        if (newContactsList.length == 0 && contactsList.length == 0) {
+        if (newContact == null && contactsList.length == 0) {
             contactsList = (<div>可以选择一个常用出行人，或者点击上方加号添加一个常用出行人</div>)
         }
 
@@ -213,9 +230,12 @@ var Step1 = React.createClass({
                         <div className="order-contact-name-container">
                             {nameList}
                         </div>
-                        <FaButton faClass="fa fa-plus" onClick={this.onAddBtnClick} />
+                        <Tooltip placement="top" title={addBtnTip}>
+                            <FaButton faClass="fa fa-plus" onClick={this.onAddBtnClick} />
+                        </Tooltip>
                     </Title>
-                    {newContactsList}
+                    {newAccountTip}
+                    {newContact}
                     {contactsList}
                 </div>
                 <div className="submit pull-right">
