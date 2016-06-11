@@ -37,7 +37,7 @@ var App = React.createClass({
     mixins: [Reflux.connect(IndexHot.store, 'data')],
 
     getInitialState: function() {
-        IndexHot.actions.load({'date': '2014-01-01', 'routeids': 123});
+        IndexHot.actions.load();
         return {
             'data': {
                 'status': 0,
@@ -91,9 +91,9 @@ var App = React.createClass({
                             <Col lg={10} lgOffset={1} md={12} >
                                 <div id="anchor" />
                                 <Separator text="海逍遥旅行" ref="hxyDesc"/>
-                                <div className="text">信仰满满的公司，带你逃离生活的苟且，大胆寻找诗与远方</div>
-                                <div className="text">出发是一种可能，年轻是一场盛宴</div>
-                                <div className="text">等待一路狂欢</div>
+                                <div className="text">有些路高跟鞋没法走到，有些芬芳香水替代不了</div>
+                                <div className="text">有些人，坐格子间一辈子也见不到</div>
+                                <div className="text">世界这么大，你该去看看</div>
                                 <div className="text"><i className="fa fa-angle-double-down" /></div>
                                 <Image responsive className="hxy-desc-img " src={activity} />
                             </Col>

@@ -39,7 +39,7 @@ var Banner = React.createClass({
                     <div className="swiper-slide swiper-no-swiping" style={dbg}></div>
                     <div className="swiper-slide swiper-no-swiping" style={fbg}></div>
                 </div>
-                <div className="arrow-container">
+                <div className="arrow-container swiper-no-swiping">
                     <div className="arrows">
                         <div className="left-arrow" ref="prev">
                             <i className="fa fa-angle-left"/><a>PREV</a>

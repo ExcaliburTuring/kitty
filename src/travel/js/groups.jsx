@@ -55,10 +55,10 @@ var Groups = React.createClass({
         return this.props.groups.map(function(group, index) {
             return {
                 'key': `travel-new-order-${index}`, 
-                'date': `${group.startDate}到${group.endDate}`,
+                'date': `${group.startDate} 到 ${group.endDate}`,
                 'title': group.title,
                 'status': groupStatus.getDesc(group.status),
-                'price': `${group.price}元`,
+                'price': `${group.price}`,
                 'newOrder': group 
             };
         });
