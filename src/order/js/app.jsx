@@ -211,9 +211,10 @@ var App = React.createClass({
                             onNextBtnClick={this.onNextBtnClick}/>);
         } else if (status === orderStatus.DISCOUNT_SELECT) {
             step = 2;
+            var travellerCount = this.getTravellerCount(this.state.isAccountSelect, this.state.travellers);
             content = (<Step2
                             ref="step2"
-                            count={this.state.travellerCount}
+                            count={travellerCount}
                             orderInfo={data.orderInfo}
                             accountTraveller={this.state.accountTraveller}
                             isAccountSelect={this.state.isAccountSelect}

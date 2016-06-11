@@ -137,9 +137,7 @@ var Step1 = React.createClass({
 
     componentWillReceiveProps: function(nextProps) {
         this.setState({
-            'accountTraveller': nextProps.accountTraveller,
-            'selectContacts': this.convertTravellers(nextProps.travellers),
-            'selectContactsSize': nextProps.travellers.length
+            'accountTraveller': nextProps.accountTraveller
         })
     },
 
