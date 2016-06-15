@@ -5,8 +5,8 @@ module.exports = {
     {
       "groupid": 3,
       "routeid": 1,
-      "startDate": 2016.06.30,
-      "endDate": 2016.06.30,
+      "startDate": "2016.06.30",
+      "endDate": "2016.06.30",
       "title": "一队",
       "price": 4200,
       "status": "TRAVELLING",
@@ -20,8 +20,8 @@ module.exports = {
     {
       "groupid": 4,
       "routeid": 1,
-      "startDate": 2016.07.02,
-      "endDate": 2016.07.11,
+     "startDate": "2016.06.30",
+      "endDate": "2016.06.30",
       "title": "一队",
       "price": 4600,
       "status": "FULL",
@@ -35,8 +35,8 @@ module.exports = {
     {
       "groupid": 5,
       "routeid": 1,
-      "startDate": 2016.07.10,
-      "endDate": 2016.07.19,
+      "startDate": "2016.06.30",
+      "endDate": "2016.06.30",
       "title": "二队",
       "price": 4600,
       "status": "OPEN",
@@ -50,8 +50,8 @@ module.exports = {
     {
       "groupid": 6,
       "routeid": 1,
-      "startDate": 1466179200000,
-      "endDate": 1466697600000,
+      "startDate": "2016.06.30",
+      "endDate": "2016.06.30",
       "title": "",
       "price": 4400,
       "status": "OPEN",

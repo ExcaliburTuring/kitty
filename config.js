@@ -19,11 +19,14 @@ var componentPath = path.join(SRC_PATH, 'component/');
 
 const PATH_MAP = (function () {
     // lib
-    var pathMap = {
-        'swiper': LIB_PATH + 'js/swiper/swiper.js',
-        'swiper.less': LIB_PATH + 'css/swiper/swiper.less'
-    };
+    // var pathMap = {
+    //     'antd': LIB_PATH + 'js/antd/antd.min.js',
+    //     'marked': LIB_PATH + 'js/marked/marked.min.js',
+    //     'swiper': LIB_PATH + 'js/swiper/swiper.js',
+    //     'swiper.less': LIB_PATH + 'css/swiper/swiper.less'
+    // };
 
+    var pathMap = {};
     function readFile(dir, callback) {
         fs.readdirSync(dir)
         .forEach(function(file) {
@@ -56,6 +59,8 @@ const PATH_MAP = (function () {
     readFile(commonImgPath, addToPath);
     // src/component
     readFile(componentPath, addJsToPathMap);
+
+    delete pathMap['.DS_Store']
 
     console.log('pathMap: ');
     console.log(pathMap);
