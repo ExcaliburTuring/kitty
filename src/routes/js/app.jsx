@@ -5,7 +5,7 @@ import Rabbit from 'rabbit';
 import {Col } from 'react-bootstrap';
 import Groups from './groups'
 
-var RouteList = Rabbit.create(url.routeList); 
+var RouteList = Rabbit.create(url.route); 
 
 var App = React.createClass({
 
@@ -22,7 +22,7 @@ var App = React.createClass({
     },
 
     componentDidMount: function() {
-         RouteList.actions.load();
+        RouteList.actions.load();
     },
 
     render: function() {
@@ -78,7 +78,7 @@ var Routes =React.createClass({
                 </div>
                 <div className="content">
                     <Col md={4}>
-                        <img src={route.img} onClick={this.onClick}/>
+                        <img src={route.headImg} onClick={this.onClick}/>
                     </Col>
                     <Col md={8}>
                         <div className="days">

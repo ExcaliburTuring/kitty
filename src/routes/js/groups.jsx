@@ -33,7 +33,6 @@ var Groups = React.createClass({
     },
 
     render: function() {
-        console.log(this.state.team);
         var groups = this.state.team.groups;
         var groupList;
         var status;
