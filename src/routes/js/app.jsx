@@ -27,8 +27,6 @@ var App = React.createClass({
 
     render: function() {
         var routes = this.state.data.routes;
-        console.log(routes);
-
         var routeList = routes.map(function(route) {
             return (
                     <Routes route={route} key={route.routeid}/>

@@ -32,6 +32,7 @@ var mockConfig = [
     config('/account*', 'account.html'),
     config('/order*', 'order.html'),
     config('/img/*'),
+    config('/lib/*')
 ];
 
 function mockHandler(req, res) {

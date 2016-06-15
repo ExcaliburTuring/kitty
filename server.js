@@ -6,6 +6,7 @@ var mock = require('./mock');
 var app = express();
 app.use(express.static(config.TEST_PATH));
 app.use(express.static(config.ASSET_PATH));
+app.use('/lib', express.static(config.LIB_PATH));
 app.get('/*', mock.mockHandler);
 app.post('/*', mock.mockHandler);
 app.listen(8081, 'localhost', function(err) {
@@ -29,27 +30,27 @@ var proxyConfig =(function(){
         }, {});
     return tempProxyConfig;
 }());
-var target = 'http://localhost:8083';
-proxyConfig['/order*'] = {
-    target: target,
-    secure: false
-}
-proxyConfig['/account*'] = {
-    target: target,
-    secure: false
-}
-proxyConfig['/travel*'] = {
-    target: target,
-    secure: false
-}
-proxyConfig['/index*'] = {
-    target: target,
-    secure: false
-}
-proxyConfig['/wx*'] = {
-    target: target,
-    secure: false
-}
+// var target = 'http://localhost:8083';
+// proxyConfig['/order*'] = {
+//     target: target,
+//     secure: false
+// }
+// proxyConfig['/account*'] = {
+//     target: target,
+//     secure: false
+// }
+// proxyConfig['/travel*'] = {
+//     target: target,
+//     secure: false
+// }
+// proxyConfig['/index*'] = {
+//     target: target,
+//     secure: false
+// }
+// proxyConfig['/wx*'] = {
+//     target: target,
+//     secure: false
+// }
 var server = new WebpackDevServer(compiler, {
     hot: true,
     historyApiFallback: true,
