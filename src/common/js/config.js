@@ -21,9 +21,7 @@ export var url = {
     'orderOrder': '/order/order',
     'orderBrief': '/order/brief',
     'orderDiscount': '/order/discount',
-    'orderDiscountCode': '/order/discountcode',
-
-    'routeList': '/routes/info'
+    'orderDiscountCode': '/order/discountcode'
 };
 
 export var defaultValue = {
