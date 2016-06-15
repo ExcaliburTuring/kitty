@@ -1,8 +1,9 @@
 import React from 'react';
 import Reflux from 'reflux';
+import { Col, Image } from 'react-bootstrap';
+
 import { url } from 'config';
 import Rabbit from 'rabbit';
-import {Col } from 'react-bootstrap';
 import Groups from './groups'
 
 var RouteList = Rabbit.create(url.route); 
@@ -78,7 +79,7 @@ var Routes =React.createClass({
                 </div>
                 <div className="content">
                     <Col md={4}>
-                        <img src={route.headImg} onClick={this.onClick}/>
+                        <Image responsive src={route.headImg} onClick={this.onClick}/>
                     </Col>
                     <Col md={8}>
                         <div className="days">
