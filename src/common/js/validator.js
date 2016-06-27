@@ -1,7 +1,6 @@
 /**
  * @author xiezhenzong
  */
-import _ from 'underscore';
 import IDValidator from 'id-validator';
 
 // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
@@ -43,10 +42,14 @@ function _error(msg) {
     return _state('error', msg);
 }
 
+function isEmpty(test) {
+    return !test || test.length == 0;
+}
+
 const validator = {
 
     hasText: function(text, msg) {
-        return _.isEmpty(text) ? _error(msg): _success();
+        return isEmpty(text) ? _error(msg): _success();
     },
 
     id: function(id, msg) {

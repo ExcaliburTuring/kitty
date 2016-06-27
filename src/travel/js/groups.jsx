@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Col } from 'react-bootstrap';
-import { message, Table, Button } from 'antd';
+import { Col, Button } from 'react-bootstrap';
+import { message, Table } from 'antd';
 import 'antd/lib/index.css';
 
 import { url, defaultValue, groupStatus } from 'config';
