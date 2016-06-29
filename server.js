@@ -30,27 +30,27 @@ var proxyConfig =(function(){
         }, {});
     return tempProxyConfig;
 }());
-var target = 'http://192.168.1.104:8080';
-proxyConfig['/order*'] = {
-    target: target,
-    secure: false
-}
-proxyConfig['/account*'] = {
-    target: target,
-    secure: false
-}
-proxyConfig['/travel*'] = {
-    target: target,
-    secure: false
-}
-proxyConfig['/index*'] = {
-    target: target,
-    secure: false
-}
-proxyConfig['/wx*'] = {
-    target: target,
-    secure: false
-}
+// var target = 'http://192.168.1.104:8080';
+// proxyConfig['/order*'] = {
+//     target: target,
+//     secure: false
+// }
+// proxyConfig['/account*'] = {
+//     target: target,
+//     secure: false
+// }
+// proxyConfig['/travel*'] = {
+//     target: target,
+//     secure: false
+// }
+// proxyConfig['/index*'] = {
+//     target: target,
+//     secure: false
+// }
+// proxyConfig['/wx*'] = {
+//     target: target,
+//     secure: false
+// }
 var server = new WebpackDevServer(compiler, {
     hot: true,
     historyApiFallback: true,
