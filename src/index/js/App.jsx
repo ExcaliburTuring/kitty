@@ -160,15 +160,20 @@ var Route = React.createClass({
         var daysImg = _getDaysImg(route.days);
         return (
             <div className="route-container" onClick={this.onClick}>
-                <div className="headImg-container">
-                    <Image responsive src={route.headImg} />
-                    <div className="opacity">
+                <figure className="effect-apollo">
+                        <Image responsive src={route.headImg} />
+                        <figcaption>
+                            <h2>{route.name}</h2>
+                            <p>{route.title}</p>
+                            <a href="#">View more</a>
+                        </figcaption>   
+                </figure>
+                {/*    <div className="opacity">
                         <img className="mapImg" src={route.mapImg} />
-                    </div>
-                </div>
-                <div className="days">
+                    </div>*/}
+                {/*<div className="days">
                     <Image responsive src={daysImg} />
-                </div>
+                </div>*/}
                 <div className="info">
                     <span className="bar" /><a>{route.name}</a>
                     <h5>{route.title}</h5>
