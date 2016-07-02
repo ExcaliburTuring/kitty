@@ -1,4 +1,5 @@
 @import '~base.less';
+@import 'routes.less';
 
 .head {
     position: relative;
@@ -238,7 +239,6 @@
 }
 
 .products .route-container {
-    position: relative;
     margin-bottom: 28px;
     cursor: pointer;
 
@@ -250,69 +250,8 @@
         -o-animation: shadow 0.5s; /* Opera */
     }
 
-    .days{
-        position: absolute;
-        left: -20px;
-        top: 10px;
-        z-index: 3;
-        width: 70px;
-        height: 70px;
-    }
-
-    .headImg-container{
-        position: relative;
-        display: block;
-
-        .opacity {
-            position: absolute;
-            text-align: center;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            z-index: 2;
-
-            .mapImg{
-                height: 100%;
-            }
-
-            &:hover{
-                opacity: 0.5;
-                background-color: @currency;
-                animation:myfirst 0.5s;
-                -moz-animation:myfirst 0.5s; /* Firefox */
-                -webkit-animation:myfirst 0.5s; /* Safari and Chrome */
-                -o-animation:myfirst 0.5s; /* Opera */
-            }
-
-            @keyframes myfirst
-            {
-                from {opacity:0}
-                to {opacity:0.5;background-color:@currency}
-            }
-
-            @-moz-keyframes myfirst /* Firefox */
-            {
-                from {opacity:0}
-                to {opacity:0.5;background-color:@currency}
-            }
-
-            @-webkit-keyframes myfirst /* Safari and Chrome */
-            {
-                from {opacity:0}
-                to {opacity:0.5;background-color:@currency}
-            }
-
-            @-o-keyframes myfirst /* Opera */
-            {
-                from {opacity:0}
-                to {opacity:0.5;background-color:@currency}
-            }
-        }
-    }
-
     .info {
+        position: relative;
         height: 65px;
         border: 1px solid #ddd;
         text-align: left;
@@ -407,3 +346,4 @@
     from {box-shadow: 0 0 0 0 @dark-gray;;}
     to {box-shadow: 0 0 5px 0 @dark-gray;}
 }
+
