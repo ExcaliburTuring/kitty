@@ -5,8 +5,8 @@ import React from 'react';
 
 import Swiper from 'swiper';
 import a from '../img/A.jpg';
-import d from '../img/b.jpg';
-import e from '../img/c.jpg';
+import d from '../img/d.jpg';
+import e from '../img/e.jpg';
 import f from '../img/f.jpg';
 
 var Banner = React.createClass({
