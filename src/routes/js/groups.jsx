@@ -36,19 +36,13 @@ var Groups = React.createClass({
         var groups = this.state.team.groups;
         var groupList;
         var status;
-        var startDate;
-        var endDate;
         var self = this;
 
         if (groups && groups.length >= 1) {
             groupList = groups.map(function (group, index) {
-                
-                startDate=new Date(parseInt(group.startDate)).toLocaleString().replace(/\//g, "-").replace(/日/g, " ").substr(0,9);  
-                endDate=new Date(parseInt(group.endDate)).toLocaleString().replace(/\//g, "-").replace(/日/g, " ").substr(0,9); 
-
                 return (
                     <tr key={`group-${index}`}>
-                        <td>{startDate} 到 {endDate}</td>
+                        <td>{group.startDate} 到 {group.endDate}</td>
                         <td className="left">{group.title}</td>
                         <td>{status}</td>
                         <td>{group.price}</td>
