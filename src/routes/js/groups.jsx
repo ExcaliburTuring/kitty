@@ -5,7 +5,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import { Table, Button } from 'react-bootstrap';
 
-import { url } from 'config';
+import { url, orderStatus } from 'config';
 import Rabbit from 'rabbit';
 
 var GroupInfo = Rabbit.create(url.group); 
@@ -35,7 +35,6 @@ var Groups = React.createClass({
     render: function() {
         var groups = this.state.team.groups;
         var groupList;
-        var status;
         var self = this;
 
         if (groups && groups.length >= 1) {
@@ -44,7 +43,7 @@ var Groups = React.createClass({
                     <tr key={`group-${index}`}>
                         <td>{group.startDate} 到 {group.endDate}</td>
                         <td className="left">{group.title}</td>
-                        <td>{status}</td>
+                        <td>{orderStatus.getDesc(group.status)}</td>
                         <td>{group.price}</td>
                         <td><Button className="able" onClick={self.onClick}>{"详情"}</Button></td>
                     </tr>   
