@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var debug = process.env.NODE_ENV !== 'production';
 var config = require('./config');
@@ -12,17 +13,21 @@ const SRC_PATH = config.SRC_PATH;
 const PUBLIC_PATH = config.PUBLIC_PATH;
 const STATIC_PATH = config.STATIC_PATH;
 
-var entries = {};
-var plugins = (function(){
-    var array = [
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'common',
-            filename: debug ? 'common.js' : 'common-[chunkhash].js',
-            minChunks: 3
-        })
-    ];
-    if (!debug) {
-        array.push(
+var plugins = [
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'common',
+        filename: debug ? 'common.js' : 'common-[chunkhash].js',
+        minChunks: 3
+    })
+];
+(function(){
+    if (debug) {
+        plugins.push(
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.NoErrorsPlugin()
+        );
+    } else {
+        plugins.push(
             new webpack.optimize.UglifyJsPlugin({
                 minimize: true,
                 compress: {
@@ -33,17 +38,13 @@ var plugins = (function(){
                 'process.env': {
                   'NODE_ENV': JSON.stringify('production')
                 }
-            })
-        );
-    } else {
-        array.push(
-            new webpack.HotModuleReplacementPlugin(),
-            new webpack.NoErrorsPlugin()
+            }),
+            new ExtractTextPlugin('stylesheets/[name]-[chunkhash].css', {allChunks: true})
         );
     }
-    return array;
-})();
+}());
 
+var entries = {};
 (function(){
     fs.readdirSync(SRC_PATH)
     .filter(function(dir) {
@@ -64,6 +65,44 @@ var plugins = (function(){
     });
 }());
 
+var loaders = [{
+    test: /\.(js|jsx)$/,
+    include: SRC_PATH,
+    exclude: /node_modules/,
+    loader: 'babel',
+    query: {
+      presets: ['es2015', 'stage-0', 'react']
+    }
+}, {
+    test: /\.(png|jpg|gif)$/,
+    loader: 'url-loader?limit=5000'
+}, {
+    test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    loader: "url-loader?limit=10000&minetype=application/font-woff"
+}, {
+    test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    loader: "file-loader"
+}];
+(function(){
+    if (debug) {
+        loaders.push({
+            test: /\.css$/,
+            loader: 'style-loader!css-loader'
+        }, {
+            test: /\.less$/,
+            loader: 'style-loader!css-loader!less-loader'
+        });
+    } else {
+        loaders.push({
+            test: /\.css$/,
+            loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+        }, {
+            test: /\.less$/,
+            loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+        });
+    }
+}());
+
 var config = {
     entry: entries,
     output: {
@@ -76,43 +115,13 @@ var config = {
         extensions: ['', '.js', '.jsx', '.json', '.css', '.less', '.jpg', '.png', '.gif']
     },
     externals: {
-        'react': 'React',
-        'react-dom': 'ReactDOM',
-        'react-bootstrap': 'ReactBootstrap',
-        'react-route': 'ReactRouter',
-        'reflux': 'Reflux',
-        'history': 'History',
-        'antd': 'antd',
-        'marked': 'marked',
-        'swiper': 'Swiper',
-        'id-validator': 'IDValidator'
+        // 'react-bootstrap': 'ReactBootstrap',
+        // 'antd': 'antd',
+        'swiper': 'Swiper'
     },
     plugins: plugins,
     module: {
-        loaders: [{
-            test: /\.(js|jsx)$/,
-            include: SRC_PATH,
-            exclude: /node_modules/,
-            loader: 'babel',
-            query: {
-              presets: ['es2015', 'stage-0', 'react']
-            }
-        }, {
-            test: /\.less$/,
-            loader: 'style!css!less'
-        }, {
-            test: /\.css$/,
-            loader: 'style!css'
-        }, {
-            test: /\.(png|jpg|gif)$/,
-            loader: 'url-loader?limit=10000'
-        }, {
-            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "url-loader?limit=10000&minetype=application/font-woff"
-        }, {
-            test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "file-loader"
-        }]
+        loaders: loaders
     }
 };
 if (debug) {
