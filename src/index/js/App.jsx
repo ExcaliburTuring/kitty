@@ -85,43 +85,38 @@ var App = React.createClass({
         return (
             <div className="content">
                 <Banner onDoubleDownBtnClick={this.onDoubleDownBtnClick} showDoubleDownBtn={this.state.showDoubleDownBtn}/>
-                <div className="hxy-desc">
-                    <Grid>
-                        <Row>
-                            <Col lg={10} lgOffset={1} md={12} >
-                                <div id="anchor" />
-                                <Separator text="海逍遥旅行" ref="hxyDesc"/>
-                                <div className="text">有些路高跟鞋没法走到，有些芬芳香水替代不了</div>
-                                <div className="text">有些人，坐格子间一辈子也见不到</div>
-                                <div className="text">世界这么大，你该去看看</div>
-                                <div className="text"><i className="fa fa-angle-double-down" /></div>
-                                <Image responsive className="hxy-desc-img " src={activity} />
-                            </Col>
-                        </Row>
-                    </Grid>
+                <div className="activities container">
+                    <Col lg={4} md={4}>
+                        <a href="/activities">
+                            <Image responsive src={activity1}/>
+                        </a>
+                    </Col>
+                    <Col lg={4} md={4}>
+                        <a href="/activities">
+                            <Image responsive src={activity}/>
+                        </a>
+                    </Col>
+                    <Col lg={4} md={4}>
+                        <Image responsive src={activity2}/>
+                    </Col>
+                </div>
+                <div className="container">
+                    <Separator text="海逍遥旅行" ref="hxyDesc"/>
                 </div>
                 <div className="products">
                     {products}
+                    <div className="more">
+                        <a>查看更多</a>
+                        <i className="fa fa-angle-right"/>
+                    </div>
                 </div>
-                <div className="activities">
-                    <Grid>
-                        <Row>
-                            <Col lg={5} lgOffset={1} md={6}>
-                                <a href="/activities">
-                                    <Image responsive src={activity1}/>
-                                </a>
-                            </Col>
-                            <Col lg={5} md={6}>
-                                <Image responsive src={activity2}/>
-                            </Col>
-                        </Row>
-                    </Grid>
+                <div className="container">
+                    <Separator text="关于我们" ref="hxyDesc"/>
                 </div>
                 <div className="others" style={world}>
                     <Grid>
                         <Row>
                             <Col lg={10} lgOffset={1} md={12} >
-                                <Separator text="关于我们"/>
                                 <div className="aboutus">
                                     <div className="text-center about-text">
                                         我们坚信，在这个星球上有很多淳朴真实的奇妙地方
@@ -189,14 +184,8 @@ var Separator = React.createClass({
     render: function() {
         return (
             <div className="separator">
-                <Col smHidden xsHidden md={4}>
-                    <div className="separator-line" />
-                </Col>
-                <Col md={4}>
+                <Col md={12}>
                     <div className="text-center separator-text">{this.props.text}</div>
-                </Col>
-                <Col smHidden xsHidden md={4}>
-                    <div className="separator-line" />
                 </Col>
             </div>
         );
