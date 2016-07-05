@@ -6,7 +6,7 @@ import Swiper from 'swiper';
 
 var Slider = React.createClass({
 
-    componentDidMount: function(){
+    componentDidUpdate: function(nextProps, nextState){
         var mySwiper = new Swiper (this.refs.swiper, {
             direction: 'horizontal',
             autoplay: 5000,
