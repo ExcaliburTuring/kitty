@@ -5,3 +5,4 @@ npm-debug.log
 kitty.cmd
 assets/
 package.json
+server.js
