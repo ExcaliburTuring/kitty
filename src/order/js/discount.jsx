@@ -67,6 +67,7 @@ var Discount = React.createClass({
             if (data.status == 0 ){
                 self.setState({
                     'discountCode': {
+                        'code': discountCode,
                         'discountPrice': data.value,
                         'validateStatus': 'success',
                         'msg': '此优惠码可以使用'
