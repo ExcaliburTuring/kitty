@@ -13,6 +13,7 @@ import activity from '../img/activity.jpg';
 import activity1 from '../img/postcard.jpg';
 import activity2 from '../img/leader.jpg';
 import worldmap from "../img/worldmap.png";
+import Aboutus from "../img/aboutus.jpg";
 
 const daysImgConfig = {
     1: defaultValue.getRouteImgPath('1.png'),
@@ -100,38 +101,35 @@ var App = React.createClass({
                         <Image responsive src={activity2}/>
                     </Col>
                 </div>
-                <div className="container">
-                    <Separator text="海逍遥旅行" ref="hxyDesc"/>
-                </div>
+                <Separator text="海逍遥旅行" ref="hxyDesc"/>
                 <div className="products">
                     {products}
                     <div className="more">
-                        <a>查看更多</a>
+                        <a href="/routes">查看更多</a>
                         <i className="fa fa-angle-right"/>
                     </div>
                 </div>
-                <div className="container">
-                    <Separator text="关于我们" ref="hxyDesc"/>
-                </div>
+                <Separator text="关于我们" ref="hxyDesc"/>
                 <div className="others" style={world}>
                     <Grid>
                         <Row>
-                            <Col lg={10} lgOffset={1} md={12} >
+                            <Col lg={5} lgOffset={1} md={6} >
+                                <div className="aboutimg">
+                                    <Image responsive src={Aboutus} />
+                                </div>
+                            </Col>
+                            <Col lg={5} md={6} >
                                 <div className="aboutus">
-                                    <div className="text-center about-text">
-                                        我们坚信，在这个星球上有很多淳朴真实的奇妙地方
-                                    </div>
-                                    <div className="text-center about-text">
-                                        我们要做的不仅是发现这些地方，同时希望更多的人走出去，体验这样真实的旅行
-                                    </div>
-                                    <div className="text-center about-text">
-                                        如果愿意敞开心扉，带着接纳这个世界的心，旅行就会带给你前所未有的期待
-                                    </div>
-                                    <div className="text-center about-text">
-                                        未来的某一天，我们希望和你一起徒步在仙乃日神山的朝圣之路，或是在内蒙古草原上一同仰望星空
-                                    </div>
-                                    <div className="text-center about-text">
-                                        这一切的一切，都在于旅行
+                                    <div className="about-text">
+                                        我们坚信，<br />
+                                        在这个星球上有很多淳朴真实的奇妙地方。<br />
+                                        我们要做的不仅是发现这些地方，同时希望更多的人走出去，<br />
+                                        体验这样真实的旅行。<br />
+                                        如果愿意敞开心扉，带着接纳这个世界的心，旅行就会带给你前所未有的期待。<br /><br />
+                                        未来的某一天，<br />
+                                        我们希望和你一起徒步在仙乃日神山的朝圣之路，<br />
+                                        或是在内蒙古草原上一同仰望星空。<br />
+                                        这一切的一切，都在于旅行。
                                     </div>
                                 </div>
                             </Col>
@@ -158,7 +156,6 @@ var Route = React.createClass({
                 <figure className="effect-apollo">
                         <Image responsive src={route.headImg} />
                         <figcaption>
-                            <h2>{route.name}</h2>
                             <p>{route.title}</p>
                             <a href="#">View more</a>
                         </figcaption>   
@@ -170,7 +167,8 @@ var Route = React.createClass({
                     <Image responsive src={daysImg} />
                 </div>*/}
                 <div className="info">
-                    <span className="bar" /><a>{route.name}</a>
+                    <div className="days"><Image responsive src={daysImg} /></div>
+                    <a>{route.name}</a>
                     <h5>{route.title}</h5>
                 </div>
             </div>
@@ -184,9 +182,7 @@ var Separator = React.createClass({
     render: function() {
         return (
             <div className="separator">
-                <Col md={12}>
-                    <div className="text-center separator-text">{this.props.text}</div>
-                </Col>
+                <div className="separator-text">{this.props.text}</div>
             </div>
         );
     }
