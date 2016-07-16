@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import { Col, Image } from 'react-bootstrap';
+import { Row, Col, Image } from 'react-bootstrap';
 
 import { url } from 'config';
 import Rabbit from 'rabbit';
@@ -76,32 +76,34 @@ var Routes =React.createClass({
                     </div>
                 </div>
                 <div className="content">
-                    <Col md={4}>
-                        <Image responsive src={route.headImg} onClick={this.onClick}/>
-                    </Col>
-                    <Col md={8}>
-                        <div className="days">
-                            <span className="up">{route.days}</span><span className="down">DAY</span>
-                        </div>
-                        <div className="name" onClick={this.onClick}>
-                            {route.name}
-                        </div>
-                        <div className="title">
-                            {route.title}
-                        </div>
-                        <div className="route">
-                            路线： <span className="">{route.route}</span>
-                        </div>
-                        <div className="desc">
-                            {route.desc}
-                        </div>
-                        <div className="detail" onClick={this.onhandleChange}>
-                            出发日期
-                        </div>
-                        <div className="price">
-                            {route.minPrice} - {route.maxPrice}
-                        </div>
-                    </Col>
+                    <Row>
+                        <Col md={4}>
+                            <Image responsive src={route.headImg} onClick={this.onClick}/>
+                        </Col>
+                        <Col md={8}>
+                            <div className="days">
+                                <span className="up">{route.days}</span><span className="down">DAY</span>
+                            </div>
+                            <div className="name" onClick={this.onClick}>
+                                {route.name}
+                            </div>
+                            <div className="title">
+                                {route.title}
+                            </div>
+                            <div className="route">
+                                路线： <span className="">{route.route}</span>
+                            </div>
+                            <div className="desc">
+                                {route.desc}
+                            </div>
+                            <div className="detail" onClick={this.onhandleChange}>
+                                出发日期
+                            </div>
+                            <div className="price">
+                                {route.minPrice} - {route.maxPrice}
+                            </div>
+                        </Col>
+                    </Row>
                 </div>
                 {groups}
             </div>
