@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 import { Table } from 'antd';
 import 'antd/lib/index.css';
 
-import { url, orderStatus, defaultValue } from 'config';
+import { url, orderStatus, groupStatus, defaultValue } from 'config';
 import Rabbit from 'rabbit';
 
 var Groups = React.createClass({
