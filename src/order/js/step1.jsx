@@ -8,7 +8,7 @@ import { Button } from 'react-bootstrap';
 import { Alert, Checkbox, message, Tooltip } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
-import { url, orderStatus } from 'config';
+import { url, accountStatus } from 'config';
 import Rabbit from 'rabbit';
 import Contact from 'contact';
 import Title from 'title';
@@ -27,7 +27,7 @@ var Step1 = React.createClass({
     onAddBtnClick: function() {
         var newContact = this.state.newContact;
         if (newContact != null) {
-            message.warning('您有一个新建的联系人还没有添加完毕，请先完成添加！');
+            message.warn('您有一个新建的联系人还没有添加完毕，请先完成添加！');
         } else {
             this.setState({'newContact': {}});
         }
@@ -158,7 +158,7 @@ var Step1 = React.createClass({
             );
 
             if (self.props.isAccountSelect) {
-                if (accountTraveller.status == orderStatus.WAIT_COMPLETE_INFO) {
+                if (accountTraveller.status == accountStatus.WAIT_COMPLETE_INFO) {
                     newAccountTip = (
                         <Alert message="新用户提醒信息"
                             description="您还是新用户，强烈建议您完善个人信息，方便以后下单。"

@@ -3,12 +3,45 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Table, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { Table } from 'antd';
+import 'antd/lib/index.css';
 
-import { url, orderStatus } from 'config';
+import { url, orderStatus, defaultValue } from 'config';
 import Rabbit from 'rabbit';
 
 var Groups = React.createClass({
+
+    getTableColumn: function() {
+        var self = this;
+        return [{
+            title: '日期',
+            dataIndex: 'date',
+            colSpan: 2
+        }, {
+            title: '',
+            dataIndex: 'title',
+            colSpan: 0
+        }, {
+            title: '状态',
+            dataIndex: 'status',
+        }, {
+            title: '价格',
+            dataIndex: 'price',
+        }];
+    },
+
+    getTableData: function(groups) {
+        return groups.map(function(group, index) {
+            return {
+                'key': `travel-group-${index}`, 
+                'date': `${group.startDate} 到 ${group.endDate}`,
+                'title': group.title,
+                'status': groupStatus.getDesc(group.status),
+                'price': `${group.price}`
+            };
+        });
+    },
 
     getInitialState: function() {
         return {
@@ -40,36 +73,20 @@ var Groups = React.createClass({
 
     render: function() {
         var groups = this.state.team.groups;
-        var groupList;
-        var self = this;
-
-        if (groups && groups.length >= 1) {
-            groupList = groups.map(function (group, index) {
-                return (
-                    <tr key={`group-${index}`}>
-                        <td>{group.startDate} 到 {group.endDate}</td>
-                        <td className="left">{group.title}</td>
-                        <td>{orderStatus.getDesc(group.status)}</td>
-                        <td>{group.price}</td>
-                        <td><Button className="able" onClick={self.onClick}>{"详情"}</Button></td>
-                    </tr>   
-                );                                    
-            });
+        if (!groups || groups.length == 0) {
+            return (
+                <div className="teaminfo">
+                    <p>这条路线暂时没有成团，如果您感兴趣，可以联系我们，{defaultValue.hotline}</p>
+                </div>
+            );
         }
         return (
-            <div className="teaminfo" key="this.props.routeid">
-                <Table responsive condensed hover>
-                    <thead>
-                        <tr>
-                            <th>日期</th>
-                            <th> </th>
-                            <th>状态</th>
-                            <th>价格</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>{groupList}</tbody>
-                </Table>
+            <div className="teaminfo">
+                <Table 
+                    columns={this.getTableColumn()} 
+                    dataSource={this.getTableData(groups)} 
+                    bordered 
+                    pagination={false} />
             </div>
         );
     }
