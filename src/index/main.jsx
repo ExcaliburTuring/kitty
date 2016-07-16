@@ -2,7 +2,7 @@
 import ReactDOM from 'react-dom';
 
 import App from './js/app';
-import Navbar from './navbar/navbar.jsx';
+import Navbar from 'navbar';
 import Footer from 'footer';
 
 require('./css/application.less');
