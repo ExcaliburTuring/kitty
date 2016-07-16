@@ -46,7 +46,7 @@ var Routes =React.createClass({
 
     getInitialState: function() {
         return{
-            'detailVisible': 'false'
+            'detailVisible': false
         }
     },
 
@@ -62,12 +62,10 @@ var Routes =React.createClass({
 
     render: function() {
         var route = this.props.route;
-        var groups;
-
-        if(this.state.detailVisible == true){
-            groups = (<Groups routeid={route.routeid} />);
-        }else if(this.state.detailVisible == false){
-            groups = "";
+        var GroupInfo = Rabbit.create(url.group); 
+        var groups = null;
+        if (this.state.detailVisible) {
+            groups = (<Groups routeid={route.routeid} groupInfo={GroupInfo}/>)
         }
 
         return (

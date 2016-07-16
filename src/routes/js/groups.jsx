@@ -8,11 +8,7 @@ import { Table, Button } from 'react-bootstrap';
 import { url, orderStatus } from 'config';
 import Rabbit from 'rabbit';
 
-var GroupInfo = Rabbit.create(url.group); 
-
 var Groups = React.createClass({
-
-    mixins: [Reflux.connect(GroupInfo.store, 'team')],
 
     getInitialState: function() {
         return {
@@ -29,7 +25,17 @@ var Groups = React.createClass({
     },
 
     componentDidMount: function() {
-         GroupInfo.actions.load({'routeid':`${this.props.routeid}`});
+        var GroupInfo = this.props.groupInfo;
+        this.unsubscribe = GroupInfo.store.listen(this.onStatusChange);
+        GroupInfo.actions.load({'routeid':`${this.props.routeid}`});
+    },
+
+    componentWillUnmount: function() {
+        this.unsubscribe();
+    },
+
+    onStatusChange: function(team) {
+        this.setState({'team': team});
     },
 
     render: function() {
