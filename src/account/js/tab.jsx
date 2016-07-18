@@ -62,16 +62,13 @@ var Tab = React.createClass({
                                     </a>
                                 </div>
                             </div>
-                            <div className="tab-detail">
-                                <span className="tab-name">{this.state.name}</span>
-                            </div>
                         </Col>
                         <Col md={9}>
                             <div className="tab-nav">
                                 <Nav bsStyle = "pills" justified onSelect = {this.handleSelect} activeKey = {this.state.activeKey}>
-                                    <NavItem eventKey = {1}> 我 </NavItem> 
-                                    <NavItem eventKey = {2}> 个人信息 </NavItem> 
-                                    <NavItem eventKey = {3}> 订单 </NavItem>
+                                    <NavItem eventKey = {1}> 我的窝 </NavItem> 
+                                    <NavItem eventKey = {2}> 我的信息 </NavItem> 
+                                    <NavItem eventKey = {3}> 我的订单 </NavItem>
                                 </Nav>
                             </div>
                         </Col>

@@ -13,7 +13,7 @@ var Notice = React.createClass({
         var traffic = marked(notice.traffic);
         var prepare = marked(notice.prepare);
         return (
-             <div className="notice">
+             <div className="notice container">
                 <Col xs={12} md={6}>
                     <Col xs={12} md={12}>
                         <h2><i className="fa fa-compass"/>关于当地</h2>

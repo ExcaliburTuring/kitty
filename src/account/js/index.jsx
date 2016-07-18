@@ -68,12 +68,13 @@ var Index = React.createClass({
                     <div className="my-container">
                         <Col md={3}>
                             <div className="profiles">
-                                <div className="">
-                                    <p><i className="fa fa-male"/>{accountInfo.name}</p>
-                                    <p><i className="fa fa-mobile"/>{accountInfo.mobile}</p>
-                                    <p><i className="fa fa-birthday-cake"/>{accountSetting.birthday}</p>
+                                <div className="name">
+                                   {accountInfo.name}
                                 </div>
-                                <a href={infoUrl} activeClassName="active">编辑资料</a>
+                                <div className="discount">
+                                    <div className="left"><span>优惠券：0张</span></div>
+                                    <div className="right">红包：0.00元</div>
+                                </div>
                             </div>
                         </Col>
                         <Col md={9}>

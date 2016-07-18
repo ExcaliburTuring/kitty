@@ -13,7 +13,7 @@ var Expense = React.createClass({
         var exclude = marked(expense.exclude);
         var cancel = marked(expense.cancel);
         return (
-            <div className="expense">
+            <div className="expense container">
                 <Col xs={12} md={6}>
                     <Col xs={12} md={12}>
                         <h2><i className="fa fa-exclamation-circle"/> 费用包含</h2>

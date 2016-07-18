@@ -236,7 +236,7 @@ var App = React.createClass({
        }
         return (
             <Grid>
-                <StepBar step={step}/>
+                {/*<StepBar step={step}/>*/}
                 <Row>
                     <Col md={9}>
                         <div className="order-content-container">

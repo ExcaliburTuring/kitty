@@ -102,9 +102,6 @@ var OrderItem = React.createClass({
                                 <div className="travel-name">
                                     {order.name}
                                 </div>
-                                <div className="travel-intro">
-                                    {order.title}
-                                </div>
                                 <div className="travel-time">
                                     {order.startDate} 到 {order.endDate}
                                 </div>
