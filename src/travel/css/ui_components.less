@@ -1,14 +1,12 @@
-@face-height: 535px;
 @body-nav-height: 60px;
 @face-margin-top: 5px;
 
-.face-container {
-    height: @face-height;
+/*.face-container {
     margin-top: @face-margin-top;
     margin-bottom: 10px;
 
     .relative {
-        height: @face-height;
+        height: 100%;
 
         .duration {
             text-align: center;
@@ -34,8 +32,8 @@
         .title {
             margin: 0 10px 10px 10px;
             font-weight: 700;
-            font-size: 33px!important;
-            line-height: 30px;
+            font-size: 24px!important;
+            line-height: 36px;
             display: block;
         }
 
@@ -62,7 +60,7 @@
             h5 {
                 display: inline;
                 color: @dark-blue;
-                font-size: 16px;
+                font-size: 14px;
                 line-height: 28px!important;
             }
         }
@@ -75,11 +73,11 @@
                 margin: 20px 0;
                 font-size: 25px!important;
                 font-weight: 700;
-                text-align: center;
+                text-align: right;
             }
 
             .time {
-                width: 250px;
+                width: 100%;
                 height: @body-nav-height;
                 background: @currency;
                 border: none;
@@ -89,11 +87,14 @@
             }
         }
     }
+}*/
 
     .swiper-container{
         width: 100%;
-        height: @face-height;
-        float: right;
+        height: 100%;
+        left: 0;
+        top: 0;
+        position: absolute;
         z-index: 1;
 
         .swiper-slide {
@@ -101,27 +102,13 @@
             background-size: cover;
             background-repeat: no-repeat;
         }
-
-        .body-nav-mask {
-            bottom: 0;
-            position: absolute;
-            height: @body-nav-height;
-            width: 100%;
-            z-index: 2;
-            background-color: #000;
-            margin-right: 15px;
-            opacity: 0.5;
-        }
     }
-}
 
 .am-sticky-placeholder {
     width: 100%;
     position: absolute;
     text-align: right;
-    top: 13 + @face-height + @face-margin-top;
-    left: 0;
-    right: 0;
+    top: 664px;
     z-index: 2;
 
     .navbar {
@@ -138,7 +125,8 @@
         .navbar-nav.navbar-right > li > a {
             width: 130px;
             font-size: 25px;
-            color: @gray;
+            color: @white;
+            text-shadow: 0 0 1px @dark-gray;
             text-align: center;
             border-radius: 1px;
             border-top: 5px solid transparent;
@@ -165,6 +153,9 @@
         background-color: @white;
 
         .navbar-nav.navbar-right > li > a {
+            color: @gray;
+            text-shadow: none;
+
             &:hover {
                 border-top: 5px solid @currency;
             }

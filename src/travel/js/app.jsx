@@ -80,26 +80,14 @@ var App = React.createClass({
             <div>
                 <Navbar name="routes" />
                 <BodyNav container={this}/>
-                <Grid>
-                    <Row>
-                        <Face route={routes.routes[0]} sliderImgs={imgtext.sliderImgs}/>
-                    </Row>
-                    <Row>
-                        <Brief brief={imgtext.introduction}/>
-                    </Row>
-                    <Row>
-                        <Days days={imgtext.days}/>
-                    </Row>
-                    <Row>
-                        <Notice notice={imgtext.notice}/>
-                    </Row>
-                    <Row>
-                        <Expense expense={imgtext.expense}/>
-                    </Row>
-                    <Row>
-                        <Groups groups={groups.groups}/>
-                    </Row>
-                </Grid>
+                <div className="container">
+                    <Face route={routes.routes[0]} sliderImgs={imgtext.sliderImgs}/>
+                    <Brief brief={imgtext.introduction}/>
+                    <Days days={imgtext.days}/>
+                    <Notice notice={imgtext.notice}/>
+                    <Expense expense={imgtext.expense}/>
+                    <Groups groups={groups.groups}/>
+                </div>
                 <Footer />
             </div>
         );

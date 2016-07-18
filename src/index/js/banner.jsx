@@ -5,9 +5,9 @@ import React from 'react';
 
 import Swiper from 'swiper';
 import a from '../img/A.jpg';
-import d from '../img/d.jpg';
-import e from '../img/e.jpg';
-import f from '../img/f.jpg';
+import d from '../img/D.jpg';
+import e from '../img/E.jpg';
+import f from '../img/F.jpg';
 
 var Banner = React.createClass({
 
@@ -40,7 +40,7 @@ var Banner = React.createClass({
                     <div className="swiper-slide swiper-no-swiping" style={fbg}></div>
                 </div>
                 <div className="arrow-container swiper-no-swiping">
-                    <div className="arrows">
+                    <div className="arrows container">
                         <div className="left-arrow" ref="prev">
                             <i className="fa fa-angle-left"/><a>Prev</a>
                         </div>

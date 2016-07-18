@@ -3,7 +3,8 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Col } from 'react-bootstrap';
+import { Col,Image } from 'react-bootstrap';
+import WH from '../img/169.png';
 
 import Slider from './slider';
 
@@ -12,8 +13,8 @@ var Face = React.createClass({
     render: function() {
         var route = this.props.route;
         return (
-            <div className="face-container">
-                <Col xs={6} md={3}>
+            <div className="face-container container">
+                {/*<Col xs={6} md={3}>
                     <div className="relative">
                         <div className="pull-left">
                             <div className="duration pull-left">
@@ -37,8 +38,9 @@ var Face = React.createClass({
                             <button className="time">时间&价格</button>
                         </div>
                     </div>
-                </Col>
-                <Col xs={6} md={9}>
+                </Col>*/}
+                <Col className="container" md={12}>
+                    <Image responsive src={WH} />
                     <Slider sliderImgs={this.props.sliderImgs}/>
                 </Col>
             </div>

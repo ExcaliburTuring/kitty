@@ -38,7 +38,6 @@ var Slider = React.createClass({
                 </div>
                 <div className="swiper-button-prev swiper-button-white" ref="prev"></div>
                 <div className="swiper-button-next swiper-button-white" ref="next"></div>
-                <div className="body-nav-mask"></div>
             </div>
         );
     }

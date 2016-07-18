@@ -80,10 +80,10 @@ var BodyNav = React.createClass({
                     <Navbar>
                         <Nav pullRight activeKey={1} onSelect={this.handleSelect}>
                             <NavItem eventKey={".brief"} >路线简介</NavItem>
-                            <NavItem eventKey={".day1"} >行程</NavItem>
+                            <NavItem eventKey={".day1"} >行程安排</NavItem>
                             <NavItem eventKey={".notice"} >注意事项</NavItem>
                             <NavItem eventKey={".expense"} >费用说明</NavItem>
-                            <NavItem eventKey={".teaminfo"} >报名</NavItem>
+                            <NavItem eventKey={".teaminfo"} >马上报名</NavItem>
                         </Nav>
                     </Navbar>
                 </AutoAffix>
