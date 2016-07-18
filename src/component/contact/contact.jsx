@@ -148,7 +148,7 @@ var Contact = React.createClass({
                         : contact.idType === idType.IDENTIFICATION;
         return (
             <div className="contacts-item-container clearfix">
-                <Title title={contact.name} className="contact-title">
+                <Title className="contact-title">
                     <EditButtonGroup
                         readOnly={readOnly}
                         isChange={this.state.isChange}
