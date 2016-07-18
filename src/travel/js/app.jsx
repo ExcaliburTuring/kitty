@@ -79,9 +79,9 @@ var App = React.createClass({
         return (
             <div>
                 <Navbar name="routes" />
-                <BodyNav container={this}/>
-                <div className="container">
+                <div className="content container">
                     <Face route={routes.routes[0]} sliderImgs={imgtext.sliderImgs}/>
+                    <div className="body-nav"><BodyNav container={this}/></div>
                     <Brief brief={imgtext.introduction}/>
                     <Days days={imgtext.days}/>
                     <Notice notice={imgtext.notice}/>
