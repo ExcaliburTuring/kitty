@@ -26,7 +26,7 @@ body {
 
 .step .line_bg{ 
 	height:3px; 
-	background: #FFCDCD; 
+	background: @currency; 
 	display:inline-block; 
 	width:50%; top:13px; 
 	position:absolute; 
@@ -112,9 +112,9 @@ body {
 
 .travel-info {
 	padding: 10px;
-	border-bottom: 3px solid @red;
+	border-bottom: 2px solid @currency;
 	border-radius: 3px;
-	box-shadow:  0 0 5px @light-gray;
+	box-shadow:  0 0 1px @light-gray;
 	
 	h2{
 		font-size: 24px;
@@ -169,22 +169,22 @@ body {
 .order-step2 {
 
 	.discount-title {
-		color: @red;
+		color: @currency;
 		font-size: 24px;
 		height: 50px;
 	    padding: 13px 20px;
 	    margin-bottom: 20px;
 	    border-radius: 8px;
-	    box-shadow: 0 0 3px #aeaeae;
-	    border-bottom: 3px solid @red;
+	    box-shadow: 0 0 1px #aeaeae;
+	    border-bottom: 2px solid @currency;
 	}
 
 	.discount-item {
 		border-radius: 8px;
-		border-bottom: 3px solid @red;
-		box-shadow: 0 0 3px @light-gray;
+		border-bottom: 2px solid @currency;
+		box-shadow: 0 0 1px @light-gray;
 		font-size: 24px;
-		color: @red;
+		color: @currency;
 
 		.left-info{
 			font-size: 20px;
@@ -198,7 +198,7 @@ body {
 		    padding-left: 20px;
 		    color: #666;
 		    border-radius: 8px 8px 0 0;
-		    box-shadow: 0 0 3px @light-gray;
+		    box-shadow: 0 0 1px @light-gray;
 
 		    .discount-name {
 		    	margin-left: 10px;
@@ -230,7 +230,7 @@ body {
 		.pay-container {
 			padding: 10px 20px;
 	    	border-radius: 0 0 8px 8px;
-	    	box-shadow: 0 0 3px @light-gray;
+	    	box-shadow: 0 0 1px @light-gray;
 
 			.pay-left {
 				width: 100px;
@@ -256,8 +256,8 @@ body {
 		margin-bottom: 50px;
 		height: 100px;
 		border-radius: 8px;
-		border-bottom: 3px solid @red;
-		box-shadow: 0 0 3px @light-gray;
+		border-bottom: 2px solid @red;
+		box-shadow: 0 0 1px @light-gray;
 		font-size: 24px;
 		color: @red;
 
@@ -306,16 +306,14 @@ body {
 .order-contact-container {
 	
 	border-radius: 3px;
-	box-shadow:  0 0 5px @light-gray;
-    padding: 20px;
 
     .order-contact-title {
     	height: 50px;
         padding: 10px 20px;
         margin-bottom: 20px;
         border-radius: 8px;
-        box-shadow: 0 0 3px #aeaeae;
-        border-bottom: 3px solid @red;
+        box-shadow: 0 0 1px #aeaeae;
+        border-bottom: 2px solid @currency;
 
         .order-contact-tip,
         .order-contact-name-container {
@@ -345,8 +343,8 @@ body {
         padding: 10px 20px;
         margin-bottom: 20px;
         border-radius: 8px;
-        box-shadow: 0 0 3px #aeaeae;
-        border-bottom: 3px solid @red;
+        box-shadow: 0 0 1px #aeaeae;
+        border-bottom: 2px solid @currency;
 
         .order-status-text,
         .order-status-content {

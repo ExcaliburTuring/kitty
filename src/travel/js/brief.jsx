@@ -23,7 +23,7 @@ var Brief = React.createClass({
         });
 
         return (
-             <div className="brief">
+             <div className="brief container">
                 <Col xs={12} md={12}>
                     <hr />
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>

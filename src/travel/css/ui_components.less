@@ -1,14 +1,12 @@
-@face-height: 535px;
 @body-nav-height: 60px;
 @face-margin-top: 5px;
 
-.face-container {
-    height: @face-height;
+/*.face-container {
     margin-top: @face-margin-top;
     margin-bottom: 10px;
 
     .relative {
-        height: @face-height;
+        height: 100%;
 
         .duration {
             text-align: center;
@@ -34,8 +32,8 @@
         .title {
             margin: 0 10px 10px 10px;
             font-weight: 700;
-            font-size: 33px!important;
-            line-height: 30px;
+            font-size: 24px!important;
+            line-height: 36px;
             display: block;
         }
 
@@ -62,7 +60,7 @@
             h5 {
                 display: inline;
                 color: @dark-blue;
-                font-size: 16px;
+                font-size: 14px;
                 line-height: 28px!important;
             }
         }
@@ -75,11 +73,11 @@
                 margin: 20px 0;
                 font-size: 25px!important;
                 font-weight: 700;
-                text-align: center;
+                text-align: right;
             }
 
             .time {
-                width: 250px;
+                width: 100%;
                 height: @body-nav-height;
                 background: @currency;
                 border: none;
@@ -89,39 +87,72 @@
             }
         }
     }
+}*/
 
-    .swiper-container{
-        width: 100%;
-        height: @face-height;
-        float: right;
-        z-index: 1;
+.swiper-container{
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    z-index: 1;
 
-        .swiper-slide {
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
+    .swiper-slide {
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .topleft {
+        margin-top: 32px;
+        margin-left: 32px;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 48px;
+        text-shadow: 0 1px 3px rgba(0,0,0,.9);
+        color: @white;
+
+        .name {
+            font-size: 32px;
+            color: @currency;
         }
 
-        .body-nav-mask {
-            bottom: 0;
-            position: absolute;
-            height: @body-nav-height;
-            width: 100%;
-            z-index: 2;
-            background-color: #000;
-            margin-right: 15px;
-            opacity: 0.5;
+        .day-count {
+            font-size: 32px;
+        }
+    }
+
+    .rightbottom {
+        position: absolute;
+        z-index: 2;
+        right: 28px;
+        bottom: 14px;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 32px;
+        text-shadow: 0 1px 3px rgba(0,0,0,.9);
+        color: @white;
+
+        .price {
+            font-size: 32px;
+            line-height: 32px;
+            color: @currency;
         }
     }
 }
 
-.am-sticky-placeholder {
+.body-nav {
     width: 100%;
+    height: 30px;
+    position: relative;
+}
+
+.am-sticky-placeholder {
+    width: 200%;
     position: absolute;
     text-align: right;
-    top: 13 + @face-height + @face-margin-top;
-    left: 0;
-    right: 0;
+    margin-left: -50%;
+    margin-top: -60px;
     z-index: 2;
 
     .navbar {
@@ -131,17 +162,18 @@
         box-shadow: none;
         background-color: transparent;
 
-        .navbar-nav.navbar-right {
+        .navbar-nav.navbar-left {
             margin-right: 40px;
         }
 
-        .navbar-nav.navbar-right > li > a {
+        .navbar-nav.navbar-left > li > a {
             width: 130px;
-            font-size: 25px;
-            color: @gray;
+            font-size: 20px;
+            color: @white;
+            text-shadow: 0 1px 3px rgba(0,0,0,.9);
             text-align: center;
             border-radius: 1px;
-            border-top: 5px solid transparent;
+            border-top: 3px solid transparent;
             border-bottom: none;
             transition: color 0.2s,border 0.2s;
             -moz-transition: color 0.2s,border 0.2s; /* Firefox 4 */
@@ -155,7 +187,7 @@
             }
 
             &:focus {
-                border-top: 5px solid transparent;
+                border-top: 3px solid transparent;
             }
         }
     }
@@ -164,22 +196,29 @@
         box-shadow: 0 0 5px @gray;
         background-color: @white;
 
-        .navbar-nav.navbar-right > li > a {
+        .navbar-nav.navbar-left > li > a {
+            color: @gray;
+            text-shadow: none;
+
             &:hover {
-                border-top: 5px solid @currency;
+                border-top: 3px solid @currency;
             }
         }
 
-        .navbar-nav.navbar-right > li.select > a {
+        .navbar-nav.navbar-left > li.select > a {
             background-color: transparent;
             color: @currency;
-            border-top: 5px solid @currency;
+            border-top: 3px solid @currency;
 
             &:focus {
-                border-top: 5px solid @currency;
+                border-top: 3px solid @currency;
             }
         }
     }
+}
+
+.content {
+    box-shadow: 0 0 3px @light-gray;
 }
 
 .brief,

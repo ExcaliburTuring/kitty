@@ -16,12 +16,11 @@ var GroupBrief = React.createClass({
                         <img src={travelRoute.headImg} />
                         <h2>{travelRoute.name}</h2>
                         <h3>{travelRoute.title}</h3>
-                        <h4>{travelRoute.route}</h4>
                         <h4>{travelGroup.startDate} 至 {travelGroup.endDate}</h4>
                     </div>
                 </div>
                 <div className="total">
-                    <p>总价：</p><div className="price-right">{travelGroup.price}</div>
+                    <p>单价：</p><div className="price-right">{travelGroup.price}</div>
                 </div>
             </div>
         );

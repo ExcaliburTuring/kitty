@@ -20,7 +20,7 @@ var Days = React.createClass({
             });
         }
         return (
-            <div className="xingcheng">
+            <div className="xingcheng container">
                 <Col xs={12} md={12}>
                     <br/>
                     <hr/>
