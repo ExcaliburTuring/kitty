@@ -101,8 +101,7 @@ var App = React.createClass({
                         <div className="activity-container" style={bg4}>
                             <div className="intro">
                                 <div className="title">一个人的奇幻漂流</div>
-                                <h3><br/>
-                                    被小伙伴残忍的抛弃了怎么办？<br/>
+                                <h2>被小伙伴残忍的抛弃了怎么办？<br/>
                                     一个人玩照样精彩！<br/>
                                     逍遥君承诺，<br/>
                                     旅行没有单房差！<br/>
@@ -111,7 +110,7 @@ var App = React.createClass({
                                     还要悄悄告诉你，<br/>
                                     星空下，篝火旁，<br/>
                                     一言不合就脱单!
-                                </h3>
+                                </h2>
                             </div>
                         </div>
                     </div>
