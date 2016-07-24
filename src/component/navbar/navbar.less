@@ -53,6 +53,7 @@
 
 .navbar-header {
 	img {
+		display: inline-block;
 		height: 50px;
 	}
 }
@@ -99,7 +100,7 @@
 			height: 0px;
 		    border-left: 8px solid transparent;
 		    border-right: 8px solid transparent;
-		    border-bottom: 12px solid @light-currency;
+		    border-bottom: 12px solid @trans-currency;
 			margin: 0 auto;
 		}
 
@@ -107,15 +108,14 @@
 			width: 100px;
 			padding: 10px 0;
 			border-radius: 10px;
-			background-color: @light-currency;
+			background-color: @trans-currency;
 			margin: 0 auto;
 			font-size: 16px;
 			text-align: center;
 			line-height: 30px;
 
 			.line {
-				color: @white;
-				background-color: @light-currency;
+				color: @black;
 			}
 
 			.line:hover {
