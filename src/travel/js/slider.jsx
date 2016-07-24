@@ -23,18 +23,20 @@ var Slider = React.createClass({
             }
         });
     },
-
+ 
     render: function() { 
+        var name = this.props.name;
+        var descriptionlist = this.props.descriptions;
         var slideItemList = this.props.sliderImgs.map(function(img, index) {
             var bg = {backgroundImage: `url(${img})`};
             return (
                 <div className="swiper-slide swiper-no-swiping" style={bg} key={index}>
                     <div className="topleft">
-                        <div className="name">大西北</div>
+                        <div className="name">{name}</div>
                         <div>
                             <span className="day-count">{index+1}</span>
                             <span>/9days</span>
-                            <span>  兰州，看滚滚而去的母亲河，霸气耸立的中山铁桥。</span>
+                            <span>  {descriptionlist[index]}</span>
                         </div>
                     </div>
                 </div>
