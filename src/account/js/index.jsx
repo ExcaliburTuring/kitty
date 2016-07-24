@@ -77,19 +77,19 @@ var Index = React.createClass({
                                 </div>
                             </div>
                         </Col>
-                        <Col md={9}>
+                        <Col xs={12} md={9}>
                             <div className="title">
-                                <Col md={5}>
+                                <Col xsHidden md={5}>
                                     <div className="welcome">
                                         欢迎回来，{accountInfo.name}
                                     </div>
                                 </Col>
                                 <div className="messages">
-                                    <Col md={3}>
+                                    <Col xs={6} md={3}>
                                         <span className="bar">未完成订单：</span>
                                         <span className="unfinished">{data.currentOrderCount}</span>
                                     </Col>
-                                    <Col md={3}>
+                                    <Col xs={6} md={3}>
                                         <span className="bar">历史订单：</span>
                                         <span className="histories">{data.historyOrderCount}</span>
                                     </Col>

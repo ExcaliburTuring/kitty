@@ -106,8 +106,8 @@ var AccountMenu = React.createClass({
                         <div className="square">
                             <div className="orders line">我的行程</div>
                             <div className="whiteline" />
-                            <div className="config line">设置</div>
-                            <div className=""><a href="/account/logout">退出</a></div>
+                            <div className="config line">账号设置</div>
+                            <div className="line" href="/account/logout">退出</div>
                         </div>
                     </div>
                 </div>
