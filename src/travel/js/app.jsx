@@ -47,6 +47,7 @@ var App = React.createClass({
                 }],
                 'imgtext': {
                     'sliderImgs': [],
+                    'descriptions': [],
                     'introduction': {
                         'mdtext': '',
                         'spotlights':[]
@@ -80,7 +81,7 @@ var App = React.createClass({
             <div>
                 <Navbar name="routes" />
                 <div className="content container">
-                    <Face route={routes.routes[0]} sliderImgs={imgtext.sliderImgs}/>
+                    <Face route={routes.routes[0]} sliderImgs={imgtext.sliderImgs} descriptions={imgtext.descriptions}/>
                     <div className="body-nav"><BodyNav container={this}/></div>
                     <Brief brief={imgtext.introduction}/>
                     <Days days={imgtext.days}/>

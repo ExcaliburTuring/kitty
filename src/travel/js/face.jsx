@@ -41,7 +41,7 @@ var Face = React.createClass({
                 </Col>*/}
                 <Col className="container" md={12}>
                     <Image responsive src={WH} />
-                    <Slider sliderImgs={this.props.sliderImgs}/>
+                    <Slider name={route.name} sliderImgs={this.props.sliderImgs} descriptions={this.props.descriptions}/>
                 </Col>
             </div>
         );

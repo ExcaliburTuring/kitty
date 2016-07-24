@@ -9,9 +9,9 @@ import { defaultValue, url } from 'config';
 import Rabbit from 'rabbit';
 import Banner from './banner';
 
-import activity from '../img/activity.jpg';
 import activity1 from '../img/postcard.jpg';
-import activity2 from '../img/leader.jpg';
+import activity2 from '../img/activity.jpg';
+import activity3 from '../img/leader.jpg';
 import worldmap from "../img/worldmap.png";
 import Aboutus from "../img/aboutus.jpg";
 
@@ -91,17 +91,19 @@ var App = React.createClass({
                 <div  className="content container">
                     <div className="activities">
                         <Col lg={4} md={4}>
-                            <a href="/activities">
+                            <a href="/activities#/1">
                                 <Image responsive src={activity1}/>
                             </a>
                         </Col>
                         <Col lg={4} md={4}>
-                            <a href="/activities">
-                                <Image responsive src={activity}/>
+                            <a href="/activities#/2">
+                                <Image responsive src={activity2}/>
                             </a>
                         </Col>
                         <Col lg={4} md={4}>
-                            <Image responsive src={activity2}/>
+                            <a href="/activities#/3">
+                                <Image responsive src={activity3}/>
+                            </a>
                         </Col>
                     </div>
                     <Separator text="海逍遥旅行" ref="hxyDesc"/>
