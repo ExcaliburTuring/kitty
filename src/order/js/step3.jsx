@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Col } from 'react-bootstrap';
 import { Table, Button, Tooltip } from 'antd';
 
 import { idType, priceUtil, orderStatus, defaultValue } from 'config';

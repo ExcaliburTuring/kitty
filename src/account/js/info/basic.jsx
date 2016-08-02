@@ -121,12 +121,12 @@ var BasicInfo = React.createClass({
                         onRevertBtnClick={this.onRevertBtnClick}
                         onSubmitBtnClick={this.onSubmitBtnClick} />
                 </Title>
-                <Col smHidden xsHidden md={2}>
+                <Col xsHidden md={2}>
                     <div className="left-block">
                         <Image responsive src={info}/>
                     </div>
                 </Col>
-                <Col sm={12} xs={12} md={5}>
+                <Col xs={12} md={5}>
                     <Form horizontal>
                         <Name
                             ref="nameInput"

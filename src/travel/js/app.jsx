@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Grid, Row, Col } from 'react-bootstrap';
 
 import Rabbit from 'rabbit';
 import { url } from 'config';

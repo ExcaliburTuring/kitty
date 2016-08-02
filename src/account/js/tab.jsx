@@ -54,7 +54,7 @@ var Tab = React.createClass({
             <div className="tab-container">
                 <Grid>
                     <Row className="tab-content">
-                        <Col smHidden xsHidden md={3}>
+                        <Col sm={3} md={3}>
                             <div className="tab-account-info">
                                 <div className="tab-avatar">
                                     <a href={`${url.account}${this.state.indexUrl}`}>
@@ -63,7 +63,7 @@ var Tab = React.createClass({
                                 </div>
                             </div>
                         </Col>
-                        <Col md={9}>
+                        <Col sm={9} md={9}>
                             <div className="tab-nav">
                                 <Nav bsStyle = "pills" justified onSelect = {this.handleSelect} activeKey = {this.state.activeKey}>
                                     <NavItem eventKey = {1}> 我的窝 </NavItem> 

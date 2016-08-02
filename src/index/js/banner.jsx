@@ -8,13 +8,15 @@ import a from '../img/A.jpg';
 import d from '../img/D.jpg';
 import e from '../img/E.jpg';
 import f from '../img/F.jpg';
+import WH from '../img/196.png';
+import { Col } from 'react-bootstrap';
 
 var Banner = React.createClass({
 
     componentDidMount: function(){
         var mySwiper = new Swiper (this.refs.swiper, {
             direction: 'horizontal',
-            autoplay: 5000,
+            autoplay: 0,
             speed: 600,
             loop: true,
             noSwiping : true,
@@ -32,20 +34,20 @@ var Banner = React.createClass({
         var fbg = {backgroundImage: "url(" + f + ")"};
 
         return(
-            <div className="swiper-container" ref="swiper">
-                <div className="swiper-wrapper">
-                    <div className="swiper-slide swiper-no-swiping" style={abg}></div>
-                    <div className="swiper-slide swiper-no-swiping" style={ebg}></div>
-                    <div className="swiper-slide swiper-no-swiping" style={dbg}></div>
-                    <div className="swiper-slide swiper-no-swiping" style={fbg}></div>
-                </div>
-                <div className="arrow-container swiper-no-swiping">
-                    <div className="arrows container">
-                        <div className="left-arrow" ref="prev">
-                            <i className="fa fa-angle-left"/><a>Prev</a>
-                        </div>
-                        <div className="right-arrow" ref="next">
-                            <a>Next</a><i className="fa fa-angle-right"/>
+            <div className="WH-table">
+                <img className="WH-container" src={WH} />
+                <div className="swiper-container" ref="swiper">
+                    <div className="swiper-wrapper">
+                        <div className="swiper-slide swiper-no-swiping" style={abg}></div>
+                    </div>
+                    <div className="arrow-container swiper-no-swiping">
+                        <div className="arrows container">
+                            <div className="left-arrow" ref="prev">
+                                <i className="fa fa-angle-left"/><a>Prev</a>
+                            </div>
+                            <div className="right-arrow" ref="next">
+                                <a>Next</a><i className="fa fa-angle-right"/>
+                            </div>
                         </div>
                     </div>
                 </div>

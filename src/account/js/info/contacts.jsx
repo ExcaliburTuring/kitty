@@ -120,12 +120,12 @@ var Contacts = React.createClass({
                 <Title title="常用出行人" className="info-title">
                     <FaButton faClass="fa fa-plus" onClick={this.onAddBtnClick} />
                 </Title>
-                <Col smHidden xsHidden md={2} >
+                <Col xsHidden md={2} >
                     <div className="left-block">
                         <Image responsive src={people}/>
                     </div>
                 </Col>
-                <Col sm={12} xs={12} md={9} >
+                <Col xs={12} md={9} >
                     {newContactsList}
                     {contactsList}
                 </Col>

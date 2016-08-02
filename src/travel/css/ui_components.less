@@ -10,7 +10,7 @@
 
         .duration {
             text-align: center;
-            padding: 1px 2px; 
+            padding: 1px 2px;
             width: 36px; 
             height: 36px;
             color: @white;
@@ -147,10 +147,8 @@
 }
 
 .am-sticky-placeholder {
-    width: 200%;
     position: absolute;
-    text-align: right;
-    margin-left: -50%;
+    width: 100%;
     margin-top: -60px;
     z-index: 2;
 
@@ -194,6 +192,8 @@
     .navbar.affixed {
         box-shadow: 0 0 5px @gray;
         background-color: @white;
+        width: 2000px!important;
+        margin-left: -500px;
 
         .navbar-nav.navbar-left > li > a {
             color: @gray;
@@ -230,7 +230,8 @@
     }
 
     h2 {
-      line-height: 68px;
+      line-height: 45px;
+      font-size: 24px;
       font-weight: 600;
       color: @dark-gray;
     }
@@ -247,23 +248,29 @@
     .liangdian {
         line-height: 60px;
         font-family: "Microsoft YaHei";
-        font-weight: normal;
-        font-size: 24px;
+        font-weight: 600;
+        font-size: 18px;
         color:@dark-gray;
     }
 
     .light-title {
         font-family: inherit;
-        font-size: 45px;
+        font-weight: 400;
+        font-size: 36px;
         color:@currency;
     }
 
     .spot-light {
-        font-size: 24px;
+        font-weight: 600;
+        font-size: 18px;
     }
 }
 
 .xingcheng {
+
+    h2 {
+        font-size: 1.6em!important;
+    }
 
     .day1,
     .days {
@@ -334,7 +341,7 @@
 
     h2 {
         text-align: center;
-        font-size: 1.8em!important;
+        font-size: 1.6em!important;
         margin-bottom: 30px;
         margin-top: 20px;
     }
@@ -375,4 +382,8 @@
         color: @white;
     }
 
+}
+
+.wh-container {
+    width: 100%;
 }

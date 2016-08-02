@@ -43,20 +43,20 @@ var OrderItem = React.createClass({
 
             groupinfo = (
                 <div className="group-info">
-                    <Col md={4}>
+                    <Col sm={4} md={4}>
                     <div className="travel-countdown">
                         <p className="countdown-title">距离出发还有：</p>
                         <p className="countdown">{order.dayCount}天</p>
                     </div>
                     </Col>
-                    <Col md={4}>
+                    <Col sm={4} md={4}>
                         <div className="group-members">
                             <p>当前队伍中的队友：</p>
                             <div className="avatars">{avatars}</div>
                             <p className="more">扫码进群查看更多<i className="fa fa-arrow-right" /></p>
                         </div>
                     </Col>
-                    <Col md={4}>
+                    <Col sm={4} md={4}>
                         <div className="group-QR">
                             <Image src={order.wxQrCode} responsive />
                         </div>
@@ -81,23 +81,23 @@ var OrderItem = React.createClass({
             <div>
                 <div className={orderclass}>
                     <div className="start-title">
-                        <Col md={4}>
+                        <Col sm={4} md={4}>
                             <p className="left">{title}</p>
                         </Col>
-                        <Col md={4}>
+                        <Col sm={4} md={4}>
                             <p className="middle">订单号：DMU156481{order.orderid}</p>
                         </Col>
-                        <Col md={4}>
+                        <Col sm={4} md={4}>
                             {minutecount}
                         </Col>
                     </div>
                     <div className="order-info">
-                        <Col md={4}>
+                        <Col sm={4} md={4}>
                             <div className="travel-img">
                                 <Image src={order.headImg} responsive/>
                             </div>
                         </Col>
-                        <Col md={6}>
+                        <Col sm={6} md={6}>
                             <div className="travel-info">
                                 <div className="travel-name">
                                     {order.name}
@@ -113,7 +113,7 @@ var OrderItem = React.createClass({
                                 </div>
                             </div>
                         </Col>
-                        <Col md={2}>
+                        <Col sm={2} md={2}>
                             <div className="travel-info">
                                 <TravellerList
                                     names={order.names}

@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Alert, Checkbox, message, Tooltip } from 'antd';
 
