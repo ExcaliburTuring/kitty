@@ -21,13 +21,13 @@ var Days = React.createClass({
         }
         return (
             <div className="xingcheng container">
-                <Col xs={12} md={12}>
+                <Col sm={12} md={12}>
                     <br/>
                     <hr/>
                     <br/>
                 </Col>
                 {firstDay}
-                <Col xs={12} md={12}>
+                <Col sm={12} md={12}>
                     <br/>
                     <hr/>
                     <br/>
@@ -47,13 +47,13 @@ var Day1 = React.createClass({
         var mdtext = marked(day.mdtext);
         return (
             <div className="day1">
-                <Col xs={12} md={12}>
+                <Col sm={12} md={12}>
                     <h2>{day.title}</h2>
                 </Col>
-                <Col xs={12} md={6}>
+                <Col sm={6} md={6}>
                     <Image responsive src={day.imgs[0]}/>
                 </Col>
-                <Col xs={12} md={6}>
+                <Col sm={6} md={6}>
                     <i className="fa fa-bookmark fa-5x"/>
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
                 </Col>
@@ -82,14 +82,14 @@ var Day = React.createClass({
         var star = day.star ? this.createAddInfo('fa-star', day.star) : null; 
         return (
             <div className="days">
-                <Col xs={12} md={12}>
+                <Col sm={12} md={12}>
                     <h2>{day.title}</h2>
                 </Col>
-                <Col xs={12} md={6}>
+                <Col sm={6} md={6}>
                     <Image responsive src={day.imgs[0]}/>
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
                 </Col>
-                <Col xs={12} md={6}>
+                <Col sm={6} md={6}>
                     <Image responsive src={day.imgs[1]}/>
                     <div className="icons">
                         {star}
@@ -99,7 +99,7 @@ var Day = React.createClass({
                         {hotel}
                     </div>
                 </Col>
-                <Col xs={12} md={12}>
+                <Col sm={12} md={12}>
                     <br/>
                     <hr/>
                     <br/>

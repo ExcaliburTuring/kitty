@@ -25,14 +25,14 @@ var Slider = React.createClass({
     },
  
     render: function() { 
-        var name = this.props.name;
+        var route = this.props.route;
         var descriptionlist = this.props.descriptions;
         var slideItemList = this.props.sliderImgs.map(function(img, index) {
             var bg = {backgroundImage: `url(${img})`};
             return (
                 <div className="swiper-slide swiper-no-swiping" style={bg} key={index}>
                     <div className="topleft">
-                        <div className="name">{name}</div>
+                        <div className="name">{route.name}</div>
                         <div>
                             <span className="day-count">{index+1}</span>
                             <span>/9days</span>
@@ -47,7 +47,7 @@ var Slider = React.createClass({
                 <div className="rightbottom">
                     <div>
                         <span>总价 ￥</span>
-                        <span className="price">3880</span>
+                        <span className="price">{route.minPrice}</span>
                     </div>
                 </div>
                 <div className="swiper-wrapper">

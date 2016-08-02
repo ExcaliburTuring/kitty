@@ -72,17 +72,17 @@ var Step2 = React.createClass({
                         orderInfo={this.props.orderInfo}/>
                     <div className="pay-container">
                         <Row>
-                            <Col md={2}>
+                            <Col sm={2} md={2}>
                                 <div className="pay-left">
                                     <Image src={alipay} responsive/>
                                 </div>
                             </Col>
-                            <Col md={8}>
+                            <Col sm={8} md={8}>
                                 <div className="pay-middle">
                                     扫一扫或登录帐号进行支付，部分用户有快捷支付单笔2000元的限额。
                                 </div>
                             </Col>
-                            <Col md={2}>
+                            <Col sm={2} md={2}>
                                 <div className="pay-right">
                                     <Button
                                         type="primary" 

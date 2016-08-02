@@ -238,12 +238,12 @@ var App = React.createClass({
             <Grid>
                 {/*<StepBar step={step}/>*/}
                 <Row>
-                    <Col md={9}>
+                    <Col sm={9} md={9}>
                         <div className="order-content-container">
                             {content}
                         </div>
                     </Col>
-                    <Col md={3}>
+                    <Col sm={3} md={3}>
                         <GroupBrief 
                             travelRoute={data.travelRoute} 
                             travelGroup={data.travelGroup}/>

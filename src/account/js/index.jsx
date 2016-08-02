@@ -66,18 +66,18 @@ var Index = React.createClass({
             <Grid>
                 <Row>
                     <div className="my-container">
-                        <Col md={3}>
+                        <Col sm={3} md={3}>
                             <div className="profiles">
                                 <div className="name">
                                    {accountInfo.name}
                                 </div>
                                 <div className="discount">
-                                    <div className="left"><span>优惠券：0张</span></div>
-                                    <div className="right">红包：0.00元</div>
+                                    <div className="left"><span>优惠券：0</span></div>
+                                    <div className="right">红包：0</div>
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={12} md={9}>
+                        <Col sm={9} md={9}>
                             <div className="title">
                                 <Col xsHidden md={5}>
                                     <div className="welcome">

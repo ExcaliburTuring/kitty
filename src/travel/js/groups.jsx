@@ -115,7 +115,9 @@ var Groups = React.createClass({
                         bordered 
                         pagination={false} />
                 </Col>
-                
+                <Col xs={12} mdHidden lgHidden>
+                    <h2>手机版网页正在调试中，如需报名请使用PC电脑登陆报名</h2>
+                </Col>
             </div>
         );
     }

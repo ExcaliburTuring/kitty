@@ -14,7 +14,7 @@ var Face = React.createClass({
         var route = this.props.route;
         return (
             <div className="face-container container">
-                {/*<Col xs={6} md={3}>
+                {/*<Col sm={6} md={3}>
                     <div className="relative">
                         <div className="pull-left">
                             <div className="duration pull-left">
@@ -39,9 +39,9 @@ var Face = React.createClass({
                         </div>
                     </div>
                 </Col>*/}
-                <Col className="container" md={12}>
-                    <Image responsive src={WH} />
-                    <Slider name={route.name} sliderImgs={this.props.sliderImgs} descriptions={this.props.descriptions}/>
+                <Col className="container" sm={12} md={12}>
+                    <img className="wh-container" src={WH} />
+                    <Slider route={route} sliderImgs={this.props.sliderImgs} descriptions={this.props.descriptions}/>
                 </Col>
             </div>
         );
