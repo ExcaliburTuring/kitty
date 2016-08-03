@@ -46,7 +46,7 @@ var Slider = React.createClass({
             <div className="swiper-container" ref="swiper">
                 <div className="rightbottom">
                     <div>
-                        <span>总价 ￥</span>
+                        <span>总价 </span>
                         <span className="price">{route.minPrice}</span>
                     </div>
                 </div>
