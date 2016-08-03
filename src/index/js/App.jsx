@@ -63,19 +63,19 @@ var App = React.createClass({
         if (hotRoutes.length != 0) {
            products = (
                 <div>
-                    <Col md={6} lg={6}>
+                    <Col sm={6} md={6} lg={6}>
                         <Route route={hotRoutes[0]}/>
                     </Col>
-                    <Col md={6} lg={6}>
+                    <Col sm={6} md={6} lg={6}>
                         <Route route={hotRoutes[1]} />
                     </Col>
-                    <Col md={6} lg={6}>
+                    <Col sm={6} md={6} lg={6}>
                         <Route route={hotRoutes[2]}/>
                     </Col>
-                    <Col md={6} lg={6}>
+                    <Col sm={6} md={6} lg={6}>
                         <Route route={hotRoutes[3]} />
                     </Col>
-                    <Col md={12} lg={12}>
+                    <Col sm={10} smPush={1} mdPush={0} md={12} lg={12}>
                         <div className="more">
                             <a href="/routes">查看更多</a>
                             <i className="fa fa-angle-right"/>
@@ -90,46 +90,47 @@ var App = React.createClass({
                 <Banner onDoubleDownBtnClick={this.onDoubleDownBtnClick} showDoubleDownBtn={this.state.showDoubleDownBtn}/>
                 <div  className="content container">
                     <div className="activities">
-                        <Col lg={4} md={4}>
-                            <a href="/activities#/1">
-                                <Image responsive src={activity1}/>
-                            </a>
-                        </Col>
-                        <Col lg={4} md={4}>
+                        <Col sm={4} lg={4} md={4}>
                             <a href="/activities#/2">
                                 <Image responsive src={activity2}/>
                             </a>
                         </Col>
-                        <Col lg={4} md={4}>
+                        <Col sm={4} lg={4} md={4}>
+                            <a href="/activities#/1">
+                                <Image responsive src={activity1}/>
+                            </a>
+                        </Col>
+                        <Col sm={4} lg={4} md={4}>
                             <a href="/activities#/3">
                                 <Image responsive src={activity3}/>
                             </a>
                         </Col>
                     </div>
                     <Separator text="海逍遥旅行" ref="hxyDesc"/>
-                    <div className="products">
+                    <Col className="products" sm={10} smPush={1} md={12} mdPush={0} lg={12}>
                         {products}
-                    </div>
+                    </Col>
                     <Separator text="关于我们" ref="hxyDesc"/>
                     <div className="others container" style={world}>
-                        <Col lg={6} md={6} >
-                            <div className="aboutimg">
-                                <Image responsive src={Aboutus} />
-                            </div>
-                        </Col>
-                        <Col lg={6} md={6} >
-                            <div className="aboutus">
-                                <div className="about-text">
-                                    我们坚信，<br />
-                                    在这个星球上有很多淳朴真实的奇妙地方。<br />
-                                    我们要做的不仅是发现这些地方，同时希望更多的人走出去，体验这样真实的旅行。<br />
-                                    如果愿意敞开心扉，带着接纳这个世界的心，旅行就会带给你前所未有的期待。<br /><br />
-                                    未来的某一天，<br />
-                                    我们希望和你一起徒步在仙乃日神山的朝圣之路，<br />
-                                    或是在内蒙古草原上一同仰望星空。<br />
-                                    这一切的一切，都在于旅行。
+                        <Col smPush={1} sm={10} mdPush={0} md={12}>
+                            <Col sm={6} md={6} lg={6} >
+                                <div className="aboutimg">
+                                    <Image responsive src={Aboutus} />
                                 </div>
-                            </div>
+                            </Col>
+                            <Col sm={6} lg={6} md={6} >
+                                <div className="aboutus">
+                                    <div className="about-text">
+                                        <p>中国的旅游业，需要有一家企业站出来</p>
+                                        <p>真正为年轻人提供高品质、好口碑、高性价比产品。</p>
+                                        <p>结识有趣小伙伴，带你闯入另一种人生</p>
+                                        <p>让新鲜和活力像氧气般呼进身体，唤醒沉睡的每个细胞</p>
+                                        <p>这是做海逍遥最大意义</p>
+                                        <p>哪怕我们做出一点点成功，也会给整个行业巨大改变</p>
+                                        <p>让每个人的旅行，多一种品质的可能</p>
+                                    </div>
+                                </div>
+                            </Col>
                         </Col>     
                     </div>
                 </div>

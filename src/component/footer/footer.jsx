@@ -6,6 +6,7 @@ import React from 'react';
 import hxyImg from './haixiaoyao.png';
 import xyjImg from './xiaoyaojun.png'; 
 import hxyTravel from './hxytravel.png'; 
+import { Col,Image } from 'react-bootstrap';
 
 require('./footer.less');
 
@@ -26,12 +27,12 @@ var Info = React.createClass({
         	<div className="main-footer">
                 <div className="container">
                     <div className="row">
-                        <div className="col-sm-3">
+                        <Col sm={3} md={3}>
                             <div className="footer-content">
-                                <img width="200px" src={hxyTravel} />
+                                <Image responsive src={hxyTravel} />
                             </div>
-                        </div>
-                        <div className="col-sm-3">
+                        </Col>
+                        <Col sm={3} md={3}>
                             <div className="footer-content">
                                 <div className="footer-title">关于海逍遥</div>
                                 <ul className="link">
@@ -45,24 +46,24 @@ var Info = React.createClass({
                                         <p>电话：18510248672</p>
                                     </li>
                                     <li>
-                                        <span>邮件：</span>
+                                        <span>邮箱：</span>
                                         <a href="mailto:haixiaoyaotravel@163.com">haixiaoyaotravel@163.com</a>
                                     </li>
                                 </ul>
                             </div>
-                        </div>
-                        <div className="col-sm-3">
+                        </Col>
+                        <Col sm={3} md={3}>
                             <div className="footer-content">
                                 <div className="footer-title">官方公众号</div>
                                 <img className="qr-img" alt="官方二维码" width="120" height="120" src={hxyImg} />
                             </div>
-                        </div>
-                        <div className="col-sm-3">
+                        </Col>
+                        <Col sm={3} md={3}>
                             <div className="footer-content">
                                 <div className="footer-title">客服微信号</div>
                                 <img className="qr-img" alt="逍遥君二维码" width="120" height="120" src={xyjImg} />
                             </div>
-                        </div>
+                        </Col>
                     </div>
                 </div>
             </div>

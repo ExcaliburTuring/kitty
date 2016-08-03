@@ -14,17 +14,17 @@ var Expense = React.createClass({
         var cancel = marked(expense.cancel);
         return (
             <div className="expense container">
-                <Col xs={12} md={6}>
-                    <Col xs={12} md={12}>
+                <Col sm={6} md={6}>
+                    <Col sm={12} md={12}>
                         <h2><i className="fa fa-exclamation-circle"/> 费用包含</h2>
                          <div dangerouslySetInnerHTML={{__html: include}}></div>
                     </Col>
-                    <Col xs={12} md={12}>
+                    <Col sm={12} md={12}>
                         <h2><i className="fa fa-exclamation-circle"/> 费用不包含</h2>
                         <div dangerouslySetInnerHTML={{__html: exclude}}></div>
                     </Col>
                 </Col>
-                <Col xs={12} md={6}>
+                <Col sm={6} md={6}>
                     <h2><i className="fa fa-exclamation-circle"/> 退款&保证</h2>
                     <div dangerouslySetInnerHTML={{__html: cancel}}></div>
                 </Col>

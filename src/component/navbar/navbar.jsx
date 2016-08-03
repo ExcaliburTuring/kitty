@@ -114,7 +114,7 @@ var AccountMenu = React.createClass({
             );
         } else {
             return (
-                <Nav pullRight>
+                <Nav className="right">
                     <NavItem eventKey={2} href="/wx/login">登录</NavItem>
                     <span className="split-bar" />
                     <NavItem eventKey={2} href="/wx/login">注册</NavItem>

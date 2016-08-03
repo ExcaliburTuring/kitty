@@ -59,10 +59,10 @@ var Routes =React.createClass({
 
         return (
             <div className="route-container container">
-                <Col md={6}>
+                <Col sm={6} md={6}>
                     <Image className="headimg" responsive src={route.headImg} onClick={this.onClick}/>
                 </Col>
-                <Col md={6}>
+                <Col sm={6} md={6}>
                     <div className="days">
                         <span className="up">{route.days}</span><span className="down">DAY</span>
                     </div>

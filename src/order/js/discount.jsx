@@ -206,10 +206,10 @@ var Discount = React.createClass({
         }
         return (
             <div className="discount-container clearfix">
-                <Col md={12} className="total-price-container">
+                <Col sm={12} md={12} className="total-price-container">
                     <p className="pull-right">总价：{orderInfo.price}</p>
                 </Col>
-                <Col md={8}>
+                <Col sm={8} md={8}>
                     <Form horizontal>
                         <FormItem
                             label="优惠策略:"
@@ -244,12 +244,12 @@ var Discount = React.createClass({
                         </FormItem>
                    </Form>
                 </Col>
-                <Col md={4}>
+                <Col sm={4} md={4}>
                     <p className="desc-price">-{this.state.policyDiscount.discountPrice}</p>
                     <p className="desc-price">-{this.state.discountCode.discountPrice}</p>
                     <p className="desc-price">-{this.state.studentDiscount.discountPrice}</p>
                 </Col>
-                <Col md={12}>
+                <Col sm={12} md={12}>
                     <p className="pull-right">
                         结算价格：{this.getActualPrice()}
                     </p>

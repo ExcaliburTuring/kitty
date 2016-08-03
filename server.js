@@ -30,7 +30,7 @@ var proxyConfig =(function(){
         }, {});
     return tempProxyConfig;
 }());
-var target = 'http://localhost:8083';
+var target = 'http://192.168.1.104:8080';
 proxyConfig['/order*'] = {
     target: target,
     secure: false
