@@ -35,7 +35,7 @@ var Slider = React.createClass({
                         <div className="name">{route.name}</div>
                         <div>
                             <span className="day-count">{index+1}</span>
-                            <span>/9days</span>
+                            <span>/{route.days}days</span>
                             <span>  {descriptionlist[index]}</span>
                         </div>
                     </div>

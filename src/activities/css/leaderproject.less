@@ -1,7 +1,6 @@
 .table {
-    margin: 20px 10%;
+    margin-bottom: 20px;
     padding: 4%;
-    border: 2px solid @gray;
     color: @dark-black;
     width: auto;
 
@@ -10,15 +9,10 @@
         width: 10%;
     }
 
-    .title {
-        font-size: 28px;
-        font-weight: bold;
-        text-align: center;
-    }
-
     h2 {
-        font-size: 20px;
-        line-height: 28px;
+        font-size: 16px;
+        line-height: 30px;
+        margin: 0;
     }
 
     h3 {
@@ -37,13 +31,77 @@
 
     h5 {
         font-size: 14px;
-        line-height: 20px;
+        line-height: 26px;
     }
 
     h6 {
         color: @gray;
         font-size: 14px;
-        line-height: 20px;
+        line-height: 24px;
+        text-align: center;
+    }
+
+    .head {
+        .line {
+            float: left;
+            position: relative;
+            width: 36%;
+            margin: 14px 0;
+            border: 0.5px solid #e26100;
+        }
+
+        .title {
+            float: left;
+            width: 24%;
+            margin: 0 2%;
+            border-radius: 15px;
+            background-color: #e26100;
+            color: @white;
+            line-height: 30px;
+            font-size: 18px;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        .subheading {
+            float: left;
+            display: inline;
+            width: 100%;
+            line-height: 40px;
+            margin-bottom: 20px;
+            color: @black;
+            font-size: 16px;
+            font-weight: normal;
+            text-align: center;
+        }
+    }
+
+    .numbers {
+        width: 30px;
+        margin: 5px 20px 5px 5px;
+        line-height: 30px;
+        border-radius: 50%;
+        background-color: #e26100;
+        color: @white;
+        font-size: 20px;
+        text-align: center;
+        float: left;
+    }
+
+    .activity {
+        width: 90%;
+        margin: 5px 0 20px 0;
+        line-height: 30px;
+        border-bottom: 1px dashed #e26100;
+        float: left;
+
+        .orange {
+            color: #e26100;
+        }
+
+        .white {
+            color: @white;
+        }
     }
 
     .end {
@@ -52,8 +110,6 @@
         padding: 20px 0;
         font-size: 16px;
         width: 70%;
-        border-top: 1px solid @black;
-        border-bottom: 1px solid @black;
         line-height: 30px;
     }
 }
