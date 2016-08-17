@@ -47,22 +47,22 @@ export var idType = {
 	 /**
      * 身份证
      */
-    IDENTIFICATION: 'IDENTIFICATION',
+    IDENTIFICATION: 0,
 
     /**
      * 护照
      */
-    PASSPORT: 'PASSPORT',
+    PASSPORT: 1,
 
     /**
      * 港澳通行证
      */
-    H_PASSER: 'H_PASSER',
+    H_PASSER: 2,
 
     /**
      * 台胞证
      */
-    T_PASSER: 'T_PASSER',
+    T_PASSER: 3,
 
     getDesc: function(idType) {
     	if (idType === this.IDENTIFICATION) {
@@ -85,17 +85,17 @@ export var gender = {
     /**
      * 未知
      */
-    UNKNOW: 'UNKNOW',
+    UNKNOW: 0,
 
     /**
      * 男
      */
-    MALE: 'MALE',
+    MALE: 1,
 
     /**
      * 女
      */
-    FEMALE: 'FEMALE',
+    FEMALE: 2,
 
     getDesc: function(gender) {
         if (gender === this.UNKNOW) {
@@ -115,17 +115,17 @@ export var accountStatus = {
      /**
      * 刚注册
      */
-    WAIT_COMPLETE_INFO: 'WAIT_COMPLETE_INFO',
+    WAIT_COMPLETE_INFO: 0,
 
     /**
      * 账户正常
      */
-    OK: 'OK',
+    OK: 1,
 
     /**
      * 账户注销
      */
-    DELETE: 'DELETE'
+    DELETE: 2
 }
 
 export var orderStatus = {
@@ -133,7 +133,7 @@ export var orderStatus = {
     /**
      * 新订单
      */
-    NEW: 'NEW',
+    NEW: 0,
 
     /**
      * 选择优惠, 前端使用的临时状态
@@ -143,76 +143,64 @@ export var orderStatus = {
     /**
      * 生成等待付款
      */
-    WAITING: 'WAITING',
+    WAITING: 1,
 
     /**
      * 取消
      */
-    CANCEL: 'CANCEL',
+    CANCEL: 2,
 
     /**
      * 超时
      */
-    TIMEOUT: 'TIMEOUT',
-
-    /**
-     * 取消支付
-     */
-    CANCELPAYMENT: 'CANCELPAYMENT',
+    TIMEOUT: 3,
 
     /**
      * 已退款
      */
-    REFOUNDED: 'REFOUNDED',
+    REFOUND: 4,
 
     /**
      * 付款中
      */
-    PAYING: 'PAYING',
+    PAYING: 5,
 
     /**
      * 付款到账
      */
-    PAID: 'PAID',
-
-    /**
-     * 退款中
-     */
-    REFOUNDING: 'REFOUNDING',
+    PAID: 6,
 
     /**
      * 开始旅行
      */
-    FINISH: 'FINISH',
+    FINISH: 7,
 
     /**
      * 行程取消
      */
-    CLOSED: 'CLOSED',
+    CLOSED: 8,
 
     getDesc: function(orderStatus) {
         switch(orderStatus) {
-            case 'NEW':
+            case this.NEW:
                 return '新订单';
-            case 'WAITING':
+            case this.WAITING:
                 return '等待付款';
-            case 'CANCEL':
+            case this.CANCEL:
                 return '取消订单';
-            case 'TIMEOUT':
+            case this.TIMEOUT:
                 return '付款超时，请重新下订单';
-            case 'CANCELPAYMENT':
-                return '取消付款';
-            case 'REFOUNDED':
+            case this.REFOUND:
                 return '退款';
-            case 'PAYING':
+            case this.PAYING:
                 return '付款中';
-            case 'PAID':
+            case this.PAID:
                 return '付款完成';
-            case 'REFOUNDING':
+            case this.REFOUNDING:
                 return '新订单';
-            case 'FINISH':
+            case this.FINISH:
                 return '开始旅行了';
-            case 'CLOSED':
+            case this.CLOSED:
                 return '行程取消'; 
         };
     }
@@ -220,22 +208,22 @@ export var orderStatus = {
 
 export var groupStatus = {
 
-    OPEN: 'OPEN',
+    OPEN: 1,
 
-    FULL: 'FULL',
+    FULL: 3,
 
-    TRAVELLING: 'TRAVELLING',
+    TRAVELLING: 4,
 
-    FINISH: 'FINISH',
+    FINISH: 5,
 
     getDesc: function(status) {
-        if(status == 'OPEN'){
+        if(status == this.OPEN){
             return "报名中";
-        } else if(status == 'FULL'){
+        } else if(status == this.FULL){
             return "已报满";
-        } else if(status == 'TRAVELLING') {
+        } else if(status == this.TRAVELLING) {
             return "已出发";
-        } else if(status == 'FINISHED') {
+        } else if(status == this.FINISHED) {
             return "报名结束";
         }
     }
