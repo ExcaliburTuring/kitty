@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
-import { Button, Checkbox, Tooltip } from 'antd';
+import { Button, Checkbox, Form } from 'antd';
 
 import { defaultValue } from 'config';
 import Discount from './discount'; 
@@ -18,8 +18,10 @@ var Step2 = React.createClass({
         this.props.onCreateOrderSubmit(discount);
     },
 
-    onOrderPaySubmit: function() {
-
+    onOrderPaySubmit: function(e) {
+        this.disabledBtn();
+        var discount = this.refs.discount.getDiscount();
+        this.props.onOrderPaySubmit(discount);
     },
 
     disabledBtn: function() {
@@ -90,15 +92,12 @@ var Step2 = React.createClass({
                                         onClick={this.onCreateOrderSubmit}>
                                         保存订单
                                     </Button>
-                                    <Tooltip placement="top" 
-                                        title={`我们的工程师们正日夜加班，开放接入支付宝支付的功能，为您提供更可靠，更便捷的支付方式，在此之前请联系${defaultValue.hotline}进行线下支付。`}>
-                                        <Button 
-                                            type="primary" 
-                                            disabled={this.state.orderPayBtnDisabled}
-                                            onClick={this.onOrderPaySubmit}>
+                                    <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET">
+                                        <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
+                                        <Button type="primary" htmlType="submit" disabled={this.state.orderPayBtnDisabled}>
                                             马上支付
                                         </Button>
-                                    </Tooltip>
+                                    </Form>
                                 </div>
                             </Col>
                         </Row>

@@ -273,7 +273,7 @@ var Agreement = React.createClass({
     render: function() {
         var text = this.props.isAgreed ? '我已经同意安全协议' : '同意安全协议';
         return (
-            <label>
+            <label className="order-agree">
                 <Checkbox
                     defaultChecked={this.props.isAgreed} 
                     onChange={ this.props.onAgreementCheck}/>

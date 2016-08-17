@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Table, Button, Tooltip } from 'antd';
+import { Table, Form, Button } from 'antd';
 
 import { idType, priceUtil, orderStatus, defaultValue } from 'config';
 
@@ -127,17 +127,20 @@ var Step3 = React.createClass({
 
 var OrderStatus = React.createClass({
 
+    onOrderPaySubmit: function() {
+
+    },
+
     render: function() {
         var payBtn = null;
         if (this.props.orderInfo.status == orderStatus.WAITING) {
             payBtn = (
-                <Tooltip placement="top" 
-                    title={`我们的工程师们正日夜加班，开放接入支付宝支付的功能，为您提供更可靠，更便捷的支付方式，在此之前请联系${defaultValue.hotline}进行线下支付。`}>
-                    <Button 
-                        type="primary">
+                 <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET">
+                    <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
+                    <Button type="primary" htmlType="submit">
                         马上支付
                     </Button>
-                </Tooltip>
+                </Form>
             );
         }
         return (

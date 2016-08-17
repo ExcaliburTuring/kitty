@@ -76,7 +76,7 @@ var Discount = React.createClass({
             } else if (data.status == 1100) {
                 self.setState({
                     'discountCode': {
-                        'discountPrice': '￥0.00',
+                        'discountPrice': '￥0',
                         'validateStatus': 'error',
                         'msg': data.errors[0].message
                     }
@@ -84,7 +84,7 @@ var Discount = React.createClass({
             } else {
                 self.setState({
                     'discountCode': {
-                        'discountPrice': '￥0.00',
+                        'discountPrice': '￥0',
                         'validateStatus': 'error',
                         'msg': '优惠码校验失败，请联系15001028030'
                     }
@@ -94,7 +94,7 @@ var Discount = React.createClass({
         .fail(function() {
             self.setState({
                 'discountCode': {
-                    'discountPrice': '￥0.00',
+                    'discountPrice': '￥0',
                     'validateStatus': 'error',
                     'msg': '优惠码校验失败，请联系15001028030'
                 }
@@ -152,17 +152,17 @@ var Discount = React.createClass({
             },
             'policyDiscount': {
                 'discountid': 0,
-                'discountPrice':'￥0.00'
+                'discountPrice':'￥0'
             },
             'discountCode': {
                 'code': '',
-                'discountPrice': '￥0.00',
+                'discountPrice': '￥0',
                 'validateStatus': null,
                 'msg': ''
             },
             'studentDiscount': {
                 'count': 0,
-                'discountPrice': '￥0.00'
+                'discountPrice': '￥0'
             }
         }
     },

@@ -250,7 +250,7 @@ export var priceUtil = {
 
     getPriceStr: function(price) {
         var rawPrice = price / 1000;
-        return `￥${rawPrice.toFixed(2)}`
+        return `￥${rawPrice.toFixed(0)}`
     }
 
 }

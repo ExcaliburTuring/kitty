@@ -132,8 +132,41 @@ var App = React.createClass({
         });
     },
 
-    onOrderPaySubmit: function() {
-
+    onOrderPaySubmit: function(discountData) {
+        var travellers = this.copyArray(this.state.travellers);
+        if (this.state.isAccountSelect) {
+            travellers.unshift(this.state.accountTraveller);
+        }
+        var self = this;
+        var request = {
+            'orderid': this.state.data.orderInfo.orderid,
+            'travellers': travellers,
+            'policyDiscountid': discountData.policyDiscountid,
+            'discountCode': discountData.discountCode,
+            'studentDiscountid': discountData.studentDiscountid,
+            'studentCount': discountData.studentCount,
+            'actualPrice': discountData.actualPrice,
+        };
+        $.ajax({
+            'url': url.orderOrder,
+            'type': 'post',
+            'async': false,
+            'data': JSON.stringify(request),
+            'dataType': 'json',
+            'contentType': 'application/json;charset=UTF-8',
+            'success': function(data) {
+                            if (data.status != 0) {
+                                self.refs.step2.enableBtn();
+                                message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                            } else {
+                                
+                            }
+                        },
+            'error': function() {
+                        self.refs.step2.enableBtn();
+                        message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                    }
+        });
     },
 
     onPreBtnClick: function() {

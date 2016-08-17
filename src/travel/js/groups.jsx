@@ -36,13 +36,13 @@ var Groups = React.createClass({
             render: function(group) {
                 if (group.status == groupStatus.OPEN) {
                     return (
-                        <Button size="large" type="primary" onClick={() => {self.onClick(group)}}>
+                        <Button size="large" onClick={() => {self.onClick(group)}}>
                             报名
                         </Button>
                     );
                 } else {
                     return (
-                        <Button size="large" type="primary" disabled>
+                        <Button size="large" disabled>
                             报名
                         </Button>
                     );
