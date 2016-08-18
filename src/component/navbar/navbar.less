@@ -5,18 +5,9 @@
 @import '~base.less';
 
 .navbar {
-	text-align: center;
 	background-color: @white;
-}
-
-.navbar-middle{
-	position: absolute;
-	width: 100%;
-	text-align: center;
-	img {
-		width: 100px;
-		height: 100px;
-	}
+	height: 60px;
+	padding-top: 5px;
 }
 
 .navbar-default {
@@ -32,23 +23,23 @@
 }
 
 .navbar-default .navbar-nav > li > a {
+	height: 57px;
 	text-align: center;
 	color: @black;
 	text-shadow: none;
 	font-family: "Microsoft YaHei";
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: 400;
-	border-bottom: 2px solid @white;;
 	&:hover {
 		color: @orange;
-		border-bottom: 2px solid @orange;
+		border-bottom: 3px solid @orange;
 	}
 }
 
 .navbar-default .navbar-nav .activity > a {
 	color: @white;
 	background-color: @orange;
-	border-bottom: 2px solid @orange;
+	border-bottom: 3px solid @orange;
 }
 
 .navbar-header {
@@ -139,8 +130,8 @@
 
 .split-bar{
 	float: left;
-	margin-top: 18px;
+	margin-top: 16px;
 	width: 2px;
-	height: 1em;
+	height: 20px;
 	background-color: @currency;
 }

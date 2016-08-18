@@ -21,10 +21,7 @@ AccountBasicInfoActions.load.listen(function() {
     $.getJSON(url.basicinfo)
     .done(function(data) {
         if (data.status == 0) {
-            _accountBasicInfo = {
-                'accountInfo': data.accountInfo,
-                'accountSetting': data.accountSetting
-            }
+            _accountBasicInfo = data.accountBasicInfo || {};
             self.completed(_accountBasicInfo)
         } else {
             self.failed();

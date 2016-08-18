@@ -17,29 +17,17 @@ var KittyNavbar = React.createClass({
 	},
     render: function() {
         var name=this.props.name;
-        var homepage;
-        var routes;
-        var activities;
-
-        if(name == "homepage"){
-            homepage = "activity"
-        }else if(name == "routes") {
-            routes = "activity"
-        }else if(name == "activities") {
-            activities = "activity"
-        }
-        
         return (
-            <Navbar className={name} staticTop>
+            <Navbar fixedTop={this.props.fixedTop} staticTop={this.props.staticTop}>
         		<Navbar.Header>
                     <Image src={logo} responsive/>
       				<Navbar.Toggle />
     			</Navbar.Header>
         		<Navbar.Collapse>
                     <Nav>
-                        <NavItem eventKey={1} className={homepage} href="/">首页</NavItem>
-                        <NavItem eventKey={2} className={routes} href="/routes">路线</NavItem>
-                        <NavItem eventKey={3} className={activities} href="/activities">活动</NavItem>
+                        <NavItem eventKey={1} href="/">首页</NavItem>
+                        <NavItem eventKey={2} className={name == "routes" ? "activity" : null} href="/routes">路线</NavItem>
+                        <NavItem eventKey={3} className={name == "activities" ? "activity" : null} href="/activities">活动</NavItem>
                     </Nav>
 					<AccountMenu />
 				</Navbar.Collapse>
@@ -49,29 +37,23 @@ var KittyNavbar = React.createClass({
 });
 
 var AccountMenu = React.createClass({
+
     mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
+
     getInitialState: function() {
         return {
             'basicInfo': {
                 'accountInfo': {
-                    'name': ''
-                },
-                'accountSetting': {
-                    'avatarUrl': ""
+                    'name': '',
+                    'avatarUrl': ''
                 }
             },
             'dropdown': false
         };
     },
 
-    openDropdown: function() {
-        var dropdown = !this.state.dropdown;
-        this.setState({'dropdown': dropdown})
-    },
-
-    closeDropdown: function() {
-        var dropdown = !this.state.dropdown;
-        this.setState({'dropdown': dropdown})
+    toggleDropdown: function() {
+        this.setState({'dropdown': !this.state.dropdown})
     },
 
     componentDidMount: function() {
@@ -80,11 +62,11 @@ var AccountMenu = React.createClass({
 
     render: function() {
         var dropdown = this.state.dropdown;
-        var basicInfo = this.state.basicInfo;
+        var accountInfo = this.state.basicInfo.accountInfo;
         var mydrop = "my-drop";
         var mydown = "my-down";
 
-        if (this.state.basicInfo.accountInfo != null) {
+        if (accountInfo != null) {
             if (dropdown == false) {
                 mydrop = "my-drop";
                 mydown = "my-down";
@@ -94,13 +76,13 @@ var AccountMenu = React.createClass({
             }
 
             return (
-                <div className="my-dropdown" onMouseOut={this.closeDropdown} onMouseOver={this.openDropdown}>
-                    <a href={`${url.account}/${basicInfo.accountInfo.accountid}`}>
-                        <Image className="avatar" src={basicInfo.accountSetting.avatarUrl} circle/>
+                <div className="my-dropdown" onMouseOut={this.toggleDropdown} onMouseOver={this.toggleDropdown}>
+                    <a href={`${url.account}/${accountInfo.accountid}`}>
+                        <Image className="avatar" src={accountInfo.avatarUrl} circle/>
+                        <span className={mydrop}>
+                            {accountInfo.nickname} <i className="fa fa-angle-down" />
+                        </span>
                     </a>
-                    <span className={mydrop}>
-                         {basicInfo.accountInfo.name} <i className="fa fa-angle-down" />
-                    </span>
                     <div className={mydown}>
                         <div className="triangle"></div>
                         <div className="square">
@@ -114,8 +96,8 @@ var AccountMenu = React.createClass({
             );
         } else {
             return (
-                <Nav className="right">
-                    <NavItem eventKey={2} href="/wx/login">登录</NavItem>
+                <Nav pullRight>
+                    <NavItem eventKey={2} href="/wx/login" target="_blank">登录</NavItem>
                     <span className="split-bar" />
                     <NavItem eventKey={2} href="/wx/login">注册</NavItem>
                 </Nav>

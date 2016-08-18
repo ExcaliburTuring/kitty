@@ -18,11 +18,11 @@ function _createActions(url) {
             if (data.status == 0) {
                 self.completed(data)
             } else {
-                self.fail();
+                self.failed(data.errors);
             }
         })
         .fail(function(jqxhr, textStatus, error) {
-            self.failed();
+            self.failed(error);
         });
     });
     return RabbitActions;
@@ -37,8 +37,8 @@ function _createStore(actions) {
             this.trigger(data);
         },
 
-        onLoadFailed: function() {
-            console.log('store failed');
+        onLoadFailed: function(errors) {
+            console.log(JSON.stringify(errors));
         }
 
     });
