@@ -29,13 +29,13 @@ var Info = React.createClass({
     },
 
     render: function() {
-        var basicInfo = this.state.basicInfo;
-        if (basicInfo.accountInfo == null) {
+        var accountInfo = this.state.basicInfo.accountInfo;
+        if (accountInfo == null) {
             return (<NoLogin/>);
         }
 
         var newAccountTip = null;
-        if (basicInfo.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
+        if (accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
             newAccountTip = (
                 <Alert message="新用户提醒信息"
                     description="您还是新用户，强烈建议您完善个人信息，方便以后下单。"
@@ -49,13 +49,13 @@ var Info = React.createClass({
                 <div className="info-container">
                     {newAccountTip}
                     <Row>
-                        <BasicInfo accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
+                        <BasicInfo accountInfo={accountInfo}/>
                     </Row>
                     <Row>
-                        <Contact accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
+                        <Contact accountInfo={accountInfo}/>
                     </Row>
                     <Row>
-                        <Contacts accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
+                        <Contacts accountInfo={accountInfo}/>
                     </Row>
                 </div>
             </Grid>

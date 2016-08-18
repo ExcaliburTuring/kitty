@@ -21,7 +21,7 @@ var Index = React.createClass({
 
     getInitialState: function() {
         AccountBasicInfo.actions.get();
-        OrderBrief.actions.load({'orderType':'CURRENT'});
+        OrderBrief.actions.load({'orderType': 0});
         return {
             'basicInfo': {},
             'data': {
@@ -34,8 +34,8 @@ var Index = React.createClass({
     },
 
     render: function() {
-        var basicInfo = this.state.basicInfo;
-        if (basicInfo.accountInfo == null) {
+        var accountInfo = this.state.basicInfo.accountInfo;
+        if (accountInfo == null) {
             return (<NoLogin/>);
         }
         var data = this.state.data;
@@ -44,8 +44,6 @@ var Index = React.createClass({
                 <p>订单查询失败, 请联系客服： 15001028030</p>
             </div>
         }
-        var accountInfo = basicInfo.accountInfo;
-        var accountSetting = basicInfo.accountSetting;
         var accountid = accountInfo.accountid;
         var infoUrl = `${url.account}/${accountid}/info`;
         var ordersUrl = `${url.account}/${accountid}/orders`;
@@ -69,7 +67,7 @@ var Index = React.createClass({
                         <Col sm={3} md={3}>
                             <div className="profiles">
                                 <div className="name">
-                                   {accountInfo.name}
+                                   {accountInfo.nickname}
                                 </div>
                                 <div className="discount">
                                     <div className="left"><span>优惠券：0</span></div>
@@ -81,7 +79,7 @@ var Index = React.createClass({
                             <div className="title">
                                 <Col xsHidden md={5}>
                                     <div className="welcome">
-                                        欢迎回来，{accountInfo.name}
+                                        欢迎回来，{accountInfo.nickname}
                                     </div>
                                 </Col>
                                 <div className="messages">

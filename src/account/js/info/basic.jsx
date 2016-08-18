@@ -105,7 +105,6 @@ var BasicInfo = React.createClass({
 
     render: function() {
         var accountInfo = this.props.accountInfo;
-        var accountSetting = this.props.accountSetting;
         var readOnly= this.state.readOnly;
         var readOnly1 = this.refs.idSelector
                         ? this.refs.idSelector.getIdType() === idType.IDENTIFICATION 
@@ -141,12 +140,12 @@ var BasicInfo = React.createClass({
                             onChange={this.onIdChange}/>
                         <Gender
                             ref="genderSelector"
-                            defaultGender={accountSetting.gender}
+                            defaultGender={accountInfo.gender}
                             readOnly={readOnly1}
                             onChange={this.onChange}/>
                         <Birthday 
                             ref="birthdaySelector"
-                            defaultBirthday={accountSetting.birthday}
+                            defaultBirthday={accountInfo.birthday}
                             readOnly={readOnly1}
                             onChange={this.onChange}/>
                     </Form>

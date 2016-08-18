@@ -28,18 +28,17 @@ var App = React.createClass({
 
     render: function() {
         var content = (<NoLogin/>);
-        if (this.state.basicInfo.accountInfo != null) {
-            if (this.state.basicInfo.accountInfo.accountid == this.state.accountid) {
+        var accountInfo = this.state.basicInfo.accountInfo;
+        if (accountInfo != null) {
+            if (accountInfo.accountid == this.state.accountid) {
                 content = (
                     <div>
-                       <Tab accountInfo={this.state.basicInfo.accountInfo}
-                            accountSetting={this.state.basicInfo.accountSetting}
-                            activeKey={this.state.activeKey}/>
+                       <Tab accountInfo={accountInfo}/>
                        {this.props.children}
                     </div>
                 );
             } else {
-                content = (<NoAuth accountid={this.state.basicInfo.accountInfo.accountid}/>);
+                content = (<NoAuth accountid={accountInfo.accountid}/>);
             }
         }
         return ( 

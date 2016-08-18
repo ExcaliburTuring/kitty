@@ -14,7 +14,7 @@ var Tab = React.createClass({
 
     getInitialState: function() {
         var accountid  = this.props.accountInfo.accountid;
-        var name = this.props.accountInfo.name;
+        var name = this.props.accountInfo.nickname;
         var indexUrl = `/${accountid}`;
         var infoUrl = `/${accountid}/info`;
         var ordersUrl = `/${accountid}/orders`;
@@ -26,9 +26,7 @@ var Tab = React.createClass({
             activeKey = 3;
         }
         return {
-            'accountid': accountid,
             'name': name,
-            'avatarUrl': this.props.accountSetting.avatarUrl,
             'indexUrl': indexUrl,
             'infoUrl': infoUrl,
             'ordersUrl': ordersUrl,
@@ -58,7 +56,7 @@ var Tab = React.createClass({
                             <div className="tab-account-info">
                                 <div className="tab-avatar">
                                     <a href={`${url.account}${this.state.indexUrl}`}>
-                                        <Image alt="头像" src={this.state.avatarUrl} circle responsive/>
+                                        <Image alt="头像" src={ this.props.accountInfo.avatarUrl} circle responsive/>
                                     </a>
                                 </div>
                             </div>
@@ -68,7 +66,6 @@ var Tab = React.createClass({
                                 <Nav bsStyle = "pills" justified onSelect = {this.handleSelect} activeKey = {this.state.activeKey}>
                                     <NavItem eventKey = {1}> 我的窝 </NavItem> 
                                     <NavItem eventKey = {2}> 我的信息 </NavItem> 
-                                    <NavItem eventKey = {3}> 我的订单 </NavItem>
                                 </Nav>
                             </div>
                         </Col>

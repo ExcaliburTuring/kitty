@@ -66,7 +66,7 @@ var Groups = React.createClass({
 
     onClick: function(group) {
         if (this.state.basicInfo.accountInfo == null) {
-            window.location.pathname = url.wxLogin;
+            window.open(url.wxLogin);
             return;
         }
 

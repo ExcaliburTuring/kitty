@@ -81,7 +81,6 @@ var Contact = React.createClass({
 
     render: function() {
         var accountInfo = this.props.accountInfo;
-        var accountSetting = this.props.accountSetting;
         var readOnly= this.state.readOnly;
 
         return (
@@ -114,7 +113,7 @@ var Contact = React.createClass({
                             readOnly={readOnly}/>
                         <Address 
                             ref="addressContainer"
-                            defaultAddress={accountSetting.address}
+                            defaultAddress={accountInfo.address}
                             onChange={this.onChange}
                             readOnly={readOnly}/>
                     </Form>
