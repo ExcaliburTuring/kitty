@@ -73,7 +73,7 @@ var AccountMenu = React.createClass({
                         <a href={`${homepage}`}>我的行程</a>
                     </Menu.Item>
                     <Menu.Item key="6">
-                        <a href={`${homepage}/info`}>账号设置</a>
+                        <a href={`${homepage}?info=1`}>账号设置</a>
                     </Menu.Item>
                     <Menu.Divider />
                     <Menu.Item key="7">

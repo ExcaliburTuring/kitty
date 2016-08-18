@@ -3,12 +3,9 @@
 @import "./info.less";
 @import "./order.less";
 
-.navbar {
-	margin-bottom:  0;
-}
-
 .banner {
 	height: 220px;
+	margin-top: 60px;
 }
 
 .noauth-container {
@@ -31,63 +28,55 @@
 	}
 }
 
-.tab-container {
-	background-color: @white;
-	box-shadow:0 0 3px @gray;
+.accountinfo-container .ant-tabs {
+	overflow: visible;
 
-	.tab-content {
-		position: relative;
+	.ant-tabs-bar {
 
-		.tab-account-info {
-			margin: 0 auto;
-    		width: 1px;
+		border-bottom: none;
 
-			.tab-avatar {
-				position: absolute;
-				margin-left: -60px;
+		> div:first-child {
+			float: left !important;
+
+			.tabbar-avatar {
 				margin-top: -70px;
 				width: 120px;
 			}
 		}
-		.tab-detail {
-			position: absolute;
-			left: 160px;
-			top: -40px;
+	}
 
-			.tab-name {
-				color: #fff;
-				font-size: 18px;
-				line-height: 24px;
-			}
+	.ant-tabs-nav-container {
+		font-size: 18px;
+		border-bottom: 1px solid #d9d9d9;;
+
+		.ant-tabs-nav > div:nth-child(2) {
+			margin-left: 180px;
 		}
 
-		.tab-nav {
-			.nav-pills>li>a {
+		.ant-tabs-ink-bar {
+			background-color: @currency;
+		}
+
+		.ant-tabs-tab {
+			margin-left: 100px;
+			margin-right: 100px;
+
+			.ant-tabs-tab-inner {
 				background-color:  transparent;
+				font-family: Microsoft Yahei;
 				color: @dark-gray;
-				font-family: "Microsoft Yahei";
-				font-size: 18px;
+				font-size: 22px;
 				border-radius: 1px;
+				padding-top: 15px;
+				padding-bottom: 15px;
 				&:hover{
 					color: @currency;
 				}
 			}
-			.nav-pills>.active>a {
-				color: @currency;
-				border-bottom: 3px solid @currency;
-			}
 		}
 
-		@media (min-width: 768px){
-			.nav-pills>li>a {
-			    margin: 0;
-			}
-		}
-
-		@media (min-width: 1170px){
-			.nav-pills>li>a {
-			    margin: 0 60px;
-			}
+		.ant-tabs-tab-active .ant-tabs-tab-inner {
+			color: @currency;
 		}
 	}
 }
