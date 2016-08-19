@@ -27,7 +27,7 @@ var KittyNavbar = React.createClass({
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem eventKey={1} href="/">首页</NavItem>
+                        <NavItem eventKey={1} className={name == "index" ? "activity" : null} href="/">首页</NavItem>
                         <NavItem eventKey={2} className={name == "routes" ? "activity" : null} href="/routes">路线</NavItem>
                         <NavItem eventKey={3} className={name == "activities" ? "activity" : null} href="/activities">活动</NavItem>
                     </Nav>

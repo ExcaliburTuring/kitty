@@ -6,11 +6,12 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { AutoAffix } from 'react-overlays';
 
 var _config = {
-    '.brief': 0,
-    '.day1': 1,
-    '.notice': 2,
-    '.expense': 3,
-    '.teaminfo': 4
+    '#app': 0,
+    '.brief': 1,
+    '.day1': 2,
+    '.notice': 3,
+    '.expense': 4,
+    '.teaminfo': 5
 }
 
 var BodyNav = React.createClass({
@@ -30,26 +31,29 @@ var BodyNav = React.createClass({
 
         window.onscroll = function(){
             var t = document.documentElement.scrollTop || document.body.scrollTop; 
-            t += 80; // 80的offset
+            t += 60; // 80的offset
+            console.log('onscroll')
             $navbar.removeClass('affixed');
             $navItems.removeClass('select');
-            if (t >= teaminfoTop) {
+            if (t >= (teaminfoTop - 200)) {
                 $navbar.addClass('affixed');
-                $navItems.eq(4).addClass('select');
+                $navItems.eq(5).addClass('select');
             } else if (t >= expenseTop) {
                 $navbar.addClass('affixed');
-                $navItems.eq(3).addClass('select');
+                $navItems.eq(4).addClass('select');
             } else if (t >= noticeTop) {
                 $navbar.addClass('affixed');
-                $navItems.eq(2).addClass('select');
+                $navItems.eq(3).addClass('select');
             } else if (t >= day1Top) {
                 $navbar.addClass('affixed');
-                $navItems.eq(1).addClass('select');
+                $navItems.eq(2).addClass('select');
             } else if (t >= briefTop) {
                 $navbar.addClass('affixed');
-                $navItems.eq(0).addClass('select');
+                $navItems.eq(1).addClass('select');
             }
         };
+
+        window.onscroll();
     },
 
     componentDidUpdate: function() {
@@ -62,8 +66,9 @@ var BodyNav = React.createClass({
 
     handleSelect: function (selectedKey) {
         window.onscroll = null;
+        var top = $(selectedKey).offset().top;
         $('html, body').animate({
-            'scrollTop': $(selectedKey).offset().top - 60
+            'scrollTop':  top > 55 ? top - 55 : 0
         }, {
             'speed': 800,
             'complete': this.addOnScroll
@@ -79,11 +84,12 @@ var BodyNav = React.createClass({
                 <AutoAffix viewportOffsetTop={0} container={this.props.container}>
                     <Navbar>
                         <Nav pullLeft activeKey={1} onSelect={this.handleSelect}>
-                            <NavItem eventKey={".brief"} >路线简介</NavItem>
-                            <NavItem eventKey={".day1"} >行程安排</NavItem>
-                            <NavItem eventKey={".notice"} >注意事项</NavItem>
-                            <NavItem eventKey={".expense"} >费用说明</NavItem>
-                            <NavItem eventKey={".teaminfo"} >马上报名</NavItem>
+                            <NavItem eventKey={"#app"} className="sticky-gohead">回头顶部</NavItem>
+                            <NavItem eventKey={".brief"}>路线简介</NavItem>
+                            <NavItem eventKey={".day1"}>行程安排</NavItem>
+                            <NavItem eventKey={".notice"}>注意事项</NavItem>
+                            <NavItem eventKey={".expense"}>费用说明</NavItem>
+                            <NavItem eventKey={".teaminfo"}>马上报名</NavItem>
                         </Nav>
                     </Navbar>
                 </AutoAffix>

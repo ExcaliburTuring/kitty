@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Col, Button } from 'react-bootstrap';
+import { Col, Row, Button } from 'react-bootstrap';
 import { message, Table } from 'antd';
 import 'antd/lib/index.css';
 
@@ -107,17 +107,19 @@ var Groups = React.createClass({
         }
         return (
             <div className="teaminfo">
-                <Col xs={12} md={12}>
-                    <h2>报名</h2>
-                    <Table 
-                        columns={this.getTableColumn()} 
-                        dataSource={this.getTableData()} 
-                        bordered 
-                        pagination={false} />
-                </Col>
-                <Col xs={12} mdHidden lgHidden>
-                    <h2>手机版网页正在调试中，如需报名请使用PC电脑登陆报名</h2>
-                </Col>
+                <Row>
+                    <Col xs={12} md={12}>
+                        <h2>报名</h2>
+                        <Table 
+                            columns={this.getTableColumn()} 
+                            dataSource={this.getTableData()} 
+                            bordered 
+                            pagination={false} />
+                    </Col>
+                    <Col xs={12} mdHidden lgHidden>
+                        <h2>手机版网页正在调试中，如需报名请使用PC电脑登陆报名</h2>
+                    </Col>
+                </Row>
             </div>
         );
     }

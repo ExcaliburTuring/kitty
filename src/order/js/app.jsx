@@ -31,19 +31,8 @@ var App = React.createClass({
             return null;
         }
         var accountInfo = info.accountInfo;
-        var accountSetting = info.accountSetting;
-        return  {
-            'accountid': accountInfo.accountid,
-            'status': accountInfo.status,
-            'contactid': 0,
-            'name': accountInfo.name,
-            'id': accountInfo.id,
-            'idType': accountInfo.idType,
-            'gender': accountSetting.gender,
-            'birthday': accountSetting.birthday,
-            'email': accountInfo.email,
-            'mobile': accountInfo.mobile
-        };
+        accountInfo['contactid'] = 0;
+        return accountInfo;
     },
 
     onAccountBasicInfoChange: function(info) {

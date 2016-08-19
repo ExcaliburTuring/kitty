@@ -161,6 +161,10 @@
 
         .navbar-nav.navbar-left {
             margin-right: 40px;
+
+            .sticky-gohead {
+                display: none;
+            }
         }
 
         .navbar-nav.navbar-left > li > a {
@@ -170,7 +174,7 @@
             text-shadow: 0 1px 3px rgba(0,0,0,.9);
             text-align: center;
             border-radius: 1px;
-            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
             border-bottom: none;
             transition: color 0.2s,border 0.2s;
             -moz-transition: color 0.2s,border 0.2s; /* Firefox 4 */
@@ -184,7 +188,7 @@
             }
 
             &:focus {
-                border-top: 3px solid transparent;
+                border-bottom: 3px solid transparent;
             }
         }
     }
@@ -195,22 +199,30 @@
         width: 2000px!important;
         margin-left: -500px;
 
-        .navbar-nav.navbar-left > li > a {
-            color: @gray;
-            text-shadow: none;
+        .navbar-nav.navbar-left {
 
-            &:hover {
-                border-top: 3px solid @currency;
+            .sticky-gohead {
+                display: inline-block;
             }
-        }
 
-        .navbar-nav.navbar-left > li.select > a {
-            background-color: transparent;
-            color: @currency;
-            border-top: 3px solid @currency;
+            > li > a {
+                color: @gray;
+                text-shadow: none;
 
-            &:focus {
-                border-top: 3px solid @currency;
+                &:hover {
+                    color: @currency;
+                    border-bottom: 3px solid @currency;
+                }
+            }
+
+            > li.select > a {
+                background-color: @currency;
+                color: @white;
+                border-bottom: 3px solid @currency;
+
+                &:focus {
+                    border-bottom: 3px solid @currency;
+                }
             }
         }
     }
@@ -338,16 +350,13 @@
     margin-top: 20px;
     margin-bottom: 20px;
     border-top: 5px solid @dark-gray;
+    min-height: 350px;
 
     h2 {
         text-align: center;
         font-size: 1.6em!important;
         margin-bottom: 30px;
         margin-top: 20px;
-    }
-
-    table {
-        margin-bottom: 50px;
     }
 
     th, tr {

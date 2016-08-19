@@ -41,13 +41,10 @@ var Index = React.createClass({
         var data = this.state.data;
         if (data.status != 0) {
             <div>
-                <p>订单查询失败, 请联系客服： 15001028030</p>
+                <p>订单查询失败, 请联系客服： {defaultValue.hotline}</p>
             </div>
         }
-        var accountid = accountInfo.accountid;
-        var infoUrl = `${url.account}/${accountid}/info`;
-        var ordersUrl = `${url.account}/${accountid}/orders`;
-       
+
         var ordersList = null;
         if (data.briefOrders != null && data.briefOrders.length > 0) {
             ordersList = data.briefOrders.map(function(order) {
@@ -57,7 +54,9 @@ var Index = React.createClass({
             });
         } else {
             ordersList = (
-                <div>暂时没有任何订单</div>
+                <div className="no-result">
+                    <p>暂时没有任何订单</p>
+                </div>
             );
         }
         return (
