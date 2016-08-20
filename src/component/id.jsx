@@ -113,9 +113,8 @@ var Id = React.createClass({
         this.setState(this.getInitialState());
     }, 
 
-    getInitialState: function() {
-        var defaultIdType = this.props.defaultIdType;
-        var defaultId = this.props.defaultId.toUpperCase();
+    _createInitalState: function(defaultId, defaultIdType) {
+        defaultId = defaultId.toUpperCase();
         var defaultBirthday = null , defaultGender = null;
         if (defaultIdType == idType.IDENTIFICATION) {
             var ret = validator.id(defaultId);
@@ -131,17 +130,27 @@ var Id = React.createClass({
             'birthday': defaultBirthday,
             'gender': defaultGender,
 
-            'readOnly': this.props.readOnly ? true : false,
             'validationState': null,
             'msg': '',
         };
+    },
+
+    getInitialState: function() {
+        return this._createInitalState(this.props.defaultId, this.props.defaultIdType)
     },
 
     componentDidUpdate: function(prevProps, prevState) {
         if (this.state.id != prevState.id
             || this.state.idType != prevState.idType) { // 有时候state 不能立即更新，所以这里要这commponenetDidupdate
             this.props.onChange(this.state.id, this.state.idType);
-        }  
+        }
+    },
+
+    componentWillReceiveProps: function(newProps) {
+        if (newProps.defaultId != this.props.defaultId
+            || newProps.defaultIdType != this.props.defaultIdType) {
+            this.setState(this._createInitalState(newProps.defaultId, newProps.defaultIdType));
+        }
     },
 
     render: function() {
@@ -165,15 +174,18 @@ var Id = React.createClass({
                 validateStatus={this.state.validationState}
                 help={this.state.msg}
                 hasFeedback
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 16 }}>
-                <Input
-                    value={this.state.id}
-                    defaultValue={this.props.defaultId}
-                    disabled={this.props.readOnly}
-                    placeholder="请输入您的身份证号"
-                    onChange={this.onIdChange}
-                    addonBefore={select}/>
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 17 }}>
+                {
+                    this.props.readOnly
+                    ? <p>{this.state.id ? '未知' : this.state.id}</p>
+                    : <Input
+                        value={this.state.id}
+                        defaultValue={this.props.defaultId}
+                        placeholder="请输入您的证件号"
+                        onChange={this.onIdChange}
+                        addonBefore={select}/>
+                }
             </FormItem> 
 
         );

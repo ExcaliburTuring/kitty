@@ -2,19 +2,20 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Col, Image } from 'react-bootstrap';
-import { Form, message } from 'antd';
+import { Row, Col, Image } from 'react-bootstrap';
+import { Form, Button, Icon, message } from 'antd';
+const ButtonGroup = Button.Group;
 
 import AccountBasicInfo from 'account_basicinfo';
 import { idType, gender, accountStatus, url, defaultValue } from 'config';
 import Title from 'title';
-import EditButtonGroup from 'editbtngroup';
 import Name from 'name';
 import Id from 'id';
 import Gender from 'gender';
 import Birthday from 'birthday';
-
-import info from  '../../img/person.png'
+import Email from 'email';
+import Mobile from 'mobile';
+import Address from 'address';
 
 var BasicInfo = React.createClass({
 
@@ -22,7 +23,24 @@ var BasicInfo = React.createClass({
         return this.refs.nameInput.isChange()
                 || this.refs.idSelector.isChange()
                 || this.refs.genderSelector.isChange()
-                || this.refs.birthdaySelector.isChange();
+                || this.refs.birthdaySelector.isChange()
+                || this.refs.emailContainer.isChange()
+                || this.refs.mobileContainer.isChange()
+                || this.refs.addressContainer.isChange();
+    },
+
+    revert: function() {
+        this.setState({
+            'readOnly': false,
+            'isChange': false
+        });
+        this.refs.nameInput.revert();
+        this.refs.idSelector.revert();
+        this.refs.genderSelector.revert();
+        this.refs.birthdaySelector.revert();
+        this.refs.emailContainer.revert();
+        this.refs.mobileContainer.revert();
+        this.refs.addressContainer.revert();
     },
 
     onChange: function() {
@@ -39,33 +57,65 @@ var BasicInfo = React.createClass({
         if (idSelector.getIdType() == idType.IDENTIFICATION) { // 只有身份证修改的时候，才会触发
             var birthday = idSelector.getBirthday();
             if (birthday) {
-                this.refs.birthdaySelector.setBirthday(birthday);
+                this.refs.birthdaySelector.setValue(birthday);
+            } else {
+                this.refs.birthdaySelector.revert();
             }
             var gender = idSelector.getGender();
             if (gender) {
-                this.refs.genderSelector.setGender(gender);
+                this.refs.genderSelector.setValue(gender);
+            } else {
+                this.refs.genderSelector.revert();
             }
         }
     },
 
-    onRevertBtnClick: function() {
-        this.revert();
+    onCancelBtnClick: function() {
+        if (this.state.isChange) {
+            this.revert();
+        } else {
+            this.setState({'readOnly': true});
+        }
     },
 
     onSubmitBtnClick: function() {
+        console.log('onChange')
+        if (!this.state.isChange) {
+            return;
+        }
+        console.log('ldldl')
+        if (this.refs.nameInput.validate() != 'success'
+            || this.refs.idSelector.validate()!= 'success'
+            || this.refs.genderSelector.validate() != 'success'
+            || this.refs.birthdaySelector.validate() != 'success'
+            || this.refs.emailContainer.validate() != 'success'
+            || this.refs.mobileContainer.validate() != 'success'
+            || this.refs.addressContainer.validate() != 'success') {
+            return;
+        }
+        console.log('dkdkkdkd')
         var basicInfo = {'accountid': this.props.accountInfo.accountid};
         if (this.refs.nameInput.isChange()) {
-            basicInfo['name'] = this.refs.nameInput.getName();
+            basicInfo['name'] = this.refs.nameInput.getValue();
         }
         if (this.refs.idSelector.isChange()) {
             basicInfo['id'] = this.refs.idSelector.getId();
             basicInfo['idType'] = this.refs.idSelector.getIdType();
         }
         if (this.refs.genderSelector.isChange()) {
-            basicInfo['gender'] = this.refs.genderSelector.getGender();
+            basicInfo['gender'] = this.refs.genderSelector.getValue();
         }
         if (this.refs.birthdaySelector.isChange()) {
-            basicInfo['birthday'] = this.refs.birthdaySelector.getBirthday();
+            basicInfo['birthday'] = this.refs.birthdaySelector.getValue();
+        }
+        if (this.refs.emailContainer.isChange()) {
+            basicInfo['email'] = this.refs.emailContainer.getValue();
+        }
+        if (this.refs.mobileContainer.isChange()) {
+            basicInfo['mobile'] = this.refs.mobileContainer.getValue();
+        }
+        if (this.refs.addressContainer.isChange()) {
+            basicInfo['address'] = this.refs.addressContainer.getValue();
         }
         var self = this;
         $.post(url.accountInfo, basicInfo)
@@ -79,21 +129,13 @@ var BasicInfo = React.createClass({
             self.refs.idSelector.cleanValidate();
             self.refs.genderSelector.cleanValidate();
             self.refs.birthdaySelector.cleanValidate();
+            self.refs.emailContainer.cleanValidate();
+            self.refs.mobileContainer.cleanValidate();
+            self.refs.addressContainer.cleanValidate();
             message.success('更新成功');
         }).fail(function() {
             message.error(defaultValue.updateAccountMsg);
         });
-    },
-
-    revert: function() {
-        this.setState({
-            'readOnly': false,
-            'isChange': false
-        });
-        this.refs.nameInput.revert();
-        this.refs.idSelector.revert();
-        this.refs.genderSelector.revert();
-        this.refs.birthdaySelector.revert();
     },
 
     getInitialState: function() {
@@ -111,45 +153,71 @@ var BasicInfo = React.createClass({
                         : accountInfo.idType === idType.IDENTIFICATION;
         return (
             <div className="basic-container info-section">
-                <Title title="基本信息" className="info-title">
-                    <EditButtonGroup
-                        readOnly={readOnly}
-                        isChange={this.state.isChange}
-                        onEditBtnClick={() => {this.setState({'readOnly': false});}}
-                        onCancelBtnClick={() => {this.setState({'readOnly': true});}}
-                        onRevertBtnClick={this.onRevertBtnClick}
-                        onSubmitBtnClick={this.onSubmitBtnClick} />
-                </Title>
-                <Col xsHidden md={2}>
-                    <div className="left-block">
-                        <Image responsive src={info}/>
-                    </div>
-                </Col>
-                <Col xs={12} md={5}>
-                    <Form horizontal>
-                        <Name
-                            ref="nameInput"
-                            defaultName={accountInfo.name}
-                            onChange={this.onChange}
-                            readOnly={readOnly}/>
-                        <Id 
-                            ref="idSelector"
-                            defaultIdType={accountInfo.idType}
-                            defaultId={accountInfo.id}
-                            readOnly={readOnly}
-                            onChange={this.onIdChange}/>
-                        <Gender
-                            ref="genderSelector"
-                            defaultGender={accountInfo.gender}
-                            readOnly={readOnly1}
-                            onChange={this.onChange}/>
-                        <Birthday 
-                            ref="birthdaySelector"
-                            defaultBirthday={accountInfo.birthday}
-                            readOnly={readOnly1}
-                            onChange={this.onChange}/>
-                    </Form>
-                </Col>
+                <Title title="基本信息" className="info-title"></Title>
+                <Row>
+                    <Col xs={12} md={5}>
+                        <Form horizontal>
+                            <Name
+                                ref="nameInput"
+                                defaultValue={accountInfo.name}
+                                onChange={this.onChange}
+                                readOnly={readOnly}/>
+                            <Id 
+                                ref="idSelector"
+                                defaultIdType={accountInfo.idType}
+                                defaultId={accountInfo.id}
+                                readOnly={readOnly}
+                                onChange={this.onIdChange}/>
+                            <Gender
+                                ref="genderSelector"
+                                defaultValue={accountInfo.gender}
+                                readOnly={readOnly1}
+                                onChange={this.onChange}/>
+                            <Birthday 
+                                ref="birthdaySelector"
+                                defaultValue={accountInfo.birthday}
+                                readOnly={readOnly1}
+                                onChange={this.onChange}/>
+                        </Form>
+                    </Col>
+                    <Col xs={12} md={5}>
+                        <Form horizontal>
+                            <Email
+                                ref="emailContainer"
+                                defaultValue={accountInfo.email}
+                                onChange={this.onChange}
+                                readOnly={readOnly}/>
+                            <Mobile 
+                                ref="mobileContainer"
+                                defaultValue={accountInfo.mobile}
+                                onChange={this.onChange}
+                                readOnly={readOnly}/>
+                            <Address 
+                                ref="addressContainer"
+                                defaultValue={accountInfo.address}
+                                onChange={this.onChange}
+                                readOnly={readOnly}/>
+                        </Form>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6} xsOffset={4}>
+                        <ButtonGroup>
+                            <Button type="primary" onClick={() => {this.setState({'readOnly': false})}}>
+                                <Icon type="edit"/>
+                                <span>编辑</span>
+                            </Button>
+                            <Button type="primary" onClick={this.onCancelBtnClick}>
+                                <Icon type="cross"/>
+                                <span>{this.state.isChange ? '撤销' : '取消'}</span>
+                            </Button>
+                            <Button type="primary" onClick={this.onSubmitBtnClick}>
+                                <Icon type="check"/>
+                                <span>确定</span>
+                            </Button>
+                        </ButtonGroup>
+                    </Col>
+                </Row>
             </div>
         );
     }

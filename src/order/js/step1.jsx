@@ -4,14 +4,14 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Button } from 'react-bootstrap';
-import { Alert, Checkbox, message, Tooltip } from 'antd';
+import { Alert, Checkbox, message } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
 import { url, accountStatus } from 'config';
 import Rabbit from 'rabbit';
 import Contact from 'contact';
 import Title from 'title';
-import FaButton from 'fabutton';
+import { NewModal, NewBtn } from 'new';
 
 import 'antd/lib/index.css';
 
@@ -19,21 +19,21 @@ var AccountContacts = Rabbit.create(url.contacts);
 
 var Step1 = React.createClass({
 
-     mixins: [
+    mixins: [
         Reflux.connect(AccountContacts.store, 'contacts')
     ],
 
-    onAddBtnClick: function() {
-        var newContact = this.state.newContact;
-        if (newContact != null) {
-            message.warn('您有一个新建的联系人还没有添加完毕，请先完成添加！');
-        } else {
-            this.setState({'newContact': {}});
+    createAccountTraveller: function(info) {
+        if (info.accountInfo == null) {
+            return null;
         }
+        var accountInfo = info.accountInfo;
+        accountInfo['contactid'] = 0;
+        return accountInfo;
     },
 
-    onNewContactMinusClick: function() {
-        this.setState({'newContact': null});
+    onAddBtnClick: function() {
+        console.log('add btn click');
     },
 
     onContactMinusClick: function(index) {
@@ -127,7 +127,6 @@ var Step1 = React.createClass({
             'contacts': {
                 'contacts': []
             },
-            'newContact': null,
             'accountTraveller': this.props.accountTraveller,
             'selectContacts': this.convertTravellers(this.props.travellers),
             'selectContactsSize': this.props.travellers.length
@@ -145,7 +144,7 @@ var Step1 = React.createClass({
         var contacts = this.state.contacts.contacts;
         var selectContacts = this.state.selectContacts;
         var self = this;
-        var newAccountTip = null, nameList = [], contactsList = [], newContact = [], addBtnTip = null;
+        var newAccountTip = null, nameList = [], contactsList = [], addBtnTip = null;
         if (accountTraveller != null) {
             nameList.push(
                 <Name 
@@ -201,21 +200,7 @@ var Step1 = React.createClass({
             }
         }
 
-        if (this.state.newContact != null ) {
-            addBtnTip = '您有一个新建的联系人正在编辑中，请先完成添加！';
-            newContact = (
-                <Contact 
-                    key="order-new-contact"
-                    readOnly={false} 
-                    contact={this.state.newContact} 
-                    onMinusClick={self.onNewContactMinusClick}
-                    onSuccessSubmit={self.onNewContactSuccessSubmit}/>
-            );
-        } else {
-            addBtnTip = '添加一个联系人到您的帐户中，方便以后下单使用!'
-        }
-
-        if (newContact == null && contactsList.length == 0) {
+        if (contactsList.length == 0) {
             contactsList = (<div>可以选择一个常用出行人，或者点击上方加号添加一个常用出行人</div>)
         }
 
@@ -227,12 +212,8 @@ var Step1 = React.createClass({
                         <div className="order-contact-name-container">
                             {nameList}
                         </div>
-                        <Tooltip placement="top" title={addBtnTip}>
-                            <FaButton faClass="fa fa-plus" onClick={this.onAddBtnClick} />
-                        </Tooltip>
                     </Title>
                     {newAccountTip}
-                    {newContact}
                     {contactsList}
                 </div>
                 <div className="submit pull-right">

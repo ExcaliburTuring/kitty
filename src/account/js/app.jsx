@@ -31,7 +31,6 @@ var App = React.createClass({
     getInitialState: function() {
         AccountBasicInfo.actions.get();
         var pathAccountid = window.location.pathname.split('/')[2];
-        console.log(this.getQueryString('info'))
         return {
             'accountid': pathAccountid,
             'basicInfo': {},

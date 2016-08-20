@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Grid, Row } from 'react-bootstrap';
+import { Grid } from 'react-bootstrap';
 import { Alert } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
@@ -11,7 +11,6 @@ import { accountStatus } from 'config';
 import Title from 'title';
 import FaButton from 'fabutton';
 import BasicInfo from './info/basic';
-import Contact from './info/contact';
 import Contacts from './info/contacts';
 import NoLogin from './nologin'; 
 
@@ -45,20 +44,13 @@ var Info = React.createClass({
         }
 
         return (
-            <Grid>
-                <div className="info-container">
+            <div className="info-container">
+                <Grid>
                     {newAccountTip}
-                    <Row>
-                        <BasicInfo accountInfo={accountInfo}/>
-                    </Row>
-                    <Row>
-                        <Contact accountInfo={accountInfo}/>
-                    </Row>
-                    <Row>
-                        <Contacts accountInfo={accountInfo}/>
-                    </Row>
-                </div>
-            </Grid>
+                    <BasicInfo accountInfo={accountInfo}/>
+                    <Contacts accountInfo={accountInfo}/>
+                </Grid>
+            </div>
         );
     }
 });

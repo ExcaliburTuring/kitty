@@ -22,25 +22,9 @@ var OrderInfo = Rabbit.create(url.orderOrder);
 var App = React.createClass({
 
     mixins: [
-        Reflux.ListenerMixin,
+        Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
         Reflux.connect(OrderInfo.store, 'data')
     ],
-
-    createAccountTraveller: function(info) {
-        if (info.accountInfo == null) {
-            return null;
-        }
-        var accountInfo = info.accountInfo;
-        accountInfo['contactid'] = 0;
-        return accountInfo;
-    },
-
-    onAccountBasicInfoChange: function(info) {
-        this.setState({
-            'basicInfo': info,
-            'accountTraveller': this.createAccountTraveller(info)
-        });
-    },
 
     // step1的回调函数
 
@@ -182,8 +166,6 @@ var App = React.createClass({
         OrderInfo.actions.load({'orderid': orderid});
         return {
             'basicInfo': {},
-            'isAccountSelect': true,
-            'accountTraveller': null,
             'travellers': [],
             'data': {
                 'status': 1,
@@ -199,13 +181,9 @@ var App = React.createClass({
         }
     },
 
-    componentDidMount: function() {
-        this.listenTo(AccountBasicInfo.store, this.onAccountBasicInfoChange);
-    },
-
     render: function() {
-        var basicInfo = this.state.basicInfo;
-        if (basicInfo.accountInfo == null) {
+        var accountInfo = this.state.basicInfo.accountInfo;
+        if (accountInfo == null) {
             return (<p>还没登陆</p>);
         }
         var data = this.state.data;
@@ -221,14 +199,11 @@ var App = React.createClass({
         var status = data.orderInfo.status;
         if (status === orderStatus.NEW) {
             step = 1;
-            content = (<Step1
-                            accountTraveller={this.state.accountTraveller}
-                            isAccountSelect={this.state.isAccountSelect}
+            content = (<Step1 ref="step1"
+                            accountInfo={accountInfo}
                             travellers={this.state.travellers}
                             isAgreed={this.state.data.orderInfo.isAgreed}
                             quota={data.quota}
-                            orderInfo={data.orderInfo} 
-                            onAccountChange={this.onAccountChange}
                             onAgreementCheck={this.onAgreementCheck}
                             onNextBtnClick={this.onNextBtnClick}/>);
         } else if (status === orderStatus.DISCOUNT_SELECT) {
@@ -258,7 +233,7 @@ var App = React.createClass({
        }
         return (
             <Grid>
-                {/*<StepBar step={step}/>*/}
+                <StepBar step={step}/>
                 <Row>
                     <Col sm={9} md={9}>
                         <div className="order-content-container">

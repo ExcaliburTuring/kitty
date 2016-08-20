@@ -1,22 +1,23 @@
 .info-container {
-	padding-top: 30px;
+	padding-top: 20px;
 	padding-bottom: 60px;
 	margin-top: 3px;
 
 	.info-section {
 
         margin-bottom: 30px;
+        border: 1px solid #dfdfdf;
+        padding-bottom: 20px;
 
 		.info-title {
 			background-image: none;
-            padding: 6px 10px;
+            padding: 12px 30px;
             margin-bottom: 20px;
-            border-radius: 6px;
-            box-shadow: 0 0 3px #aeaeae;
+            border-bottom: 1px solid #dfdfdf;
 
             h3 {
                 border-left: 5px solid @currency;
-                padding-left: 20px;
+                padding-left: 10px;
             }
 
             span {
@@ -42,5 +43,39 @@
         }
 
 	}
+
+}
+
+.basic-container {
+
+    .ant-btn-group button.ant-btn.ant-btn-primary {
+        width: 120px;
+    }
+
+}
+
+.contacts-container {
+
+    .contact-group  {
+        margin: 10px 40px 20px 40px;
+        padding: 20px 0 15px;
+        position: relative;
+        border-top: 1px solid #f4f6f8;
+
+        .row .col-md-3,
+        .row .col-md-2 {
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            position: absolute;
+            top: -7px;
+            left: 0;
+            padding-right: 10px;
+            background: #fff;
+            color: #888;
+            font: 14px/14px 'Microsoft Yahei';
+        }
+    }
 
 }
