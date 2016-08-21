@@ -105,7 +105,7 @@ var Step3 = React.createClass({
 
     render: function() {
         return (
-            <div className="order-step3">
+            <div className={`order-step3 ${this.props.hide ? "hide" : ""}`}>
                 <OrderStatus orderInfo={this.props.orderInfo}/>
                 <Table
                     className="step3-section"

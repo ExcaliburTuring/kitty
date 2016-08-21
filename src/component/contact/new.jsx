@@ -18,7 +18,29 @@ import './new.less';
 
 export var NewModal = React.createClass({
 
-    isChange: function() {
+    // api method
+
+    toggleVisiable: function() {
+        this.setState({'visible': !this.state.visible});
+    },
+
+    // helper method
+
+    _createContact: function(contact) {
+        contact = contact || {};
+        return {
+            'contactid': contact.contactid,
+            'name': contact.name || '',
+            'id': contact.id || '',
+            'idType': contact.idType || idType.IDENTIFICATION,
+            'gender': contact.gender || gender.UNKNOW,
+            'birthday': contact.birthday || '未知',
+            'mobile': contact.mobile || '',
+            'email': contact.email || ''
+        };
+    },
+
+    _isChange: function() {
         return this.refs.nameInput.isChange()
                 || this.refs.idSelector.isChange()
                 || this.refs.genderSelector.isChange()
@@ -27,7 +49,7 @@ export var NewModal = React.createClass({
                 || this.refs.mobileContainer.isChange();
     },
 
-    revert: function() {
+    _revert: function() {
         this.refs.nameInput.revert();
         this.refs.idSelector.revert();
         this.refs.genderSelector.revert();
@@ -36,11 +58,13 @@ export var NewModal = React.createClass({
         this.refs.mobileContainer.revert();
     },
 
+    // callback method
+
     onChange: function() {
-        if (this.isChange()) {
+        if (this._isChange()) {
             this.setState({'isChange': true});
         } else {
-            this.revert();
+            this._revert();
         } 
     },
 
@@ -169,30 +193,14 @@ export var NewModal = React.createClass({
         }
     },
 
+    // compoment specs
+
     getInitialState: function() {
         return {
             'visible': false,
             'confirmLoading': false,
             'closable': true
         }
-    },
-
-    toggleVisiable: function() {
-        this.setState({'visible': !this.state.visible});
-    },
-
-    _createContact: function(contact) {
-        contact = contact || {};
-        return {
-            'contactid': contact.contactid,
-            'name': contact.name || '',
-            'id': contact.id || '',
-            'idType': contact.idType || idType.IDENTIFICATION,
-            'gender': contact.gender || gender.UNKNOW,
-            'birthday': contact.birthday || '未知',
-            'mobile': contact.mobile || '',
-            'email': contact.email || ''
-        };
     },
 
     render: function() {
@@ -268,7 +276,7 @@ export var NewBtn = React.createClass({
     render: function() {
         return (
             <div className="new-btn-container">
-                <Button  type="primary" onClick={() => {this.props.onNewBtnClick()}}>
+                <Button  type="primary" onClick={this.props.onNewBtnClick}>
                     <Icon type="plus" />
                 </Button>
             </div>

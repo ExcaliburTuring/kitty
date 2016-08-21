@@ -14,8 +14,8 @@ var Mobile = React.createClass({
 
     mixins: [BaseFromItem],
 
-    _validate: function() {
-        return validator.mobile(this.state.value, '手机号输入有误');
+    _validate: function(value) {
+        return validator.mobile(value, '手机号输入有误');
     },
 
     render: function() {
@@ -45,4 +45,3 @@ var Mobile = React.createClass({
 });
 
 module.exports = Mobile;
-

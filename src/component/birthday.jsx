@@ -14,8 +14,8 @@ var Birthday = React.createClass({
 
     mixins: [BaseFromItem],
 
-    _validate: function() {
-        return validator.birthday(this.state.value, '输入的日期有误');
+    _validate: function(value) {
+        return validator.birthday(value, '输入的日期有误');
     },
 
     render: function() {

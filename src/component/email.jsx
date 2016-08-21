@@ -14,8 +14,8 @@ var Email = React.createClass({
 
     mixins: [BaseFromItem],
 
-    _validate: function() {
-        return validator.email(this.state.value);
+    _validate: function(value) {
+        return validator.email(value, '您输入的邮箱有误');
     },
 
     render: function() {

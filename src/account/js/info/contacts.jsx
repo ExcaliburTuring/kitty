@@ -10,7 +10,6 @@ import { url } from 'config';
 import Rabbit from 'rabbit';
 import Contact from 'contact';
 import Title from 'title';
-import FaButton from 'fabutton';
 import { NewModal, NewBtn } from 'new';
 
 import 'antd/lib/index.css';
@@ -25,28 +24,28 @@ var Contacts = React.createClass({
 
     onUpdate: function() {
         message.success("成功添加新常用出行人");
-        AccountContacts.actions.load({'accountid': this.props.accountInfo.accountid});
-        this.setState({'contact': null});
-    },
-
-    onEditBtnClick: function(index) {
-        var contact = this.state.data.contacts[index];
-        this.setState({'contact': contact});
-        this.refs.newModal.toggleVisiable();
+        AccountContacts.actions.load();
+        this.setState({'contact': null, 'title': ''});
     },
 
     onNewBtnClick: function() {
-        this.setState({'contact': null});
+        this.setState({'contact': null, 'title': '添加出行人'});
+        this.refs.newModal.toggleVisiable();
+    },
+
+    onEditBtnClick: function(contact) {
+        this.setState({'contact': contact, 'title': '编辑出行人'});
         this.refs.newModal.toggleVisiable();
     },
 
     getInitialState: function() {
-        AccountContacts.actions.load({'accountid': this.props.accountInfo.accountid});
+        AccountContacts.actions.load();
         return {
            'data': {
                 'contacts': []
            },
-           'contact': null
+           'contact': null,
+           'title': ''
         }
     },
 
@@ -60,13 +59,13 @@ var Contacts = React.createClass({
                 if (contact.emergency) {
                     ermergencyList.push(
                         <Col md={3} key={`emergency-list-${index}`}>
-                            <Contact index={index} contact={contact} onEditBtnClick={self.onEditBtnClick}/>
+                            <Contact contact={contact} onEditBtnClick={self.onEditBtnClick}/>
                         </Col>
                     )
                 } else {
                     contactsList.push(
                         <Col md={3} key={`contacts-list-${index}`}>
-                            <Contact index={index} contact={contact} totop onEditBtnClick={self.onEditBtnClick}/>
+                            <Contact contact={contact} totop onEditBtnClick={self.onEditBtnClick}/>
                         </Col>
                     );
                 }
@@ -81,7 +80,7 @@ var Contacts = React.createClass({
         }
         return (
             <div className="contacts-container info-section">
-                <Title title="常用出行人" className="info-title"></Title>
+                <Title title="常用出行人" className="info-title" />
                 <div className="contact-group emergency">
                     <h3>紧急联系人</h3>
                     <Row>
@@ -97,7 +96,7 @@ var Contacts = React.createClass({
                         </Col>
                     </Row>
                 </div>
-                <NewModal ref="newModal" title="添加联系人" isAccount={false}
+                <NewModal ref="newModal" title={this.state.title} isAccount={false}
                     accountid={this.props.accountInfo.accountid} 
                     contact={this.state.contact}
                     onHandleOk={this.onUpdate}

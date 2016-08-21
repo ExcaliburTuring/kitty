@@ -32,7 +32,6 @@ var BodyNav = React.createClass({
         window.onscroll = function(){
             var t = document.documentElement.scrollTop || document.body.scrollTop; 
             t += 60; // 80的offset
-            console.log('onscroll')
             $navbar.removeClass('affixed');
             $navItems.removeClass('select');
             if (t >= (teaminfoTop - 200)) {

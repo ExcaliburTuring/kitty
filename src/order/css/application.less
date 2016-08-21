@@ -110,10 +110,6 @@ body {
 	min-height: 550px;
 }
 
-.order-agree {
-	width: 150px;
-}
-
 .travel-info {
 	padding: 10px;
 	border-bottom: 2px solid @currency;
@@ -154,23 +150,80 @@ body {
 	}
 }
 
-.submit {
-	height: 100px;
-	margin: 20px 0;
-	font-size: 18px;
+.order-step1 {
+	border: 1px solid #dfdfdf;
 
-	.btn {
-		margin-left: 10px;
-		margin-top: 5px;
-		background-image: none;
-		background-color: @red;
-		border: none;
-		color: @white;
+	.order-contact-container {
+	
+		border-radius: 3px;
+
+	    .order-contact-title {
+	    	height: 50px;
+	        padding: 10px 20px;
+	        margin-bottom: 20px;
+	        border-bottom: 2px solid @currency;
+
+	        .order-contact-tip {
+	        	margin-left: 20px;
+	        	padding-top: 5px;
+
+	        	.order-group-quota {
+					color: @currency;
+					font-size: 18px;
+					font-style: border;
+					line-height: 18px;
+				}
+	        }
+	    }
+
+	    .order-traveller-select-container {
+
+	    	> span:first-child {
+	    		margin-left: 22px;
+	    	}
+
+	    	.order-contact-name {
+				margin-left: 20px;
+
+				span {
+					font-size: 14px;
+				}
+			}
+
+			button {
+				margin-left: 20px;
+			}
+	    }
+
+	    .order-traveller-show {
+	    	margin-top: 15px;
+	    	min-height: 200px;
+	    }
 	}
 
+	.submit {
+		height: 50px;
+		margin: 20px 20px 0 0;
+		font-size: 18px;
+
+		.order-agree {
+			width: 150px;
+		}
+
+		// .btn {
+		// 	margin-left: 10px;
+		// 	margin-top: 5px;
+		// 	background-image: none;
+		// 	background-color: @red;
+		// 	border: none;
+		// 	color: @white;
+		// }
+	}
 }
 
 .order-step2 {
+
+	border: 1px solid #dfdfdf;
 
 	.discount-title {
 		color: @currency;
@@ -178,35 +231,29 @@ body {
 		height: 50px;
 	    padding: 13px 20px;
 	    margin-bottom: 20px;
-	    border-radius: 8px;
-	    box-shadow: 0 0 1px #aeaeae;
 	    border-bottom: 2px solid @currency;
 	}
 
-	.discount-item {
-		border-radius: 8px;
-		border-bottom: 2px solid @currency;
-		box-shadow: 0 0 1px @light-gray;
+	.discount-item-container {
 		font-size: 24px;
 		color: @currency;
 
-		.left-info{
-			font-size: 20px;
-			color: @dark-gray;
-		}
-
 		.discount-name-list-container {
+			margin-top: 30px;
 			font-size: 20px;
-			height: 50px;
-		    padding-top: 13px;
 		    padding-left: 20px;
 		    color: #666;
 		    border-radius: 8px 8px 0 0;
-		    box-shadow: 0 0 1px @light-gray;
 
 		    .discount-name {
 		    	margin-left: 10px;
 		    	margin-top: -5px;
+		    }
+
+		    p {
+		    	font-size: 24px;
+				color: @currency;
+				margin-right: 35px;
 		    }
 		}
 
@@ -218,10 +265,6 @@ body {
 				margin-right: 20px;
 			}
 
-			.total-price-container {
-				margin-bottom: 24px;
-			}
-
 			.desc-price {
 				height: 39px;
 				margin-top: 10px;
@@ -230,64 +273,27 @@ body {
 				color: @blue;
 			}
 		}
-
-		.pay-container {
-			padding: 10px 20px;
-	    	border-radius: 0 0 8px 8px;
-	    	box-shadow: 0 0 1px @light-gray;
-
-			.pay-left {
-				width: 100px;
-				margin-top: 10px;
-			}
-
-			.pay-middle {
-				font-size: 18px;
-				line-height: 30px;
-			}
-
-			.pay-right {
-
-				button:first-child {
-					margin-bottom: 10px;
-				}
-			}
-		}
 	}
 
-	.pay-item {
-		padding: 5px 20px;
-		margin-bottom: 50px;
-		height: 100px;
-		border-radius: 8px;
-		border-bottom: 2px solid @red;
-		box-shadow: 0 0 1px @light-gray;
-		font-size: 24px;
-		color: @red;
+	.pay-container {
+		padding: 15px 20px;
+		border-top: 1px solid #dfdfdf;
+		margin-top: 10px;
 
-		.left {
-			line-height: 90px;
-			vertical-align: middle;
-
-			img{
-				width: 100px;
-			}
+		.pay-left {
+			width: 100px;
+			margin-top: 10px;
 		}
 
-		.middle {
-			line-height: 45px;
+		.pay-middle {
 			font-size: 18px;
-			vertical-align: middle;
+			line-height: 30px;
 		}
 
-		.right {
-			line-height: 90px;
-			vertical-align: middle;
+		.pay-right {
 
-			.btn {
-				border-radius: 3px;
-				background-color: @red;
-				color: @white;
+			button:first-child {
+				margin-bottom: 10px;
 			}
 		}
 	}
@@ -305,34 +311,6 @@ body {
 			color: @white;
 		}
 	}
-}
-
-.order-contact-container {
-	
-	border-radius: 3px;
-
-    .order-contact-title {
-    	height: 50px;
-        padding: 10px 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 0 1px #aeaeae;
-        border-bottom: 2px solid @currency;
-
-        .order-contact-tip,
-        .order-contact-name-container {
-        	margin-left: 20px;
-        	padding-top: 5px;
-        }
-
-    	.order-contact-name {
-    		margin-left: 8px;
-
-    		span {
-    			font-size: 14px;
-    		}
-    	}
-    }
-
 }
 
 .order-step3 {

@@ -28,37 +28,17 @@ var App = React.createClass({
 
     // step1的回调函数
 
-    onAccountChange: function(checked, account) {
-        this.setState({
-            'isAccountSelect': checked,
-            'accountTraveller': account
-        });
-    },
-
     onAgreementCheck: function(e) {
         var data = this.state.data;
         data.orderInfo.isAgreed = e.target.checked;
         this.setState({'data': data});
     },
 
-    onNextBtnClick: function(travellers) {
-        var travellerCount = this.getTravellerCount(this.state.isAccountSelect, travellers);
-        if (travellerCount == 0) {
-            message.error('请选择出行人');
-            return;
-        } 
-        if (!this.state.data.orderInfo.isAgreed) {
-            message.error('请同意安全协议');
-            return;
-        }
-        if (this.state.isAccountSelect 
-            && this.state.accountTraveller.status == orderStatus.WAIT_COMPLETE_INFO) {
-            message.error('请先完善个人信息');
-            return;
-        }
+    onNextBtnClick: function() {
+        var travellers = this.refs.step1.getSelectTravellers();
         var data = this.state.data;
         data.orderInfo.status = orderStatus.DISCOUNT_SELECT;
-        var price = priceUtil.getPrice(this.state.data.travelGroup.price) * travellerCount;
+        var price = priceUtil.getPrice(this.state.data.travelGroup.price) * travellers.length;
         data.orderInfo.price = priceUtil.getPriceStr(price);
         this.setState({
             'data': data,
@@ -194,42 +174,14 @@ var App = React.createClass({
                 </div>
             );
         }
-        var content;
         var step;
         var status = data.orderInfo.status;
         if (status === orderStatus.NEW) {
             step = 1;
-            content = (<Step1 ref="step1"
-                            accountInfo={accountInfo}
-                            travellers={this.state.travellers}
-                            isAgreed={this.state.data.orderInfo.isAgreed}
-                            quota={data.quota}
-                            onAgreementCheck={this.onAgreementCheck}
-                            onNextBtnClick={this.onNextBtnClick}/>);
         } else if (status === orderStatus.DISCOUNT_SELECT) {
             step = 2;
-            var travellerCount = this.getTravellerCount(this.state.isAccountSelect, this.state.travellers);
-            content = (<Step2
-                            ref="step2"
-                            count={travellerCount}
-                            orderInfo={data.orderInfo}
-                            accountTraveller={this.state.accountTraveller}
-                            isAccountSelect={this.state.isAccountSelect}
-                            travellers={this.state.travellers}
-                            onCreateOrderSubmit={this.onCreateOrderSubmit}
-                            onOrderPaySubmit={this.onOrderPaySubmit}
-                            onPreBtnClick={this.onPreBtnClick}/>);
         } else {
             step = 3;
-            content = (<Step3 
-                            orderInfo={data.orderInfo} 
-                            travelGroup={data.travelGroup}
-                            travelRoute={data.travelRoute}
-                            orderTravellers={data.orderTravellers}
-                            policy={data.policy}
-                            code={data.code}
-                            student={data.student}
-                            orderRefound={data.orderRefound}/>);
        }
         return (
             <Grid>
@@ -237,7 +189,29 @@ var App = React.createClass({
                 <Row>
                     <Col sm={9} md={9}>
                         <div className="order-content-container">
-                            {content}
+                            <Step1 ref="step1"
+                                hide={step != 1}
+                                isAgreed={this.state.data.orderInfo.isAgreed}
+                                quota={data.quota}
+                                onAgreementCheck={this.onAgreementCheck}
+                                onNextBtnClick={this.onNextBtnClick}/>
+                            <Step2 ref="step2"
+                                hide={step != 2}
+                                orderInfo={data.orderInfo}
+                                travellers={this.state.travellers}
+                                onCreateOrderSubmit={this.onCreateOrderSubmit}
+                                onOrderPaySubmit={this.onOrderPaySubmit}
+                                onPreBtnClick={this.onPreBtnClick}/>
+                            <Step3
+                                hide={step != 3}
+                                orderInfo={data.orderInfo} 
+                                travelGroup={data.travelGroup}
+                                travelRoute={data.travelRoute}
+                                orderTravellers={data.orderTravellers}
+                                policy={data.policy}
+                                code={data.code}
+                                student={data.student}
+                                orderRefound={data.orderRefound}/>
                         </div>
                     </Col>
                     <Col sm={3} md={3}>

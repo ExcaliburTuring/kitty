@@ -14,8 +14,8 @@ var Name = React.createClass({
 
     mixins: [BaseFromItem],
 
-    _validate: function() {
-        return validator.name(this.state.value);
+    _validate: function(value) {
+        return validator.name(value, '您输入的姓名有误');
     },
 
     render: function() {

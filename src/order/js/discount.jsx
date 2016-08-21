@@ -20,7 +20,7 @@ var Discount = React.createClass({
 
     onOrderDiscountChange: function(discount) {
         if (discount != null) {
-            var discountPrice = '￥0.00';
+            var discountPrice = '￥0';
             for (var i = discount.policy.length - 1; i >= 0; i--) {
                 if (discount.policy[i].discountid == discount.defaultDiscountid) {
                     discountPrice = discount.policy[i].value;
@@ -206,9 +206,6 @@ var Discount = React.createClass({
         }
         return (
             <div className="discount-container clearfix">
-                <Col sm={12} md={12} className="total-price-container">
-                    <p className="pull-right">总价：{orderInfo.price}</p>
-                </Col>
                 <Col sm={8} md={8}>
                     <Form horizontal>
                         <FormItem

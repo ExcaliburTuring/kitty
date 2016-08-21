@@ -93,7 +93,6 @@ var BasicInfo = React.createClass({
             || this.refs.addressContainer.validate() != 'success') {
             return;
         }
-        console.log('dkdkkdkd')
         var basicInfo = {'accountid': this.props.accountInfo.accountid};
         if (this.refs.nameInput.isChange()) {
             basicInfo['name'] = this.refs.nameInput.getValue();

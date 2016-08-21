@@ -14,8 +14,8 @@ var Address = React.createClass({
 
     mixins: [BaseFromItem],
 
-    _validate: function() {
-        return validator.address(this.state.value, '地址输入有误');
+    _validate: function(value) {
+        return validator.address(value, '地址输入有误');
     },
 
     render: function() {
