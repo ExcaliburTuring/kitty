@@ -16,7 +16,7 @@ import 'antd/lib/index.css';
 var OrderDiscount = Rabbit.create(url.orderDiscount);
 var Discount = React.createClass({
 
-    mixins: [Reflux.ListenerMixin],
+    mixins: [Reflux.connect(OrderDiscount.store, 'data')],
 
     onOrderDiscountChange: function(discount) {
         if (discount != null) {
@@ -167,8 +167,15 @@ var Discount = React.createClass({
         }
     },
 
-    componentDidMount: function() {
-        this.listenTo(OrderDiscount.store, this.onOrderDiscountChange);
+    componentWillReceiveProps: function(newProps) {
+        if (newProps.count != this.props.count) {
+            var orderInfo = newProps.orderInfo;
+            OrderDiscount.actions.load({
+                'routeid': orderInfo.routeid, 
+                'groupid': orderInfo.groupid,
+                'count': this.props.count
+            });
+        }
     },
 
     render: function() {
@@ -180,16 +187,16 @@ var Discount = React.createClass({
 
         var selectOptionList = null, studentDiscount = null, studentDiscountTip = null;
         if (data.policy.length == 0) {
-            selectOptionList = (<SelectOption value="0">无任何可选优惠策略</SelectOption>)
+            selectOptionList = (<SelectOption value={-1}>无任何可选优惠策略</SelectOption>);
         } else {
             selectOptionList = data.policy.map(function(policyItem, index) {
                 return (
-                    <SelectOption 
+                    <SelectOption
                         key={`order-discount-${index}`}
                         value={policyItem.discountid}>
                         {policyItem.desc}
                     </SelectOption>
-                )
+                );
             });
         }
         if (data.studentDiscount == null) {
@@ -247,7 +254,7 @@ var Discount = React.createClass({
                     <p className="desc-price">-{this.state.studentDiscount.discountPrice}</p>
                 </Col>
                 <Col sm={12} md={12}>
-                    <p className="pull-right">
+                    <p className="order-total-price pull-right">
                         结算价格：{this.getActualPrice()}
                     </p>
                 </Col>

@@ -48,7 +48,6 @@ var Step2 = React.createClass({
 
     render: function() {
         var nameList = [];
-        console.log(this.props.travellers)
         if (this.props.travellers.length > 0) {
             for (var i = 0, n = this.props.travellers.length; i < n; i++) {
                 nameList.push(<Name key={`traveller-${i}`} name={this.props.travellers[i].name}/>);
@@ -56,12 +55,12 @@ var Step2 = React.createClass({
         }
         return (
             <div className={`order-step2 ${this.props.hide ? "hide" : ""}`}>
-                <Title title="优惠政策" className="discount-title" />
+                <Title title="优惠政策" className="order-content-title" />
                 <div className="discount-item-container">
                     <div className="discount-name-list-container">
                         您本次订单中有：
                         {nameList}
-                        <p className="pull-right">总价：{this.props.orderInfo.price}</p>
+                        <p className="order-total-price pull-right">总价：{this.props.orderInfo.price}</p>
                     </div>
                     <Discount
                         ref="discount"

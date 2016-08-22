@@ -79,11 +79,9 @@ var BasicInfo = React.createClass({
     },
 
     onSubmitBtnClick: function() {
-        console.log('onChange')
         if (!this.state.isChange) {
             return;
         }
-        console.log('ldldl')
         if (this.refs.nameInput.validate() != 'success'
             || this.refs.idSelector.validate()!= 'success'
             || this.refs.genderSelector.validate() != 'success'

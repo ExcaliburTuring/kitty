@@ -6,6 +6,7 @@ import Reflux from 'reflux';
 import { Table, Form, Button } from 'antd';
 
 import { idType, priceUtil, orderStatus, defaultValue } from 'config';
+import Title from 'title';
 
 import 'antd/lib/index.css';
 
@@ -55,6 +56,52 @@ var Step3 = React.createClass({
         });
     },
 
+    getInitialState: function() {
+        return {
+        }
+    },
+
+    render: function() {
+        return (
+            <div className={`order-step3 ${this.props.hide ? "hide" : ""}`}>
+                <Title title="订单详情" className="order-content-title">
+                    <p className="order-status-tip">
+                        订单状态:
+                        <span className="order-status">
+                            {orderStatus.getDesc(this.props.orderInfo.status)}
+                        </span>
+                    </p>
+                    <p></p>
+                </Title>
+                <div className="step3-section">
+                    <h3>参加旅行的人</h3>
+                    <Table
+                        columns={_travellerTableColumn}
+                        dataSource={this.getTravellersTableData()}
+                        bordered 
+                        pagination={false} />
+                </div>
+                <div className="step3-section">
+                    <h3>使用的优惠</h3>
+                    <Discount 
+                        orderInfo={this.props.orderInfo} 
+                        policy={this.props.policy}
+                        code={this.props.code}
+                        student={this.props.student}/>
+                </div>
+                <div className="step3-section">
+                    <h3>紧急联系人</h3>
+                    <div>未设置紧急联系人</div>
+                </div>
+                <Refund orderRefound={this.props.orderRefound} />
+                <OrderOperation orderInfo={this.props.orderInfo} />
+            </div>
+        );
+    }
+});
+
+var Discount = React.createClass({
+
     getDiscountTableData: function() {
         var tableData = [];
         if (this.props.policy != null) {
@@ -98,62 +145,95 @@ var Step3 = React.createClass({
         return `实际共优惠了：${priceUtil.getPriceStr(totalDiscount)}`;
     },
 
-    getInitialState: function() {
-        return {
-        }
-    },
-
     render: function() {
-        return (
-            <div className={`order-step3 ${this.props.hide ? "hide" : ""}`}>
-                <OrderStatus orderInfo={this.props.orderInfo}/>
+        if (this.props.policy == null && this.props.code == null && this.props.student == null) {
+            return (
+                <div> 本订单不享受任何折扣</div>
+            );
+        } else {
+            return (
                 <Table
-                    className="step3-section"
-                    columns={_travellerTableColumn}
-                    dataSource={this.getTravellersTableData()}
-                    bordered 
-                    pagination={false} />
-                <Table
-                    className="step3-section"
                     columns={_discountTableColumn} 
                     dataSource={this.getDiscountTableData()} 
                     bordered 
                     pagination={false}
                     footer={this.getFooter} />
+            );
+        }
+    }
+});
+
+var Refund = React.createClass({
+
+    render: function() {
+        var content = null;
+        if (this.props.orderRefound == null) {
+            content = (<div>本订单暂无任何退款信息</div>);
+        } else {
+            content = (<div>这里是退款信息</div>); // FIXME
+        }
+
+        return (
+            <div className="step3-section">
+                <h3>退款信息</h3>
+                {content}
             </div>
         );
     }
 });
 
-var OrderStatus = React.createClass({
+var OrderOperation = React.createClass({
 
     onOrderPaySubmit: function() {
 
     },
 
     render: function() {
-        var payBtn = null;
-        if (this.props.orderInfo.status == orderStatus.WAITING) {
-            payBtn = (
-                 <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET">
-                    <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
-                    <Button type="primary" htmlType="submit">
-                        马上支付
+        var status = this.props.orderInfo.status;
+        var operationGroup = null;
+        if (status == orderStatus.WAITING || status == orderStatus.PAYING) {
+            operationGroup = (
+                <div className="order-operation">
+                    <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET">
+                        <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
+                        <Button type="primary" htmlType="submit">
+                            马上支付
+                        </Button>
+                    </Form>
+                    <Button type="primary">
+                        取消订单
                     </Button>
-                </Form>
+                    <Button type="primary">
+                        下载合同
+                    </Button>
+                </div>
             );
+        } else if (status == orderStatus.PAID) {
+            operationGroup = (
+                <div className="order-operation">
+                    <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET">
+                        <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
+                        <Button type="primary" htmlType="submit">
+                            马上支付
+                        </Button>
+                    </Form>
+                    <Button type="primary">
+                        订单退款
+                    </Button>
+                    <Button type="primary">
+                        下载合同
+                    </Button>
+                </div>
+            );
+        } else {
+            return null;
         }
         return (
-            <div className="step3-section">
-                <div className="order-status-title">
-                    <p className="order-status-text pull-left">订单状态: </p>
-                    <p className="order-status-content pull-left">{ orderStatus.getDesc(this.props.orderInfo.status)}</p>
-                    {payBtn}
-                </div>
+            <div className="order-operation-container">
+                {operationGroup}
             </div>
         );
     }
-
 });
 
 module.exports = Step3;

@@ -170,7 +170,7 @@ var App = React.createClass({
         if (data.status != 0) {
             return (
                 <div>
-                    <p>订单查询失败, 请联系客服： 15001028030</p>
+                    <p>{`订单查询失败, 请联系客服： ${defaultValue.hotline}`}</p>
                 </div>
             );
         }

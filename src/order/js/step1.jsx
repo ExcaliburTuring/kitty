@@ -203,7 +203,7 @@ var Step1 = React.createClass({
         return (
             <div className={`order-step1 clearfix ${this.props.hide ? "hide" : ""}`}>
                 <div className="order-contact-container">
-                    <Title title="常用出行人" className="order-contact-title">
+                    <Title title="常用出行人" className="order-content-title">
                         <p className="order-contact-tip">
                             本团还可报
                             <span className="order-group-quota">{this.props.quota}</span>
