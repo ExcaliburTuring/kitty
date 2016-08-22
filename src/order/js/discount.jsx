@@ -16,22 +16,51 @@ import 'antd/lib/index.css';
 var OrderDiscount = Rabbit.create(url.orderDiscount);
 var Discount = React.createClass({
 
-    mixins: [Reflux.connect(OrderDiscount.store, 'data')],
+    mixins: [Reflux.listenTo(OrderDiscount.store, 'onOrderDiscountChange')],
+
+    // api metho
+
+    getDiscount: function() {
+        var studentDiscount = this.state.data.studentDiscount; 
+        return {
+            'actualPrice': this._getActualPrice(),
+            'policyDiscountid': this.state.policyDiscount.discountid,
+            'discountCode': this.state.discountCode.code,
+            'studentDiscountid': studentDiscount != null ? studentDiscount.discountid : null,
+            'studentCount': this.state.studentDiscount.count
+        };
+    },
+
+    // helper method
+
+    _getActualPrice: function() {
+        return priceUtil.getPriceStr(
+                    priceUtil.getPrice(this.props.orderInfo.price)
+                    - priceUtil.getPrice(this.state.policyDiscount.discountPrice)
+                    - priceUtil.getPrice(this.state.discountCode.discountPrice)
+                    - priceUtil.getPrice(this.state.studentDiscount.discountPrice)
+                );
+    },
+
+    _findPolicyDiscount: function(discountid, policies) {
+        for (var i = policies.length - 1; i >= 0; i--) {
+            if (policies[i].discountid == discountid) {
+                return policies[i];
+            } 
+        }
+        return null;
+    },
+
+    // callback method
 
     onOrderDiscountChange: function(discount) {
         if (discount != null) {
-            var discountPrice = '￥0';
-            for (var i = discount.policy.length - 1; i >= 0; i--) {
-                if (discount.policy[i].discountid == discount.defaultDiscountid) {
-                    discountPrice = discount.policy[i].value;
-                    break;
-                }
-            }
+            var policy = this._findPolicyDiscount(discount.defaultDiscountid, discount.policy);
             this.setState({
                 'data': discount,
                 'policyDiscount': {
                     'discountid': discount.defaultDiscountid,
-                    'discountPrice': discountPrice
+                    'discountPrice': policy.value
                 }
             });
         }
@@ -39,18 +68,11 @@ var Discount = React.createClass({
 
     onPolicyDiscountChange: function(eventKey) {
         if (eventKey !== this.state.policyDiscount.discountid) { // 和当前的一样
-            var policy = this.state.data.policy;
-            var discountPrice = 0;
-            for (var i = policy.length - 1; i >= 0; i--) {
-                if (policy[i].discountid == eventKey) {
-                    discountPrice = policy[i].value;
-                    break;
-                }
-            }
+            var policy = this._findPolicyDiscount(eventKey, this.state.data.policy);
             this.setState({
                 'policyDiscount': {
                     'discountid': eventKey,
-                    'discountPrice': discountPrice
+                    'discountPrice': policy.value
                 }
             });
         }
@@ -116,33 +138,9 @@ var Discount = React.createClass({
         });
     },
 
-    getDiscount: function() {
-        var studentDiscount = this.state.data.studentDiscount; 
-        return {
-            'actualPrice': this.getActualPrice(),
-            'policyDiscountid': this.state.policyDiscount.discountid,
-            'discountCode': this.state.discountCode.code,
-            'studentDiscountid': studentDiscount != null ? studentDiscount.discountid : null,
-            'studentCount': this.state.studentDiscount.count
-        };
-    },
-
-    getActualPrice: function() {
-        return priceUtil.getPriceStr(
-                    priceUtil.getPrice(this.props.orderInfo.price)
-                    - priceUtil.getPrice(this.state.policyDiscount.discountPrice)
-                    - priceUtil.getPrice(this.state.discountCode.discountPrice)
-                    - priceUtil.getPrice(this.state.studentDiscount.discountPrice)
-                );
-    },
+    // compoment specs
 
     getInitialState: function() {
-        var orderInfo = this.props.orderInfo;
-        OrderDiscount.actions.load({
-            'routeid': orderInfo.routeid, 
-            'groupid': orderInfo.groupid,
-            'count': this.props.count
-        });
         return {
            'data': {
                 'status': 1,
@@ -173,7 +171,7 @@ var Discount = React.createClass({
             OrderDiscount.actions.load({
                 'routeid': orderInfo.routeid, 
                 'groupid': orderInfo.groupid,
-                'count': this.props.count
+                'count': newProps.count
             });
         }
     },
@@ -255,7 +253,7 @@ var Discount = React.createClass({
                 </Col>
                 <Col sm={12} md={12}>
                     <p className="order-total-price pull-right">
-                        结算价格：{this.getActualPrice()}
+                        结算价格：{this._getActualPrice()}
                     </p>
                 </Col>
             </div>

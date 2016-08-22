@@ -191,7 +191,7 @@ var OrderOperation = React.createClass({
     render: function() {
         var status = this.props.orderInfo.status;
         var operationGroup = null;
-        if (status == orderStatus.WAITING || status == orderStatus.PAYING) {
+        if (status == orderStatus.WAITING) {
             operationGroup = (
                 <div className="order-operation">
                     <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET">

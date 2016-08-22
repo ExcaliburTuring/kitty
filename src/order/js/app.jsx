@@ -26,6 +26,42 @@ var App = React.createClass({
         Reflux.connect(OrderInfo.store, 'data')
     ],
 
+    // helper method
+
+    _createOrder: function(discountData, async, success) {
+        var self = this;
+        var request = {
+            'orderid': this.state.data.orderInfo.orderid,
+            'travellers': this.state.travellers,
+            'policyDiscountid': discountData.policyDiscountid,
+            'discountCode': discountData.discountCode,
+            'studentDiscountid': discountData.studentDiscountid,
+            'studentCount': discountData.studentCount,
+            'actualPrice': discountData.actualPrice,
+        };
+        $.ajax({
+            'url': url.orderOrder,
+            'type': 'post',
+            'async': async,
+            'data': JSON.stringify(request),
+            'dataType': 'json',
+            'contentType': 'application/json;charset=UTF-8',
+            'success': function(data) {
+                            if (data.status != 0) {
+                                self.refs.step2.enableBtn();
+                                message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                            } else {
+                                message.success('订单创建成功，您可以使用支付宝进行支付');
+                                success();
+                            }
+                        },
+            'error': function() {
+                        self.refs.step2.enableBtn();
+                        message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                    }
+        });
+    },
+
     // step1的回调函数
 
     onAgreementCheck: function(e) {
@@ -49,77 +85,13 @@ var App = React.createClass({
     // step2的回调函数
 
     onCreateOrderSubmit: function(discountData) {
-        var travellers = this.copyArray(this.state.travellers);
-        if (this.state.isAccountSelect) {
-            travellers.unshift(this.state.accountTraveller);
-        }
-        var self = this;
-        var request = {
-            'orderid': this.state.data.orderInfo.orderid,
-            'travellers': travellers,
-            'policyDiscountid': discountData.policyDiscountid,
-            'discountCode': discountData.discountCode,
-            'studentDiscountid': discountData.studentDiscountid,
-            'studentCount': discountData.studentCount,
-            'actualPrice': discountData.actualPrice,
-        };
-        $.ajax({
-            'url': url.orderOrder,
-            'type': 'post',
-            'data': JSON.stringify(request),
-            'dataType': 'json',
-            'contentType': 'application/json;charset=UTF-8',
-            'success': function(data) {
-                            if (data.status != 0) {
-                                self.refs.step2.enableBtn();
-                                message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
-                            } else {
-                                message.success('订单创建成功，您可以使用支付宝进行支付');
-                                setTimeout('location.reload(true);', 500);
-                            }
-                        },
-            'error': function() {
-                        self.refs.step2.enableBtn();
-                        message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
-                    }
+        this._createOrder(discountData, true, function() {
+            setTimeout('location.reload(true);', 500);
         });
     },
 
     onOrderPaySubmit: function(discountData) {
-        var travellers = this.copyArray(this.state.travellers);
-        if (this.state.isAccountSelect) {
-            travellers.unshift(this.state.accountTraveller);
-        }
-        var self = this;
-        var request = {
-            'orderid': this.state.data.orderInfo.orderid,
-            'travellers': travellers,
-            'policyDiscountid': discountData.policyDiscountid,
-            'discountCode': discountData.discountCode,
-            'studentDiscountid': discountData.studentDiscountid,
-            'studentCount': discountData.studentCount,
-            'actualPrice': discountData.actualPrice,
-        };
-        $.ajax({
-            'url': url.orderOrder,
-            'type': 'post',
-            'async': false,
-            'data': JSON.stringify(request),
-            'dataType': 'json',
-            'contentType': 'application/json;charset=UTF-8',
-            'success': function(data) {
-                            if (data.status != 0) {
-                                self.refs.step2.enableBtn();
-                                message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
-                            } else {
-                                
-                            }
-                        },
-            'error': function() {
-                        self.refs.step2.enableBtn();
-                        message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
-                    }
-        });
+        this._createOrder(discountData, false, function() {});
     },
 
     onPreBtnClick: function() {
@@ -128,17 +100,7 @@ var App = React.createClass({
         this.setState({'data': data});
     },
 
-    copyArray: function(array) {
-        var copy = [];
-        for (var i = 0; i < array.length; i++) {
-            copy.push(array[i]);
-        }
-        return copy;
-    },
-
-    getTravellerCount: function(isAccountSelect, travellers) {
-        return isAccountSelect ? travellers.length + 1 : travellers.length;
-    },
+    // compoment specs
 
     getInitialState: function() {
         AccountBasicInfo.actions.get();
@@ -155,8 +117,7 @@ var App = React.createClass({
                 'orderTravellers': [],
                 'code': {},
                 'student': {},
-                'orderRefound': {},
-                'quota': 0
+                'orderRefound': {}
             }
         }
     },
@@ -192,7 +153,7 @@ var App = React.createClass({
                             <Step1 ref="step1"
                                 hide={step != 1}
                                 isAgreed={this.state.data.orderInfo.isAgreed}
-                                quota={data.quota}
+                                quota={this.state.data.travelGroup.maxCount - this.state.data.travelGroup.actualCount}
                                 onAgreementCheck={this.onAgreementCheck}
                                 onNextBtnClick={this.onNextBtnClick}/>
                             <Step2 ref="step2"

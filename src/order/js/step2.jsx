@@ -13,30 +13,30 @@ import 'antd/lib/index.css';
 
 var Step2 = React.createClass({
 
-    onCreateOrderSubmit: function() {
-        this.disabledBtn();
-        var discount = this.refs.discount.getDiscount();
-        this.props.onCreateOrderSubmit(discount);
+    enableBtn: function() {
+        this.setState({
+            'createBtnDisabled': false,
+            'orderPayBtnDisabled': false
+        });
     },
 
-    onOrderPaySubmit: function(e) {
-        this.disabledBtn();
-        var discount = this.refs.discount.getDiscount();
-        this.props.onOrderPaySubmit(discount);
-    },
-
-    disabledBtn: function() {
+    _disabledBtn: function() {
         this.setState({
             'createBtnDisabled': true,
             'orderPayBtnDisabled': true
         });
     },
 
-    enableBtn: function() {
-        this.setState({
-            'createBtnDisabled': false,
-            'orderPayBtnDisabled': false
-        });
+    onCreateOrderSubmit: function() {
+        this._disabledBtn();
+        var discount = this.refs.discount.getDiscount();
+        this.props.onCreateOrderSubmit(discount);
+    },
+
+    onOrderPaySubmit: function(e) {
+        this._disabledBtn();
+        var discount = this.refs.discount.getDiscount();
+        this.props.onOrderPaySubmit(discount);
     },
 
     getInitialState: function() {
