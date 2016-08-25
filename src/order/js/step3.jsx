@@ -184,17 +184,13 @@ var Refund = React.createClass({
 
 var OrderOperation = React.createClass({
 
-    onOrderPaySubmit: function() {
-
-    },
-
     render: function() {
         var status = this.props.orderInfo.status;
         var operationGroup = null;
         if (status == orderStatus.WAITING) {
             operationGroup = (
                 <div className="order-operation">
-                    <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET">
+                    <Form inline onSubmit={()=>{}} action="/order/pay" method="GET" target="_blank">
                         <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
                         <Button type="primary" htmlType="submit">
                             马上支付
@@ -211,7 +207,7 @@ var OrderOperation = React.createClass({
         } else if (status == orderStatus.PAID) {
             operationGroup = (
                 <div className="order-operation">
-                    <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET">
+                    <Form inline onSubmit={()=>{}} action="/order/pay" method="GET" target="_blank">
                         <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
                         <Button type="primary" htmlType="submit">
                             马上支付

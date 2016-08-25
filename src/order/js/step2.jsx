@@ -86,7 +86,7 @@ var Step2 = React.createClass({
                                     onClick={this.onCreateOrderSubmit}>
                                     保存订单
                                 </Button>
-                                <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET">
+                                <Form inline onSubmit={this.onOrderPaySubmit} action="/order/pay" method="GET" target="_blank">
                                     <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
                                     <Button type="primary" htmlType="submit" disabled={this.state.orderPayBtnDisabled}>
                                         马上支付
