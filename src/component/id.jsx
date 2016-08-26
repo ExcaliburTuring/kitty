@@ -72,8 +72,8 @@ var Id = React.createClass({
                 'id': '',
                 'validationState': 'error',
                 'msg': '',
-                birthday: null,
-                gender: null,
+                'birthday': null,
+                'gender': null,
             });
         }
     },
@@ -178,7 +178,7 @@ var Id = React.createClass({
                 wrapperCol={{ span: 17 }}>
                 {
                     this.props.readOnly
-                    ? <p>{this.state.id ? '未知' : this.state.id}</p>
+                    ? <p>{this.state.id ? this.state.id : '未知'}</p>
                     : <Input
                         value={this.state.id}
                         defaultValue={this.props.defaultId}

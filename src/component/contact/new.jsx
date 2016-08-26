@@ -33,10 +33,10 @@ export var NewModal = React.createClass({
             'name': contact.name || '',
             'id': contact.id || '',
             'idType': contact.idType || idType.IDENTIFICATION,
-            'gender': contact.gender || gender.UNKNOW,
-            'birthday': contact.birthday || '未知',
-            'mobile': contact.mobile || '',
-            'email': contact.email || ''
+            'gender': contact.gender,
+            'birthday': contact.birthday,
+            'mobile': contact.mobile,
+            'email': contact.email
         };
     },
 

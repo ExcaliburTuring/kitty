@@ -31,11 +31,12 @@ var Birthday = React.createClass({
                 wrapperCol={{ span: 17 }}>
                 {
                     this.props.readOnly
-                    ? <p>{this.state.value == null ? '未知' : this.state.value}</p>
+                    ? <p>{this.state.value ? this.state.value : '未知'}</p>
                     : <DatePicker
+                        format="yyyy-MM-dd"
                         value={this.state.value}
                         defaultValue={this.props.defaultValue}
-                        onChange={this._onChange}/>
+                        onChange={(e)=>{this._onChange({'target': {'value': e.toISOString().split('T')[0]}})}}/>
                 }
             </FormItem>
         );

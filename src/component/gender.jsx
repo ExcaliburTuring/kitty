@@ -37,7 +37,7 @@ var Gender = React.createClass({
                 wrapperCol={{ span: 17 }}>
                 {
                     this.props.readOnly
-                    ? <p>{gender.getDesc(this.state.value == null ? gender.UNKNOW : this.state.value)}</p>
+                    ? <p>{gender.getDesc(this.state.value ? this.state.value : gender.UNKNOW)}</p>
                     : <RadioGroup
                         value={this.state.value}
                         defaultValue={this.props.defaultValue}

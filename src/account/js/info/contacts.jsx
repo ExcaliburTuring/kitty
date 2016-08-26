@@ -23,7 +23,7 @@ var Contacts = React.createClass({
     ],
 
     onUpdate: function() {
-        message.success("成功添加新常用出行人");
+        message.success("成功更新常用出行人");
         AccountContacts.actions.load();
         this.setState({'contact': null, 'title': ''});
     },

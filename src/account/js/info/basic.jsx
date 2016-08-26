@@ -145,9 +145,9 @@ var BasicInfo = React.createClass({
     render: function() {
         var accountInfo = this.props.accountInfo;
         var readOnly= this.state.readOnly;
-        var readOnly1 = this.refs.idSelector
+        var readOnly1 = readOnly || (this.refs.idSelector
                         ? this.refs.idSelector.getIdType() === idType.IDENTIFICATION 
-                        : accountInfo.idType === idType.IDENTIFICATION;
+                        : accountInfo.idType === idType.IDENTIFICATION);
         return (
             <div className="basic-container info-section">
                 <Title title="基本信息" className="info-title"></Title>

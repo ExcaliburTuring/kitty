@@ -83,7 +83,7 @@ var BaseFromItem = {
     },
 
     componentDidUpdate: function(prevProps, prevState) {
-        if (this.state.value != prevState.value) { // 有时候state不能立即更新，所以这里要这屌用onChange
+        if (this.state.value != prevState.value) { // 有时候state不能立即更新，所以这里要这调用onChange
             this.props.onChange(this.state.value);
         }
     }
