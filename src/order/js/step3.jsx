@@ -29,7 +29,7 @@ const _travellerTableColumn = [{
 }];
 
 const _discountTableColumn = [{
-    'title': '优惠信息',
+    'title': '支付与优惠信息',
     'dataIndex': 'discountName',
     'colSpan': 3
 }, {
@@ -85,7 +85,7 @@ var Step3 = React.createClass({
                         pagination={false} />
                 </div>
                 <div className="step3-section">
-                    <h3>使用的优惠</h3>
+                    <h3>支付金额和优惠</h3>
                     <Discount 
                         orderInfo={this.props.orderInfo} 
                         policy={this.props.policy}
@@ -148,6 +148,12 @@ var Discount = React.createClass({
 
     getDiscountTableData: function() {
         var tableData = [];
+        tableData.push({
+            'key': 'order-price',
+            'discountName': '订单金额',
+            'discountDesc': `共${this.props.orderInfo.count}人出行`,
+            'discountPrice': this.props.orderInfo.price
+        });
         if (this.props.policy != null) {
             tableData.push({
                 'key': 'order-step3-discount-1',
@@ -172,6 +178,12 @@ var Discount = React.createClass({
                 'discountPrice': priceUtil.getPriceStr(priceUtil.getPrice(this.props.student.value) * this.props.orderInfo.studentCount)
             });
         }
+        tableData.push({
+            'key': 'order-actual-price',
+            'discountName': '实际支付',
+            'discountDesc': '',
+            'discountPrice': this.props.orderInfo.actualPrice
+        });
         return tableData;
     },
 
