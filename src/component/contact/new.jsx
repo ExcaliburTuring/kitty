@@ -88,6 +88,11 @@ export var NewModal = React.createClass({
     },
 
     handleOk: function() {
+        if (!this.state.isChange) {
+            this.toggleVisiable();
+            return;
+        }
+
         if (this.refs.nameInput.validate() != 'success'
             || this.refs.idSelector.validate()!= 'success'
             || this.refs.genderSelector.validate() != 'success'

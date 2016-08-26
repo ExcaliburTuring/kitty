@@ -57,8 +57,11 @@ var Step1 = React.createClass({
     },
 
     _copyArray: function(array) {
+        if (!array) {
+            return [];
+        }
         var copy = [];
-        for (var i = 0; i < array.length; i++) {
+        for (var i = 0, n = array.length; i < n; i++) {
             copy.push(array[i]);
         }
         return copy;
@@ -179,10 +182,14 @@ var Step1 = React.createClass({
             'data': {
                 'contacts': []
             },
-            'selectTravellers': [],
+            'selectTravellers': this._copyArray(this.props.travellers),
             'contact': null,
             'title': ''
         };
+    },
+
+    componentWillReceiveProps: function(newProps) {
+        this.setState(this._copyArray(newProps.travellers));
     },
 
     render: function() {
@@ -201,7 +208,7 @@ var Step1 = React.createClass({
             );
         }
         return (
-            <div className={`order-step1 clearfix ${this.props.hide ? "hide" : ""}`}>
+            <div className="order-step1 clearfix">
                 <div className="order-contact-container">
                     <Title title="常用出行人" className="order-content-title">
                         <p className="order-contact-tip">
@@ -278,9 +285,3 @@ var Agreement = React.createClass({
 });
 
 module.exports = Step1;
-
-    // componentWillReceiveProps: function(nextProps) {
-    //     this.setState({
-    //         'accountTraveller': nextProps.accountTraveller
-    //     })
-    // },

@@ -19,6 +19,7 @@ export var url = {
     'order': '/order',
     'orderNew': '/order/new',
     'orderOrder': '/order/order',
+    'orderRefund': '/order/refund',
     'orderBrief': '/order/brief',
     'orderDiscount': '/order/discount',
     'orderDiscountCode': '/order/discountcode'
@@ -31,7 +32,8 @@ export var defaultValue = {
     'updateContactsMsg': '更新常用出行人信息失败，请稍后重试',
     'deleteContactsMsg': '删除常用出行人失败，请稍候重试',
     'newOrderMsg': '创建订单失败，请稍候重试',
-    'hotline': 15001028030,
+    'cancelOrderMsg': '取消订单失败，请稍后重试',
+    'hotline': '18510248672',
 
     getRouteImgPath: function(routeImgPath) {
         return this.routeImgPath + routeImgPath;
@@ -187,7 +189,7 @@ export var orderStatus = {
             case this.WAITING:
                 return '等待付款';
             case this.CANCEL:
-                return '取消订单';
+                return '订单取消';
             case this.TIMEOUT:
                 return '付款超时，请重新下订单';
             case this.REFOUND:

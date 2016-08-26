@@ -54,7 +54,7 @@ var Step2 = React.createClass({
             }
         }
         return (
-            <div className={`order-step2 ${this.props.hide ? "hide" : ""}`}>
+            <div className="order-step2">
                 <Title title="优惠政策" className="order-content-title" />
                 <div className="discount-item-container">
                     <div className="discount-name-list-container">

@@ -141,6 +141,11 @@ var Discount = React.createClass({
     // compoment specs
 
     getInitialState: function() {
+        OrderDiscount.actions.load({
+            'routeid': this.props.orderInfo.routeid, 
+            'groupid': this.props.orderInfo.groupid,
+            'count': this.props.count
+        });
         return {
            'data': {
                 'status': 1,

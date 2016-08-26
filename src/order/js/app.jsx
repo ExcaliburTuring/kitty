@@ -135,14 +135,42 @@ var App = React.createClass({
                 </div>
             );
         }
-        var step;
+        var step, content;
         var status = data.orderInfo.status;
         if (status === orderStatus.NEW) {
             step = 1;
+            content = (
+                <Step1 ref="step1"
+                    isAgreed={this.state.data.orderInfo.isAgreed}
+                    quota={this.state.data.travelGroup.maxCount - this.state.data.travelGroup.actualCount}
+                    travellers={this.state.travellers}
+                    onAgreementCheck={this.onAgreementCheck}
+                    onNextBtnClick={this.onNextBtnClick}/>
+            );
         } else if (status === orderStatus.DISCOUNT_SELECT) {
             step = 2;
+            content = (
+                <Step2 ref="step2"
+                    orderInfo={data.orderInfo}
+                    travellers={this.state.travellers}
+                    onCreateOrderSubmit={this.onCreateOrderSubmit}
+                    onOrderPaySubmit={this.onOrderPaySubmit}
+                    onPreBtnClick={this.onPreBtnClick}/>
+            );
         } else {
             step = 3;
+            content = (
+                <Step3
+                    orderInfo={data.orderInfo} 
+                    travelGroup={data.travelGroup}
+                    travelRoute={data.travelRoute}
+                    orderTravellers={data.orderTravellers}
+                    policy={data.policy}
+                    code={data.code}
+                    student={data.student}
+                    orderRefound={data.orderRefound}
+                    timeLeft={data.timeLeft}/>
+            );
        }
         return (
             <Grid>
@@ -150,29 +178,7 @@ var App = React.createClass({
                 <Row>
                     <Col sm={9} md={9}>
                         <div className="order-content-container">
-                            <Step1 ref="step1"
-                                hide={step != 1}
-                                isAgreed={this.state.data.orderInfo.isAgreed}
-                                quota={this.state.data.travelGroup.maxCount - this.state.data.travelGroup.actualCount}
-                                onAgreementCheck={this.onAgreementCheck}
-                                onNextBtnClick={this.onNextBtnClick}/>
-                            <Step2 ref="step2"
-                                hide={step != 2}
-                                orderInfo={data.orderInfo}
-                                travellers={this.state.travellers}
-                                onCreateOrderSubmit={this.onCreateOrderSubmit}
-                                onOrderPaySubmit={this.onOrderPaySubmit}
-                                onPreBtnClick={this.onPreBtnClick}/>
-                            <Step3
-                                hide={step != 3}
-                                orderInfo={data.orderInfo} 
-                                travelGroup={data.travelGroup}
-                                travelRoute={data.travelRoute}
-                                orderTravellers={data.orderTravellers}
-                                policy={data.policy}
-                                code={data.code}
-                                student={data.student}
-                                orderRefound={data.orderRefound}/>
+                            {content}
                         </div>
                     </Col>
                     <Col sm={3} md={3}>
