@@ -3,15 +3,14 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Col, Image } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { message } from 'antd'
 
-import { url, defaultValue } from 'config';
+import { url } from 'config';
 import Rabbit from 'rabbit';
 import Contact from 'contact';
 import Title from 'title';
-import FaButton from 'fabutton';
-import people from '../../img/people.png';
+import { NewModal, NewBtn } from 'new';
 
 import 'antd/lib/index.css';
 
@@ -20,115 +19,88 @@ var AccountContacts = Rabbit.create(url.contacts);
 var Contacts = React.createClass({
 
     mixins: [
-        Reflux.connect(AccountContacts.store, 'contacts')
+        Reflux.connect(AccountContacts.store, 'data')
     ],
 
-    onAddBtnClick: function() {
-        var newContacts = this.state.newContacts;
-        newContacts.push({});
-        this.setState({'newContacts': newContacts});
+    onUpdate: function() {
+        message.success("成功更新常用出行人");
+        AccountContacts.actions.load();
+        this.setState({'contact': null, 'title': ''});
     },
 
-    onNewContactMinusClick: function(index) {
-        var newContacts = this.state.newContacts;
-        newContacts.splice(index, 1);
-        this.setState({'newContacts': newContacts});
+    onNewBtnClick: function() {
+        this.setState({'contact': null, 'title': '添加出行人'});
+        this.refs.newModal.toggleVisiable();
     },
 
-    onContactMinusClick: function(index) {
-        var contacts = this.state.contacts.contacts;
-        var contact = contacts.splice(index, 1);
-        var self = this;
-        $.ajax({
-            url: url.contacts,
-            type: 'post',
-            data: {'contactid': contact[0].contactid, '_method': 'delete'}
-        }).done(function(data) {
-            if (data.status != 0) {
-                 message.error(defaultValue.deleteContactsMsg);
-            } else {
-                self.setState({
-                    'contacts': {
-                        'contacts': contacts
-                    }
-                });
-                AccountContacts.actions.load({'accountid': self.props.accountInfo.accountid});
-                message.success('成功删除常用联系人');
-            }
-        }).fail(function() {
-            message.error(defaultValue.deleteContactsMsg);
-        })
-    },
-
-    onNewContactSuccessSubmit: function(index) {
-        message.success("成功添加新常用出行人");
-        this.onNewContactMinusClick(index);
-        AccountContacts.actions.load({'accountid': this.props.accountInfo.accountid});
-    },
-
-    onContactSuccessSubmit: function(index) {
-        message.success('成功更新常用出行人');
-        AccountContacts.actions.load({'accountid': this.props.accountInfo.accountid});
+    onEditBtnClick: function(contact) {
+        this.setState({'contact': contact, 'title': '编辑出行人'});
+        this.refs.newModal.toggleVisiable();
     },
 
     getInitialState: function() {
-        AccountContacts.actions.load({'accountid': this.props.accountInfo.accountid});
+        AccountContacts.actions.load();
         return {
-           'contacts': {
+           'data': {
                 'contacts': []
            },
-           'newContacts': []
+           'contact': null,
+           'title': ''
         }
     },
 
     render: function() {
-        var contacts = this.state.contacts.contacts;
+        var contacts = this.state.data.contacts;
         var self = this;
-        var contactsList = [], newContactsList = [];
-        if (this.state.newContacts.length > 0) {
-            newContactsList = this.state.newContacts.map(function(contact, index) {
-                return (
-                    <Contact 
-                        key={`new-contact-${index}`}
-                        accountid={self.props.accountInfo.accountid}
-                        index={index}
-                        readOnly={false} 
-                        contact={contact} 
-                        onMinusClick={self.onNewContactMinusClick}
-                        onSuccessSubmit={self.onNewContactSuccessSubmit}/>
-                );
-            });
-        }
+        var ermergencyList = [], contactsList = [];
+
         if (contacts.length > 0) {
-            contactsList = contacts.map(function(contact, index) {
-                return (
-                    <Contact 
-                        key={contact.contactid}
-                        accountid={self.props.accountInfo.accountid}
-                        index={index}
-                        contact={contact} 
-                        onMinusClick={self.onContactMinusClick}
-                        onSuccessSubmit={self.onContactSuccessSubmit}/>
-                );
+            contacts.forEach(function(contact, index) {
+                if (contact.emergency) {
+                    ermergencyList.push(
+                        <Col md={3} key={`emergency-list-${index}`}>
+                            <Contact contact={contact} onEditBtnClick={self.onEditBtnClick}/>
+                        </Col>
+                    )
+                } else {
+                    contactsList.push(
+                        <Col md={3} key={`contacts-list-${index}`}>
+                            <Contact contact={contact} totop onEditBtnClick={self.onEditBtnClick}/>
+                        </Col>
+                    );
+                }
             }); 
         }
-        if (newContactsList.length == 0 && contactsList.length == 0) {
-            contactsList = (<div>没有常用出行人，可以点击上方加号进行添加</div>)
+        if (ermergencyList.length == 0) {
+            ermergencyList = (
+                <div>
+                    <p>通过下方加号添加常用出行人并同时设置为紧急联系人来添加</p>
+                </div>
+            );
         }
         return (
             <div className="contacts-container info-section">
-                <Title title="常用出行人" className="info-title">
-                    <FaButton faClass="fa fa-plus" onClick={this.onAddBtnClick} />
-                </Title>
-                <Col xsHidden md={2} >
-                    <div className="left-block">
-                        <Image responsive src={people}/>
-                    </div>
-                </Col>
-                <Col xs={12} md={9} >
-                    {newContactsList}
-                    {contactsList}
-                </Col>
+                <Title title="常用出行人" className="info-title" />
+                <div className="contact-group emergency">
+                    <h3>紧急联系人</h3>
+                    <Row>
+                        {ermergencyList}
+                    </Row>
+                </div>
+                <div className="contact-group emergency">
+                    <h3>常用出行人</h3>
+                    <Row>
+                        {contactsList}
+                        <Col md={2}>
+                            <NewBtn onNewBtnClick={this.onNewBtnClick}/>
+                        </Col>
+                    </Row>
+                </div>
+                <NewModal ref="newModal" title={this.state.title} isAccount={false}
+                    accountid={this.props.accountInfo.accountid} 
+                    contact={this.state.contact}
+                    onHandleOk={this.onUpdate}
+                    onHandleDelete={this.onUpdate}/>
             </div>
         );
     }

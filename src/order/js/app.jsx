@@ -22,45 +22,47 @@ var OrderInfo = Rabbit.create(url.orderOrder);
 var App = React.createClass({
 
     mixins: [
-        Reflux.ListenerMixin,
+        Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
         Reflux.connect(OrderInfo.store, 'data')
     ],
 
-    createAccountTraveller: function(info) {
-        if (info.accountInfo == null) {
-            return null;
-        }
-        var accountInfo = info.accountInfo;
-        var accountSetting = info.accountSetting;
-        return  {
-            'accountid': accountInfo.accountid,
-            'status': accountInfo.status,
-            'contactid': 0,
-            'name': accountInfo.name,
-            'id': accountInfo.id,
-            'idType': accountInfo.idType,
-            'gender': accountSetting.gender,
-            'birthday': accountSetting.birthday,
-            'email': accountInfo.email,
-            'mobile': accountInfo.mobile
-        };
-    },
+    // helper method
 
-    onAccountBasicInfoChange: function(info) {
-        this.setState({
-            'basicInfo': info,
-            'accountTraveller': this.createAccountTraveller(info)
+    _createOrder: function(discountData, async, success) {
+        var self = this;
+        var request = {
+            'orderid': this.state.data.orderInfo.orderid,
+            'travellers': this.state.travellers,
+            'policyDiscountid': discountData.policyDiscountid,
+            'discountCode': discountData.discountCode,
+            'studentDiscountid': discountData.studentDiscountid,
+            'studentCount': discountData.studentCount,
+            'actualPrice': discountData.actualPrice,
+        };
+        $.ajax({
+            'url': url.orderOrder,
+            'type': 'post',
+            'async': async,
+            'data': JSON.stringify(request),
+            'dataType': 'json',
+            'contentType': 'application/json;charset=UTF-8',
+            'success': function(data) {
+                            if (data.status != 0) {
+                                self.refs.step2.enableBtn();
+                                message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                            } else {
+                                message.success('订单创建成功，您可以使用支付宝进行支付');
+                                success();
+                            }
+                        },
+            'error': function() {
+                        self.refs.step2.enableBtn();
+                        message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                    }
         });
     },
 
     // step1的回调函数
-
-    onAccountChange: function(checked, account) {
-        this.setState({
-            'isAccountSelect': checked,
-            'accountTraveller': account
-        });
-    },
 
     onAgreementCheck: function(e) {
         var data = this.state.data;
@@ -68,24 +70,11 @@ var App = React.createClass({
         this.setState({'data': data});
     },
 
-    onNextBtnClick: function(travellers) {
-        var travellerCount = this.getTravellerCount(this.state.isAccountSelect, travellers);
-        if (travellerCount == 0) {
-            message.error('请选择出行人');
-            return;
-        } 
-        if (!this.state.data.orderInfo.isAgreed) {
-            message.error('请同意安全协议');
-            return;
-        }
-        if (this.state.isAccountSelect 
-            && this.state.accountTraveller.status == orderStatus.WAIT_COMPLETE_INFO) {
-            message.error('请先完善个人信息');
-            return;
-        }
+    onNextBtnClick: function() {
+        var travellers = this.refs.step1.getSelectTravellers();
         var data = this.state.data;
         data.orderInfo.status = orderStatus.DISCOUNT_SELECT;
-        var price = priceUtil.getPrice(this.state.data.travelGroup.price) * travellerCount;
+        var price = priceUtil.getPrice(this.state.data.travelGroup.price) * travellers.length;
         data.orderInfo.price = priceUtil.getPriceStr(price);
         this.setState({
             'data': data,
@@ -96,44 +85,13 @@ var App = React.createClass({
     // step2的回调函数
 
     onCreateOrderSubmit: function(discountData) {
-        var travellers = this.copyArray(this.state.travellers);
-        if (this.state.isAccountSelect) {
-            travellers.unshift(this.state.accountTraveller);
-        }
-        var self = this;
-        var request = {
-            'orderid': this.state.data.orderInfo.orderid,
-            'travellers': travellers,
-            'policyDiscountid': discountData.policyDiscountid,
-            'discountCode': discountData.discountCode,
-            'studentDiscountid': discountData.studentDiscountid,
-            'studentCount': discountData.studentCount,
-            'actualPrice': discountData.actualPrice,
-        };
-        $.ajax({
-            'url': url.orderOrder,
-            'type': 'post',
-            'data': JSON.stringify(request),
-            'dataType': 'json',
-            'contentType': 'application/json;charset=UTF-8',
-            'success': function(data) {
-                            if (data.status != 0) {
-                                self.refs.step2.enableBtn();
-                                message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
-                            } else {
-                                message.success('订单创建成功，您可以使用支付宝进行支付');
-                                setTimeout('location.reload(true);', 500);
-                            }
-                        },
-            'error': function() {
-                        self.refs.step2.enableBtn();
-                        message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
-                    }
+        this._createOrder(discountData, true, function() {
+            setTimeout('location.reload(true);', 500);
         });
     },
 
-    onOrderPaySubmit: function() {
-
+    onOrderPaySubmit: function(discountData) {
+        this._createOrder(discountData, false, function() {});
     },
 
     onPreBtnClick: function() {
@@ -142,17 +100,7 @@ var App = React.createClass({
         this.setState({'data': data});
     },
 
-    copyArray: function(array) {
-        var copy = [];
-        for (var i = 0; i < array.length; i++) {
-            copy.push(array[i]);
-        }
-        return copy;
-    },
-
-    getTravellerCount: function(isAccountSelect, travellers) {
-        return isAccountSelect ? travellers.length + 1 : travellers.length;
-    },
+    // compoment specs
 
     getInitialState: function() {
         AccountBasicInfo.actions.get();
@@ -160,8 +108,6 @@ var App = React.createClass({
         OrderInfo.actions.load({'orderid': orderid});
         return {
             'basicInfo': {},
-            'isAccountSelect': true,
-            'accountTraveller': null,
             'travellers': [],
             'data': {
                 'status': 1,
@@ -171,72 +117,64 @@ var App = React.createClass({
                 'orderTravellers': [],
                 'code': {},
                 'student': {},
-                'orderRefound': {},
-                'quota': 0
+                'orderRefound': {}
             }
         }
     },
 
-    componentDidMount: function() {
-        this.listenTo(AccountBasicInfo.store, this.onAccountBasicInfoChange);
-    },
-
     render: function() {
-        var basicInfo = this.state.basicInfo;
-        if (basicInfo.accountInfo == null) {
+        var accountInfo = this.state.basicInfo.accountInfo;
+        if (accountInfo == null) {
             return (<p>还没登陆</p>);
         }
         var data = this.state.data;
         if (data.status != 0) {
             return (
                 <div>
-                    <p>订单查询失败, 请联系客服： 15001028030</p>
+                    <p>{`订单查询失败, 请联系客服： ${defaultValue.hotline}`}</p>
                 </div>
             );
         }
-        var content;
-        var step;
+        var step, content;
         var status = data.orderInfo.status;
         if (status === orderStatus.NEW) {
             step = 1;
-            content = (<Step1
-                            accountTraveller={this.state.accountTraveller}
-                            isAccountSelect={this.state.isAccountSelect}
-                            travellers={this.state.travellers}
-                            isAgreed={this.state.data.orderInfo.isAgreed}
-                            quota={data.quota}
-                            orderInfo={data.orderInfo} 
-                            onAccountChange={this.onAccountChange}
-                            onAgreementCheck={this.onAgreementCheck}
-                            onNextBtnClick={this.onNextBtnClick}/>);
+            content = (
+                <Step1 ref="step1"
+                    isAgreed={this.state.data.orderInfo.isAgreed}
+                    quota={this.state.data.travelGroup.maxCount - this.state.data.travelGroup.actualCount}
+                    travellers={this.state.travellers}
+                    onAgreementCheck={this.onAgreementCheck}
+                    onNextBtnClick={this.onNextBtnClick}/>
+            );
         } else if (status === orderStatus.DISCOUNT_SELECT) {
             step = 2;
-            var travellerCount = this.getTravellerCount(this.state.isAccountSelect, this.state.travellers);
-            content = (<Step2
-                            ref="step2"
-                            count={travellerCount}
-                            orderInfo={data.orderInfo}
-                            accountTraveller={this.state.accountTraveller}
-                            isAccountSelect={this.state.isAccountSelect}
-                            travellers={this.state.travellers}
-                            onCreateOrderSubmit={this.onCreateOrderSubmit}
-                            onOrderPaySubmit={this.onOrderPaySubmit}
-                            onPreBtnClick={this.onPreBtnClick}/>);
+            content = (
+                <Step2 ref="step2"
+                    orderInfo={data.orderInfo}
+                    travellers={this.state.travellers}
+                    onCreateOrderSubmit={this.onCreateOrderSubmit}
+                    onOrderPaySubmit={this.onOrderPaySubmit}
+                    onPreBtnClick={this.onPreBtnClick}/>
+            );
         } else {
             step = 3;
-            content = (<Step3 
-                            orderInfo={data.orderInfo} 
-                            travelGroup={data.travelGroup}
-                            travelRoute={data.travelRoute}
-                            orderTravellers={data.orderTravellers}
-                            policy={data.policy}
-                            code={data.code}
-                            student={data.student}
-                            orderRefound={data.orderRefound}/>);
+            content = (
+                <Step3
+                    orderInfo={data.orderInfo} 
+                    travelGroup={data.travelGroup}
+                    travelRoute={data.travelRoute}
+                    orderTravellers={data.orderTravellers}
+                    policy={data.policy}
+                    code={data.code}
+                    student={data.student}
+                    orderRefound={data.orderRefound}
+                    timeLeft={data.timeLeft}/>
+            );
        }
         return (
             <Grid>
-                {/*<StepBar step={step}/>*/}
+                <StepBar step={step}/>
                 <Row>
                     <Col sm={9} md={9}>
                         <div className="order-content-container">

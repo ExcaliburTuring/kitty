@@ -19,6 +19,7 @@ export var url = {
     'order': '/order',
     'orderNew': '/order/new',
     'orderOrder': '/order/order',
+    'orderRefund': '/order/refund',
     'orderBrief': '/order/brief',
     'orderDiscount': '/order/discount',
     'orderDiscountCode': '/order/discountcode'
@@ -31,7 +32,8 @@ export var defaultValue = {
     'updateContactsMsg': '更新常用出行人信息失败，请稍后重试',
     'deleteContactsMsg': '删除常用出行人失败，请稍候重试',
     'newOrderMsg': '创建订单失败，请稍候重试',
-    'hotline': 15001028030,
+    'cancelOrderMsg': '取消订单失败，请稍后重试',
+    'hotline': '18510248672',
 
     getRouteImgPath: function(routeImgPath) {
         return this.routeImgPath + routeImgPath;
@@ -47,22 +49,22 @@ export var idType = {
 	 /**
      * 身份证
      */
-    IDENTIFICATION: 'IDENTIFICATION',
+    IDENTIFICATION: 0,
 
     /**
      * 护照
      */
-    PASSPORT: 'PASSPORT',
+    PASSPORT: 1,
 
     /**
      * 港澳通行证
      */
-    H_PASSER: 'H_PASSER',
+    H_PASSER: 2,
 
     /**
      * 台胞证
      */
-    T_PASSER: 'T_PASSER',
+    T_PASSER: 3,
 
     getDesc: function(idType) {
     	if (idType === this.IDENTIFICATION) {
@@ -85,17 +87,17 @@ export var gender = {
     /**
      * 未知
      */
-    UNKNOW: 'UNKNOW',
+    UNKNOW: 0,
 
     /**
      * 男
      */
-    MALE: 'MALE',
+    MALE: 1,
 
     /**
      * 女
      */
-    FEMALE: 'FEMALE',
+    FEMALE: 2,
 
     getDesc: function(gender) {
         if (gender === this.UNKNOW) {
@@ -115,17 +117,17 @@ export var accountStatus = {
      /**
      * 刚注册
      */
-    WAIT_COMPLETE_INFO: 'WAIT_COMPLETE_INFO',
+    WAIT_COMPLETE_INFO: 0,
 
     /**
      * 账户正常
      */
-    OK: 'OK',
+    OK: 1,
 
     /**
      * 账户注销
      */
-    DELETE: 'DELETE'
+    DELETE: 2
 }
 
 export var orderStatus = {
@@ -133,7 +135,7 @@ export var orderStatus = {
     /**
      * 新订单
      */
-    NEW: 'NEW',
+    NEW: 0,
 
     /**
      * 选择优惠, 前端使用的临时状态
@@ -143,99 +145,92 @@ export var orderStatus = {
     /**
      * 生成等待付款
      */
-    WAITING: 'WAITING',
+    WAITING: 1,
 
-    /**
-     * 取消
-     */
-    CANCEL: 'CANCEL',
-
-    /**
-     * 超时
-     */
-    TIMEOUT: 'TIMEOUT',
-
-    /**
-     * 取消支付
-     */
-    CANCELPAYMENT: 'CANCELPAYMENT',
-
-    /**
-     * 已退款
-     */
-    REFOUNDED: 'REFOUNDED',
-
-    /**
+     /**
      * 付款中
      */
-    PAYING: 'PAYING',
+    PAYING: 2,
 
     /**
      * 付款到账
      */
-    PAID: 'PAID',
-
-    /**
-     * 退款中
-     */
-    REFOUNDING: 'REFOUNDING',
+    PAID: 3,
 
     /**
      * 开始旅行
      */
-    FINISH: 'FINISH',
+    FINISH: 4,
+
+    /**
+     * 取消
+     */
+    CANCEL: 5,
+
+    /**
+     * 超时
+     */
+    TIMEOUT: 6,
 
     /**
      * 行程取消
      */
-    CLOSED: 'CLOSED',
+    CLOSED: 7,
+
+    /**
+     * 退款中
+     */
+    REFUNDING: 8,
+
+    /**
+     * 退款
+     */
+    REFUNDED: 9,
 
     getDesc: function(orderStatus) {
         switch(orderStatus) {
-            case 'NEW':
+            case this.NEW:
                 return '新订单';
-            case 'WAITING':
+            case this.WAITING:
                 return '等待付款';
-            case 'CANCEL':
-                return '取消订单';
-            case 'TIMEOUT':
-                return '付款超时，请重新下订单';
-            case 'CANCELPAYMENT':
-                return '取消付款';
-            case 'REFOUNDED':
-                return '退款';
-            case 'PAYING':
+             case this.PAYING:
                 return '付款中';
-            case 'PAID':
+            case this.PAID:
                 return '付款完成';
-            case 'REFOUNDING':
-                return '新订单';
-            case 'FINISH':
+            case this.FINISH:
                 return '开始旅行了';
-            case 'CLOSED':
+            case this.CANCEL:
+                return '订单取消';
+            case this.TIMEOUT:
+                return '付款超时，请重新下订单';
+            case this.CLOSED:
                 return '行程取消'; 
+            case this.REFUNDING:
+                return '退款中';
+            case this.REFUNDED:
+                return '退款完成';
         };
     }
 }
 
 export var groupStatus = {
 
-    OPEN: 'OPEN',
+    OPEN: 1,
 
-    FULL: 'FULL',
+    FULL: 3,
 
-    TRAVELLING: 'TRAVELLING',
+    TRAVELLING: 4,
 
-    FINISH: 'FINISH',
+    FINISH: 5,
 
     getDesc: function(status) {
-        if(status == 'OPEN'){
+        if(status == this.OPEN){
             return "报名中";
-        } else if(status == 'FULL'){
+        } else if(status == this.FULL){
             return "已报满";
-        } else if(status == 'TRAVELLING') {
+        } else if(status == this.TRAVELLING) {
             return "已出发";
-        } else if(status == 'FINISHED') {
+        } else if(status == this.FINISHED) {
             return "报名结束";
         }
     }
@@ -250,7 +245,7 @@ export var priceUtil = {
 
     getPriceStr: function(price) {
         var rawPrice = price / 1000;
-        return `￥${rawPrice.toFixed(2)}`
+        return `￥${rawPrice.toFixed(0)}`
     }
 
 }

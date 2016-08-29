@@ -8,6 +8,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import Rabbit from 'rabbit';
 import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url } from 'config';
+import Title from 'title';
 import OrderItem from './order/order';
 import NoLogin from './nologin'; 
 
@@ -21,7 +22,7 @@ var Index = React.createClass({
 
     getInitialState: function() {
         AccountBasicInfo.actions.get();
-        OrderBrief.actions.load({'orderType':'CURRENT'});
+        OrderBrief.actions.load({'orderType': 0});
         return {
             'basicInfo': {},
             'data': {
@@ -34,22 +35,17 @@ var Index = React.createClass({
     },
 
     render: function() {
-        var basicInfo = this.state.basicInfo;
-        if (basicInfo.accountInfo == null) {
+        var accountInfo = this.state.basicInfo.accountInfo;
+        if (accountInfo == null) {
             return (<NoLogin/>);
         }
         var data = this.state.data;
         if (data.status != 0) {
             <div>
-                <p>订单查询失败, 请联系客服： 15001028030</p>
+                <p>订单查询失败, 请联系客服： {defaultValue.hotline}</p>
             </div>
         }
-        var accountInfo = basicInfo.accountInfo;
-        var accountSetting = basicInfo.accountSetting;
-        var accountid = accountInfo.accountid;
-        var infoUrl = `${url.account}/${accountid}/info`;
-        var ordersUrl = `${url.account}/${accountid}/orders`;
-       
+
         var ordersList = null;
         if (data.briefOrders != null && data.briefOrders.length > 0) {
             ordersList = data.briefOrders.map(function(order) {
@@ -59,17 +55,19 @@ var Index = React.createClass({
             });
         } else {
             ordersList = (
-                <div>暂时没有任何订单</div>
+                <div className="no-result">
+                    <p>暂时没有任何订单</p>
+                </div>
             );
         }
         return (
-            <Grid>
-                <Row>
-                    <div className="my-container">
+            <div className="index-container">
+                <Grid>
+                    <Row>
                         <Col sm={3} md={3}>
                             <div className="profiles">
                                 <div className="name">
-                                   {accountInfo.name}
+                                   {accountInfo.nickname}
                                 </div>
                                 <div className="discount">
                                     <div className="left"><span>优惠券：0</span></div>
@@ -78,32 +76,22 @@ var Index = React.createClass({
                             </div>
                         </Col>
                         <Col sm={9} md={9}>
-                            <div className="title">
-                                <Col xsHidden md={5}>
-                                    <div className="welcome">
-                                        欢迎回来，{accountInfo.name}
-                                    </div>
-                                </Col>
-                                <div className="messages">
-                                    <Col xs={6} md={3}>
-                                        <span className="bar">未完成订单：</span>
-                                        <span className="unfinished">{data.currentOrderCount}</span>
-                                    </Col>
-                                    <Col xs={6} md={3}>
-                                        <span className="bar">历史订单：</span>
-                                        <span className="histories">{data.historyOrderCount}</span>
-                                    </Col>
-                                </div>
-                            </div>
-                            <div className="unfinisheds">
-                                <div className="order-container">
-                                    {ordersList}
-                                </div>
+                            <Title title={`${accountInfo.nickname}的订单：`} className="index-title">
+                                <span className="bar">未完成：</span>
+                                <span className="order-count">{data.currentOrderCount}</span>
+                                <span className="bar">历史：</span>
+                                <span className="order-count">{data.historyOrderCount}</span>
+                                <span className="bar">所有：</span>
+                                <span className="order-count">{data.historyOrderCount}</span>
+                                <p></p>
+                            </Title>
+                            <div className="order-container">
+                                {ordersList}
                             </div>
                         </Col>
-                    </div>
-                </Row>
-            </Grid>
+                    </Row>
+                </Grid>
+            </div>
         );
     }
 });

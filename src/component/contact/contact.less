@@ -1,18 +1,151 @@
 @import '~base.less';
 
-.contacts-item-container {
+.contact-item-container {
+    width: 100%;
+    height: 80px;
 
-        border-radius: 8px;
-        box-shadow: 0 0 3px @light-gray;
-        margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #f0f0f0;
 
-        .contact-title {
-            margin: 10px 6.25%;
+    .contact-name {
+        max-width: 65px;
+        margin-right: 6px;
+        vertical-align: top;
+        color: #555;
+        font: 16px/16px 'Microsoft Yahei';
+        padding-top: 12px;
+        display: inline-block;
+    }
+
+    .contact-relationship {
+        padding-top: 15px;
+        vertical-align: top;
+        display: inline-block;
+        color: #999;
+        font: 12px/12px 'Microsoft Yahei';
+    }
+
+    .edit-wrap {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        width: 12px;
+        height: 12px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .contact-title {
+        height: 40px;
+        padding-left: 65px;
+        border-bottom: 1px solid #e8ebf0;
+        position: relative;
+    }
+
+    .contact-btm {
+
+        background: #f9fafc;
+        height: 30px;
+        line-height: 25px;
+        padding: 5px 0 0 65px;
+        
+        .contact-mobile {
+            margin-left: 3px;
+        }
+    }
+
+    .contact-avatar {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        top: 9px;
+        left: 20px;
+
+        img {
+            border: 1px solid #dfdfdf;
+        }
+    }
+
+    .contact-card {
+        display: none;
+        position: absolute;
+        left: -1px;
+        top: 0;
+        background: #fff;
+        z-index: 9;
+        border: 1px solid #d8dde0;
+        border-radius: 3px;
+        box-shadow: 0 0 5px 1px #e4e6e7;
+        width: 320px;
+
+        .card-title {
+            height: 40px;
+            padding-left: 70px;
+            border-bottom: 1px solid #e8ebf0;
         }
 
-        .contact-item-btn-group {
-            width: 200px;
-            margin: 0 auto;
+        .card-btm {
+            background: #f9fafc;
+            height: 25px;
+            line-height: 25px;
+            padding-left: 70px;
+            border-bottom: 1px solid #e8ebf0;
         }
+
+        .card-avatar {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            top: 9px;
+            left: 9px;
+            border-radius: 50%;
+
+            img {
+                border: 1px solid #dfdfdf;
+            }
+        }
+
+        .card-detail {
+            padding: 10px 10px 10px 40px;
+            font-family: 'Microsoft Yahei';
+            line-height: 20px;
+
+            p {
+                margin-bottom: 10px;
+            }
+
+            .detail-title {
+                color: #5d6168;
+                font-size: 14px;
+            }
+
+            .contact-birthday,
+            .contact-gender {
+                display: inline-block;
+            }
+
+            .contact-gender {
+                margin-left: 20px;
+            }
+        }
+    }
+
+    .contact-card.totop {
+        bottom: 0;
+        top: auto;
+    }
+
+    &:hover {
+
+        .contact-title,
+        .contact-btm,
+        .contact-avatar {
+            display: none;
+        }
+
+        .contact-card {
+            display: block;
+        }
+    }
 
 }
