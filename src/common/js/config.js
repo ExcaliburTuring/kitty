@@ -147,40 +147,45 @@ export var orderStatus = {
      */
     WAITING: 1,
 
-    /**
-     * 取消
-     */
-    CANCEL: 2,
-
-    /**
-     * 超时
-     */
-    TIMEOUT: 3,
-
-    /**
-     * 已退款
-     */
-    REFOUND: 4,
-
-    /**
+     /**
      * 付款中
      */
-    PAYING: 5,
+    PAYING: 2,
 
     /**
      * 付款到账
      */
-    PAID: 6,
+    PAID: 3,
 
     /**
      * 开始旅行
      */
-    FINISH: 7,
+    FINISH: 4,
+
+    /**
+     * 取消
+     */
+    CANCEL: 5,
+
+    /**
+     * 超时
+     */
+    TIMEOUT: 6,
 
     /**
      * 行程取消
      */
-    CLOSED: 8,
+    CLOSED: 7,
+
+    /**
+     * 退款中
+     */
+    REFUNDING: 8,
+
+    /**
+     * 退款
+     */
+    REFUNDED: 9,
 
     getDesc: function(orderStatus) {
         switch(orderStatus) {
@@ -188,22 +193,22 @@ export var orderStatus = {
                 return '新订单';
             case this.WAITING:
                 return '等待付款';
+             case this.PAYING:
+                return '付款中';
+            case this.PAID:
+                return '付款完成';
+            case this.FINISH:
+                return '开始旅行了';
             case this.CANCEL:
                 return '订单取消';
             case this.TIMEOUT:
                 return '付款超时，请重新下订单';
-            case this.REFOUND:
-                return '退款';
-            case this.PAYING:
-                return '付款中';
-            case this.PAID:
-                return '付款完成';
-            case this.REFOUNDING:
-                return '新订单';
-            case this.FINISH:
-                return '开始旅行了';
             case this.CLOSED:
                 return '行程取消'; 
+            case this.REFUNDING:
+                return '退款中';
+            case this.REFUNDED:
+                return '退款完成';
         };
     }
 }
