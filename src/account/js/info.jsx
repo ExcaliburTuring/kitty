@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Grid, Row } from 'react-bootstrap';
+import { Grid } from 'react-bootstrap';
 import { Alert } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
@@ -11,7 +11,6 @@ import { accountStatus } from 'config';
 import Title from 'title';
 import FaButton from 'fabutton';
 import BasicInfo from './info/basic';
-import Contact from './info/contact';
 import Contacts from './info/contacts';
 import NoLogin from './nologin'; 
 
@@ -29,13 +28,13 @@ var Info = React.createClass({
     },
 
     render: function() {
-        var basicInfo = this.state.basicInfo;
-        if (basicInfo.accountInfo == null) {
+        var accountInfo = this.state.basicInfo.accountInfo;
+        if (accountInfo == null) {
             return (<NoLogin/>);
         }
 
         var newAccountTip = null;
-        if (basicInfo.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
+        if (accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
             newAccountTip = (
                 <Alert message="新用户提醒信息"
                     description="您还是新用户，强烈建议您完善个人信息，方便以后下单。"
@@ -45,20 +44,13 @@ var Info = React.createClass({
         }
 
         return (
-            <Grid>
-                <div className="info-container">
+            <div className="info-container">
+                <Grid>
                     {newAccountTip}
-                    <Row>
-                        <BasicInfo accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
-                    </Row>
-                    <Row>
-                        <Contact accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
-                    </Row>
-                    <Row>
-                        <Contacts accountInfo={basicInfo.accountInfo} accountSetting={basicInfo.accountSetting}/>
-                    </Row>
-                </div>
-            </Grid>
+                    <BasicInfo accountInfo={accountInfo}/>
+                    <Contacts accountInfo={accountInfo}/>
+                </Grid>
+            </div>
         );
     }
 });

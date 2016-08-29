@@ -39,7 +39,7 @@ var Face = React.createClass({
                         </div>
                     </div>
                 </Col>*/}
-                <Col className="container" sm={12} md={12}>
+                <Col sm={12} md={12}>
                     <img className="wh-container" src={WH} />
                     <Slider route={route} sliderImgs={this.props.sliderImgs} descriptions={this.props.descriptions}/>
                 </Col>

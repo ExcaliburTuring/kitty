@@ -16,22 +16,51 @@ import 'antd/lib/index.css';
 var OrderDiscount = Rabbit.create(url.orderDiscount);
 var Discount = React.createClass({
 
-    mixins: [Reflux.ListenerMixin],
+    mixins: [Reflux.listenTo(OrderDiscount.store, 'onOrderDiscountChange')],
+
+    // api metho
+
+    getDiscount: function() {
+        var studentDiscount = this.state.data.studentDiscount; 
+        return {
+            'actualPrice': this._getActualPrice(),
+            'policyDiscountid': this.state.policyDiscount.discountid,
+            'discountCode': this.state.discountCode.code,
+            'studentDiscountid': studentDiscount != null ? studentDiscount.discountid : null,
+            'studentCount': this.state.studentDiscount.count
+        };
+    },
+
+    // helper method
+
+    _getActualPrice: function() {
+        return priceUtil.getPriceStr(
+                    priceUtil.getPrice(this.props.orderInfo.price)
+                    - priceUtil.getPrice(this.state.policyDiscount.discountPrice)
+                    - priceUtil.getPrice(this.state.discountCode.discountPrice)
+                    - priceUtil.getPrice(this.state.studentDiscount.discountPrice)
+                );
+    },
+
+    _findPolicyDiscount: function(discountid, policies) {
+        for (var i = policies.length - 1; i >= 0; i--) {
+            if (policies[i].discountid == discountid) {
+                return policies[i];
+            } 
+        }
+        return null;
+    },
+
+    // callback method
 
     onOrderDiscountChange: function(discount) {
         if (discount != null) {
-            var discountPrice = '￥0.00';
-            for (var i = discount.policy.length - 1; i >= 0; i--) {
-                if (discount.policy[i].discountid == discount.defaultDiscountid) {
-                    discountPrice = discount.policy[i].value;
-                    break;
-                }
-            }
+            var policy = this._findPolicyDiscount(discount.defaultDiscountid, discount.policy);
             this.setState({
                 'data': discount,
                 'policyDiscount': {
                     'discountid': discount.defaultDiscountid,
-                    'discountPrice': discountPrice
+                    'discountPrice': policy.value
                 }
             });
         }
@@ -39,18 +68,11 @@ var Discount = React.createClass({
 
     onPolicyDiscountChange: function(eventKey) {
         if (eventKey !== this.state.policyDiscount.discountid) { // 和当前的一样
-            var policy = this.state.data.policy;
-            var discountPrice = 0;
-            for (var i = policy.length - 1; i >= 0; i--) {
-                if (policy[i].discountid == eventKey) {
-                    discountPrice = policy[i].value;
-                    break;
-                }
-            }
+            var policy = this._findPolicyDiscount(eventKey, this.state.data.policy);
             this.setState({
                 'policyDiscount': {
                     'discountid': eventKey,
-                    'discountPrice': discountPrice
+                    'discountPrice': policy.value
                 }
             });
         }
@@ -76,7 +98,7 @@ var Discount = React.createClass({
             } else if (data.status == 1100) {
                 self.setState({
                     'discountCode': {
-                        'discountPrice': '￥0.00',
+                        'discountPrice': '￥0',
                         'validateStatus': 'error',
                         'msg': data.errors[0].message
                     }
@@ -84,7 +106,7 @@ var Discount = React.createClass({
             } else {
                 self.setState({
                     'discountCode': {
-                        'discountPrice': '￥0.00',
+                        'discountPrice': '￥0',
                         'validateStatus': 'error',
                         'msg': '优惠码校验失败，请联系15001028030'
                     }
@@ -94,7 +116,7 @@ var Discount = React.createClass({
         .fail(function() {
             self.setState({
                 'discountCode': {
-                    'discountPrice': '￥0.00',
+                    'discountPrice': '￥0',
                     'validateStatus': 'error',
                     'msg': '优惠码校验失败，请联系15001028030'
                 }
@@ -116,31 +138,12 @@ var Discount = React.createClass({
         });
     },
 
-    getDiscount: function() {
-        var studentDiscount = this.state.data.studentDiscount; 
-        return {
-            'actualPrice': this.getActualPrice(),
-            'policyDiscountid': this.state.policyDiscount.discountid,
-            'discountCode': this.state.discountCode.code,
-            'studentDiscountid': studentDiscount != null ? studentDiscount.discountid : null,
-            'studentCount': this.state.studentDiscount.count
-        };
-    },
-
-    getActualPrice: function() {
-        return priceUtil.getPriceStr(
-                    priceUtil.getPrice(this.props.orderInfo.price)
-                    - priceUtil.getPrice(this.state.policyDiscount.discountPrice)
-                    - priceUtil.getPrice(this.state.discountCode.discountPrice)
-                    - priceUtil.getPrice(this.state.studentDiscount.discountPrice)
-                );
-    },
+    // compoment specs
 
     getInitialState: function() {
-        var orderInfo = this.props.orderInfo;
         OrderDiscount.actions.load({
-            'routeid': orderInfo.routeid, 
-            'groupid': orderInfo.groupid,
+            'routeid': this.props.orderInfo.routeid, 
+            'groupid': this.props.orderInfo.groupid,
             'count': this.props.count
         });
         return {
@@ -152,23 +155,30 @@ var Discount = React.createClass({
             },
             'policyDiscount': {
                 'discountid': 0,
-                'discountPrice':'￥0.00'
+                'discountPrice':'￥0'
             },
             'discountCode': {
                 'code': '',
-                'discountPrice': '￥0.00',
+                'discountPrice': '￥0',
                 'validateStatus': null,
                 'msg': ''
             },
             'studentDiscount': {
                 'count': 0,
-                'discountPrice': '￥0.00'
+                'discountPrice': '￥0'
             }
         }
     },
 
-    componentDidMount: function() {
-        this.listenTo(OrderDiscount.store, this.onOrderDiscountChange);
+    componentWillReceiveProps: function(newProps) {
+        if (newProps.count != this.props.count) {
+            var orderInfo = newProps.orderInfo;
+            OrderDiscount.actions.load({
+                'routeid': orderInfo.routeid, 
+                'groupid': orderInfo.groupid,
+                'count': newProps.count
+            });
+        }
     },
 
     render: function() {
@@ -180,16 +190,16 @@ var Discount = React.createClass({
 
         var selectOptionList = null, studentDiscount = null, studentDiscountTip = null;
         if (data.policy.length == 0) {
-            selectOptionList = (<SelectOption value="0">无任何可选优惠策略</SelectOption>)
+            selectOptionList = (<SelectOption value={-1}>无任何可选优惠策略</SelectOption>);
         } else {
             selectOptionList = data.policy.map(function(policyItem, index) {
                 return (
-                    <SelectOption 
+                    <SelectOption
                         key={`order-discount-${index}`}
                         value={policyItem.discountid}>
                         {policyItem.desc}
                     </SelectOption>
-                )
+                );
             });
         }
         if (data.studentDiscount == null) {
@@ -206,9 +216,6 @@ var Discount = React.createClass({
         }
         return (
             <div className="discount-container clearfix">
-                <Col sm={12} md={12} className="total-price-container">
-                    <p className="pull-right">总价：{orderInfo.price}</p>
-                </Col>
                 <Col sm={8} md={8}>
                     <Form horizontal>
                         <FormItem
@@ -250,8 +257,8 @@ var Discount = React.createClass({
                     <p className="desc-price">-{this.state.studentDiscount.discountPrice}</p>
                 </Col>
                 <Col sm={12} md={12}>
-                    <p className="pull-right">
-                        结算价格：{this.getActualPrice()}
+                    <p className="order-total-price pull-right">
+                        结算价格：{this._getActualPrice()}
                     </p>
                 </Col>
             </div>
