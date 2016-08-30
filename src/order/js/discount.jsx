@@ -56,6 +56,9 @@ var Discount = React.createClass({
     onOrderDiscountChange: function(discount) {
         if (discount != null) {
             var policy = this._findPolicyDiscount(discount.defaultDiscountid, discount.policy);
+            if (policy == null) {
+                return;
+            }
             this.setState({
                 'data': discount,
                 'policyDiscount': {

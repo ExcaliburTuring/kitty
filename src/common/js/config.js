@@ -130,6 +130,25 @@ export var accountStatus = {
     DELETE: 2
 }
 
+export var orderType = {
+
+    /**
+     * current
+     */
+    CURRENT: 0,
+
+    /**
+     * history
+     */
+    HISTORY: 1,
+
+    /**
+     * visible
+     */
+    VISIBLE: 2
+
+}
+
 export var orderStatus = {
 
     /**
