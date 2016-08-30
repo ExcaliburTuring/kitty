@@ -71,13 +71,11 @@
     border: 1px solid #dfdfdf;
     margin-bottom: 20px;
 
-    .start-title {
-        margin: 15px 22px;
-        padding-bottom: 10px;
+    .order-brief-title {
+        padding: 15px 22px;
         border-bottom: 1px dashed @dark-gray;
 
         a:hover {
-            padding-bottom: 1px;
             border-bottom: 1px solid #ff6100
         }
 
@@ -100,27 +98,23 @@
             }
         }
     }
+
+    .order-brief-content {
+        margin: 20px 7px;
+    }
 }
 
-.order-info {
-	margin-bottom: 15px;
-	padding-bottom: 5px; 
-	width: 100%;
-	height: 190px;
-	border-bottom: 1px dashed @dark-gray;
+.travel-info {
 
-    .travel-info {
-        height: 170px;
-        position: relative;
+    .travel-content {
+
+        margin-top: 15px;
 
         .travel-name {
             font-size: 18px;
             line-height: 28px;
-        }
-
-        .travel-time {
-            font-size: 14px;
-            line-height: 28px;
+            margin-right: 8px;
+            margin-bottom: 5px;
         }
 
         .travel-price {
@@ -128,12 +122,16 @@
             font-size: 14px;
             line-height: 28px;
         }
+    }
+}
+
+
+        
 
         .order-status {
             position: absolute;
             bottom: 0;
         }
-    }
 
 	.travel-names {
 		overflow: hidden;
@@ -142,7 +140,6 @@
 			margin-right: 5px;
 		}
 	}
-}
 
 .group-info {
 	margin-bottom: 15px;
@@ -212,33 +209,3 @@
         color: #777;
     }
 }
-
-// .starting {
-//     margin-bottom: 20px;
-//     padding: 5px 15px;
-//     height: 460px;
-//     background-color: @white;
-//     border: 1px dashed @currency;
-//     box-shadow: 0 0 3px @light-gray;
-
-//     .start-title {
-//         margin-bottom: 15px;
-//         padding-bottom: 5px;
-//         width: 100%;
-//         height: 40px;
-//         border-bottom: 1px dashed @dark-gray;
-//         text-align: left;
-
-//         .left {
-//             line-height: 40px;
-//             font-size: 24px;
-//             color: @currency;
-//         }
-
-//         .middle {
-//             line-height: 40px;
-//             font-size: 12px;
-//             color: @gray;
-//         }
-//     }
-// }

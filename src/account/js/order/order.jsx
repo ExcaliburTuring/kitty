@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { Col, Image } from 'react-bootstrap';
+import { Row, Col, Image } from 'react-bootstrap';
 
 import { orderStatus } from 'config';
 import Title from 'title';
@@ -11,7 +11,6 @@ var OrderItem = React.createClass({
         var order = this.props.order;
         var title = "";
         var status ="";
-        var minutecount=(<p/>);
         var price="";
         var pay="";
         var groupinfo="";
@@ -21,7 +20,6 @@ var OrderItem = React.createClass({
         if(order.status == orderStatus.WAITING){
             title = "未完成订单";
             status = "未支付";
-            minutecount = (<p className="right">支付剩余时间:{order.minuteCount}分钟</p>);
             price = order.actualPrice;
             pay = ( 
                 <div>
@@ -80,46 +78,53 @@ var OrderItem = React.createClass({
 
         return (
             <div className={`order-brief-container ${orderclass}`}>
-                <Title className="start-title" title={`订单号：${order.orderid}`}
+                <Title className="order-brief-title" title={`订单号：${order.orderid}`}
                     href={`/order/${order.orderid}`}>
                     <OrderTip 
                         orderStatus={this.props.order.status}
                         timeLeft={this.props.order.timeLeft} />
                 </Title>
-                <div className="order-info">
-                    <Col sm={4} md={4}>
-                        <div className="travel-img">
-                            <a href={`/travel/${order.routeid}`} target="_blank">
-                                <Image src={order.headImg} responsive/>
-                            </a>
-                        </div>
-                    </Col>
-                    <Col sm={6} md={6}>
-                        <div className="travel-info">
-                            <div className="travel-name">
-                                {order.name}
+                <div className="order-brief-content">
+                    <Row>
+                        <Col sm={4} md={4}>
+                            <div className="travel-info">
+                                <a href={`/travel/${order.routeid}`} target="_blank">
+                                    <Image src={order.headImg} responsive/>
+                                </a>
+                                <div className="travel-content">
+                                    <span className="travel-name">
+                                        {order.name}
+                                    </span>
+                                    <span className="travel-time">
+                                        {order.startDate} 到 {order.endDate}
+                                    </span>
+                                    <p>
+                                        {order.title}
+                                    </p>
+                                    <p className="travel-price">
+                                        {price}
+                                    </p>
+                                </div>
                             </div>
-                            <div className="travel-time">
-                                {order.startDate} 到 {order.endDate}
+                        </Col>
+                        <Col sm={6} md={6}>
+                            <div className="travel-info">
+                                <div className="order-status">
+                                    订单状态：{status}
+                                </div>
                             </div>
-                            <div className="travel-price">
-                                {price}
+                        </Col>
+                        <Col sm={2} md={2}>
+                            <div className="travel-info">
+                                <TravellerList
+                                    names={order.names}
+                                    keyPrefix="unPayed"/>
+                                <div className="order-status">
+                                    {pay}
+                                </div>
                             </div>
-                            <div className="order-status">
-                                订单状态：{status}
-                            </div>
-                        </div>
-                    </Col>
-                    <Col sm={2} md={2}>
-                        <div className="travel-info">
-                            <TravellerList
-                                names={order.names}
-                                keyPrefix="unPayed"/>
-                            <div className="order-status">
-                                {pay}
-                            </div>
-                        </div>
-                    </Col>
+                        </Col>
+                    </Row>
                 </div>
                 {groupinfo}
             </div>

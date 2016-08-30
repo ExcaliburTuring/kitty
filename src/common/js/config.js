@@ -182,29 +182,29 @@ export var orderStatus = {
     FINISH: 4,
 
     /**
-     * 取消
-     */
-    CANCEL: 5,
-
-    /**
-     * 超时
-     */
-    TIMEOUT: 6,
-
-    /**
-     * 行程取消
-     */
-    CLOSED: 7,
-
-    /**
      * 退款中
      */
-    REFUNDING: 8,
+    REFUNDING: 5,
 
     /**
      * 退款
      */
-    REFUNDED: 9,
+    REFUNDED: 6,
+
+    /**
+     * 取消
+     */
+    CANCEL: 7,
+
+    /**
+     * 超时
+     */
+    TIMEOUT: 8,
+
+    /**
+     * 行程取消
+     */
+    CLOSED: 9,
 
     getDesc: function(orderStatus) {
         switch(orderStatus) {
