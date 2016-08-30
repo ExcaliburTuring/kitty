@@ -60,11 +60,14 @@
         font-size: 20px;
         font-weight: bolder;
 		color: @currency;
-        text-decoration: underline;
+
+        &:hover {
+            text-decoration: underline;
+        }
 	}
 }
 
-.order-detail-container {
+.order-brief-container {
     border: 1px solid #dfdfdf;
     margin-bottom: 20px;
 
@@ -73,7 +76,13 @@
         padding-bottom: 10px;
         border-bottom: 1px dashed @dark-gray;
 
-        h3 {
+        a:hover {
+            padding-bottom: 1px;
+            border-bottom: 1px solid #ff6100
+        }
+
+        h3,
+        a {
             color: @currency;
             font-size: 22px;
         }

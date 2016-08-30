@@ -79,8 +79,9 @@ var OrderItem = React.createClass({
         }
 
         return (
-            <div className={`order-detail-container ${orderclass}`}>
-                <Title className="start-title" title={`订单号：${order.orderid}`}>
+            <div className={`order-brief-container ${orderclass}`}>
+                <Title className="start-title" title={`订单号：${order.orderid}`}
+                    href={`/order/${order.orderid}`}>
                     <OrderTip 
                         orderStatus={this.props.order.status}
                         timeLeft={this.props.order.timeLeft} />
@@ -88,7 +89,7 @@ var OrderItem = React.createClass({
                 <div className="order-info">
                     <Col sm={4} md={4}>
                         <div className="travel-img">
-                            <a href={`/order/${order.orderid}`} target="_blank">
+                            <a href={`/travel/${order.routeid}`} target="_blank">
                                 <Image src={order.headImg} responsive/>
                             </a>
                         </div>
