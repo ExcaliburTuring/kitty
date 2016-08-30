@@ -58,7 +58,7 @@ var Step2 = React.createClass({
                 <Title title="优惠政策" className="order-content-title" />
                 <div className="discount-item-container">
                     <div className="discount-name-list-container">
-                        您本次订单中有：
+                        出行人员：
                         {nameList}
                         <p className="order-total-price pull-right">总价：{this.props.orderInfo.price}</p>
                     </div>

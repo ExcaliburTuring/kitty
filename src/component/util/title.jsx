@@ -5,6 +5,23 @@ import React from 'react';
 
 var Title = React.createClass({
 
+    _getTitle: function() {
+        var href = this.props.href;
+        if (href) {
+            return (
+                <h3 className="pull-left">
+                    <a href={href} target="_blank">
+                        {this.props.title}
+                    </a>
+                </h3>
+            );
+        } else {
+            return (
+                <h3 className="pull-left">{this.props.title}</h3>
+            );
+        }
+    },
+
     render: function() {
         var leftNode, rightNode;
         var children = React.Children.toArray(this.props.children);
@@ -27,9 +44,10 @@ var Title = React.createClass({
             }) ;
             rightNode = children.slice(children.length - 1) ;
         }
+        var title = this._getTitle();
         return (
             <div className={`${this.props.className} clearfix`}>
-                <h3 className="pull-left">{this.props.title}</h3>
+                { title }
                 { leftNode }
                 <div className="pull-right">
                     { rightNode }

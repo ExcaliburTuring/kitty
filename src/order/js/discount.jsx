@@ -64,6 +64,10 @@ var Discount = React.createClass({
                         'discountPrice': policy.value
                     }
                 });
+            } else {
+                this.setState({
+                    'data': discount
+                });
             }
         }
     },
