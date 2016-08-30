@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Image } from 'react-bootstrap';
 
 import { orderStatus } from 'config';
+import Title from 'title';
 import TravellerList from './travellers';
 
 var OrderItem = React.createClass({
@@ -78,57 +79,92 @@ var OrderItem = React.createClass({
         }
 
         return (
-            <div>
-                <div className={orderclass}>
-                    <div className="start-title">
-                        <Col sm={4} md={4}>
-                            <p className="left">{title}</p>
-                        </Col>
-                        <Col sm={4} md={4}>
-                            <p className="middle">订单号：DMU156481{order.orderid}</p>
-                        </Col>
-                        <Col sm={4} md={4}>
-                            {minutecount}
-                        </Col>
-                    </div>
-                    <div className="order-info">
-                        <Col sm={4} md={4}>
-                            <div className="travel-img">
+            <div className={`order-detail-container ${orderclass}`}>
+                <Title className="start-title" title={`订单号：${order.orderid}`}>
+                    <OrderTip 
+                        orderStatus={this.props.order.status}
+                        timeLeft={this.props.order.timeLeft} />
+                </Title>
+                <div className="order-info">
+                    <Col sm={4} md={4}>
+                        <div className="travel-img">
+                            <a href={`/order/${order.orderid}`} target="_blank">
                                 <Image src={order.headImg} responsive/>
+                            </a>
+                        </div>
+                    </Col>
+                    <Col sm={6} md={6}>
+                        <div className="travel-info">
+                            <div className="travel-name">
+                                {order.name}
                             </div>
-                        </Col>
-                        <Col sm={6} md={6}>
-                            <div className="travel-info">
-                                <div className="travel-name">
-                                    {order.name}
-                                </div>
-                                <div className="travel-time">
-                                    {order.startDate} 到 {order.endDate}
-                                </div>
-                                <div className="travel-price">
-                                    {price}
-                                </div>
-                                <div className="order-status">
-                                    订单状态：{status}
-                                </div>
+                            <div className="travel-time">
+                                {order.startDate} 到 {order.endDate}
                             </div>
-                        </Col>
-                        <Col sm={2} md={2}>
-                            <div className="travel-info">
-                                <TravellerList
-                                    names={order.names}
-                                    keyPrefix="unPayed"/>
-                                <div className="order-status">
-                                    {pay}
-                                </div>
+                            <div className="travel-price">
+                                {price}
                             </div>
-                        </Col>
-                    </div>
-                    {groupinfo}
+                            <div className="order-status">
+                                订单状态：{status}
+                            </div>
+                        </div>
+                    </Col>
+                    <Col sm={2} md={2}>
+                        <div className="travel-info">
+                            <TravellerList
+                                names={order.names}
+                                keyPrefix="unPayed"/>
+                            <div className="order-status">
+                                {pay}
+                            </div>
+                        </div>
+                    </Col>
                 </div>
+                {groupinfo}
             </div>
         );
     }
+});
+
+var OrderTip = React.createClass({
+
+    _countdown: function() {
+        this.setState({
+            'timeLeft': this.state.timeLeft - 1
+        });
+    },
+
+    getInitialState: function() {
+        return {
+            'timeLeft': this.props.timeLeft
+        };
+    },
+
+    componentDidMount: function() {
+        this._countdown();
+        setInterval(this._countdown, 1000);
+    },
+
+    render: function() {
+        if (this.props.orderStatus == orderStatus.WAITING) {
+            var timeLeft = this.state.timeLeft;
+            var hour = Math.floor(timeLeft / 3600);
+            var minute = Math.floor((timeLeft - hour * 3600) / 60);
+            var second = timeLeft - hour * 3600 - minute * 60;
+
+            return (
+                <p className="order-tip">还剩余：
+                    <span className="order-countdown">{hour}</span>小时
+                    <span className="order-countdown">{minute}</span>分钟
+                    <span className="order-countdown">{second}</span>秒
+                </p>
+            );
+        } else {
+
+        }
+        return null;
+    }
+
 });
 
 module.exports = OrderItem;

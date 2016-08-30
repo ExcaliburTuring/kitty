@@ -40,6 +40,7 @@
 	height: 50px;
 	line-height: 27px;
     font-size: 16px;
+    margin-bottom: 20px;
 
     h3 {
         padding-top: 4px;
@@ -59,7 +60,37 @@
         font-size: 20px;
         font-weight: bolder;
 		color: @currency;
+        text-decoration: underline;
 	}
+}
+
+.order-detail-container {
+    border: 1px solid #dfdfdf;
+    margin-bottom: 20px;
+
+    .start-title {
+        margin: 15px 22px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed @dark-gray;
+
+        h3 {
+            color: @currency;
+            font-size: 22px;
+        }
+
+        .order-tip {
+            margin-top: 5px;
+
+            .order-countdown {
+                color: @currency;
+                font-size: 18px;
+                font-style: border;
+                line-height: 18px;
+                margin-left: 4px;
+                margin-right: 4px;
+            }
+        }
+    }
 }
 
 .order-info {
