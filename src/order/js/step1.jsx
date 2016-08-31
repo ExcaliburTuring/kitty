@@ -25,6 +25,7 @@ var Step1 = React.createClass({
     ],
 
     // api method
+
     getSelectTravellers: function() {
         return this.state.selectTravellers;
     },
@@ -148,11 +149,30 @@ var Step1 = React.createClass({
         this.refs.newModal.toggleVisiable();
     },
 
-    onUpdate: function() {
+    onHandleOk: function() {
         message.success("成功更新常用出行人");
         AccountBasicInfo.actions.load();
         AccountContacts.actions.load();
         this.setState({'contact': null, 'title': ''});
+    },
+
+    onHandleDelete: function() {
+        var contact = this.state.contact;
+        var selectTravellers = this.state.selectTravellers;
+        for (var i = selectTravellers.length - 1; i >= 0; i--) {
+            var t = selectTravellers[i];
+            console.log('onHandleDelete')
+            if (t.accountid == contact.accountid 
+                && t.contactid == contact.contactid) {
+                selectTravellers.splice(i, 1);
+                console.log('find delete contact: ' + t);
+                break;
+            }
+        }
+        this.setState({'contact': null, 'title': '', 'selectTravellers': selectTravellers});
+        message.success("成功更新常用出行人");
+        AccountBasicInfo.actions.load();
+        AccountContacts.actions.load();
     },
 
     onNextBtnClick: function() {
@@ -243,8 +263,8 @@ var Step1 = React.createClass({
                     isAccount={this.state.contact ? this.state.contact.contactid == 0 : false}
                     accountid={this.state.basicInfo.accountInfo.accountid} 
                     contact={this.state.contact}
-                    onHandleOk={this.onUpdate}
-                    onHandleDelete={this.onUpdate}/>
+                    onHandleOk={this.onHandleOk}
+                    onHandleDelete={this.onHandleDelete}/>
             </div>
         );
     }
