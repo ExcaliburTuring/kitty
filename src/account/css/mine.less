@@ -85,17 +85,22 @@
             font-size: 22px;
         }
 
+        .order-status-tip,
         .order-tip {
-            margin-top: 5px;
+            margin-left: 20px;
+            padding-top: 5px;
+            font-size: 14px;
+            color: #666;
+        }
 
-            .order-countdown {
-                color: @currency;
-                font-size: 18px;
-                font-style: border;
-                line-height: 18px;
-                margin-left: 4px;
-                margin-right: 4px;
-            }
+        .order-status-tip .order-status,
+        .order-tip .order-countdown {
+            color: @currency;
+            font-size: 18px;
+            font-style: border;
+            line-height: 18px;
+            margin-left: 8px;
+            margin-right: 8px;
         }
     }
 
@@ -125,21 +130,25 @@
     }
 }
 
+.order-info {
 
-        
+    .traveller-names {
 
-        .order-status {
-            position: absolute;
-            bottom: 0;
+        &:hover {
+            cursor: pointer;
         }
 
-	.travel-names {
-		overflow: hidden;
-		p .fa {
-			color: @gray;
-			margin-right: 5px;
-		}
-	}
+        span {
+            max-width: 100px;
+            margin-right: 5px;
+
+            .fa {
+                color: @gray;
+                margin-right: 5px;
+            }
+        }
+    }
+}
 
 .group-info {
 	margin-bottom: 15px;

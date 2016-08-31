@@ -3,7 +3,7 @@ import { Row, Col, Image } from 'react-bootstrap';
 
 import { orderStatus } from 'config';
 import Title from 'title';
-import TravellerList from './travellers';
+import OrderTip from 'order_tip';
 
 var OrderItem = React.createClass({
 
@@ -11,7 +11,6 @@ var OrderItem = React.createClass({
         var order = this.props.order;
         var title = "";
         var status ="";
-        var price="";
         var pay="";
         var groupinfo="";
         var orderclass="order";
@@ -20,7 +19,6 @@ var OrderItem = React.createClass({
         if(order.status == orderStatus.WAITING){
             title = "未完成订单";
             status = "未支付";
-            price = order.actualPrice;
             pay = ( 
                 <div>
                     <a className="pay">去支付</a>
@@ -73,16 +71,22 @@ var OrderItem = React.createClass({
             status ="已完成";
             orderclass ="order history";
         }else{
-            orderclass ="invisible";
+           // orderclass ="invisible";
         }
 
         return (
             <div className={`order-brief-container ${orderclass}`}>
                 <Title className="order-brief-title" title={`订单号：${order.orderid}`}
                     href={`/order/${order.orderid}`}>
+                    <p className="order-status-tip">
+                        订单状态:
+                        <span className="order-status">
+                            {orderStatus.getDesc(order.status)}
+                        </span>
+                    </p>
                     <OrderTip 
-                        orderStatus={this.props.order.status}
-                        timeLeft={this.props.order.timeLeft} />
+                        orderStatus={order.status}
+                        timeLeft={order.timeLeft} />
                 </Title>
                 <div className="order-brief-content">
                     <Row>
@@ -102,28 +106,18 @@ var OrderItem = React.createClass({
                                         {order.title}
                                     </p>
                                     <p className="travel-price">
-                                        {price}
+                                        {order.price}
                                     </p>
                                 </div>
                             </div>
                         </Col>
-                        <Col sm={6} md={6}>
-                            <div className="travel-info">
-                                <div className="order-status">
-                                    订单状态：{status}
-                                </div>
+                        <Col sm={8} md={8}>
+                            <div className="order-info">
+                                <TravellerList names={order.travellerNames} keyPrefix={order.orderid}/>
                             </div>
                         </Col>
-                        <Col sm={2} md={2}>
-                            <div className="travel-info">
-                                <TravellerList
-                                    names={order.names}
-                                    keyPrefix="unPayed"/>
-                                <div className="order-status">
-                                    {pay}
-                                </div>
-                            </div>
-                        </Col>
+
+                        
                     </Row>
                 </div>
                 {groupinfo}
@@ -132,45 +126,35 @@ var OrderItem = React.createClass({
     }
 });
 
-var OrderTip = React.createClass({
-
-    _countdown: function() {
-        this.setState({
-            'timeLeft': this.state.timeLeft - 1
-        });
-    },
-
-    getInitialState: function() {
-        return {
-            'timeLeft': this.props.timeLeft
-        };
-    },
-
-    componentDidMount: function() {
-        this._countdown();
-        setInterval(this._countdown, 1000);
-    },
+var TravellerList = React.createClass({
 
     render: function() {
-        if (this.props.orderStatus == orderStatus.WAITING) {
-            var timeLeft = this.state.timeLeft;
-            var hour = Math.floor(timeLeft / 3600);
-            var minute = Math.floor((timeLeft - hour * 3600) / 60);
-            var second = timeLeft - hour * 3600 - minute * 60;
-
+        var keyPrefix = this.props.keyPrefix;
+        var travellers = this.props.names.map(function(name, index) {
             return (
-                <p className="order-tip">还剩余：
-                    <span className="order-countdown">{hour}</span>小时
-                    <span className="order-countdown">{minute}</span>分钟
-                    <span className="order-countdown">{second}</span>秒
-                </p>
+                <span key={`${keyPrefix}-${index}`} className="ellipsis">
+                    <i className="fa fa-check-square-o" />
+                    {name}
+                </span>
             );
-        } else {
-
-        }
-        return null;
+        });
+        return (
+            <div className="traveller-names">
+                <span>出行人员：</span>
+                {travellers}
+            </div>
+        );
     }
-
 });
 
 module.exports = OrderItem;
+/**
+<Col sm={2} md={2}>
+                            <div className="travel-info">
+                                
+                                <div className="order-status">
+                                    {pay}
+                                </div>
+                            </div>
+                        </Col>
+*/

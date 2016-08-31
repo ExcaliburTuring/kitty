@@ -8,6 +8,7 @@ import { Table, Form, Button, Modal, Input, message } from 'antd';
 
 import { url, idType, priceUtil, orderStatus, defaultValue } from 'config';
 import Title from 'title';
+import OrderTip from 'order_tip';
 
 import 'antd/lib/index.css';
 
@@ -77,7 +78,7 @@ var Step3 = React.createClass({
                         timeLeft={this.props.timeLeft} />
                 </Title>
                 <div className="step3-section">
-                    <h3>参加旅行的人</h3>
+                    <h3>出行人员</h3>
                     <Table
                         columns={_travellerTableColumn}
                         dataSource={this.getTravellersTableData()}
@@ -101,47 +102,6 @@ var Step3 = React.createClass({
             </div>
         );
     }
-});
-
-var OrderTip = React.createClass({
-
-    _countdown: function() {
-        this.setState({
-            'timeLeft': this.state.timeLeft - 1
-        });
-    },
-
-    getInitialState: function() {
-        return {
-            'timeLeft': this.props.timeLeft
-        };
-    },
-
-    componentDidMount: function() {
-        this._countdown();
-        setInterval(this._countdown, 1000);
-    },
-
-    render: function() {
-        if (this.props.orderStatus == orderStatus.WAITING) {
-            var timeLeft = this.state.timeLeft;
-            var hour = Math.floor(timeLeft / 3600);
-            var minute = Math.floor((timeLeft - hour * 3600) / 60);
-            var second = timeLeft - hour * 3600 - minute * 60;
-
-            return (
-                <p className="order-tip">还剩余：
-                    <span className="order-countdown">{hour}</span>小时
-                    <span className="order-countdown">{minute}</span>分钟
-                    <span className="order-countdown">{second}</span>秒
-                </p>
-            );
-        } else {
-
-        }
-        return null;
-    }
-
 });
 
 var Discount = React.createClass({
