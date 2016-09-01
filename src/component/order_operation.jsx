@@ -4,7 +4,7 @@
 import React from 'react';
 import { Modal, Input, message } from 'antd';
 
-import { orderStatus, defaultValue } from 'config';
+import { url, orderStatus, defaultValue } from 'config';
 
 import 'antd/lib/index.css';
 

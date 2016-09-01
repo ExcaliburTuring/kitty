@@ -197,6 +197,15 @@ var OrderOperation = React.createClass({
                     </Button>
                 </div>
             );
+        } else if (status == orderStatus.CANCEL || status == orderStatus.REFUNDING
+            || status == orderStatus.REFUNDED){
+            operationGroup = (
+                <div className="order-operation">
+                    <Button bsStyle="link" onClick={this.onOtherRouteBtnClick}>
+                        查看其它路线
+                    </Button>
+                </div>
+            );
         } else {
             return null;
         }
