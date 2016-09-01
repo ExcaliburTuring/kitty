@@ -221,7 +221,7 @@ export var orderStatus = {
             case this.CANCEL:
                 return '订单取消';
             case this.TIMEOUT:
-                return '付款超时，请重新下订单';
+                return '付款超时';
             case this.CLOSED:
                 return '行程取消'; 
             case this.REFUNDING:

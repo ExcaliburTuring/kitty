@@ -8,7 +8,7 @@ import { Form, Select, Input, InputNumber, Button } from 'antd';
 var FormItem = Form.Item;
 var SelectOption = Select.Option;
 
-import { url, priceUtil } from 'config';
+import { url, priceUtil, defaultValue } from 'config';
 import Rabbit from 'rabbit';
 
 import 'antd/lib/index.css';
@@ -114,7 +114,7 @@ var Discount = React.createClass({
                     'discountCode': {
                         'discountPrice': '￥0',
                         'validateStatus': 'error',
-                        'msg': '优惠码校验失败，请联系15001028030'
+                        'msg': `优惠码校验失败，请联系${defaultValue.hotline}`
                     }
                 });
             }
@@ -124,7 +124,7 @@ var Discount = React.createClass({
                 'discountCode': {
                     'discountPrice': '￥0',
                     'validateStatus': 'error',
-                    'msg': '优惠码校验失败，请联系15001028030'
+                    'msg': `优惠码校验失败，请联系${defaultValue.hotline}`
                 }
             });
         });

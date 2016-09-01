@@ -169,7 +169,8 @@ var App = React.createClass({
                     code={data.code}
                     student={data.student}
                     orderRefound={data.orderRefound}
-                    timeLeft={data.timeLeft}/>
+                    timeLeft={data.timeLeft}
+                    dayLeft={data.dayLeft}/>
             );
        }
         return (
