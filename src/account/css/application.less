@@ -2,9 +2,21 @@
 @import "./mine.less";
 @import "./info.less";
 
-.banner {
-	height: 220px;
-	margin-top: 55px;
+.content-container {
+	position: relative;
+
+	.banner {
+		height: 220px;
+		margin-top: 55px;
+	}
+
+	.tabbar-hover {
+		width: 100%;
+		height: 1px;
+		border-bottom: 1px solid #d9d9d9;
+		position: absolute;
+		top: 280px;
+	}
 }
 
 .noauth-container {
@@ -36,6 +48,7 @@
 
 		> div:first-child {
 			float: left !important;
+			margin-left: 60px;
 
 			.tabbar-avatar {
 				margin-top: -70px;
@@ -46,7 +59,6 @@
 
 	.ant-tabs-nav-container {
 		font-size: 18px;
-		border-bottom: 1px solid #d9d9d9;;
 
 		.ant-tabs-nav > div:nth-child(2) {
 			margin-left: 180px;
