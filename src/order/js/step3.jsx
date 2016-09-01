@@ -9,6 +9,7 @@ import { Table, Form, Button, Modal, Input, message } from 'antd';
 import { url, idType, priceUtil, orderStatus, defaultValue } from 'config';
 import Title from 'title';
 import OrderTip from 'order_tip';
+import OrderOperationHelper from 'order_operation';
 
 import 'antd/lib/index.css';
 
@@ -64,18 +65,18 @@ var Step3 = React.createClass({
     },
 
     render: function() {
+        var orderInfo = this.props.orderInfo;
         return (
             <div className="order-step3">
                 <Title title="订单详情" className="order-content-title">
                     <p className="order-status-tip">
                         订单状态:
                         <span className="order-status">
-                            {orderStatus.getDesc(this.props.orderInfo.status)}
+                            {orderStatus.getDesc(orderInfo.status)}
                         </span>
                     </p>
-                    <OrderTip 
-                        orderStatus={this.props.orderInfo.status}
-                        timeLeft={this.props.timeLeft} />
+                    <OrderTip status={orderInfo.status}
+                        timeLeft={this.props.timeLeft} dayLeft={this.props.dayLeft}/>
                 </Title>
                 <div className="step3-section">
                     <h3>出行人员</h3>
@@ -88,7 +89,7 @@ var Step3 = React.createClass({
                 <div className="step3-section">
                     <h3>支付金额和优惠</h3>
                     <Discount 
-                        orderInfo={this.props.orderInfo} 
+                        orderInfo={orderInfo} 
                         policy={this.props.policy}
                         code={this.props.code}
                         student={this.props.student}/>
@@ -98,7 +99,8 @@ var Step3 = React.createClass({
                     <div>未设置紧急联系人</div>
                 </div>
                 <Refund orderRefound={this.props.orderRefound} />
-                <OrderOperation orderInfo={this.props.orderInfo} />
+                <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status}
+                                routeid={orderInfo.routeid}/>
             </div>
         );
     }
@@ -162,20 +164,14 @@ var Discount = React.createClass({
     },
 
     render: function() {
-        if (this.props.policy == null && this.props.code == null && this.props.student == null) {
-            return (
-                <div> 本订单不享受任何折扣</div>
-            );
-        } else {
-            return (
-                <Table
-                    columns={_discountTableColumn} 
-                    dataSource={this.getDiscountTableData()} 
-                    bordered 
-                    pagination={false}
-                    footer={this.getFooter} />
-            );
-        }
+        return (
+            <Table
+                columns={_discountTableColumn} 
+                dataSource={this.getDiscountTableData()} 
+                bordered 
+                pagination={false}
+                footer={this.getFooter} />
+        );
     }
 });
 
@@ -200,108 +196,16 @@ var Refund = React.createClass({
 
 var OrderOperation = React.createClass({
 
-    // help method
-    _doCancelOrder: function() {
-        var self = this;
-        $.ajax({
-            url: url.orderOrder,
-            type: 'post',
-            data: {'orderid': this.props.orderInfo.orderid, '_method': 'delete'}
-        }).done(function(data) {
-            if (data.status != 0) {
-                message.error(defaultValue.cancelOrderMsg);
-            } else {
-                message.success('取消订单成功');
-                setTimeout('location.reload(true);', 300);
-            }
-        }).fail(function() {
-            message.error(defaultValue.cancelOrderMsg);
-        });
-    },
-
-    _doRefundOrder: function() {
-        var desc = $("#refund-reason-input").text();
-        var self = this;
-        $.ajax({
-            url: url.orderRefund,
-            type: 'post',
-            data: {'orderid': this.props.orderInfo.orderid, 'desc': desc}
-        }).done(function(data) {
-            if (data.status != 0) {
-                var errMsg = data.errors[0].message;
-                var content = (
-                    <div>
-                        <p>由于：<span className="order-refund-failed">{errMsg}</span> 
-                            的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
-                            {defaultValue.hotline}
-                        </p>
-                    </div>
-                )
-                Modal.error({
-                    title: '订单退款失败',
-                    content: content
-                });
-            } else {
-                Modal.success({
-                    title: '订单退款成功',
-                    content: '您已经成功申请订单退款！如可自动退款，将按原路返回到您的账户中。如无法自动退款，海逍遥工作人员将很快与您取得联系，请您耐心等候！'
-                });
-            }
-        }).fail(function() {
-            var content = (
-                <div>
-                    <p>由于：<span className="order-refund-failed">系统处理失败</span> 
-                        的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
-                        {defaultValue.hotline}
-                    </p>
-                </div>
-            )
-            Modal.error({
-                title: '订单退款失败',
-                content: content
-            });
-        });
-    },
-
-    // callback method
-    onCancelOrderBtnClick: function() {
-        var self = this;
-        Modal.confirm({
-            title: '删除订单',
-            content: `您是否确认要删除这个订单?如果您对我们的路线有疑问或建议，欢迎直接致电我们客服:${defaultValue.hotline}`,
-            onOk: function() {
-                self._doCancelOrder();
-            },
-            onCancel: function() {}
-        });
-    },
-
-    onRefundOrderBtnClick: function() {
-        var self = this;
-        var refundModalContent = (
-            <div>
-                <p>{`如果您对订单不满意或者因某些原因想重新下订单可直接联系我们客服: ${defaultValue.hotline}，并且申请退款有可能不能全额返还的哦，参考退款政策。`}</p>
-                <Input id="refund-reason-input" placeholder="请输入您申请退款的理由"></Input>
-            </div>
-        );
-        Modal.confirm({
-            title: '订单退款',
-            content: refundModalContent,
-            onOk: function() {
-                self._doRefundOrder();
-            },
-            onCancel: function() {}
-        });
-    },
+    mixins: [OrderOperationHelper],
 
     render: function() {
-        var status = this.props.orderInfo.status;
+        var status = this.props.status;
         var operationGroup = null;
         if (status == orderStatus.WAITING) {
             operationGroup = (
                 <div className="order-operation">
                     <Form inline onSubmit={()=>{}} action="/order/pay" method="GET" target="_blank">
-                        <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
+                        <input type="hidden" name="orderid" value={this.props.orderid}></input>
                         <Button type="primary" htmlType="submit">
                             马上支付
                         </Button>
@@ -320,8 +224,19 @@ var OrderOperation = React.createClass({
                     <Button type="primary" onClick={this.onRefundOrderBtnClick}>
                         订单退款
                     </Button>
-                    <Button type="primary">
+                    <Button type="primary" onClick={this.onOtherRouteBtnClick}>
                         查看其它路线
+                    </Button>
+                </div>
+            );
+        } else if (status == orderStatus.TIMEOUT) {
+            operationGroup = (
+                <div className="order-operation">
+                    <Button type="primary" onClick={this.onRefundOrderBtnClick}>
+                        重新下单
+                    </Button>
+                    <Button type="primary" onClick={this.onSameRouteBtnClick}>
+                        查看同一路线
                     </Button>
                 </div>
             );
@@ -337,3 +252,98 @@ var OrderOperation = React.createClass({
 });
 
 module.exports = Step3;
+
+
+// // help method
+//     _doCancelOrder: function() {
+//         var self = this;
+//         $.ajax({
+//             url: url.orderOrder,
+//             type: 'post',
+//             data: {'orderid': this.props.orderid, '_method': 'delete'}
+//         }).done(function(data) {
+//             if (data.status != 0) {
+//                 message.error(defaultValue.cancelOrderMsg);
+//             } else {
+//                 message.success('取消订单成功');
+//                 setTimeout('location.reload(true);', 300);
+//             }
+//         }).fail(function() {
+//             message.error(defaultValue.cancelOrderMsg);
+//         });
+//     },
+
+//     _doRefundOrder: function() {
+//         var desc = $("#refund-reason-input").text();
+//         var self = this;
+//         $.ajax({
+//             url: url.orderRefund,
+//             type: 'post',
+//             data: {'orderid': this.props.orderid, 'desc': desc}
+//         }).done(function(data) {
+//             if (data.status != 0) {
+//                 var errMsg = data.errors[0].message;
+//                 var content = (
+//                     <div>
+//                         <p>由于：<span className="order-refund-failed">{errMsg}</span> 
+//                             的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+//                             {defaultValue.hotline}
+//                         </p>
+//                     </div>
+//                 )
+//                 Modal.error({
+//                     title: '订单退款失败',
+//                     content: content
+//                 });
+//             } else {
+//                 Modal.success({
+//                     title: '订单退款成功',
+//                     content: '您已经成功申请订单退款！如可自动退款，将按原路返回到您的账户中。如无法自动退款，海逍遥工作人员将很快与您取得联系，请您耐心等候！'
+//                 });
+//             }
+//         }).fail(function() {
+//             var content = (
+//                 <div>
+//                     <p>由于：<span className="order-refund-failed">系统处理失败</span> 
+//                         的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+//                         {defaultValue.hotline}
+//                     </p>
+//                 </div>
+//             )
+//             Modal.error({
+//                 title: '订单退款失败',
+//                 content: content
+//             });
+//         });
+//     },
+
+//     // callback method
+//     onCancelOrderBtnClick: function() {
+//         var self = this;
+//         Modal.confirm({
+//             title: '删除订单',
+//             content: `您是否确认要删除这个订单?如果您对我们的路线有疑问或建议，欢迎直接致电我们客服:${defaultValue.hotline}`,
+//             onOk: function() {
+//                 self._doCancelOrder();
+//             },
+//             onCancel: function() {}
+//         });
+//     },
+
+//     onRefundOrderBtnClick: function() {
+//         var self = this;
+//         var refundModalContent = (
+//             <div>
+//                 <p>{`如果您对订单不满意或者因某些原因想重新下订单可直接联系我们客服: ${defaultValue.hotline}，并且申请退款有可能不能全额返还的哦，参考退款政策。`}</p>
+//                 <Input id="refund-reason-input" placeholder="请输入您申请退款的理由"></Input>
+//             </div>
+//         );
+//         Modal.confirm({
+//             title: '订单退款',
+//             content: refundModalContent,
+//             onOk: function() {
+//                 self._doRefundOrder();
+//             },
+//             onCancel: function() {}
+//         });
+//     },

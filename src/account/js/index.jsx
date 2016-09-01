@@ -15,6 +15,8 @@ import NoLogin from './nologin';
 var OrderBrief = Rabbit.create(url.orderBrief); 
 var Index = React.createClass({
 
+    orderType: orderType.CURRENT,
+
     mixins: [
         Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
         Reflux.connect(OrderBrief.store, 'data')
@@ -23,11 +25,11 @@ var Index = React.createClass({
     // callback method
 
     onSelectOrderType: function(type) {
-        if (this.state.orderType == type) {
+        if (this.orderType == type) {
             return;
         }
         OrderBrief.actions.load({'orderType': type});
-        this.setState({'orderType': type});
+        this.orderType = type;
     },
 
     // compoment specs
@@ -37,7 +39,6 @@ var Index = React.createClass({
         OrderBrief.actions.load({'orderType': orderType.CURRENT});
         return {
             'basicInfo': {},
-            'orderType': orderType.CURRENT,
             'data': {
                 'status': 1,
                 'briefOrders': [],
@@ -63,7 +64,7 @@ var Index = React.createClass({
         if (data.briefOrders != null && data.briefOrders.length > 0) {
             ordersList = data.briefOrders.map(function(order) {
                 return (
-                        <OrderItem order={order} key={order.orderid}/>
+                        <OrderItem briefOrder={order} key={order.orderInfo.orderid}/>
                 );
             });
         } else {

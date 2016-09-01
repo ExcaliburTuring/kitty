@@ -75,10 +75,6 @@
         padding: 15px 22px;
         border-bottom: 1px dashed @dark-gray;
 
-        a:hover {
-            border-bottom: 1px solid #ff6100
-        }
-
         h3,
         a {
             color: @currency;
@@ -105,91 +101,128 @@
     }
 
     .order-brief-content {
-        margin: 20px 7px;
+        margin-top: 20px;
+
+        .row {
+            margin-left: 7px;
+            margin-right: 7px;
+        }
+
+        .order-extra-container {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            max-height: 50px;
+            min-height: 30px;
+            padding-top: 10px;
+            border-top: 1px dashed @dark-gray;
+        }
     }
 }
 
 .travel-info {
 
-    .travel-content {
-
-        margin-top: 15px;
-
-        .travel-name {
-            font-size: 18px;
-            line-height: 28px;
-            margin-right: 8px;
-            margin-bottom: 5px;
-        }
-
-        .travel-price {
-            color: @currency;
-            font-size: 14px;
-            line-height: 28px;
-        }
+    .travel-name {
+        font-size: 18px;
+        line-height: 28px;
+        margin-right: 8px;
+        margin-bottom: 5px;
     }
 }
 
 .order-info {
 
+    .order-label {
+        font-size: 18px;
+        line-height: 28px;
+        margin-right: 8px;
+    }
+
     .traveller-names {
 
-        &:hover {
-            cursor: pointer;
-        }
+        margin-top: 5px;
 
-        span {
+        .traveller-name {
+
             max-width: 100px;
-            margin-right: 5px;
+            margin-right: 8px;
 
             .fa {
                 color: @gray;
                 margin-right: 5px;
             }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .order-price {
+
+        .price {
+            color: @orange;
+        }
+
+        .price-operator {
+            font-size: 14px;
+        }
+    }
+}
+
+.order-operation-container {
+    width: 100%;
+    height: 20px;
+    margin-bottom: 8px;
+
+    .order-operation {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        form.ant-form-inline {
+            display: inline-block;
+        }
+
+        button.btn.btn-link {
+            margin-right: 10px;
+            font-size: 12px;
+            padding: 0;
+            color: #e01515;
+            padding-left: 10px;
+            border-left: 1px solid #e01515;
+
+            &:hover {
+                color: #e01515;
+            }
+        }
+
+        button.btn.btn-link:first-child {
+            border-left: none;
         }
     }
 }
 
 .group-info {
-	margin-bottom: 15px;
-	padding-bottom: 5px; 
-	width: 100%;
-	height: 190px;
-		
-	.travel-countdown {
-		.countdown-title {
-			color: @currency;
-			font-size: 18px;
-			text-align: center;
-		}
-		.countdown {
-			font-family: cursive;
-			font-size: 60px;
-			line-height: 80px;
-			text-align: center;
-		}
-	}
 
 	.group-members {
-		height: 170px;
 		font-size: 14px;
 		
 		.avatars {
-			height: 80px;
 			overflow: hidden;
 
 			img {
 				width: 40px;
 			}
+
+            .traveller-name {
+                max-width: 100px;
+                margin-right: 8px;
+            }
 		}
 
 		.fa {
 			margin-left: 20px;
 			font-size: 18px;
-		}
-		.more {
-			position: absolute;
-			bottom: 10px;
 		}
 	}
 
@@ -197,6 +230,22 @@
 		float:right;
 		width: 170px;
 	}
+}
+
+
+/**
+ * 当前订单都样式
+ */
+.order-brief-container.current {
+
+}
+
+
+/**
+ * 过期订单都样式
+ */
+.order-brief-container.history {
+    background: @gray-bg;
 }
 
 .no-result {

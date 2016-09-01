@@ -161,11 +161,9 @@ var Step1 = React.createClass({
         var selectTravellers = this.state.selectTravellers;
         for (var i = selectTravellers.length - 1; i >= 0; i--) {
             var t = selectTravellers[i];
-            console.log('onHandleDelete')
             if (t.accountid == contact.accountid 
                 && t.contactid == contact.contactid) {
                 selectTravellers.splice(i, 1);
-                console.log('find delete contact: ' + t);
                 break;
             }
         }
