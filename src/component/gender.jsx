@@ -7,7 +7,6 @@ const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
 import { gender } from 'config';
-import validator from 'validator';
 import BaseFromItem from 'base_form_item';
 
 import 'antd/lib/index.css';

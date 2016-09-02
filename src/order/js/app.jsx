@@ -38,6 +38,8 @@ var App = React.createClass({
             'studentDiscountid': discountData.studentDiscountid,
             'studentCount': discountData.studentCount,
             'actualPrice': discountData.actualPrice,
+            'emergencyContact': this.state.emergency.name,
+            'emergencyMobile': this.state.emergency.mobile
         };
         $.ajax({
             'url': url.orderOrder,
@@ -72,13 +74,15 @@ var App = React.createClass({
 
     onNextBtnClick: function() {
         var travellers = this.refs.step1.getSelectTravellers();
+        var emergency = this.refs.step1.getEmergency();
         var data = this.state.data;
         data.orderInfo.status = orderStatus.DISCOUNT_SELECT;
         var price = priceUtil.getPrice(this.state.data.travelGroup.price) * travellers.length;
         data.orderInfo.price = priceUtil.getPriceStr(price);
         this.setState({
             'data': data,
-            'travellers': travellers
+            'travellers': travellers,
+            'emergency': emergency
         });
     },
 
@@ -109,6 +113,7 @@ var App = React.createClass({
         return {
             'basicInfo': {},
             'travellers': [],
+            'emergency': {},
             'data': {
                 'status': 1,
                 'orderInfo': {},

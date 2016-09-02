@@ -54,12 +54,16 @@ var BaseFromItem = {
         if (this.state.value === value) {
             return;
         }
-        var ret = this._validate(value);
-        this.setState({
-            'value': value,
-            'validationState': ret['state'],
-            'msg': ret['msg']
-        });
+        if (this.props.defaultValue === value) {
+            this.setState(this._createInitalState(this.props.defaultValue));
+        } else {
+            var ret = this._validate(value);
+            this.setState({
+                'value': value,
+                'validationState': ret['state'],
+                'msg': ret['msg']
+            });
+        }
     },
 
     _createInitalState: function(defaultValue) {
