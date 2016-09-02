@@ -204,7 +204,7 @@ var Emergency = React.createClass({
         var emergency = [];
         for (var i = 0, n = emergencyMobiles.length; i < n; i++) {
             emergency.push({
-                'id': i,
+                'id': i + 1,
                 'name': i >= emergencyContacts.length ? '' : emergencyContacts[i],
                 'mobile': emergencyMobiles[i]
             })
