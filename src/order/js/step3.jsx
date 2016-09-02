@@ -42,7 +42,18 @@ const _discountTableColumn = [{
     'title': '实际优惠价格',
     'dataIndex': 'discountPrice',
     'colSpan': 0
-}]
+}];
+
+const _emergencyTableColumn = [{
+    'title': '序号',
+    'dataIndex': 'id'
+}, {
+    'title': '姓名',
+    'dataIndex': 'name'
+}, {
+    'title': '联系方式',
+    'dataIndex': 'mobile'
+}];
 
 var Step3 = React.createClass({
 
@@ -96,7 +107,8 @@ var Step3 = React.createClass({
                 </div>
                 <div className="step3-section">
                     <h3>紧急联系人</h3>
-                    <div>未设置紧急联系人</div>
+                    <Emergency emergencyContact={orderInfo.emergencyContact}
+                        emergencyMobile={orderInfo.emergencyMobile} />
                 </div>
                 <Refund orderRefound={this.props.orderRefound} />
                 <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status}
@@ -171,6 +183,40 @@ var Discount = React.createClass({
                 bordered 
                 pagination={false}
                 footer={this.getFooter} />
+        );
+    }
+});
+
+var Emergency = React.createClass({
+
+    _split: function(value) {
+        return value == null ? [] : value.split(',');
+    },
+
+    render: function() {
+        var emergencyContacts = this._split(this.props.emergencyContact);
+        var emergencyMobiles = this._split(this.props.emergencyMobile);
+        if (emergencyContacts.length == 0 || emergencyMobiles.length == 0) {
+            return (
+                <div>没有设置紧急联系人</div>
+            );
+        }
+        var emergency = [];
+        for (var i = 0, n = emergencyMobiles.length; i < n; i++) {
+            emergency.push({
+                'id': i,
+                'name': i >= emergencyContacts.length ? '' : emergencyContacts[i],
+                'mobile': emergencyMobiles[i]
+            })
+        }
+        return (
+            <div>
+                <Table
+                    columns={_emergencyTableColumn} 
+                    dataSource={emergency} 
+                    bordered 
+                    pagination={false} />
+            </div>
         );
     }
 });

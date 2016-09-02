@@ -31,7 +31,7 @@ var OrderOperationHelper = {
     },
 
     _doRefundOrder: function() {
-        var desc = $("#refund-reason-input").text();
+        var desc = $("#refund-reason-input").val();
         var self = this;
         $.ajax({
             url: url.orderRefund,
@@ -98,6 +98,7 @@ var OrderOperationHelper = {
         );
         Modal.confirm({
             title: '订单退款',
+            okText: '确定',
             content: refundModalContent,
             onOk: function() {
                 self._doRefundOrder();

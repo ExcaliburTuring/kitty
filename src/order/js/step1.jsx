@@ -4,10 +4,11 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Row, Col } from 'react-bootstrap';
-import { Alert, Checkbox, Icon, Button, message } from 'antd';
+import { Alert, Checkbox, Icon, Button, Modal, Input, message } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
 import { url, accountStatus } from 'config';
+import validator from 'validator';
 import Rabbit from 'rabbit';
 import Contact from 'contact';
 import Title from 'title';
@@ -30,6 +31,28 @@ var Step1 = React.createClass({
         return this.state.selectTravellers;
     },
 
+    getEmergency: function() {
+        var name = '', mobile = '',emergencyContacts = this.state.emergencyContacts;
+        for (var key in emergencyContacts) {
+            if (key != 'size' && emergencyContacts.hasOwnProperty(key)) {
+                var emergency = emergencyContacts[key];
+                name = name + emergency.name + ',';
+                mobile = mobile + emergency.mobile + ',';
+            }
+        }
+        if (name.length > 1) {
+            name = name.substring(0, name.length - 1);
+        } else {
+            return {};
+        }
+        if (mobile.length > 1) {
+            mobile = mobile.substring(0, mobile.length - 1);
+        } else {
+            return {};
+        }
+        return {'name': name, 'mobile': mobile};
+    },
+
     // helper method
 
     _createTravellers: function() {
@@ -47,7 +70,7 @@ var Step1 = React.createClass({
         return {
             'accountid': accountInfo.accountid,
             'contactid': 0,
-            'name': accountInfo.name,
+            'name': accountInfo.name || accountInfo.nickname,
             'id': accountInfo.id,
             'idType': accountInfo.idType,
             'gender': accountInfo.gender,
@@ -111,16 +134,52 @@ var Step1 = React.createClass({
         return contactsList;
     },
 
+    _createEmergencyNameList: function(travellers, selectTravellers) {
+        var self = this, nameList = [], emergencyContacts = this.state.emergencyContacts;
+        for (var i = 0, n = travellers.length; i < n; i++) {
+            var traveller = travellers[i];
+            if (traveller.emergency // 这个联系人是紧急联系人，并且没有选择去旅游
+                && !selectTravellers.hasOwnProperty(`${traveller.accountid}-${traveller.contactid}`)) {
+                nameList.push(
+                    <Name 
+                        key={`travellers-name-list-${i}`} 
+                        traveller={traveller}
+                        name={traveller.name == null ? '您自己' : traveller.name} 
+                        onChange={self.onEmergencyNameChange}
+                        checked={emergencyContacts.hasOwnProperty(traveller.mobile)}/>
+                );
+            }
+        }
+        return nameList;
+    },
+
+    _createEmergencyContactList: function() {
+        var self = this, contactsList = [], emergencyContacts = this.state.emergencyContacts;
+        for (var key in emergencyContacts) {
+            if (key != 'size' && emergencyContacts.hasOwnProperty(key)) {
+                var emergencyContact = emergencyContacts[key];
+                contactsList.push(
+                    <Col key={`select-travellers-list-${key}`} md={4}>
+                        <Contact contact={emergencyContact} 
+                            readOnly needCard={false} closable
+                            onEditBtnClick={self.onEditBtnClick} onClose={this.onEmergencyClose}/>
+                    </Col>
+                );
+            }
+        }
+        return contactsList;
+    },
+
     // callback method
 
     onNameChange: function(e, traveller) {
         var selectTravellers = this.state.selectTravellers;
         var size = selectTravellers.length;
         if (e.target.checked) {
-            if (size >= this.props.quota) {
+            if (size > this.props.quota) {
                 message.warn(`本团最多还可以报${this.props.quota}人`);
                 return;
-            } else if (size >= 5) {
+            } else if (size > 5) {
                 message.warn('每个订单最多可以报5人');
                 return;
             } else {
@@ -129,14 +188,34 @@ var Step1 = React.createClass({
         } else {
             for (var i = selectTravellers.length - 1; i >= 0; i--) {
                 var t = selectTravellers[i];
-                if (t.accountid == traveller.accountid 
-                    && t.contactid == traveller.contactid) {
+                if (t.accountid == traveller.accountid && t.contactid == traveller.contactid) {
                     selectTravellers.splice(i, 1);
                     break;
                 }
             }
         }
         this.setState({'selectTravellers': selectTravellers});
+    },
+
+    onEmergencyNameChange: function(e, traveller) {
+        var emergencyContacts = this.state.emergencyContacts;
+        if (e.target.checked) {
+            if (emergencyContacts.size > 3) {
+                message.warn('每个订单最多可以有3个紧急联系人');
+                return;
+            } else {
+                emergencyContacts[traveller.mobile] = { // 手机作为key，避免同一个手机
+                    'name': traveller.name, 
+                    'mobile': traveller.mobile, 
+                    'relationship': '紧急联系人'
+                };
+                emergencyContacts.size = emergencyContacts.size + 1;
+            }
+        } else {
+            delete emergencyContacts[traveller.mobile];
+            emergencyContacts.size = emergencyContacts.size - 1;
+        }
+        this.setState({'emergencyContacts': emergencyContacts});
     },
 
     onNewBtnClick: function() {
@@ -147,6 +226,54 @@ var Step1 = React.createClass({
     onEditBtnClick: function(contact) {
         this.setState({'contact': contact, 'title': '编辑出行人'});
         this.refs.newModal.toggleVisiable();
+    },
+
+    onNewEmergencyBtnClick: function() {
+        var self = this;
+        var modalContent = (
+            <div>
+                <label>
+                    姓名：
+                    <Input id="emergency-name-input" placeholder="请输入" />
+                </label>
+                <label>
+                    电话：
+                    <Input id="emergency-mobile-input" placeholder="请输入" />
+                </label>
+            </div>
+        );
+        Modal.confirm({
+            title: '添加紧急联系人',
+            okText: '添加',
+            content: modalContent,
+            onOk: function() {
+                var name = $("#emergency-name-input").val();
+                var mobile = $("#emergency-mobile-input").val();
+                if (name && name.length > 1 && mobile && mobile.length > 1) {
+                    var ret = validator.mobile(mobile, '手机号输入有误');
+                    if (ret.state != 'success') {
+                        message.error('输入的手机号有误，请重新添加!');
+                        return;
+                    }
+                    var emergencyContacts = self.state.emergencyContacts;
+                    emergencyContacts[mobile] = { // 手机作为key，避免同一个手机
+                        'name': name, 
+                        'mobile': mobile, 
+                        'relationship': '紧急联系人'
+                    };
+                    emergencyContacts.size = emergencyContacts.size + 1;
+                    self.setState({'emergencyContacts': emergencyContacts});
+                }
+            },
+            onCancel: function() {}
+        });
+    },
+
+    onEmergencyClose: function(contact) {
+        var emergencyContacts = this.state.emergencyContacts;
+        delete emergencyContacts[contact.mobile];
+        emergencyContacts.size = emergencyContacts.size - 1;
+        this.setState({'emergencyContacts': emergencyContacts});
     },
 
     onHandleOk: function() {
@@ -161,8 +288,7 @@ var Step1 = React.createClass({
         var selectTravellers = this.state.selectTravellers;
         for (var i = selectTravellers.length - 1; i >= 0; i--) {
             var t = selectTravellers[i];
-            if (t.accountid == contact.accountid 
-                && t.contactid == contact.contactid) {
+            if (t.accountid == contact.accountid && t.contactid == contact.contactid) {
                 selectTravellers.splice(i, 1);
                 break;
             }
@@ -184,7 +310,7 @@ var Step1 = React.createClass({
             return;
         }
         if (this.state.basicInfo.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
-            message.error('请先完善个人信息');
+            message.error('请先完善个人信息。可先勾选自己，然后点击小铅笔按钮进行编辑。');
             return;
         }
         this.props.onNextBtnClick();
@@ -202,7 +328,10 @@ var Step1 = React.createClass({
             },
             'selectTravellers': this._copyArray(this.props.travellers),
             'contact': null,
-            'title': ''
+            'title': '',
+            'emergencyContacts': {
+                'size' : 0
+            }
         };
     },
 
@@ -216,8 +345,13 @@ var Step1 = React.createClass({
         }
         var travellers = this._createTravellers();
         var selectTravellers = this._createSelectTravellers();
+        // 出行人选择
         var nameList = this._createNameList(travellers, selectTravellers);
         var contactsList = this._createContactsList(travellers, selectTravellers);
+        // 紧急联系人选择
+        var emergencyNameList = this._createEmergencyNameList(travellers, selectTravellers);
+        var emergencyContactList = this._createEmergencyContactList();
+        // 新用户提示
         var newAccountTip = null;
         if (this.state.basicInfo.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
             newAccountTip = (
@@ -228,7 +362,7 @@ var Step1 = React.createClass({
         return (
             <div className="order-step1 clearfix">
                 <div className="order-contact-container">
-                    <Title title="常用出行人" className="order-content-title">
+                    <Title title="选择出行人" className="order-content-title">
                         <p className="order-contact-tip">
                             本团还可报
                             <span className="order-group-quota">{this.props.quota}</span>
@@ -247,6 +381,18 @@ var Step1 = React.createClass({
                     <div className="order-traveller-show">
                         <Row>
                             {contactsList}
+                        </Row>
+                    </div>
+                    <div className="order-emergency-contianer">
+                        <span className="order-emergency-title">紧急联系人:</span>
+                        {emergencyNameList}
+                        <Button type="ghost" size="small" onClick={this.onNewEmergencyBtnClick}>
+                            <Icon type="plus"/>添加
+                        </Button>
+                    </div>
+                    <div className="order-emergency-show">
+                        <Row>
+                            {emergencyContactList}
                         </Row>
                     </div>
                 </div>

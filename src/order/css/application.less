@@ -173,32 +173,52 @@ body {
 		}
     }
 
+	/**
+	 * 因为.order-emergency-contianer里也会用到下面两个样式，
+	 * 所以就不放在.order-traveller-select-container里了
+	 */
+    .order-contact-name {
+		margin-left: 20px;
+
+		span {
+			font-size: 14px;
+		}
+	}
+
+	button {
+		margin-left: 20px;
+	}
+
     .order-traveller-select-container {
 
     	> span:first-child {
-    		margin-left: 22px;
+    		margin-left: 20px;
     	}
-
-    	.order-contact-name {
-			margin-left: 20px;
-
-			span {
-				font-size: 14px;
-			}
-		}
-
-		button {
-			margin-left: 20px;
-		}
     }
 
-    .order-traveller-show {
+    .order-emergency-contianer {
+    	width: 100%;
+    	border-top: 1px solid #dfdfdf;
+    	padding: 13px 20px 0 20px;
+
+    	.order-emergency-title {
+
+    	}
+
+    }
+
+    .order-traveller-show,
+    .order-emergency-show {
     	margin-top: 15px;
     	min-height: 200px;
 
     	.row .col-md-4 {
             margin-bottom: 10px;
         }
+    }
+
+    .order-emergency-show {
+    	min-height: 100px;
     }
 
 	.submit {

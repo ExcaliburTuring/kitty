@@ -12,6 +12,7 @@ import Birthday from 'birthday';
 import Email from 'email';
 import Mobile from 'mobile';
 import Address from 'address';
+import Emergency from 'emergency';
 
 import 'antd/lib/index.css';
 import './new.less';
@@ -36,7 +37,8 @@ export var NewModal = React.createClass({
             'gender': contact.gender,
             'birthday': contact.birthday,
             'mobile': contact.mobile,
-            'email': contact.email
+            'email': contact.email,
+            'emergency': contact.emergency
         };
     },
 
@@ -46,7 +48,8 @@ export var NewModal = React.createClass({
                 || this.refs.genderSelector.isChange()
                 || this.refs.birthdaySelector.isChange()
                 || this.refs.emailContainer.isChange()
-                || this.refs.mobileContainer.isChange();
+                || this.refs.mobileContainer.isChange()
+                || this.refs.emergencyContainer.isChange();
     },
 
     _revert: function() {
@@ -56,6 +59,7 @@ export var NewModal = React.createClass({
         this.refs.birthdaySelector.revert();
         this.refs.emailContainer.revert();
         this.refs.mobileContainer.revert();
+        this.refs.emergencyContainer.revert();
     },
 
     // callback method
@@ -98,7 +102,8 @@ export var NewModal = React.createClass({
             || this.refs.genderSelector.validate() != 'success'
             || this.refs.birthdaySelector.validate() != 'success'
             || this.refs.emailContainer.validate() != 'success'
-            || this.refs.mobileContainer.validate() != 'success') {
+            || this.refs.mobileContainer.validate() != 'success'
+            || this.refs.emergencyContainer.validate() != 'success') {
             return;
         }
 
@@ -131,6 +136,9 @@ export var NewModal = React.createClass({
         if (this.refs.mobileContainer.isChange()) {
             contact['mobile'] = this.refs.mobileContainer.getValue();
         }
+        if (this.refs.emergencyContainer.isChange()) {
+            contact['emergency'] = this.refs.emergencyContainer.getValue();
+        }
         var self = this;
         $.post(this.props.isAccount ? url.accountInfo : url.contacts, contact)
         .done(function(data) {
@@ -152,6 +160,7 @@ export var NewModal = React.createClass({
                 self.refs.birthdaySelector.cleanValidate();
                 self.refs.emailContainer.cleanValidate();
                 self.refs.mobileContainer.cleanValidate();
+                self.refs.emergencyContainer.cleanValidate();
                 self.props.onHandleOk();
             }
         }).fail(function() {
@@ -195,6 +204,9 @@ export var NewModal = React.createClass({
     handleCancel: function() {
         if (this.state.closable) {
             this.toggleVisiable();
+            if (this.state.isChange) {
+                this._revert();
+            }
         }
     },
 
@@ -268,6 +280,11 @@ export var NewModal = React.createClass({
                     <Email
                         ref="emailContainer"
                         defaultValue={contact.email}
+                        onChange={this.onChange}
+                        readOnly={false}/>
+                    <Emergency 
+                        ref="emergencyContainer"
+                        defaultValue={contact.emergency}
                         onChange={this.onChange}
                         readOnly={false}/>
                 </Form>
