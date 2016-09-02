@@ -40,8 +40,9 @@ var App = React.createClass({
 
     createDom: function(content) {
         return ( 
-            <div>
+            <div className="content-container">
                 <Banner/>
+                <div className="tabbar-hover"></div>
                 <div className="container">
                     <div className="accountinfo-container">
                         {content}
