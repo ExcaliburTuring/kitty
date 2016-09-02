@@ -1,3 +1,18 @@
+.index-title,
+.order-brief-container,
+.profiles {
+    border-radius: 6px;
+    overflow: hidden;
+
+    &:hover {
+        box-shadow: 0 0 6px 0 @trans-black;
+        animation: shadow 0.2s;
+        -moz-animation: shadow 0.2s; /* Firefox */
+        -webkit-animation: shadow 0.2s; /* Safari and Chrome */
+        -o-animation: shadow 0.2s; /* Opera */
+    };
+}
+
 .index-container {
 	font-family: "Microsoft Yahei";
     padding-top: 20px;
@@ -247,7 +262,7 @@
  * 过期订单都样式
  */
 .order-brief-container.history {
-    background: @gray-bg;
+    background: @rice;
 }
 
 .no-result {

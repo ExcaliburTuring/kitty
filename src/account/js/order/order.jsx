@@ -22,7 +22,7 @@ var OrderItem = React.createClass({
         var travelRoute = briefOrder.travelRoute;
         var travelGroup = briefOrder.travelGroup;
         var className = _classNameConfig[orderInfo.status == orderStatus.WAITING 
-            || orderStatus == orderStatus.PAYING || orderInfo.status == orderStatus.PAID];
+            || orderInfo.status == orderStatus.PAYING || orderInfo.status == orderStatus.PAID];
         return (
             <div className={`order-brief-container ${className}`}>
                 <Title className="order-brief-title" title={`订单号：${orderInfo.orderid}`}

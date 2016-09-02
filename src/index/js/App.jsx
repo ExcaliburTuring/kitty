@@ -4,6 +4,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Grid, Row, Col, Image } from 'react-bootstrap';
+import marked from 'marked';
 
 import { defaultValue, url } from 'config';
 import Rabbit from 'rabbit';
@@ -148,13 +149,14 @@ var Route = React.createClass({
 
     render: function() {
         var route = this.props.route;
+        var cover = marked(route.cover);
         var daysImg = _getDaysImg(route.days);
         return (
             <div className="route-container" onClick={this.onClick}>
                 <figure className="effect-apollo">
                         <Image responsive src={route.headImg} />
                         <figcaption>
-                            <p>{route.title}</p>
+                            <div dangerouslySetInnerHTML={{__html: cover}}></div>
                             <a href="#">View more</a>
                         </figcaption>   
                 </figure>

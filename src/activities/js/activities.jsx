@@ -12,37 +12,48 @@ var App = React.createClass({
                 <div className="table">
                     <div className="head">
                         <div className="line"/>
-                        <div className="title">暑期优惠活动</div>
+                        <div className="title">海逍遥优惠活动</div>
                         <div className="line"/>
-                        <div className="subheading">逍遥君暑期大放“价”</div>
+                        <div className="subheading">你们放假，我们“放价”！</div>
                     </div>
                     <Col md={12} sm={12}>
                         <div className="numbers">A</div>
                         <div className="activity">
-                            <h2>活动A：一路有你</h2>
-                            <h5><span className="orange">对象： </span>2人以上<br/>
-                                <span className="orange">参与方式： </span>报名时选择“N人同行优惠”即可享受啦~<br/>
-                                <span className="orange">详细说明： </span>大好时光怎能一个人独享，拉上你的闺蜜/死党/好友/基友一起来吧!<br/><br/>
+                            <h2>活动A：“一路同行”多人报名优惠</h2>
+                            <h5><span className="orange">对象： </span>2人及以上同时报名<br/>
+                                <span className="orange">参与方式： </span>报名时正确填写小伙伴信息，选择优惠政策即可~<br/>
+                                <span className="orange">详细说明： </span>长途旅行，2人优惠300元，3人优惠500元！<br/>
+                                长途旅行，2人优惠300元，3人优惠500元！<br/><br/>
                             </h5>
                         </div>
                     </Col>
                     <Col md={12} sm={12}>
                         <div className="numbers">B</div>
                         <div className="activity">
-                            <h2>活动B：那些年，我们一起上过的大学</h2>
-                            <h5><span className="orange">对象： </span>持有效学生证的同学<br/>
+                            <h2>活动B：“同窗岁月” 学生优惠</h2>
+                            <h5><span className="orange">对象： </span>持有效学生证同学（研究生除外）<br/>
                                 <span className="orange">参与方式： </span>报名时勾选学生证即可<br/>
-                                <span className="orange">详细说明： </span>我们是祖国的花朵，趁年轻赶紧享受门票折扣的阳光！<br/><br/>
+                                <span className="orange">详细说明： </span>学生证在手，走遍天下都半价。我们可是祖国的花朵，趁年轻赶紧享受门票折扣的阳光！<br/>每条路线门票价格有所不同，请在报名时查看。<br/><br/>
                             </h5>
                         </div>
                     </Col>
                     <Col md={12} sm={12}>
                         <div className="numbers">C</div>
                         <div className="activity">
-                            <h2>活动C：后会友期</h2>
-                            <h5><span className="orange">对象： </span>持有优惠码的小伙伴<br/>
-                                <span className="orange">参与方式： </span>报名时输入优惠码验证成功即可<br/>
-                                <span className="orange">详细说明： </span>优惠码有效期为两年，要小心藏好哦！用不了还可以送给周围需要的小伙伴^_^<br/><br/>
+                            <h2>活动C：“码上有礼” 优惠券多多</h2>
+                            <h5><span className="orange">对象： </span>有优惠码同学<br/>
+                                <span className="orange">参与方式： </span>报名时输入优惠码即可<br/>
+                                <span className="orange">详细说明： </span>2016年注册海逍遥的用户，我们会直接送100元优惠券到你账户作为见面礼~<br/>还想要怎么办捏，参加旅行后，在朋友圈秀出最美的照片，截图发给客服，我们会送出100元，300元，500元不等的优惠券，要看你怎么费尽心思打动我们客服喽。<br/>送出优惠码不记名，用不掉可以送给需要的小伙伴哈<br/><br/>
+                            </h5>
+                        </div>
+                    </Col>
+                    <Col md={12} sm={12}>
+                        <div className="numbers">D</div>
+                        <div className="activity">
+                            <h2>活动D：“可能遇见TA”</h2>
+                            <h5><span className="orange">对象： </span>单人参团小伙伴<br/>
+                                <span className="orange">内容： </span>没有单房差！<br/>
+                                <span className="orange">详细说明： </span>一个人来也不用担心哦，海逍遥领队最擅长的就是带大家一起玩了。年轻活力小团队，全程互动，迅速打成一片。脱离工作小圈子，跨公司跨行业认识一群有趣的人。<br/>大漠、星空、银河、帐篷，这么浪漫的旅程，一不小心就遇上了那个TA。<br/>PS：常年以来妹子比例从来没低于60%，汉子们在哪里，快来报名呀。<br/><br/>
                             </h5>
                         </div>
                     </Col>
@@ -57,11 +68,11 @@ var App = React.createClass({
                             </h5>
                         </div>
                     </Col>
-                    <div className="end">以上优惠能不能一起用？<br/>
+{/*                    <div className="end">以上优惠能不能一起用？<br/>
                         能！能！能！<br/>
                         逍遥君才不跟假期那么小气呢！<br/>
                         放个假还要调休，我们放价就放个痛快！
-                    </div>
+                    </div>*/}
                     <div className="head">
                         <div className="line"/>
                         <div className="title">海逍遥旅行</div>

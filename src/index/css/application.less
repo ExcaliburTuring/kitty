@@ -150,11 +150,11 @@
     cursor: pointer;
 
     &:hover {
-        box-shadow: 0 0 3px 0 @light-gray;
-        animation: shadow 0.3s;
-        -moz-animation: shadow 0.3s; /* Firefox */
-        -webkit-animation: shadow 0.3s; /* Safari and Chrome */
-        -o-animation: shadow 0.3s; /* Opera */
+        box-shadow: 0 0 6px 0 @trans-black;
+        animation: shadow 0.2s;
+        -moz-animation: shadow 0.2s; /* Firefox */
+        -webkit-animation: shadow 0.2s; /* Safari and Chrome */
+        -o-animation: shadow 0.2s; /* Opera */
     }
 
     .info {
@@ -240,11 +240,11 @@
         margin: 20px 0;
 
         &:hover {
-            box-shadow: 0 0 3px 0 @light-gray;
-            animation: shadow 0.3s;
-            -moz-animation: shadow 0.3s; /* Firefox */
-            -webkit-animation: shadow 0.3s; /* Safari and Chrome */
-            -o-animation: shadow 0.3s; /* Opera */
+            box-shadow: 0 0 6px 0 @trans-black;
+            animation: shadow 0.2s;
+            -moz-animation: shadow 0.2s; /* Firefox */
+            -webkit-animation: shadow 0.2s; /* Safari and Chrome */
+            -o-animation: shadow 0.2s; /* Opera */
         }
     }
 }
@@ -271,29 +271,5 @@
     .aboutimg {
         padding: 12px 8px;
     }
-}
-
-@keyframes shadow
-{
-    from {box-shadow: 0 0 0 0 @light-gray;;}
-    to {box-shadow: 0 0 3px 0 @light-gray;}
-}
-
-@-moz-keyframes shadow /* Firefox */
-{
-    from {box-shadow: 0 0 0 0 @light-gray;;}
-    to {box-shadow: 0 0 3px 0 @light-gray;}
-}
-
-@-webkit-keyframes shadow /* Safari and Chrome */
-{
-    from {box-shadow: 0 0 0 0 @light-gray;;}
-    to {box-shadow: 0 0 3px 0 @light-gray;}
-}
-
-@-o-keyframes shadow /* Opera */
-{
-    from {box-shadow: 0 0 0 0 @light-gray;;}
-    to {box-shadow: 0 0 3px 0 @light-gray;}
 }
 
