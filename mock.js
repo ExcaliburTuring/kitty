@@ -31,6 +31,7 @@ var mockConfig = [
     config('/travel*', 'travel.html'),
     config('/account*', 'account.html'),
     config('/order*', 'order.html'),
+    config('/wap*', 'wap.html'),
     config('/img/*'),
     config('/lib/*')
 ];
