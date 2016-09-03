@@ -9,6 +9,7 @@ import { message } from 'antd';
 import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url, orderStatus, priceUtil } from 'config';
 import Rabbit from 'rabbit';
+import Login from 'login';
 import Step1 from './step1';
 import Step2 from './step2';
 import Step3 from './step3';
@@ -130,7 +131,7 @@ var App = React.createClass({
     render: function() {
         var accountInfo = this.state.basicInfo.accountInfo;
         if (accountInfo == null) {
-            return (<p>还没登陆</p>);
+            return (<Login/>);
         }
         var data = this.state.data;
         if (data.status != 0) {
