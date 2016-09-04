@@ -6,3 +6,4 @@ kitty.cmd
 assets/
 package.json
 server.js
+.DS_Store

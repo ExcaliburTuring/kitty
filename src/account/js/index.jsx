@@ -8,9 +8,9 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import Rabbit from 'rabbit';
 import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url, orderType } from 'config';
+import Login from 'login';
 import Title from 'title';
 import OrderItem from './order/order';
-import NoLogin from './nologin'; 
 
 var OrderBrief = Rabbit.create(url.orderBrief); 
 var Index = React.createClass({
@@ -51,7 +51,7 @@ var Index = React.createClass({
     render: function() {
         var accountInfo = this.state.basicInfo.accountInfo;
         if (accountInfo == null) {
-            return (<NoLogin/>);
+            return (<Login/>);
         }
         var data = this.state.data;
         if (data.status != 0) {

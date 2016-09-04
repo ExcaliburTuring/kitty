@@ -2,23 +2,22 @@
  * @authro xiezhenzong
  */
 import React from 'react';
+import { Jumbotron, Button } from 'react-bootstrap';
+
+import './notfound.less';
 
 var NotFound = React.createClass({
 
     render: function() {
         return (
-            <div className="container"> 
-                <div className="noauth-content">
-                    <div className="noauth-icon">
-                        <i className="fa fa-lock fa-5x"></i>
-                    </div>
-                     <div className="noauth-tip">
-                        <p>您所访问的页面并不存在</p>
-                        <p>请移步: 
-                            <a href="/"><i className="fa fa-home fa-2x"></i>网站首页</a>
-                        </p>
-                    </div>
-                </div>
+            <div className="notfound-container">
+                <Jumbotron>
+                    <h2>Soooooorry</h2>
+                    <p>尊敬的用户，对不起！您访问的网页并不存在。</p>
+                    <p>请重新输入地址，或直接返回
+                        <Button bsStyle="link" href="/" >首页</Button>
+                    </p>
+                </Jumbotron>
             </div>
         );
     }
