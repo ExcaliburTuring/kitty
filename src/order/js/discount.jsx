@@ -8,7 +8,7 @@ import { Form, Select, Input, InputNumber, Button, Icon } from 'antd';
 var FormItem = Form.Item;
 var SelectOption = Select.Option;
 
-import { url, priceUtil, defaultValue } from 'config';
+import { url, priceUtil, defaultValue, discountCodeStatus } from 'config';
 import Rabbit from 'rabbit';
 import DiscountCodeTable from 'discount_code';
 
@@ -24,7 +24,7 @@ var Discount = React.createClass({
         Reflux.listenTo(DiscountCode.store, 'onAccountDiscountCodeLoaded')
     ],
 
-    // api metho
+    // api method
 
     getDiscount: function() {
         var studentDiscount = this.state.data.studentDiscount; 
@@ -99,6 +99,9 @@ var Discount = React.createClass({
             var maxValueCode = null, maxValue = -1;
             for (var index in accountDiscountCodeData.discountCodes) {
                 var discountCode = accountDiscountCodeData.discountCodes[index];
+                if (!discountCodeStatus.usable(discountCode.status)) {
+                    continue;
+                }
                 var price = priceUtil.getPrice(discountCode.value);
                 if (maxValue < price) {
                     maxValue = price;

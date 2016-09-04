@@ -24,10 +24,6 @@ const _discountCodeTableColumn = [{
 var DiscountCodeTable = React.createClass({
 
     // helper method
-    _usable: function(status) {
-        return status == discountCodeStatus.CREATED 
-                || status == discountCodeStatus.VERIFIED || status == discountCodeStatus.OCCUPIED;
-    },
 
     _copyArray: function(array) {
         if (!array) {
@@ -48,7 +44,7 @@ var DiscountCodeTable = React.createClass({
         var _discountCodeTableData = [];
         for (var index in discountCodeData.discountCodes) {
             var discountCode = discountCodeData.discountCodes[index];
-            var usable = this._usable(discountCode.status);
+            var usable = discountCodeStatus.usable(discountCode.status);
             _discountCodeTableData.push({
                 'key': `discountcode-${index}`,
                 'discountCode': discountCode.discountCode,
@@ -63,7 +59,7 @@ var DiscountCodeTable = React.createClass({
                 'title': '',
                 'dataIndex': 'code',
                 render: function(code) {
-                    if (self._usable(code.status)) {
+                    if (discountCodeStatus.usable(code.status)) {
                         return (
                             <Button type="primary" onClick={() => {self.props.onAddBtnClick(code)}}>
                                 使用
