@@ -284,7 +284,6 @@ export var discountCodeStatus = {
     USED: 4,
 
     getDesc: function(status) {
-        console.log(status)
         if(status == this.CREATED){
             return "可用";
         } else if(status == this.TIMEOUT){
