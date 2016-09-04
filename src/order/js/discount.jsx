@@ -4,19 +4,25 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Col } from 'react-bootstrap';
-import { Form, Select, Input, InputNumber, Button } from 'antd';
+import { Form, Select, Input, InputNumber, Button, Icon } from 'antd';
 var FormItem = Form.Item;
 var SelectOption = Select.Option;
 
 import { url, priceUtil, defaultValue } from 'config';
 import Rabbit from 'rabbit';
+import DiscountCodeTable from 'discount_code';
 
 import 'antd/lib/index.css';
 
 var OrderDiscount = Rabbit.create(url.orderDiscount);
+var DiscountCode = Rabbit.create(url.discountCode);
+
 var Discount = React.createClass({
 
-    mixins: [Reflux.listenTo(OrderDiscount.store, 'onOrderDiscountChange')],
+    mixins: [
+        Reflux.listenTo(OrderDiscount.store, 'onPolicyDiscountLoaded'),
+        Reflux.listenTo(DiscountCode.store, 'onAccountDiscountCodeLoaded')
+    ],
 
     // api metho
 
@@ -53,7 +59,7 @@ var Discount = React.createClass({
 
     // callback method
 
-    onOrderDiscountChange: function(discount) {
+    onPolicyDiscountLoaded: function(discount) {
         if (discount != null) {
             var policy = this._findPolicyDiscount(discount.defaultDiscountid, discount.policy);
             if (policy != null) {
@@ -84,6 +90,64 @@ var Discount = React.createClass({
         }
     },
 
+    /**
+     * 账户优惠码列表加载完成
+     */
+    onAccountDiscountCodeLoaded: function(accountDiscountCodeData) {
+        if (accountDiscountCodeData.status == 0 
+            && accountDiscountCodeData.discountCodes.length > 0) {
+            var maxValueCode = null, maxValue = -1;
+            for (var index in accountDiscountCodeData.discountCodes) {
+                var discountCode = accountDiscountCodeData.discountCodes[index];
+                var price = priceUtil.getPrice(discountCode.value);
+                if (maxValue < price) {
+                    maxValue = price;
+                    maxValueCode = discountCode;
+                }
+            }
+            this.setState({
+                'discountCode': {
+                    'code': maxValueCode.discountCode,
+                    'discountPrice': maxValueCode.value
+                },
+                'accountDiscountCode': accountDiscountCodeData
+            });
+        } else {
+            this.setState({'accountDiscountCode': accountDiscountCodeData});
+        }
+    },
+
+    /**
+     * 优惠码表格里的使用按钮被点击
+     */
+    onDiscoutCodeTableAddBtnClick: function(code) {
+        this.setState({
+            'discountCode': {
+                'code': code.discountCode,
+                'discountPrice': code.value
+            }
+        });
+    },
+
+    /**
+     * 优惠码输入框正在输入
+     */
+    onDiscountCodeInput: function(e) {
+        var discountCode = e.target.value;
+        if (discountCode == this.state.discountCode.code) {
+            return;
+        }
+        this.setState({
+            'discountCode': {
+                'code': discountCode,
+                'discountPrice': '￥0' // 输入的时候，设置为0
+            }
+        });
+    },
+
+    /**
+     * 优惠码输入完成
+     */
     onDiscountCodeChange: function(e) {
         var discountCode = e.target.value;
         if (discountCode == this.state.discountCode.code) {
@@ -152,6 +216,7 @@ var Discount = React.createClass({
             'groupid': this.props.orderInfo.groupid,
             'count': this.props.count
         });
+        DiscountCode.actions.load();
         return {
            'data': {
                 'status': 1,
@@ -172,6 +237,9 @@ var Discount = React.createClass({
             'studentDiscount': {
                 'count': 0,
                 'discountPrice': '￥0'
+            },
+            'accountDiscountCode': {
+                'discountCodes': []
             }
         }
     },
@@ -237,16 +305,23 @@ var Discount = React.createClass({
                             </Select>
                         </FormItem>
                         <FormItem
+                            className="discountcode-input-container"
                             label="优惠码:"
                             labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 14 }}
+                            wrapperCol={{ span: 15 }}
                             validateStatus={this.state.discountCode.validateStatus}
-                            help={this.state.discountCode.msg}
-                            hasFeedback>
+                            help={this.state.discountCode.msg}>
                             <Input
-                                placeholder="请输入优惠码" 
+                                value={this.state.discountCode.code}
+                                placeholder="请输入优惠码"
+                                onChange={this.onDiscountCodeInput} 
                                 onPressEnter={this.onDiscountCodeChange} 
                                 onBlur={this.onDiscountCodeChange}/>
+                            <DiscountCodeTable placement="top" needAddBtn
+                                discountCode={this.state.accountDiscountCode}
+                                onAddBtnClick={this.onDiscoutCodeTableAddBtnClick} >
+                                <Icon type="info-circle-o" className="discountcode-tip"/>
+                            </DiscountCodeTable>
                         </FormItem>
                         <FormItem
                             label="学生证优惠:"
