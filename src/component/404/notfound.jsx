@@ -4,6 +4,8 @@
 import React from 'react';
 import { Jumbotron, Button } from 'react-bootstrap';
 
+import './notfound.less';
+
 var NotFound = React.createClass({
 
     render: function() {
