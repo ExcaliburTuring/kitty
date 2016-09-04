@@ -5,7 +5,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import { Jumbotron, Button } from 'react-bootstrap';
 
-import { defaultValue } from 'config';
+import NotAuth from 'notauth';
 
 var App = React.createClass({
 
@@ -13,13 +13,7 @@ var App = React.createClass({
         return (
             <div className="app-container">
                 <div className="container">
-                    <div className="notauth-container">
-                        <Jumbotron>
-                            <h2>Soooooorry</h2>
-                            <p>尊敬的用户，对不起！您没有访问该页面的权限。</p>
-                            <p>{`您可直接致电海逍遥: ${defaultValue.hotline}`}</p>
-                        </Jumbotron>
-                    </div>
+                    {NotAuth}
                 </div>
             </div>
         );

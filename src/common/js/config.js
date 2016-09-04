@@ -9,6 +9,7 @@ export var url = {
     'accountInfo': '/account/info',
 	'basicinfo': '/account/basicinfo',
 	'contacts': '/account/contacts',
+    'discountCode': '/account/discountcode',
 
     'travel': '/travel',
 	'route': '/travel/route',
@@ -254,6 +255,47 @@ export var groupStatus = {
         }
     }
 
+}
+
+export var discountCodeStatus = {
+     /**
+     * 已生成，等待验证
+     */
+    CREATED: 0,
+
+    /**
+     * 已过期
+     */
+    TIMEOUT: 1,
+
+    /**
+     * 用户提交，验证通过
+     */
+    VERIFIED: 2,
+
+    /**
+     * 用户下单，占用中
+     */
+    OCCUPIED: 3,
+
+    /**
+     * 付款完成，优惠券不再有效
+     */
+    USED: 4,
+
+    getDesc: function(status) {
+        if(status == this.CREATED){
+            return "可用";
+        } else if(status == this.TIMEOUT){
+            return "已过期";
+        } else if(status == this.VERIFIED) {
+            return "验证通过";
+        } else if(status == this.OCCUPIED) {
+            return "占用中";
+        } else if (status == this.USED) {
+            return "已使用"
+        }
+    }
 }
 
 export var priceUtil = {

@@ -10,16 +10,19 @@ import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url, orderType } from 'config';
 import Login from 'login';
 import Title from 'title';
+import DiscountCodeTable from 'discount_code';
 import OrderItem from './order/order';
 
-var OrderBrief = Rabbit.create(url.orderBrief); 
+var OrderBrief = Rabbit.create(url.orderBrief);
+var DiscountCode = Rabbit.create(url.discountCode);
 var Index = React.createClass({
 
     orderType: orderType.CURRENT,
 
     mixins: [
         Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
-        Reflux.connect(OrderBrief.store, 'data')
+        Reflux.connect(OrderBrief.store, 'data'),
+        Reflux.connect(DiscountCode.store, 'discountCode')
     ],
 
     // callback method
@@ -37,6 +40,7 @@ var Index = React.createClass({
     getInitialState: function() {
         AccountBasicInfo.actions.get();
         OrderBrief.actions.load({'orderType': orderType.CURRENT});
+        DiscountCode.actions.load();
         return {
             'basicInfo': {},
             'data': {
@@ -44,6 +48,9 @@ var Index = React.createClass({
                 'briefOrders': [],
                 'currentOrderCount': 0,
                 'historyOrderCount': 0
+            },
+            'discountCode': {
+                'discountCodes': []
             }
         };
     },
@@ -84,8 +91,19 @@ var Index = React.createClass({
                                    {accountInfo.nickname}
                                 </div>
                                 <div className="discount">
-                                    <div className="left"><span>优惠券：0</span></div>
-                                    <div className="right">红包：0</div>
+                                    <div className="left">
+                                        优惠券：
+                                        <DiscountCodeTable placement="bottom" ref="discountCode"
+                                            discountCode={this.state.discountCode}>
+                                            <span className="discountcode-count">
+                                                {this.state.discountCode.discountCodes.length}
+                                            </span>
+                                        </DiscountCodeTable>
+                                    </div>
+                                    <div className="right">
+                                        红包：
+                                        <span className="redbag-count">0</span>
+                                    </div>
                                 </div>
                             </div>
                         </Col>

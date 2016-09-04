@@ -15,7 +15,6 @@ import Step2 from './step2';
 import Step3 from './step3';
 import GroupBrief from './group';
 import Discount from './discount'; 
-import NoAuth from './noauth';
 
 import 'antd/lib/index.css';
 

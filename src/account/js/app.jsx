@@ -10,9 +10,9 @@ const TabPane = Tabs.TabPane;
 import AccountBasicInfo from 'account_basicinfo';
 import { url } from 'config';
 import Login from 'login';
+import NoAuth from 'notauth';
 
 import Banner from './banner';
-import NoAuth from './noauth';
 import Index from './index';
 import Info from './info';
 
@@ -58,7 +58,7 @@ var App = React.createClass({
             return this.createDom(<Login/>);
         }
         if (accountInfo.accountid != this.state.accountid) {
-            return this.createDom(<NoAuth accountid={accountInfo.accountid}/>);
+            return this.createDom(<NoAuth/>);
         }
         const operations = <TabBarExtraContent accountInfo={accountInfo}/>;
         var content = (

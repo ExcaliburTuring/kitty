@@ -11,14 +11,10 @@ var App = React.createClass({
 
     mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
 
-     _getQuery:  function (query, key) {
-        var nvpair = {};
-        var pairs = query.replace('?', '').split('&');
-        $.each(pairs, function(i, v){
-            var pair = v.split('=');
-            nvpair[pair[0]] = pair[1];
-        });
-        return nvpair[key];
+     _getQuery:  function (key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)", "i"); 
+        var r = window.location.search.substr(1).match(reg); 
+        return r != null ? unescape(r[2]): null; 
     },
 
     getInitialState: function() {
@@ -31,7 +27,7 @@ var App = React.createClass({
     render: function() {
         var accountInfo = this.state.basicInfo.accountInfo;
         if (accountInfo != null) { // 已经登陆了
-            var redirect = this._getQuery(window.location.search, 'redirect');
+            var redirect = this._getQuery('redirect');
             if (redirect) {
                 window.location.href = redirect;
             } else {
