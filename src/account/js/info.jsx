@@ -8,11 +8,10 @@ import { Alert } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
 import { accountStatus } from 'config';
+import Login from 'login';
 import Title from 'title';
-import FaButton from 'fabutton';
 import BasicInfo from './info/basic';
 import Contacts from './info/contacts';
-import NoLogin from './nologin'; 
 
 import 'antd/lib/index.css';
 
@@ -30,7 +29,7 @@ var Info = React.createClass({
     render: function() {
         var accountInfo = this.state.basicInfo.accountInfo;
         if (accountInfo == null) {
-            return (<NoLogin/>);
+            return (<Login/>);
         }
 
         var newAccountTip = null;

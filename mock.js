@@ -32,6 +32,10 @@ var mockConfig = [
     config('/account*', 'account.html'),
     config('/order*', 'order.html'),
     config('/wap*', 'wap.html'),
+    config('/login', 'login.html'),
+    config('/notauth', 'notauth.html'),
+    config('/notfound', 'notfound.html'),
+    config('/error', 'error.html'),
     config('/img/*'),
     config('/lib/*')
 ];

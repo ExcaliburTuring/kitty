@@ -51,10 +51,6 @@ proxyConfig['/wx*'] = {
     target: target,
     secure: false
 }
-proxyConfig['/login'] = {
-    target: target,
-    secure: false
-}
 var server = new WebpackDevServer(compiler, {
     historyApiFallback: true,
     hot: true,
