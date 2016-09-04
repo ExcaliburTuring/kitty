@@ -295,6 +295,10 @@ export var discountCodeStatus = {
         } else if (status == this.USED) {
             return "已使用"
         }
+    },
+
+    isUsable: function(status) {
+        return status == this.CREATED || status == this.VERIFIED || status == this.OCCUPIED;
     }
 }
 
