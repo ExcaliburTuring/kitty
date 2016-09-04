@@ -99,7 +99,7 @@ var Discount = React.createClass({
             var maxValueCode = null, maxValue = -1;
             for (var index in accountDiscountCodeData.discountCodes) {
                 var discountCode = accountDiscountCodeData.discountCodes[index];
-                if (!discountCodeStatus.usable(discountCode.status)) {
+                if (!discountCodeStatus.isUsable(discountCode.status)) {
                     continue;
                 }
                 var price = priceUtil.getPrice(discountCode.value);

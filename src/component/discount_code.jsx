@@ -44,7 +44,7 @@ var DiscountCodeTable = React.createClass({
         var _discountCodeTableData = [];
         for (var index in discountCodeData.discountCodes) {
             var discountCode = discountCodeData.discountCodes[index];
-            var usable = discountCodeStatus.usable(discountCode.status);
+            var usable = discountCodeStatus.isUsable(discountCode.status);
             _discountCodeTableData.push({
                 'key': `discountcode-${index}`,
                 'discountCode': discountCode.discountCode,
@@ -59,7 +59,7 @@ var DiscountCodeTable = React.createClass({
                 'title': '',
                 'dataIndex': 'code',
                 render: function(code) {
-                    if (discountCodeStatus.usable(code.status)) {
+                    if (discountCodeStatus.isUsable(code.status)) {
                         return (
                             <Button type="primary" onClick={() => {self.props.onAddBtnClick(code)}}>
                                 使用
