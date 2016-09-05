@@ -1,0 +1,35 @@
+@import '~base.less';
+
+/**
+ * 退款确认框样式
+ */
+.ant-modal-container .ant-modal-content {
+
+    // 覆盖antd样式
+    .ant-modal-body {
+        padding: 20px;
+
+        .ant-confirm-content {
+            margin-left: 8px;
+
+            .ant-alert.ant-alert-warn {
+                margin-top: 8px;
+
+                .ant-alert-close-icon  .anticon.anticon-cross {
+                    font-size: 8px;
+                    margin-right: 10px;
+                    padding: 0 1px;
+                    position: relative;
+                    top: 2px;
+                }
+            }
+        }
+    }
+
+    .refund-price-text {
+        color: @currency;
+        font-style: border;
+        margin-right: 8px;
+    }
+
+}
