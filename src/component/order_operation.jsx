@@ -2,13 +2,26 @@
  * @author xiezhenzong
  */
 import React from 'react';
-import { Modal, Input, message } from 'antd';
+import { Modal, Input, Alert, Select, message } from 'antd';
+const Option = Select.Option;
 
-import { url, orderStatus, defaultValue } from 'config';
+import { url, orderStatus, defaultValue, refundType } from 'config';
 
 import 'antd/lib/index.css';
+import './order_operation.less'
+
+var _refundReasonConfig = {
+    'refund-reason-1': "买不到车票/飞机票",
+    'refund-reason-2': "同伴退出",
+    'refund-reason-3' : "公司/家庭突发事件处理",
+    'refund-reason-4': "感冒/受伤等身体健康原因"
+};
 
 var OrderOperationHelper = {
+
+    _refundReason: '',
+
+    _refundReasonSelect: [],
 
     // help method
 
@@ -30,8 +43,28 @@ var OrderOperationHelper = {
         });
     },
 
+    _doGetRefundOrderType: function() {
+        var refundTypeInfo = null;
+        $.ajax({
+            'url': url.orderRefundType + `?orderid=${this.props.orderid}`,
+            'type': 'GET',
+            'async': false,
+            'success': function(data) {
+                if (data.status != 0) {
+                    message.error(`获取退款策略失败，您可以联系${defaultValue.hotline}`);
+                } else {
+                    refundTypeInfo = data;   
+                }
+            },
+            'error': function() {
+                message.error(`获取退款策略失败，您可以联系${defaultValue.hotline}`);
+            }
+        });
+        return refundTypeInfo;
+    },
+
     _doRefundOrder: function() {
-        var desc = $("#refund-reason-input").val();
+        var desc = this._getRefundReasonDescFromState();
         var self = this;
         $.ajax({
             url: url.orderRefund,
@@ -57,6 +90,7 @@ var OrderOperationHelper = {
                     title: '订单退款成功',
                     content: '您已经成功申请订单退款！如可自动退款，将按原路返回到您的账户中。如无法自动退款，海逍遥工作人员将很快与您取得联系，请您耐心等候！'
                 });
+                setTimeout('location.reload(true);', 300);
             }
         }).fail(function() {
             var content = (
@@ -74,6 +108,38 @@ var OrderOperationHelper = {
         });
     },
 
+    _getRefundReasonDescFromState: function() {
+        var refundReason = this._refundReasonSelect;
+        var desc = this._refundReason == '' ? '' : this._refundReason + ';';
+        for (var i = 0, n = refundReason.length; i < n; i++) {
+            var t = refundReason[i];
+            if (_refundReasonConfig.hasOwnProperty(t)) {
+                desc = desc + _refundReasonConfig[t] + ';';
+            }
+        }
+        return desc.length > 0 ? desc.substring(0, desc.length - 1) : '';
+    },
+
+    _doRefundReasonChange: function(value) {
+        this._refundReason = value;
+    },
+
+    _doRefundReasonSelect: function(value) {
+        var refundReason = this._refundReasonSelect;
+        refundReason.push(value);
+    },
+
+    _doRefundReasonDeselect: function(value) {
+        var refundReason = this._refundReasonSelect;
+        for (var i = refundReason.length - 1; i >= 0; i--) {
+            var t = refundReason[i];
+            if (t == value) {
+                refundReason.splice(i, 1);
+                break;
+            }
+        }
+    },
+
     // callback method
 
     onCancelOrderBtnClick: function() {
@@ -89,11 +155,40 @@ var OrderOperationHelper = {
     },
 
     onRefundOrderBtnClick: function() {
+        var refundTypeInfo = this._doGetRefundOrderType();
         var self = this;
         var refundModalContent = (
             <div>
-                <p>{`如果您对订单不满意或者因某些原因想重新下订单可直接联系我们客服: ${defaultValue.hotline}，并且申请退款有可能不能全额返还的哦，参考退款政策。`}</p>
-                <Input id="refund-reason-input" placeholder="请输入您申请退款的理由"></Input>
+                {
+                    refundTypeInfo != null ?
+                        <div>
+                            <p>退款策略：{refundType.getDesc(refundTypeInfo.type)}</p>
+                            <p>
+                                实际支付：<span className="refund-price-text">{this.props.actualPrice}</span>
+                                退款金额：<span className="refund-price-text">{refundTypeInfo.refundPrice}</span>
+                                扣减金额：<span className="refund-price-text">{refundTypeInfo.deductPrice}</span>
+                            </p>
+                        </div>
+                    : null
+                }
+                <Alert 
+                    message="友情提示"
+                    description={
+                        <p>
+                            {`如果您对订单不满意或者因某些原因想重新下订单可直接联系我们客服: ${defaultValue.hotline}，并且申请退款有可能不能全额返还的哦，参考退款政策。`}
+                        </p>
+                    } type="warn" closable />
+                <Select 
+                    tags style={{ width: '100%' }}
+                    searchPlaceholder="请输入或选择申请退款理由"
+                    onSearch={this._doRefundReasonChange}
+                    onSelect={this._doRefundReasonSelect}
+                    onDeselect={this._doRefundReasonDeselect}>
+                    <Option key="refund-reason-1">买不到车票/飞机票</Option>
+                    <Option key="refund-reason-2">同伴退出</Option>
+                    <Option key="refund-reason-3">公司/家庭突发事件处理</Option>
+                    <Option key="refund-reason-4">感冒/受伤等身体健康原因</Option>
+                </Select>
             </div>
         );
         Modal.confirm({

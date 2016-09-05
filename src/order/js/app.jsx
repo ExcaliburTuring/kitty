@@ -49,18 +49,18 @@ var App = React.createClass({
             'dataType': 'json',
             'contentType': 'application/json;charset=UTF-8',
             'success': function(data) {
-                            if (data.status != 0) {
-                                self.refs.step2.enableBtn();
-                                message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
-                            } else {
-                                message.success('订单创建成功，您可以使用支付宝进行支付');
-                                success();
-                            }
-                        },
+                if (data.status != 0) {
+                    self.refs.step2.enableBtn();
+                    message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                } else {
+                    message.success('订单创建成功，您可以使用支付宝进行支付');
+                    success();
+                }
+            },
             'error': function() {
-                        self.refs.step2.enableBtn();
-                        message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
-                    }
+                self.refs.step2.enableBtn();
+                message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
+            }
         });
     },
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Image, Button } from 'react-bootstrap';
 import { Form, Tooltip, Icon } from 'antd';
 
-import { orderStatus, priceUtil } from 'config';
+import { orderStatus, refundStatus, refundType, priceUtil } from 'config';
 import Title from 'title';
 import OrderTip from 'order_tip';
 import OrderOperationHelper from 'order_operation';
@@ -53,14 +53,15 @@ var OrderItem = React.createClass({
                                 <TravellerList names={briefOrder.travellerNames} keyPrefix={orderInfo.orderid}/>
                                 <OrderPrice orderInfo={orderInfo} travelGroup={travelGroup}
                                     policy={briefOrder.policy} code={briefOrder.code} student={briefOrder.student}/>
+                                <Refund status={orderInfo.status} orderRefound={briefOrder.orderRefound}/>
                             </div>
                         </Col>
                     </Row>
                     <div className="order-extra-container">
                         <Row>
                             <Col sm={4} md={4} smPush={8} mdPush={8}>
-                                <OrderOperation orderid={orderInfo.orderid} 
-                                    status={orderInfo.status} routeid={travelRoute.routeid} />
+                                <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status} 
+                                    actualPrice={orderInfo.actualPrice} routeid={travelRoute.routeid} />
                             </Col>
                             <GroupInfo otherTravellers={briefOrder.otherTravellers} 
                                 wxQrCode={travelGroup.wxQrcode}/>
@@ -129,7 +130,7 @@ var OrderPrice = React.createClass({
         var discountTip = (
             <div>
                 {policy != null ? <p>{policy.desc}:减{policy.value}</p> : null }
-                {code != null ? <p>优惠码{code.discountCode}:减{code.value}}</p> : null }
+                {code != null ? <p>优惠码{code.discountCode}:减{code.value}</p> : null }
                 {student != null ? <p>学生优惠每人减{student.value},共{this.props.orderInfo.studentCount}人</p> : null }
             </div>
         );
@@ -146,6 +147,25 @@ var OrderPrice = React.createClass({
                 </Tooltip>
                 <span className="price-operator">＝</span>
                 <span className="price">{this.props.orderInfo.actualPrice}</span>
+            </div>
+        );
+    }
+});
+
+var Refund = React.createClass({
+
+    render: function() {
+        var status = this.props.status;
+        var orderRefound = this.props.orderRefound;
+        if (orderRefound == null
+            || (status != orderStatus.REFUNDING && status != orderStatus.REFUNDED)) {
+            return null;
+        }
+        return (
+            <div className="order-price">
+                <span className="order-label">退款</span>
+                <span className="price">{orderRefound.refund}</span>
+                （{refundStatus.getDesc(orderRefound.status)}）
             </div>
         );
     }

@@ -20,6 +20,7 @@ export var url = {
     'order': '/order',
     'orderNew': '/order/new',
     'orderOrder': '/order/order',
+    'orderRefundType': '/order/refundtype',
     'orderRefund': '/order/refund',
     'orderBrief': '/order/brief',
     'orderDiscount': '/order/discount',
@@ -47,24 +48,13 @@ export var error = {
 };
 
 export var idType = {
-	 /**
-     * 身份证
-     */
+
     IDENTIFICATION: 0,
 
-    /**
-     * 护照
-     */
     PASSPORT: 1,
 
-    /**
-     * 港澳通行证
-     */
     H_PASSER: 2,
 
-    /**
-     * 台胞证
-     */
     T_PASSER: 3,
 
     getDesc: function(idType) {
@@ -85,19 +75,10 @@ export var idType = {
 
 export var gender = {
 
-    /**
-     * 未知
-     */
     UNKNOW: 0,
 
-    /**
-     * 男
-     */
     MALE: 1,
 
-    /**
-     * 女
-     */
     FEMALE: 2,
 
     getDesc: function(gender) {
@@ -115,46 +96,26 @@ export var gender = {
 }
 
 export var accountStatus = {
-     /**
-     * 刚注册
-     */
+
     WAIT_COMPLETE_INFO: 0,
 
-    /**
-     * 账户正常
-     */
     OK: 1,
 
-    /**
-     * 账户注销
-     */
     DELETE: 2
 }
 
 export var orderType = {
 
-    /**
-     * current
-     */
     CURRENT: 0,
 
-    /**
-     * history
-     */
     HISTORY: 1,
 
-    /**
-     * visible
-     */
     VISIBLE: 2
 
 }
 
 export var orderStatus = {
 
-    /**
-     * 新订单
-     */
     NEW: 0,
 
     /**
@@ -162,49 +123,22 @@ export var orderStatus = {
      */
     DISCOUNT_SELECT: 'DISCOUNT_SELECT',
 
-    /**
-     * 生成等待付款
-     */
     WAITING: 1,
 
-     /**
-     * 付款中
-     */
     PAYING: 2,
 
-    /**
-     * 付款到账
-     */
     PAID: 3,
 
-    /**
-     * 开始旅行
-     */
     FINISH: 4,
 
-    /**
-     * 退款中
-     */
     REFUNDING: 5,
 
-    /**
-     * 退款
-     */
     REFUNDED: 6,
 
-    /**
-     * 取消
-     */
     CANCEL: 7,
 
-    /**
-     * 超时
-     */
     TIMEOUT: 8,
 
-    /**
-     * 行程取消
-     */
     CLOSED: 9,
 
     getDesc: function(orderStatus) {
@@ -258,29 +192,15 @@ export var groupStatus = {
 }
 
 export var discountCodeStatus = {
-     /**
-     * 已生成，等待验证
-     */
+
     CREATED: 0,
 
-    /**
-     * 已过期
-     */
     TIMEOUT: 1,
 
-    /**
-     * 用户提交，验证通过
-     */
     VERIFIED: 2,
 
-    /**
-     * 用户下单，占用中
-     */
     OCCUPIED: 3,
 
-    /**
-     * 付款完成，优惠券不再有效
-     */
     USED: 4,
 
     getDesc: function(status) {
@@ -299,6 +219,73 @@ export var discountCodeStatus = {
 
     isUsable: function(status) {
         return status == this.CREATED || status == this.VERIFIED || status == this.OCCUPIED;
+    }
+}
+
+export var refundStatus = {
+     /**
+     * 退款产生
+     */
+    CREATED: 0,
+
+    /**
+     * 确认退款
+     */
+    CONFIRMED: 1,
+
+    /**
+     * 完成退款
+     */
+    REFOUNDED: 2,
+
+    getDesc: function(status) {
+        if (status == this.CREATED) {
+            return "退款申请中";
+        } else if (status == this.CONFIRMED) {
+            return "退款已确认，等待返还";
+        } else if (status == this.REFOUNDED) {
+            return "退款完成";
+        }
+    }
+}
+
+export var refundType = {
+
+    LONG_PCT_95: 0,
+
+    LONG_PCT_80: 1,
+
+    LONG_PCT_50: 2,
+
+    LONG_PCT_20: 3,
+
+    SHORT_PCT_100: 4,
+
+    SHORT_PCT_80: 5,
+
+    SHORT_PCT_50: 6,
+
+    SHORT_PCT_20: 7,
+
+    getDesc: function(type) {
+        switch(type) {
+            case this.LONG_PCT_95:
+                return '出发前21天及以上退款，返还旅游费用的95%';
+            case this.LONG_PCT_80:
+                return '出发前20天至8天退款，返还旅游费用的80%';
+             case this.LONG_PCT_50:
+                return '出发前7天至1天退款，返还旅游费用的50%';
+            case this.LONG_PCT_20:
+                return '集合日当天退款，返还旅游费用的20%';
+            case this.SHORT_PCT_100:
+                return '出发前7天及以上退款，全额返还';
+            case this.SHORT_PCT_80:
+                return '出发前6天至3天退款，返还旅游费用的80%';
+            case this.SHORT_PCT_50:
+                return '出发前2天至1天退款，返还旅游费用的50%';
+            case this.SHORT_PCT_20:
+                return '集合日当天退款，返还旅游费用的20%'; 
+        };
     }
 }
 

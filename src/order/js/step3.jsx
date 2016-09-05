@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
 import { Table, Form, Button, Modal, Input, message } from 'antd';
 
-import { url, idType, priceUtil, orderStatus, defaultValue } from 'config';
+import { url, idType, priceUtil, orderStatus, defaultValue, refundStatus, refundType } from 'config';
 import Title from 'title';
 import OrderTip from 'order_tip';
 import OrderOperationHelper from 'order_operation';
@@ -110,9 +110,9 @@ var Step3 = React.createClass({
                     <Emergency emergencyContact={orderInfo.emergencyContact}
                         emergencyMobile={orderInfo.emergencyMobile} />
                 </div>
-                <Refund orderRefound={this.props.orderRefound} />
+                <Refund orderInfo={orderInfo} orderRefound={this.props.orderRefound}/>
                 <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status}
-                                routeid={orderInfo.routeid}/>
+                                actualPrice={orderInfo.actualPrice} routeid={orderInfo.routeid}/>
             </div>
         );
     }
@@ -204,6 +204,7 @@ var Emergency = React.createClass({
         var emergency = [];
         for (var i = 0, n = emergencyMobiles.length; i < n; i++) {
             emergency.push({
+                'key': `emergency-${i}`,
                 'id': i + 1,
                 'name': i >= emergencyContacts.length ? '' : emergencyContacts[i],
                 'mobile': emergencyMobiles[i]
@@ -225,10 +226,21 @@ var Refund = React.createClass({
 
     render: function() {
         var content = null;
-        if (this.props.orderRefound == null) {
+        var status = this.props.orderInfo.status;
+        var orderRefound = this.props.orderRefound;
+        if (orderRefound == null 
+            || (status != orderStatus.REFUNDING && status != orderStatus.REFUNDED)) {
             content = (<div>本订单暂无任何退款信息</div>);
         } else {
-            content = (<div>这里是退款信息</div>); // FIXME
+            content = (
+                <div>
+                    <p>当前状态：{refundStatus.getDesc(orderRefound.status)}</p>
+                    <p>退款策略：{refundType.getDesc(orderRefound.type)}</p>
+                    <p>实际支付：{this.props.orderInfo.actualPrice}</p>
+                    <p>退款金额：{orderRefound.refund}</p>
+                    <p>退款原因：{orderRefound.desc}</p>
+                </div>
+            );
         }
 
         return (
