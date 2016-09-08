@@ -9,129 +9,8 @@ body {
 	-webkit-overflow-scrolling: touch;
 }
 
-.step { 
-	margin: 20px auto; 
+.order-container {
 	margin-top: 100px;
-	display:block; 
-	height: 60px;
-
-	ul{ 
-	    list-style-type: none;
-	}
-
-	li{ 
-		position:relative; 
-		text-align:center;
-	}
-
-	.line_bg { 
-		height:3px; 
-		background: @currency; 
-		display:inline-block; 
-		width:50%; top:13px; 
-		position:absolute; 
-		z-index:1;
-	}
-
-	.lbg-l{
-		left:0;
-	}
-	.lbg-r{
-		right:0;
-	}
-
-	.num { 
-		position:relative; 
-		z-index:2; 
-		background: @white;
-		width:54px; 
-		height:30px;
-		text-align:center; 
-		display:
-		inline-block;
-
-		em,
-		i {
-			border-radius: 3px;
-			width:24px; 
-			height:24px; 
-			display:inline-block; 
-			left:15px; 
-			top:2px;
-			position:absolute;
-		}
-
-		em {
-			border-radius: 5px;
-			background: #FFCDCD;
-			transform:rotate(45deg);
-			-webkit-transform:rotate(45deg);
-			-moz-transform:rotate(45deg);
-			-ms-transform:rotate(45deg);
-			-o-transform:rotate(45deg);
-			z-index:2;
-		}
-
-		i {
-			z-index:3; 
-			color:#fff; 
-			font-style:normal; 
-			font-weight:700; 
-			top:4px;
-		}
-	}
-
-	.lbg-txt { 
-		position:relative; 
-		color: #FFCDCD; 
-		font-size:13px;
-	}
-	.on .lbg-txt{
-		color: #FF2A2A;
-	}
-	.on .line_bg,
-	.on .num em{ 
-		background: #FF2A2A;
-	}
-}
-
-.travel-info {
-	padding: 10px;
-	border: 1px solid #dfdfdf;
-	border-bottom: 2px solid @currency;
-	
-	h2{
-		font-size: 24px;
-		margin: 10px 0;
-	}
-
-	h3, 
-	h4{
-		font-size: 14px;
-		margin-bottom: 8px;
-	}
-
-	p{
-		display: inline-block;
-	}
-
-	.price-right{
-		float: right;
-		margin-right: 15px;
-	}
-
-	.group-brief-container{
-		border: none;
-		border-bottom: 1px dashed @black;
-	}
-
-	img{
-		width:100%;
-	}
-
-	.total {
-		margin-top: 10px;
-	}
 }
 
 .order-content-container {
@@ -149,15 +28,28 @@ body {
 			font-size: 24px;
 	    }
 	}
-
-	.order-step1,
-	.order-step2,
-	.order-step3 {
-		border: 1px solid #dfdfdf;
-	}
 }
 
-.order-step1 {
+.order-contact-container,
+.order-discount-container,
+.agreement-container,
+.pay-container,
+.order-show-container {
+	border: 1px solid #dfdfdf;
+}
+
+.order-form-container {
+
+	/**
+	 * 新用户提醒框样式
+	 */
+	.ant-alert-with-description {
+		border-radius: 0;
+	}
+
+}
+
+.order-contact-container {
 
     .order-content-title .order-contact-tip {
     	margin-left: 20px;
@@ -200,17 +92,12 @@ body {
     	width: 100%;
     	border-top: 1px solid #dfdfdf;
     	padding: 13px 20px 0 20px;
-
-    	.order-emergency-title {
-
-    	}
-
     }
 
     .order-traveller-show,
     .order-emergency-show {
     	margin-top: 15px;
-    	min-height: 200px;
+    	min-height: 100px;
 
     	.row .col-md-4 {
             margin-bottom: 10px;
@@ -220,37 +107,18 @@ body {
     .order-emergency-show {
     	min-height: 100px;
     }
-
-	.submit {
-		height: 50px;
-		margin: 20px 20px 0 0;
-		font-size: 18px;
-
-		.order-agree {
-			width: 150px;
-		}
-
-		// FIXME
-		// .btn {
-		// 	margin-left: 10px;
-		// 	margin-top: 5px;
-		// 	background-image: none;
-		// 	background-color: @red;
-		// 	border: none;
-		// 	color: @white;
-		// }
-	}
 }
 
-.order-step2 {
+.order-discount-container {
+
+	margin-top: 20px;
 
 	.order-total-price {
 		font-size: 24px;
 		color: @currency;
 	}
 
-	.discount-name-list-container {
-		margin-top: 30px;
+	.discount-price-container {
 		font-size: 20px;
 	    padding-left: 35px;
 	    padding-right: 35px;
@@ -273,7 +141,7 @@ body {
 
 		.desc-price {
 			height: 39px;
-			margin-top: 10px;
+			margin-top: 6px;
 			margin-bottom: 20px;
 			text-align: right;
 			color: @blue;
@@ -288,29 +156,6 @@ body {
 			font-size: 14px;
 			margin-top: 15px;
 			margin-left: 3px;
-		}
-	}
-
-	.pay-container {
-		padding: 15px 20px;
-		border-top: 1px solid #dfdfdf;
-		margin-top: 10px;
-
-		.pay-left {
-			width: 100px;
-			margin-top: 10px;
-		}
-
-		.pay-middle {
-			font-size: 18px;
-			line-height: 30px;
-		}
-
-		.pay-right {
-
-			button:first-child {
-				margin-bottom: 10px;
-			}
 		}
 	}
 
@@ -329,7 +174,44 @@ body {
 	}
 }
 
-.order-step3 {
+.agreement-container {
+	height: 50px;
+	margin-top: 20px;
+	padding: 13px 20px;
+	font-size: 18px;
+
+	.order-agree {
+		margin-left: 20px;
+	}
+
+	a {
+		margin-left: 10px;
+	}
+}
+
+.pay-container {
+	padding: 15px 20px;
+	border-top: none;
+
+	.pay-left {
+		width: 100px;
+		margin-top: 10px;
+	}
+
+	.pay-middle {
+		font-size: 18px;
+		line-height: 30px;
+	}
+
+	.pay-right {
+
+		button:first-child {
+			margin-bottom: 10px;
+		}
+	}
+}
+
+.order-show-container {
 
 	.order-content-title .order-status-tip,
 	.order-content-title .order-tip {
@@ -396,4 +278,43 @@ body {
 	line-height: 18px;
 	margin-left: 3px;
 	margin-right: 3px;
+}
+
+.travel-info {
+	padding: 10px;
+	border: 1px solid #dfdfdf;
+	border-bottom: 2px solid @currency;
+	
+	h2{
+		font-size: 24px;
+		margin: 10px 0;
+	}
+
+	h3, 
+	h4{
+		font-size: 14px;
+		margin-bottom: 8px;
+	}
+
+	p{
+		display: inline-block;
+	}
+
+	.price-right{
+		float: right;
+		margin-right: 15px;
+	}
+
+	.group-brief-container{
+		border: none;
+		border-bottom: 1px dashed @black;
+	}
+
+	img{
+		width:100%;
+	}
+
+	.total {
+		margin-top: 10px;
+	}
 }
