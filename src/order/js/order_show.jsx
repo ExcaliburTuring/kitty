@@ -2,14 +2,15 @@
  * @author xiezhenzong 
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
+import { Grid, Row, Col } from 'react-bootstrap';
 import { Table, Form, Button, Modal, Input, message } from 'antd';
 
 import { url, idType, priceUtil, orderStatus, defaultValue, refundStatus, refundType } from 'config';
 import Title from 'title';
 import OrderTip from 'order_tip';
 import OrderOperationHelper from 'order_operation';
+import GroupBrief from './group';
 
 import 'antd/lib/index.css';
 
@@ -55,10 +56,10 @@ const _emergencyTableColumn = [{
     'dataIndex': 'mobile'
 }];
 
-var Step3 = React.createClass({
+var OrderShow = React.createClass({
 
     getTravellersTableData: function() {
-        return this.props.orderTravellers.map(function(traveller) {
+        return this.props.orderInfoData.orderTravellers.map(function(traveller) {
             return {
                 'key': `order-step-discount-${traveller.travellerid}`,
                 'name': traveller.name,
@@ -76,44 +77,56 @@ var Step3 = React.createClass({
     },
 
     render: function() {
-        var orderInfo = this.props.orderInfo;
+        var orderInfoData = this.props.orderInfoData;
+        var orderInfo = orderInfoData.orderInfo;
         return (
-            <div className="order-step3">
-                <Title title="订单详情" className="order-content-title">
-                    <p className="order-status-tip">
-                        订单状态:
-                        <span className="order-status">
-                            {orderStatus.getDesc(orderInfo.status)}
-                        </span>
-                    </p>
-                    <OrderTip status={orderInfo.status}
-                        timeLeft={this.props.timeLeft} dayLeft={this.props.dayLeft}/>
-                </Title>
-                <div className="step3-section">
-                    <h3>出行人员</h3>
-                    <Table
-                        columns={_travellerTableColumn}
-                        dataSource={this.getTravellersTableData()}
-                        bordered 
-                        pagination={false} />
-                </div>
-                <div className="step3-section">
-                    <h3>支付金额和优惠</h3>
-                    <Discount 
-                        orderInfo={orderInfo} 
-                        policy={this.props.policy}
-                        code={this.props.code}
-                        student={this.props.student}/>
-                </div>
-                <div className="step3-section">
-                    <h3>紧急联系人</h3>
-                    <Emergency emergencyContact={orderInfo.emergencyContact}
-                        emergencyMobile={orderInfo.emergencyMobile} />
-                </div>
-                <Refund orderInfo={orderInfo} orderRefound={this.props.orderRefound}/>
-                <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status}
-                                actualPrice={orderInfo.actualPrice} routeid={orderInfo.routeid}/>
-            </div>
+            <Grid>
+                <Row>
+                    <Col sm={9} md={9}>
+                        <div className="order-content-container order-show-container">
+                            <Title title="订单详情" className="order-content-title">
+                                <p className="order-status-tip">
+                                    订单状态:
+                                    <span className="order-status">
+                                        {orderStatus.getDesc(orderInfo.status)}
+                                    </span>
+                                </p>
+                                <OrderTip status={orderInfo.status}
+                                    timeLeft={orderInfoData.timeLeft} dayLeft={orderInfoData.dayLeft}/>
+                            </Title>
+                            <div className="step3-section">
+                                <h3>出行人员</h3>
+                                <Table
+                                    columns={_travellerTableColumn}
+                                    dataSource={this.getTravellersTableData()}
+                                    bordered 
+                                    pagination={false} />
+                            </div>
+                            <div className="step3-section">
+                                <h3>支付金额和优惠</h3>
+                                <Discount 
+                                    orderInfo={orderInfo} 
+                                    policy={orderInfoData.policy}
+                                    code={orderInfoData.code}
+                                    student={orderInfoData.student}/>
+                            </div>
+                            <div className="step3-section">
+                                <h3>紧急联系人</h3>
+                                <Emergency emergencyContact={orderInfo.emergencyContact}
+                                    emergencyMobile={orderInfo.emergencyMobile} />
+                            </div>
+                            <Refund orderInfo={orderInfo} orderRefound={orderInfoData.orderRefound}/>
+                            <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status}
+                                            actualPrice={orderInfo.actualPrice} routeid={orderInfo.routeid}/>
+                        </div>
+                    </Col>
+                    <Col sm={3} md={3}>
+                        <GroupBrief 
+                            travelRoute={orderInfoData.travelRoute} 
+                            travelGroup={orderInfoData.travelGroup}/>
+                    </Col>
+                </Row>
+            </Grid>
         );
     }
 });
@@ -190,7 +203,7 @@ var Discount = React.createClass({
 var Emergency = React.createClass({
 
     _split: function(value) {
-        return value == null ? [] : value.split(',');
+        return value == null ? [] : value.split(';');
     },
 
     render: function() {
@@ -318,4 +331,4 @@ var OrderOperation = React.createClass({
     }
 });
 
-module.exports = Step3;
+module.exports = OrderShow;
