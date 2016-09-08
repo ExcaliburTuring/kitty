@@ -35,7 +35,7 @@ var mockConfig = [
     config('/login', 'login.html'),
     config('/notauth', 'notauth.html'),
     config('/notfound', 'notfound.html'),
-    config('/error', 'error.html'),
+    config('/syserror', 'syserror.html'),
     config('/img/*'),
     config('/lib/*')
 ];

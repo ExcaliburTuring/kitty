@@ -161,7 +161,7 @@ export var NewModal = React.createClass({
                 self.refs.emailContainer.cleanValidate();
                 self.refs.mobileContainer.cleanValidate();
                 self.refs.emergencyContainer.cleanValidate();
-                self.props.onHandleOk();
+                self.props.onHandleOk(self.props.isAccount);
             }
         }).fail(function() {
             self.setState({
