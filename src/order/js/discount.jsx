@@ -74,7 +74,7 @@ var Discount = React.createClass({
                                 className="discountcode-input-container"
                                 label="优惠码:"
                                 labelCol={{ span: 5 }}
-                                wrapperCol={{ span: 15 }}
+                                wrapperCol={{ span: 16 }}
                                 validateStatus={this.props.discountCode.validateStatus}
                                 help={this.props.discountCode.msg}>
                                 <Input
