@@ -484,7 +484,7 @@ var OrderForm = React.createClass({
      * 学生优惠人数更改
      */
     onStudentDiscountChange: function(e) {
-        var count = +e;
+        var count = e ? +e : 0;
         if (count == this.state.studentDiscount.count) {
             return;
         }
