@@ -116,8 +116,8 @@ var OrderShow = React.createClass({
                                     emergencyMobile={orderInfo.emergencyMobile} />
                             </div>
                             <Refund orderInfo={orderInfo} orderRefound={orderInfoData.orderRefound}/>
-                            <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status}
-                                            actualPrice={orderInfo.actualPrice} routeid={orderInfo.routeid}/>
+                            <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status} actualPrice={orderInfo.actualPrice}
+                                routeid={orderInfo.routeid} groupid={orderInfo.groupid}/>
                         </div>
                     </Col>
                     <Col sm={3} md={3}>
@@ -303,7 +303,7 @@ var OrderOperation = React.createClass({
         } else if (status == orderStatus.TIMEOUT) {
             operationGroup = (
                 <div className="order-operation">
-                    <Button type="primary" onClick={this.onRefundOrderBtnClick}>
+                    <Button type="primary" onClick={this.onReorderBtnClick}>
                         重新下单
                     </Button>
                     <Button type="primary" onClick={this.onSameRouteBtnClick}>
