@@ -77,7 +77,7 @@ var AccountMenu = React.createClass({
                     </Menu.Item>
                     <Menu.Divider />
                     <Menu.Item key="7">
-                        <a href="/account/logout"><Icon type="cross" />退出</a>
+                        <a href="/account/logout"><Icon type="logout" />退出</a>
                     </Menu.Item>
                 </Menu>
             );
