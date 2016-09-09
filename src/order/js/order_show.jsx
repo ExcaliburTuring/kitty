@@ -284,8 +284,19 @@ var OrderOperation = React.createClass({
                     <Button type="primary" onClick={this.onCancelOrderBtnClick}>
                         取消订单
                     </Button>
-                    <Button type="primary">
-                        下载合同
+                </div>
+            );
+        } else if (status == orderStatus.PAYING) {
+            operationGroup = (
+                <div className="order-operation">
+                    <Form inline onSubmit={()=>{}} action="/order/pay" method="GET" target="_blank">
+                        <input type="hidden" name="orderid" value={this.props.orderid}></input>
+                        <Button type="primary" htmlType="submit">
+                            继续支付
+                        </Button>
+                    </Form>
+                    <Button type="primary" onClick={this.onCancelOrderBtnClick}>
+                        取消订单
                     </Button>
                 </div>
             );
@@ -296,7 +307,10 @@ var OrderOperation = React.createClass({
                         订单退款
                     </Button>
                     <Button type="primary" onClick={this.onOtherRouteBtnClick}>
-                        查看其它路线
+                        其它路线
+                    </Button>
+                    <Button type="primary" onClick={this.onDownloadContractBtnClick}>
+                        下载合同
                     </Button>
                 </div>
             );
@@ -307,7 +321,7 @@ var OrderOperation = React.createClass({
                         重新下单
                     </Button>
                     <Button type="primary" onClick={this.onSameRouteBtnClick}>
-                        查看同一路线
+                        同一路线
                     </Button>
                 </div>
             );
@@ -316,7 +330,7 @@ var OrderOperation = React.createClass({
             operationGroup = (
                 <div className="order-operation">
                     <Button type="primary" onClick={this.onOtherRouteBtnClick}>
-                        查看其它路线
+                        其它路线
                     </Button>
                 </div>
             );

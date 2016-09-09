@@ -184,9 +184,6 @@ var OrderOperation = React.createClass({
                     <Button bsStyle="link" onClick={this.onCancelOrderBtnClick}>
                         取消订单
                     </Button>
-                    <Button bsStyle="link">
-                        下载合同
-                    </Button>
                 </div>
             );
         } else if (status == orderStatus.PAYING) {
@@ -195,14 +192,11 @@ var OrderOperation = React.createClass({
                     <Form inline onSubmit={()=>{}} action="/order/pay" method="GET" target="_blank">
                         <input type="hidden" name="orderid" value={this.props.orderid}></input>
                         <Button bsStyle="link" type="submit">
-                            去支付
+                            继续支付
                         </Button>
                     </Form>
                     <Button bsStyle="link" onClick={this.onCancelOrderBtnClick}>
                         取消订单
-                    </Button>
-                    <Button bsStyle="link">
-                        下载合同
                     </Button>
                 </div>
             );
@@ -214,6 +208,9 @@ var OrderOperation = React.createClass({
                     </Button>
                     <Button bsStyle="link" onClick={this.onRefundOrderBtnClick}>
                         退款
+                    </Button>
+                    <Button bsStyle="link" onClick={this.onDownloadContractBtnClick}>
+                        合同
                     </Button>
                     <Button bsStyle="link" onClick={this.onOtherRouteBtnClick}>
                         其它路线
@@ -236,7 +233,7 @@ var OrderOperation = React.createClass({
             operationGroup = (
                 <div className="order-operation">
                     <Button bsStyle="link" onClick={this.onOtherRouteBtnClick}>
-                        查看其它路线
+                        其它路线
                     </Button>
                 </div>
             );
