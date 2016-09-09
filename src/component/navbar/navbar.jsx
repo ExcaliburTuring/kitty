@@ -70,14 +70,14 @@ var AccountMenu = React.createClass({
             const menu = (
                 <Menu>
                     <Menu.Item key="5">
-                        <a href={`${homepage}`}>我的行程</a>
+                        <a href={`${homepage}`}><Icon type="home" />我的行程</a>
                     </Menu.Item>
                     <Menu.Item key="6">
-                        <a href={`${homepage}?info=1`}>账号设置</a>
+                        <a href={`${homepage}?info=1`}><Icon type="setting" />个人信息</a>
                     </Menu.Item>
                     <Menu.Divider />
                     <Menu.Item key="7">
-                        <a href="/account/logout">退出</a>
+                        <a href="/account/logout"><Icon type="cross" />退出</a>
                     </Menu.Item>
                 </Menu>
             );

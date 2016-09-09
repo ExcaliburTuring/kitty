@@ -1,16 +1,8 @@
 .index-title,
 .order-brief-container,
-.profiles {
-    border-radius: 6px;
-    overflow: hidden;
+ {
+    box-shadow: 0 0 3px 0 @light-gray;
 
-    &:hover {
-        box-shadow: 0 0 6px 0 @trans-black;
-        animation: shadow 0.2s;
-        -moz-animation: shadow 0.2s; /* Firefox */
-        -webkit-animation: shadow 0.2s; /* Safari and Chrome */
-        -o-animation: shadow 0.2s; /* Opera */
-    };
 }
 
 .index-container {
@@ -22,6 +14,7 @@
 
 .profiles {
 	font-size: 16px;
+    margin-top: -35px;
     text-align: center;
     background-color: @white;
     border: 1px solid #dfdfdf;
@@ -62,11 +55,9 @@
 }
 
 .index-title {
-    padding: 12px;
+    padding: 10px;
 	color: @dark-gray;
 	background-color: @white;
-	border: 1px solid #dfdfdf;
-	height: 50px;
 	line-height: 27px;
     font-size: 16px;
     margin-bottom: 20px;
@@ -87,7 +78,6 @@
 
 	.order-count {
         font-size: 20px;
-        font-weight: bolder;
 		color: @currency;
 
         &:hover {
@@ -97,7 +87,7 @@
 }
 
 .order-brief-container {
-    border: 1px solid #dfdfdf;
+    border: 1px dashed @currency;
     margin-bottom: 20px;
 
     .order-brief-title {
@@ -190,10 +180,12 @@
 
         .price {
             color: @orange;
+            font-size: 14px;
         }
 
-        .price-operator {
-            font-size: 14px;
+        .price-before {
+            color: @gray;
+            text-decoration: line-through;
         }
     }
 }
@@ -210,6 +202,10 @@
 
         form.ant-form-inline {
             display: inline-block;
+        }
+
+        a {
+            color: #e01515;
         }
 
         button.btn.btn-link {

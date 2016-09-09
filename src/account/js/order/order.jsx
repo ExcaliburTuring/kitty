@@ -46,9 +46,8 @@ var OrderItem = React.createClass({
                         <Col sm={8} md={8}>
                             <div className="travel-info">
                                 <span className="travel-name">{travelRoute.name}</span>
-                                <span className="travel-time">{travelGroup.startDate} 到 {travelGroup.endDate}</span>
-                                <p className="travel-route">{travelRoute.route}</p>
                             </div>
+                            <span className="travel-time">{travelGroup.startDate} 到 {travelGroup.endDate}</span>
                             <div className="order-info">
                                 <TravellerList names={briefOrder.travellerNames} keyPrefix={orderInfo.orderid}/>
                                 <OrderPrice orderInfo={orderInfo} travelGroup={travelGroup}
@@ -58,14 +57,12 @@ var OrderItem = React.createClass({
                         </Col>
                     </Row>
                     <div className="order-extra-container">
-                        <Row>
-                            <Col sm={4} md={4} smPush={8} mdPush={8}>
-                                <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status} 
-                                    actualPrice={orderInfo.actualPrice} routeid={travelRoute.routeid} />
-                            </Col>
-                            <GroupInfo otherTravellers={briefOrder.otherTravellers} 
-                                wxQrCode={travelGroup.wxQrcode}/>
-                        </Row>
+                        <Col sm={4} md={4} smPush={8} mdPush={8}>
+                            <OrderOperation orderid={orderInfo.orderid} 
+                                status={orderInfo.status} routeid={travelRoute.routeid} />
+                        </Col>
+                        <GroupInfo otherTravellers={briefOrder.otherTravellers} 
+                            wxQrCode={travelGroup.wxQrcode}/>
                     </div>
                 </div>
             </div>
@@ -138,15 +135,10 @@ var OrderPrice = React.createClass({
         return (
             <div className="order-price">
                 <span className="order-label">价格</span>
-                <Tooltip placement="top" title={priceTip}>
-                    <span className="price">{this.props.orderInfo.price}</span>
-                </Tooltip>
-                <span className="price-operator"> - </span>
                 <Tooltip placement="top" title={discountTip}>
-                    <span className="price">{priceUtil.getPriceStr(totalDiscount)}</span>
+                    <span className="price-before">{this.props.orderInfo.price}</span>
                 </Tooltip>
-                <span className="price-operator">＝</span>
-                <span className="price">{this.props.orderInfo.actualPrice}</span>
+                <span className="price">  {this.props.orderInfo.actualPrice}</span>
             </div>
         );
     }
@@ -195,9 +187,29 @@ var OrderOperation = React.createClass({
                     </Button>
                 </div>
             );
+        } else if (status == orderStatus.PAYING) {
+            operationGroup = (
+                <div className="order-operation">
+                    <Form inline onSubmit={()=>{}} action="/order/pay" method="GET" target="_blank">
+                        <input type="hidden" name="orderid" value={this.props.orderid}></input>
+                        <Button bsStyle="link" type="submit">
+                            去支付
+                        </Button>
+                    </Form>
+                    <Button bsStyle="link" onClick={this.onCancelOrderBtnClick}>
+                        取消订单
+                    </Button>
+                    <Button bsStyle="link">
+                        下载合同
+                    </Button>
+                </div>
+            );
         } else if (status == orderStatus.PAID) {
             operationGroup = (
                 <div className="order-operation">
+                    <Button bsStyle="link" href={`/order/${this.props.orderid}`}>
+                        查看
+                    </Button>
                     <Button bsStyle="link" onClick={this.onRefundOrderBtnClick}>
                         退款
                     </Button>
