@@ -16,29 +16,6 @@ var Footer = React.createClass({
     render: function() {
         return (
             <div className="footer">
-                <AutoAffix onAffixBottom={0} container={this.props.container}>
-                    <Col sm={4} md={4}>
-                        <div className="mylabel">
-                            <i className="icon"><img src={home}/>
-                            </i>
-                            <p>优惠券</p>
-                        </div>
-                    </Col>
-                    <Col sm={4} md={4}>
-                        <div className="mylabel">
-                            <i className="icon"><img src={user}/>
-                            </i>
-                            <p>优惠券</p>
-                        </div>
-                    </Col>
-                    <Col sm={4} md={4}>
-                        <div className="mylabel">
-                            <i className="icon"><img src={shopping}/>
-                            </i>
-                            <p>优惠券</p>
-                        </div>
-                    </Col>
-                </AutoAffix>
             </div>
         )
     }

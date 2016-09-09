@@ -9,6 +9,7 @@ var Brief = React.createClass({
 
     render: function() {
         var brief = this.props.brief;
+        var route = this.props.route.toString().split("-");
         var mdtext =  marked(brief.mdtext);
 
         var spotlights = brief.spotlights.map(function(spotlight, index) {
@@ -22,9 +23,18 @@ var Brief = React.createClass({
             );
         });
 
+        var track = route.map(function(track, index) {
+            return (
+                <span key={`${index}`}> {track}/</span>
+            );
+        });
+
+
+
         return (
              <div className="brief container">
                 <Col sm={12} md={12}>
+                    <div className="track">{track}</div>
                     <hr />
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
                 </Col>

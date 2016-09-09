@@ -63,8 +63,8 @@ var App = React.createClass({
         const operations = <TabBarExtraContent accountInfo={accountInfo}/>;
         var content = (
             <Tabs tabBarExtraContent={operations} activeKey={this.state.tabSelect} onChange={(key) => {this.setState({'tabSelect': key});}}>
-                <TabPane tab="我的窝" key="1"><Index /></TabPane>
-                <TabPane tab="我的信息" key="2"><Info /></TabPane>
+                <TabPane tab="我的行程" key="1"><Index /></TabPane>
+                <TabPane tab="个人信息" key="2"><Info /></TabPane>
             </Tabs>
         );
         return this.createDom(content);
