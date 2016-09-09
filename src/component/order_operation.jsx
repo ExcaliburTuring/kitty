@@ -208,6 +208,20 @@ var OrderOperationHelper = {
 
     onOtherRouteBtnClick: function() {
         window.location.href = `/routes`;
+    },
+
+    onReorderBtnClick: function() {
+        $.post(url.orderNew, {'routeid': this.props.routeid, 'groupid': this.props.groupid})
+        .done(function(data) {
+            if (data.status != 0) {
+                message.error(defaultValue.newOrderMsg);
+            } else {
+                window.location.pathname = `${url.order}/${data.orderid}`;
+            }
+        })
+        .fail(function() {
+            message.error(defaultValue.newOrderMsg);
+        });
     }
 };
 

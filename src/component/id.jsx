@@ -29,8 +29,10 @@ var Id = React.createClass({
         }
         var newState = {
             'validationState': ret['state'],
-            'errMsg': ret['msg']
+            'msg': ret['msg']
         };
+
+        console.log(newState)
 
         if (ret['info']) {
             newState['birthday'] = ret['info']['birth'];
