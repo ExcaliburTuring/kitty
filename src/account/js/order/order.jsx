@@ -57,12 +57,14 @@ var OrderItem = React.createClass({
                         </Col>
                     </Row>
                     <div className="order-extra-container">
-                        <Col sm={4} md={4} smPush={8} mdPush={8}>
-                            <OrderOperation orderid={orderInfo.orderid} 
-                                status={orderInfo.status} routeid={travelRoute.routeid} />
-                        </Col>
-                        <GroupInfo otherTravellers={briefOrder.otherTravellers} 
-                            wxQrCode={travelGroup.wxQrcode}/>
+                        <Row>
+                            <Col sm={4} md={4} smPush={8} mdPush={8}>
+                                <OrderOperation orderid={orderInfo.orderid} status={orderInfo.status} actualPrice={orderInfo.actualPrice}
+                                    routeid={travelRoute.routeid} groupid={travelGroup.groupid}/>
+                            </Col>
+                            <GroupInfo otherTravellers={briefOrder.otherTravellers} 
+                                wxQrCode={travelGroup.wxQrcode}/>
+                        </Row>
                     </div>
                 </div>
             </div>
@@ -221,7 +223,7 @@ var OrderOperation = React.createClass({
         } else if (status == orderStatus.TIMEOUT) {
             operationGroup = (
                 <div className="order-operation">
-                    <Button bsStyle="link" onClick={this.onRefundOrderBtnClick}>
+                    <Button bsStyle="link" onClick={this.onReorderBtnClick}>
                         重新下单
                     </Button>
                     <Button bsStyle="link" onClick={this.onSameRouteBtnClick}>
