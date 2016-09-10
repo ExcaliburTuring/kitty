@@ -99,7 +99,7 @@ var AccountMenu = React.createClass({
                 <Nav pullRight>
                     <NavItem eventKey={8} href="/wx/login" target="_blank">登录</NavItem>
                     <span className="split-bar" />
-                    <NavItem eventKey={9} href="/wx/login">注册</NavItem>
+                    <NavItem eventKey={9} href="/wx/login" target="_blank">注册</NavItem>
                 </Nav>
             );
         }
