@@ -101,7 +101,7 @@ var Groups = React.createClass({
             return (
                 <div className="teaminfo">
                     <h2>报名</h2>
-                    <p>这条路线暂时没有成团，如果您感兴趣，可以联系我们，15001028030</p>
+                    <p>这条路线暂时没有成团，如果您感兴趣，可以联系我们，{defaultValue.hotline}</p>
                 </div>
             );
         }
