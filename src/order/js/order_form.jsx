@@ -583,7 +583,7 @@ var OrderForm = React.createClass({
             },
 
             // 临时变量
-            'selectTravellers': [],
+            'selectTravellers': [this._createAccountTraveller()],
             'emergencyContacts': {
                 'size' : 0
             },
@@ -628,9 +628,10 @@ var OrderForm = React.createClass({
         var orderInfo = orderInfoData.orderInfo;
         var travelGroup = orderInfoData.travelGroup;
         var selectTravellers = this.state.selectTravellers;
-        if (selectTravellers.length == 0) { // 实际上也会更改state里的数组，只是不会通知页面更改
-            selectTravellers.push(this._createAccountTraveller());
-        }
+        // 董事长说不要这个，那就不要咯。
+        // if (selectTravellers.length == 0) { // 实际上也会更改state里的数组，只是不会通知页面更改
+        //     selectTravellers.push(this._createAccountTraveller());
+        // }
         var count = selectTravellers.length;
         var price = priceUtil.getPriceStr(this._getPrice());
         var actualPrice = this._getActualPrice();
