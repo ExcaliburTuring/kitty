@@ -291,6 +291,9 @@ export var priceUtil = {
     },
 
     getPriceStr: function(price) {
+        if (price <= 0) {
+            return `￥0`
+        }
         var rawPrice = price / 1000;
         return `￥${rawPrice.toFixed(0)}`
     }
