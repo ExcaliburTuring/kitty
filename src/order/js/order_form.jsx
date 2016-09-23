@@ -102,6 +102,12 @@ var OrderForm = React.createClass({
             this.refs.pay.enableBtn();
             return;
         }
+        if (priceUtil.getPrice(discountData.actualPrice)) {
+            message.error(`出现负数价格太不科学了，请联系海逍遥${defaultValue.hotline}`);
+            this.refs.pay.enableBtn();
+            return;
+        }
+
         var discountData = this._getDiscount();
         var emergency = this._getEmergency();
         var self = this;
@@ -497,6 +503,9 @@ var OrderForm = React.createClass({
         });
     },
 
+    /**
+     * 同意合同
+     */
     onAgreementCheck: function(e) {
         this.setState({'isAgreed': e.target.checked});
     },
