@@ -6,12 +6,12 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { AutoAffix } from 'react-overlays';
 
 var _config = {
-    '#app': 0,
-    '.brief': 1,
-    '.day1': 2,
-    '.notice': 3,
-    '.expense': 4,
-    '.teaminfo': 5
+    '.brief': 0,
+    '.day1': 1,
+    '.notice': 2,
+    '.expense': 3,
+    '.teaminfo': 4,
+    '#app': 5,
 }
 
 var BodyNav = React.createClass({
@@ -36,19 +36,19 @@ var BodyNav = React.createClass({
             $navItems.removeClass('select');
             if (t >= (teaminfoTop - 200)) {
                 $navbar.addClass('affixed');
-                $navItems.eq(5).addClass('select');
+                $navItems.eq(4).addClass('select');
             } else if (t >= expenseTop) {
                 $navbar.addClass('affixed');
-                $navItems.eq(4).addClass('select');
+                $navItems.eq(3).addClass('select');
             } else if (t >= noticeTop) {
                 $navbar.addClass('affixed');
-                $navItems.eq(3).addClass('select');
+                $navItems.eq(2).addClass('select');
             } else if (t >= day1Top) {
                 $navbar.addClass('affixed');
-                $navItems.eq(2).addClass('select');
+                $navItems.eq(1).addClass('select');
             } else if (t >= briefTop) {
                 $navbar.addClass('affixed');
-                $navItems.eq(1).addClass('select');
+                $navItems.eq(0).addClass('select');
             }
         };
 
@@ -83,12 +83,12 @@ var BodyNav = React.createClass({
                 <AutoAffix viewportOffsetTop={0} container={this.props.container}>
                     <Navbar>
                         <Nav pullLeft activeKey={1} onSelect={this.handleSelect}>
-                            <NavItem eventKey={"#app"} className="sticky-gohead">回头顶部</NavItem>
                             <NavItem eventKey={".brief"}>路线简介</NavItem>
                             <NavItem eventKey={".day1"}>行程安排</NavItem>
                             <NavItem eventKey={".notice"}>注意事项</NavItem>
                             <NavItem eventKey={".expense"}>费用说明</NavItem>
                             <NavItem eventKey={".teaminfo"}>马上报名</NavItem>
+                            <NavItem eventKey={"#app"} className="sticky-gohead">回头顶部</NavItem>
                         </Nav>
                     </Navbar>
                 </AutoAffix>
