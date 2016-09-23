@@ -7,7 +7,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { Modal, Input, Alert, message } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
-import { url, priceUtil, discountCodeStatus, accountStatus } from 'config';
+import { url, priceUtil, discountCodeStatus, accountStatus, defaultValue } from 'config';
 import validator from 'validator';
 import Rabbit from 'rabbit';
 import { NewModal } from 'new';
@@ -102,13 +102,13 @@ var OrderForm = React.createClass({
             this.refs.pay.enableBtn();
             return;
         }
-        if (priceUtil.getPrice(discountData.actualPrice)) {
+
+        var discountData = this._getDiscount();
+        if (priceUtil.getPrice(discountData.actualPrice) <= 0) {
             message.error(`出现负数价格太不科学了，请联系海逍遥${defaultValue.hotline}`);
             this.refs.pay.enableBtn();
             return;
         }
-
-        var discountData = this._getDiscount();
         var emergency = this._getEmergency();
         var self = this;
         var request = {
