@@ -4,7 +4,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Row, Col } from 'react-bootstrap';
-import { Alert, Checkbox, Icon, Button, Modal, Input, message } from 'antd';
+import { Checkbox, message } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
 import { url, accountStatus } from 'config';
@@ -37,6 +37,14 @@ var Agreement = React.createClass({
         return `/order/contract/travel_contract.pdf?${orderid}&${travellers}&${count}&${price}&${actualPrice}`;
     },
 
+    onAgreementLinkClick: function() {
+        if (this.props.selectTravellers.length <= 0) {
+            message.error("还未选择出行人");
+            return;
+        }
+        window.open(this._createContractLink());
+    },
+
     render: function() {
         return (
             <div className="agreement-container clearfix">
@@ -45,7 +53,7 @@ var Agreement = React.createClass({
                     <Checkbox
                         defaultChecked={this.props.isAgreed} 
                         onChange={this.props.onAgreementCheck}/>
-                    <a href={this._createContractLink()} target="_blank">
+                    <a href="javascript:" target="_blank" onClick={this.onAgreementLinkClick}>
                         安全协议
                     </a>
                 </label>
