@@ -166,15 +166,19 @@ export var groupStatus = {
 
     OPEN: 1,
 
+    STOP: 2,
+
     FULL: 3,
 
     TRAVELLING: 4,
 
-    FINISH: 5,
+    FINISHED: 5,
 
     getDesc: function(status) {
         if(status == this.OPEN){
             return "报名中";
+        } else if (status == this.STOP) {
+            return "暂停";
         } else if(status == this.FULL){
             return "已报满";
         } else if(status == this.TRAVELLING) {

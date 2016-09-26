@@ -36,6 +36,14 @@ var Discount = React.createClass({
                     </SelectOption>
                 );
             });
+            selectOptionList.unshift(
+                <SelectOption
+                    key={`order-discount--1`}
+                    value={-1}>
+                    不使用优惠
+                </SelectOption>
+            );
+            console.log( selectOptionList);
         }
         if (discountData.studentDiscount == null) {
             studentDiscount = (
