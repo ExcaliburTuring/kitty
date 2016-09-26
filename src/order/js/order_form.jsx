@@ -398,8 +398,13 @@ var OrderForm = React.createClass({
      * 优惠策略更改
      */
     onPolicyDiscountChange: function(eventKey) {
-        if (eventKey !== this.state.policyDiscount.discountid) { // 和当前的一样
-            var policy = this._findPolicyDiscount(eventKey, this.state.discountData.policy);
+        if (eventKey !== this.state.policyDiscount.discountid) { // 和当前的不一样
+            var policy = null;
+            if (eventKey === -1) {
+                policy = {value: '￥0'};
+            } else {
+                policy = this._findPolicyDiscount(eventKey, this.state.discountData.policy);
+            }
             this.setState({
                 'policyDiscount': {
                     'discountid': eventKey,
@@ -442,6 +447,9 @@ var OrderForm = React.createClass({
      */
     onDiscountCodeInput: function(e) {
         var discountCode = e.target.value;
+        if (discountCode == '') {
+            return;
+        }
         var self = this;
         $.get(url.orderDiscountCode, {'code': discountCode})
         .done(function(data) {
