@@ -31,9 +31,6 @@ var Id = React.createClass({
             'validationState': ret['state'],
             'msg': ret['msg']
         };
-
-        console.log(newState)
-
         if (ret['info']) {
             newState['birthday'] = ret['info']['birth'];
             newState['gender'] = ret['info']['sex'] == 0 ? gender.FEMALE : gender.MALE;

@@ -109,11 +109,15 @@ var OrderForm = React.createClass({
             this.refs.pay.enableBtn();
             return;
         }
-        var emergency = this._getEmergency();
         var self = this;
+        var selectTravellers = this.state.selectTravellers;
+        selectTravellers.forEach(function(selectTraveller) {
+            selectTraveller['roommate'] = self.state.roommates[`${selectTraveller.accountid}-${selectTraveller.contactid}`] || null;
+        });
+        var emergency = this._getEmergency(); 
         var request = {
             'orderid': this.props.orderInfoData.orderInfo.orderid,
-            'travellers': this.state.selectTravellers,
+            'travellers': selectTravellers,
             'policyDiscountid': discountData.policyDiscountid,
             'discountCode': discountData.discountCode,
             'studentDiscountid': discountData.studentDiscountid,
@@ -313,6 +317,14 @@ var OrderForm = React.createClass({
     onNewBtnClick: function() {
         this.setState({'contact': null, 'title': '添加出行人'});
         this.refs.newModal.toggleVisiable();
+    },
+
+    onRoommateChange: function(e, selectTraveller) {
+        var value = e.target.value;
+        console.log(value);
+        var roommates = this.state.roommates;
+        roommates[`${selectTraveller.accountid}-${selectTraveller.contactid}`] = value;
+        this.setState({"roommates": roommates});
     },
 
     /**
@@ -601,6 +613,7 @@ var OrderForm = React.createClass({
 
             // 临时变量
             'selectTravellers': [this._createAccountTraveller()],
+            'roommates': {},
             'emergencyContacts': {
                 'size' : 0
             },
@@ -670,6 +683,7 @@ var OrderForm = React.createClass({
                                 onNameChange={this.onNameChange}
                                 onEditBtnClick={this.onEditBtnClick}
                                 onNewBtnClick={this.onNewBtnClick}
+                                onRoommateChange={this.onRoommateChange}
                                 emergencyContacts={this.state.emergencyContacts}
                                 onEmergencyNameChange={this.onEmergencyNameChange}
                                 onEmergencyClose={this.onEmergencyClose}
