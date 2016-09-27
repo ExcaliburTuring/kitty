@@ -66,7 +66,7 @@ var OrderShow = React.createClass({
                 'idType': idType.getDesc(traveller.idType),
                 'id': traveller.id,
                 'mobile': traveller.mobile,
-                'roomate': traveller.roomate ? traveller.roomate : '服从安排'
+                'roomate': traveller.roommate ? traveller.roommate : '服从安排'
             };
         });
     },

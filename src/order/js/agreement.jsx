@@ -54,16 +54,16 @@ var Agreement = React.createClass({
                         defaultChecked={this.props.isAgreed} 
                         onChange={this.props.onAgreementCheck}/>
                     <a href="javascript:" target="_blank" onClick={this.onAgreementLinkClick}>
-                        安全协议
-                    </a>
-                </label>
-                <label>
-                    <a href="/index/hxy_secure_notice.pdf" target="_blank">
-                        报名须知
+                        旅游合同
                     </a>
                 </label>
                 <label>
                     <a href="/index/hxy_signup_notice.pdf" target="_blank">
+                        报名须知
+                    </a>
+                </label>
+                <label>
+                    <a href="/index/hxy_secure_notice.pdf" target="_blank">
                         海逍遥安全告知书
                     </a>
                 </label>

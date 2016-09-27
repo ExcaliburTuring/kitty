@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
-import { Checkbox, Icon, Button } from 'antd';
+import { Checkbox, Icon, Button, Input } from 'antd';
 
 import Contact from 'contact';
 import Title from 'title';
@@ -57,6 +57,19 @@ var Travellers = React.createClass({
         return contactsList;
     },
 
+    _createRoommateList: function() {
+        var self = this;
+        return this.props.selectTravellers.map(function(selectTraveller, index) {
+            return (
+                <div className="order-roommate-item" key={`order-roommate-${index}`}>
+                    <p className="order-roommate-label ellipsis">{`${selectTraveller.name}:`}</p>
+                    <Input className="order-roommate-input" placeholder="请输入" 
+                        onChange={(e)=>{self.props.onRoommateChange(e, selectTraveller)}}/>
+                </div>
+            );
+        });
+    },
+
     _createEmergencyNameList: function(travellers, selectTravellers) {
         var self = this, nameList = [], emergencyContacts = this.props.emergencyContacts;
         for (var i = 0, n = travellers.length; i < n; i++) {
@@ -101,6 +114,8 @@ var Travellers = React.createClass({
         // 出行人选择
         var nameList = this._createNameList(travellers, selectTravellers);
         var contactsList = this._createContactsList(travellers, selectTravellers);
+        // 睡友
+        var roommateList = this._createRoommateList();
         // 紧急联系人选择
         var emergencyNameList = this._createEmergencyNameList(travellers, selectTravellers);
         var emergencyContactList = this._createEmergencyContactList();
@@ -125,6 +140,12 @@ var Travellers = React.createClass({
                     <Row>
                         {contactsList}
                     </Row>
+                </div>
+                 <div className="order-roommate-contianer">
+                    <span>睡友设置:</span>
+                </div>
+                <div className="order-roommate-show">
+                    {roommateList}
                 </div>
                 <div className="order-emergency-contianer">
                     <span >紧急联系人:</span>

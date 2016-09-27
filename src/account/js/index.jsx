@@ -109,7 +109,7 @@ var Index = React.createClass({
                         </Col>
                         <Col sm={9} md={9}>
                             <Title title={`${accountInfo.nickname}的订单：`} className="index-title">
-                                <span className="bar">未完成：</span>
+                                <span className="bar">当前：</span>
                                 <a onClick={()=>{this.onSelectOrderType(orderType.CURRENT);}} className="order-count">
                                     {data.currentOrderCount}
                                 </a>

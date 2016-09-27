@@ -30,7 +30,6 @@ var BodyNav = React.createClass({
         var $navItems = $navbar.find('ul li');
 
         window.onscroll = function(){
-            console.log('kdkdkdkdkdkdkdkdkdkdk')
             var t = document.documentElement.scrollTop || document.body.scrollTop; 
             t += 60; // 80的offset
             $navbar.removeClass('affixed');
