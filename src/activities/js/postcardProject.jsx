@@ -19,7 +19,7 @@ var App = React.createClass({
                         <div className="line"/>
                         <div className="title">明信片计划</div>
                         <div className="line"/>
-                        <div className="subheading">"明信片计划"灵魂和脚步，必须有一个在路上""</div>
+                        <div className="subheading">"明信片计划" 灵魂和脚步，必须有一个在路上</div>
                     </div>
                     <Col md={12} sm={12}>
                         <div className="numbers">A</div>
@@ -30,7 +30,7 @@ var App = React.createClass({
                                 <span className="orange">3： </span>截图，联系客服。选择风流才子，或名门闺秀亲笔写一张明信片给你哦（就像下面这样）<br/>
                                 <span className="orange">4： </span>明信片写好之后会给你发照片滴，以防邮政丢失<br/>
                                 <span className="orange">5： </span>接下来就是漫长的期待啦，明信片会跟着我们团一起出发，在沿途重要城市或景点发出<br/>
-                                <span className="orange">5： </span>时不时去收信地址检查下，期待见到它！br/><br/>
+                                <span className="orange">5： </span>时不时去收信地址检查下，期待见到它！<br/><br/>
                             </h5>
                         </div>
                     </Col>

@@ -150,9 +150,14 @@ var BasicInfo = React.createClass({
                         : accountInfo.idType === idType.IDENTIFICATION);
         return (
             <div className="basic-container info-section">
-                <Title title="基本信息" className="info-title"></Title>
-                <Row>
-                    <Col xs={12} md={5}>
+                <Title title="基本信息" className="info-title">
+                    <button className="edit-btn" onClick={() => {this.setState({'readOnly': false})}}>
+                        <Icon type="edit"/>
+                        <span> 编辑</span>
+                    </button>
+                </Title>
+                <Row className="basic-info-container">
+                    <Col xs={12} md={6}>
                         <Form horizontal>
                             <Name
                                 ref="nameInput"
@@ -177,7 +182,7 @@ var BasicInfo = React.createClass({
                                 onChange={this.onChange}/>
                         </Form>
                     </Col>
-                    <Col xs={12} md={5}>
+                    <Col xs={12} md={6}>
                         <Form horizontal>
                             <Email
                                 ref="emailContainer"
@@ -198,21 +203,15 @@ var BasicInfo = React.createClass({
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={6} xsOffset={4}>
-                        <ButtonGroup>
-                            <Button type="primary" onClick={() => {this.setState({'readOnly': false})}}>
-                                <Icon type="edit"/>
-                                <span>编辑</span>
-                            </Button>
-                            <Button type="primary" onClick={this.onCancelBtnClick}>
-                                <Icon type="cross"/>
-                                <span>{this.state.isChange ? '撤销' : '取消'}</span>
-                            </Button>
-                            <Button type="primary" onClick={this.onSubmitBtnClick}>
-                                <Icon type="check"/>
-                                <span>确定</span>
-                            </Button>
-                        </ButtonGroup>
+                    <Col lg={3} md={3} xs={3} xsOffset={4}>
+                        <button className="confirm-btn pull-left" onClick={this.onSubmitBtnClick}>
+                            <Icon type="check"/>
+                            <span> 确定</span>
+                        </button>
+                        <button className="cancel-btn pull-right" onClick={this.onCancelBtnClick}>
+                            <Icon type="cross"/>
+                            <span> {this.state.isChange ? '撤销' : '取消'}</span>
+                        </button>
                     </Col>
                 </Row>
             </div>

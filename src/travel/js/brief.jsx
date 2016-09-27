@@ -9,7 +9,7 @@ var Brief = React.createClass({
 
     render: function() {
         var brief = this.props.brief;
-        var route = this.props.route.toString().split("-");
+        var route = this.props.route.toString().replace(/\-/g," - ");
         var mdtext =  marked(brief.mdtext);
 
         var spotlights = brief.spotlights.map(function(spotlight, index) {
@@ -23,9 +23,9 @@ var Brief = React.createClass({
             );
         });
 
-        var track = route.map(function(track, index) {
+        var track = this.props.route.toString().split("-").map(function(track, index) {
             return (
-                <span key={`${index}`}> {track}/</span>
+                <span key={`${index}`}>{track} - </span>
             );
         });
 
@@ -34,7 +34,7 @@ var Brief = React.createClass({
         return (
              <div className="brief container">
                 <Col sm={12} md={12}>
-                    <div className="track">{track}</div>
+                    <div className="track">{route}</div>
                     <hr />
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
                 </Col>

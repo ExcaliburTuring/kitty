@@ -82,14 +82,13 @@ var Contacts = React.createClass({
             <div className="contacts-container info-section">
                 <Title title="常用出行人" className="info-title" />
                 <div className="contact-group emergency">
-                    <h3>紧急联系人</h3>
-                    <Row>
+                    <Row className="basic-info-container">
                         {ermergencyList}
                     </Row>
                 </div>
+                <Title title="紧急联系人" className="info-title" />
                 <div className="contact-group emergency">
-                    <h3>常用出行人</h3>
-                    <Row>
+                    <Row className="basic-info-container">
                         {contactsList}
                         <Col md={2}>
                             <NewBtn onNewBtnClick={this.onNewBtnClick}/>

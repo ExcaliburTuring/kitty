@@ -22,8 +22,7 @@ var App = React.createClass({
                             <h2>活动A：“一路同行”多人报名优惠</h2>
                             <h5><span className="orange">对象： </span>2人及以上同时报名<br/>
                                 <span className="orange">参与方式： </span>报名时正确填写小伙伴信息，选择优惠政策即可~<br/>
-                                <span className="orange">详细说明： </span>长途旅行，2人优惠300元，3人优惠500元！<br/>
-                                长途旅行，2人优惠300元，3人优惠500元！<br/><br/>
+                                <span className="orange">详细说明： </span>长途旅行，2人优惠300元，3人优惠500元！<br/><br/>
                             </h5>
                         </div>
                     </Col>
@@ -54,17 +53,6 @@ var App = React.createClass({
                             <h5><span className="orange">对象： </span>单人参团小伙伴<br/>
                                 <span className="orange">内容： </span>没有单房差！<br/>
                                 <span className="orange">详细说明： </span>一个人来也不用担心哦，海逍遥领队最擅长的就是带大家一起玩了。年轻活力小团队，全程互动，迅速打成一片。脱离工作小圈子，跨公司跨行业认识一群有趣的人。<br/>大漠、星空、银河、帐篷，这么浪漫的旅程，一不小心就遇上了那个TA。<br/>PS：常年以来妹子比例从来没低于60%，汉子们在哪里，快来报名呀。<br/><br/>
-                            </h5>
-                        </div>
-                    </Col>
-                    <Col md={12} sm={12}>
-                        <div className="numbers"></div>
-                        <div className="activity">
-                            <h2>一个人的奇幻漂流</h2>
-                            <h5>被小伙伴残忍的抛弃了怎么办？<br/>
-                                逍遥君承诺，旅行没有单房差！<br/>
-                                因男女比例无法同性拼房就一个人睡大床<br/>
-                                还要悄悄告诉你，星空下，篝火旁，一言不合就脱单<br/><br/>
                             </h5>
                         </div>
                     </Col>
