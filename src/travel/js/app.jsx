@@ -72,10 +72,9 @@ var App = React.createClass({
     },
 
     render: function() {
-        var state = this.state;
-        var routes = state.routes;
+        var routes = this.state.routes;
         var imgtext = routes.imgtext;
-        var groups = state.groups;
+        var groups = this.state.groups;
         return (
             <div>
                 <Navbar name="routes" />

@@ -43,7 +43,6 @@ var Discount = React.createClass({
                     不使用优惠
                 </SelectOption>
             );
-            console.log( selectOptionList);
         }
         if (discountData.studentDiscount == null) {
             studentDiscount = (
