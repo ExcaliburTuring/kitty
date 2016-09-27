@@ -30,6 +30,7 @@ var BodyNav = React.createClass({
         var $navItems = $navbar.find('ul li');
 
         window.onscroll = function(){
+            console.log('kdkdkdkdkdkdkdkdkdkdk')
             var t = document.documentElement.scrollTop || document.body.scrollTop; 
             t += 60; // 80的offset
             $navbar.removeClass('affixed');
@@ -82,7 +83,7 @@ var BodyNav = React.createClass({
             <div className="am-sticky-placeholder">
                 <AutoAffix viewportOffsetTop={0} container={this.props.container}>
                     <Navbar>
-                        <Nav pullLeft activeKey={1} onSelect={this.handleSelect}>
+                        <Nav pullLeft activeKey={5} onSelect={this.handleSelect}>
                             <NavItem eventKey={".brief"}>路线简介</NavItem>
                             <NavItem eventKey={".day1"}>行程安排</NavItem>
                             <NavItem eventKey={".notice"}>注意事项</NavItem>
