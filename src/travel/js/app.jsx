@@ -81,7 +81,7 @@ var App = React.createClass({
                 <div className="content container">
                     <Face route={routes.routes[0]} sliderImgs={imgtext.sliderImgs} descriptions={imgtext.descriptions}/>
                     <div className="body-nav"><BodyNav container={this}/></div>
-                    <Brief route={routes.routes[0].route} brief={imgtext.introduction}/>
+                    <Brief days={imgtext.days} brief={imgtext.introduction}/>
                     <Days days={imgtext.days}/>
                     <Notice notice={imgtext.notice}/>
                     <Expense expense={imgtext.expense}/>
