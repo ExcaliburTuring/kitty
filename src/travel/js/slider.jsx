@@ -50,6 +50,7 @@ var Slider = React.createClass({
                     <div>
                         <span>总价 ￥</span>
                         <span className="price">{minPrice}</span>
+                        <span> 起</span>
                     </div>
                 </div>
                 <div className="swiper-wrapper">

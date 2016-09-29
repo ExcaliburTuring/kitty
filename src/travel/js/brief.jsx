@@ -2,7 +2,7 @@
  * @authro xiezhenzong
  */
 import React from 'react';
-import { Col } from 'react-bootstrap';
+import { Col,Glyphicon } from 'react-bootstrap';
 import marked from 'marked';
 
 var Brief = React.createClass({
@@ -46,12 +46,12 @@ var Brief = React.createClass({
                         <div className="title">
                             <i  className="kuai"/>行程概要：
                         </div>
-                        <div className="left-btn"><i className="fa fa-angle-left" /></div>
+                        <div className="left-btn"><Glyphicon glyph="glyphicon glyphicon-menu-left" /></div>
                         <div className="days">
                             <div className="timeline" />
                             {track}
                         </div>
-                        <div className="right-btn" ><i className="fa fa-angle-right" /></div>
+                        <div className="right-btn" ><Glyphicon glyph="glyphicon glyphicon-menu-right" /></div>
                     </div>
                     <hr />
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
