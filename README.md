@@ -1,4 +1,4 @@
-![kitty](http://www.iconpng.com/png/hello_kitty/kitty_2.png)
+![kitty](http://www.hxytravel.com/public/ead6eb41d2ea226f28998f84abd3783f.png)
 # ButterFleog - kitty
 
 ------
