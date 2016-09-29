@@ -22,7 +22,7 @@ var App = React.createClass({
             paginationType : 'custom',
             paginationCustomRender: function (swiper, current, total) {
 /*                return (
-                    <ul class="onepage-pagination" style="opacity: 1;">
+                    <ul className="onepage-pagination" style="opacity: 1;">
                         for (var i = total - 1; i >= 0; i--) {
                             if(current.equals(i)){
                                 return
