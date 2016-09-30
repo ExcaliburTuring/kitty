@@ -217,7 +217,7 @@ export var discountCodeStatus = {
     },
 
     isUsable: function(status) {
-        return status == this.CREATED || status == this.VERIFIED || status == this.OCCUPIED;
+        return status == this.CREATED || status == this.VERIFIED;
     }
 }
 

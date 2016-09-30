@@ -4,6 +4,8 @@
 import React from 'react';
 import { Jumbotron, Button } from 'react-bootstrap';
 
+import { defaultValue } from 'config';
+
 import './notauth.less';
 
 var NotAuth = React.createClass({
