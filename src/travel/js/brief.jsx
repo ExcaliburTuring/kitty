@@ -2,14 +2,14 @@
  * @authro xiezhenzong
  */
 import React from 'react';
-import { Col } from 'react-bootstrap';
+import { Col,Glyphicon } from 'react-bootstrap';
 import marked from 'marked';
 
 var Brief = React.createClass({
 
     render: function() {
         var brief = this.props.brief;
-        var route = this.props.route.toString().split("-");
+        var days = this.props.days;
         var mdtext =  marked(brief.mdtext);
 
         var spotlights = brief.spotlights.map(function(spotlight, index) {
@@ -23,9 +23,17 @@ var Brief = React.createClass({
             );
         });
 
-        var track = route.map(function(track, index) {
+        var track = days.map(function(day, index) {
+            var spots = day.spots.map(function(spot, index) {
+                return (
+                    <p key={`${index}`}>{spot}</p>
+                );
+            });
             return (
-                <span key={`${index}`}> {track}/</span>
+                <div className="oneday" key={`${index}`}>
+                    <div className="daycount"><i className="dian"/> DAY<strong>{`${index+1}`}</strong></div>
+                    {spots}
+                </div>
             );
         });
 
@@ -34,7 +42,17 @@ var Brief = React.createClass({
         return (
              <div className="brief container">
                 <Col sm={12} md={12}>
-                    <div className="track">{track}</div>
+                    <div className="track">
+                        <div className="title">
+                            <i  className="kuai"/>行程概要：
+                        </div>
+                        <div className="left-btn"><Glyphicon glyph="glyphicon glyphicon-menu-left" /></div>
+                        <div className="days">
+                            <div className="timeline" />
+                            {track}
+                        </div>
+                        <div className="right-btn" ><Glyphicon glyph="glyphicon glyphicon-menu-right" /></div>
+                    </div>
                     <hr />
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
                 </Col>

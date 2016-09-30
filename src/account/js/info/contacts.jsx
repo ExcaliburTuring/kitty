@@ -81,14 +81,15 @@ var Contacts = React.createClass({
         return (
             <div className="contacts-container info-section">
                 <Title title="常用出行人" className="info-title" />
+                <div className="basic-info-container"/>
                 <div className="contact-group emergency">
-                    <h3>紧急联系人</h3>
                     <Row>
                         {ermergencyList}
                     </Row>
                 </div>
+                <Title title="紧急联系人" className="info-title" />
+                <div className="basic-info-container"/>
                 <div className="contact-group emergency">
-                    <h3>常用出行人</h3>
                     <Row>
                         {contactsList}
                         <Col md={2}>

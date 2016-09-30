@@ -62,7 +62,7 @@ var Travellers = React.createClass({
         return this.props.selectTravellers.map(function(selectTraveller, index) {
             return (
                 <div className="order-roommate-item" key={`order-roommate-${index}`}>
-                    <p className="order-roommate-label ellipsis">{`${selectTraveller.name}:`}</p>
+                    <span className="order-roommate-label ellipsis">{`${selectTraveller.name}:`}</span>
                     <Input className="order-roommate-input" placeholder="请输入" 
                         onChange={(e)=>{self.props.onRoommateChange(e, selectTraveller)}}/>
                 </div>
@@ -123,9 +123,7 @@ var Travellers = React.createClass({
             <div className="order-contact-container clearfix">
                 <Title title="出行人" className="order-content-title">
                     <p className="order-contact-tip">
-                        本团还可报
-                        <span className="order-group-quota">{this.props.quota}</span>
-                        人
+                        本团还可报 <span className="order-group-quota">{this.props.quota}</span> 人
                     </p>
                     <p></p>
                 </Title>
@@ -146,6 +144,7 @@ var Travellers = React.createClass({
                 </div>
                 <div className="order-roommate-show">
                     {roommateList}
+                    如果不输入睡友姓名，海逍遥将会自动为您选择同性拼房<br/><br/>
                 </div>
                 <div className="order-emergency-contianer">
                     <span >紧急联系人:</span>

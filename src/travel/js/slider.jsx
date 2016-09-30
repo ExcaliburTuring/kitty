@@ -42,12 +42,15 @@ var Slider = React.createClass({
                 </div>
             );
         })
+
+        var minPrice = route.minPrice.replace("￥","");
         return (
             <div className="swiper-container" ref="swiper">
                 <div className="rightbottom">
                     <div>
-                        <span>总价 </span>
-                        <span className="price">{route.minPrice}</span>
+                        <span>总价 ￥</span>
+                        <span className="price">{minPrice}</span>
+                        <span> 起</span>
                     </div>
                 </div>
                 <div className="swiper-wrapper">
