@@ -2,10 +2,21 @@
  * @authro xiezhenzong
  */
 import React from 'react';
-import { Col,Glyphicon } from 'react-bootstrap';
+import { Col, Glyphicon } from 'react-bootstrap';
 import marked from 'marked';
+import Swiper from 'swiper';
 
 var Brief = React.createClass({
+
+    componentDidUpdate: function(nextProps, nextState){
+        var mySwiper = new Swiper (this.refs.swiper, {
+            slidesPerView: 8,
+            spaceBetween: 30,
+            prevButton: this.refs.prev,
+            nextButton: this.refs.next,
+            mousewheelControl : false
+        });
+    },
 
     render: function() {
         var brief = this.props.brief;
@@ -30,28 +41,30 @@ var Brief = React.createClass({
                 );
             });
             return (
-                <div className="oneday" key={`${index}`}>
+                <div className="oneday swiper-slide" key={`${index}`}>
                     <div className="daycount"><i className="dian"/> DAY<strong>{`${index+1}`}</strong></div>
                     {spots}
                 </div>
             );
         });
 
-
-
         return (
              <div className="brief container">
                 <Col sm={12} md={12}>
-                    <div className="track">
+                    <div className="track swiper-container" ref="swiper">
                         <div className="title">
-                            <i  className="kuai"/>行程概要：
+                            <i className="kuai"/>行程概要：
                         </div>
-                        <div className="left-btn"><Glyphicon glyph="glyphicon glyphicon-menu-left" /></div>
-                        <div className="days">
+                        <div className="left-btn" ref="prev">
+                            <Glyphicon glyph="glyphicon glyphicon-menu-left"/>
+                        </div>
+                        <div className="days swiper-wrapper">
                             <div className="timeline" />
                             {track}
                         </div>
-                        <div className="right-btn" ><Glyphicon glyph="glyphicon glyphicon-menu-right" /></div>
+                        <div className="right-btn" ref="next">
+                            <Glyphicon glyph="glyphicon glyphicon-menu-right"/>
+                        </div>
                     </div>
                     <hr />
                     <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
