@@ -41,8 +41,8 @@ var App = React.createClass({
                     'name': '',
                     'title': '',
                     'route': '',
-                    'minPrice': 0,
-                    'maxPrice': 0
+                    'minPrice': '¥0',
+                    'maxPrice': '¥0'
                 }],
                 'imgtext': {
                     'sliderImgs': [],
