@@ -43,7 +43,7 @@ var Slider = React.createClass({
             );
         })
 
-        var minPrice = route.minPrice.replace("￥","");
+        var minPrice = route.minPrice.replace("￥", "");
         return (
             <div className="swiper-container" ref="swiper">
                 <div className="rightbottom">
