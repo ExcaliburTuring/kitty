@@ -1,4 +1,4 @@
-![kitty](http://www.hxytravel.com/public/ead6eb41d2ea226f28998f84abd3783f.png)
+![kitty](https://raw.githubusercontent.com/ExcaliburTuring/kitty/master/src/index/img/A.jpg)
 # ButterFleog - kitty
 
 ------
