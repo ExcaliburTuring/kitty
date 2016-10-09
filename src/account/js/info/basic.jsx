@@ -204,14 +204,20 @@ var BasicInfo = React.createClass({
                 </Row>
                 <Row>
                     <Col lg={3} md={3} xs={3} xsOffset={4}>
-                        <button className="confirm-btn pull-left" onClick={this.onSubmitBtnClick}>
-                            <Icon type="check"/>
-                            <span> 确定</span>
-                        </button>
-                        <button className="cancel-btn pull-right" onClick={this.onCancelBtnClick}>
-                            <Icon type="cross"/>
-                            <span> {this.state.isChange ? '撤销' : '取消'}</span>
-                        </button>
+                    {
+                        readOnly
+                        ? null
+                        : <div>
+                            <button className="confirm-btn pull-left" onClick={this.onSubmitBtnClick}>
+                                <Icon type="check"/>
+                                <span> 确定</span>
+                            </button>
+                            <button className="cancel-btn pull-right" onClick={this.onCancelBtnClick}>
+                                <Icon type="cross"/>
+                                <span> {this.state.isChange ? '撤销' : '取消'}</span>
+                            </button>
+                        </div>
+                    }
                     </Col>
                 </Row>
             </div>

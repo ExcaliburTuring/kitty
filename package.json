@@ -22,6 +22,7 @@
   "devDependencies": {
     "babel-core": "^6.3.15",
     "babel-loader": "^6.2.0",
+    "babel-plugin-import": "^1.0.1",
     "babel-plugin-react-transform": "^2.0.2",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
@@ -45,18 +46,19 @@
     "whatwg-fetch": "^0.10.1"
   },
   "dependencies": {
+    "antd": "^0.12.17",
+    "antd-mobile": "^0.9.0",
     "classnames": "^2.2.1",
     "history": "^1.17.0",
     "id-validator": "^1.2.1",
     "marked": "^0.3.5",
     "moment": "^2.13.0",
     "react": "^0.14.5",
-    "react-dom": "^0.14.5",
+    "react-bootstrap": "^0.29.2",
     "react-datepicker": "^0.27.0",
+    "react-dom": "^0.14.5",
     "react-overlays": "^0.6.3",
     "react-router": "^2.0.1",
-    "react-bootstrap": "^0.29.2",
-    "reflux": "^0.4.1",
-    "antd": "^0.12.17"
+    "reflux": "^0.4.1"
   }
 }
