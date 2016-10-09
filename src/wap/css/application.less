@@ -220,26 +220,143 @@ body {
     }
 }
 
-.tab-bar {
-    height: 50px;
-    width: 100%;
-    border-top: 1px solid @silver;
-    position: fixed;
-    bottom: 0;
-    background-color: @white;
+.mine-container {
+    margin-bottom: 120px;
 
-    .tab-btn {
+    .mine-header {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        border: 1px solid @currency; 
         text-align: center;
-        padding-top: 6px;
 
-        i {
-            font-size: 24px;
-            display: block;
+        img {
+            width: 64px;
+            height: 64px;
+        }
+    }
+
+    .mine-order {
+        border: 1px solid @currency; 
+        margin-top: 24px;
+
+        .mine-order-title {
+            background-image: none;
+            border-bottom: 1px solid @currency; 
+
+            div.pull-right {
+                padding-top: 10px;
+                padding-right: 20px;
+            }
         }
 
-        span {
-            font-size: 12px;
+        .bar {
+            margin-left: 40px;
+            padding-left: 10px;
+            border-left: 3px solid @currency;
         }
 
+        .order-count {
+            font-size: 20px;
+            color: @currency;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .mine-block {
+        border: 1px solid @currency; 
+        margin-top: 24px;
+
+        .mine-count {
+            color: @currency;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+    }
+
+    .mine-order .mine-order-title ,
+    .mine-block {
+        h3 {
+            font-size: 18px;
+            line-height: 34px;
+            padding-left: 20px;
+        }     
+    }
+}
+
+.order-container {
+    margin-bottom: 120px;
+
+    .order-header {
+        padding: 30px 20px;
+        border: 1px solid @currency; 
+
+        .order-count-container {
+            border: 1px solid @currency;
+            text-align: center;
+            margin-left: 20px;
+            padding: 20px 0;
+        }
+    }
+}
+
+.order-item-container {
+    margin-top: 30px;
+    padding: 30px;
+    background-color: #FDFDFD;
+
+   .travel-info {
+
+        .travel-name {
+            font-size: 18px;
+            line-height: 28px;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+    }
+
+    .order-info {
+
+        .order-label {
+            font-size: 18px;
+            line-height: 28px;
+            margin-right: 8px;
+        }
+
+        .traveller-names {
+
+            margin-top: 5px;
+
+            .traveller-name {
+
+                max-width: 100px;
+                margin-right: 8px;
+
+                .fa {
+                    color: @gray;
+                    margin-right: 5px;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .order-price {
+
+            .price {
+                color: @orange;
+                font-size: 14px;
+            }
+
+            .price-before {
+                color: @gray;
+                text-decoration: line-through;
+            }
+        }
     }
 }
