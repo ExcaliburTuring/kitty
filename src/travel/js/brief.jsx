@@ -49,21 +49,21 @@ var Brief = React.createClass({
         });
 
         return (
-             <div className="brief container">
+             <div className="brief">
                 <Col sm={12} md={12}>
-                    <div className="track swiper-container" ref="swiper">
+                    <div className="track">
                         <div className="title">
                             <i className="kuai"/>行程概要：
                         </div>
                         <div className="left-btn" ref="prev">
                             <Glyphicon glyph="glyphicon glyphicon-menu-left"/>
                         </div>
-                        <div className="days swiper-wrapper">
-                            <div className="timeline" />
-                            {track}
-                        </div>
                         <div className="right-btn" ref="next">
                             <Glyphicon glyph="glyphicon glyphicon-menu-right"/>
+                        </div>
+                        <div className="days swiper-container" ref="swiper">
+                            <div className="timeline" />
+                            <div className="swiper-wrapper">{track}</div>
                         </div>
                     </div>
                     <hr />

@@ -1,140 +1,96 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Swiper from 'swiper';
-import icona from '../img/A.svg';
-import iconb from '../img/B.svg';
-import iconc from '../img/C.svg';
 import { url } from 'config';
 import Rabbit from 'rabbit';
-import { Icon } from 'antd';
 
-import 'antd/lib/index.css';
+import img from '../img/img.jpg';
 
-var RouteList = Rabbit.create(url.route); 
+
 
 var App = React.createClass({
 
-    mixins: [Reflux.connect(RouteList.store, 'data')],
 
     getInitialState() {
         return {
-          selectedTab: 'redTab',
-          hidden: false,
-        };
-    },
-    renderContent(pageText) {
-        return (
-          <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-            <div style={{ paddingTop: 60 }}>你已点击“{pageText}” tab， 当前展示“{pageText}”信息</div>
-            <a style={{ display: 'block', marginTop: 40 }} onClick={(e) => {
-              e.preventDefault();
-              this.setState({
-                hidden: !this.state.hidden,
-              });
-            }}>点击切换 tab-bar 显示/隐藏</a>
-          </div>
-        );
-    },
 
-    componentDidMount: function() {
-        var mySwiper = new Swiper (this.refs.swiper, {
-            direction: 'horizontal',
-            autoplay: 2000,
-            speed: 600,
-            loop: true,
-            noSwiping : false,
-            autoplayDisableOnInteraction : true,
-            mousewheelControl : false,
-            pagination : this.refs.pagination,
-        });
-        RouteList.actions.load();
+        };
     },
 
     render: function() {
 
-        var routes = this.state.data.routes;
-        var routeList = routes.map(function(route) {
-            return (
-                    <Routes route={route} key={route.routeid}/>
-            );
-        });
+        var a1="## [$t1{段落样式1}]";
+        var b1="## [$t2{段落样式2}]";
+        var c1="## [$t3{段落样式3}]";
+        var d1="## [$t4{段落样式4}]";
+        var e1="## [$t5{段落样式5}]";
+        var f1="## [$t6{段落样式6}]";
+        var g1="## [$t7{段落样式7}]";
+        var h1="## [$t8{段落样式8}]";
+
+        var a2="[$t1{文字样式1}]普通的文字";
+        var b2="[$t2{文字样式2}]普通的文字";
+        var c2="[$t3{文字样式3}]普通的文字";
+        var d2="[$t4{文字样式4}]普通的文字";
+        var e2="[$t5{文字样式5}]普通的文字";
+        var f2="[$t6{文字样式6}]普通的文字";
+
+        var a3="![](url)[$t1{文字样式1}]";
+        var b3="![](url)[$t2{文字样式2}]";
+        var c3="![](url)[$t3{文字样式3}]";
+        var d3="![](url)[$t4{文字样式4}]";
+        var e3="![](url)[$t5{文字样式5}]";
+        var f3="![](url)[$t6{文字样式6}]";
 
         return (
             <div>
-                <div className="special">
-                    <div className="head-title"><span className="pinyin">dú jiā</span>独家精品</div>
-                    <p className="second-title">基于20万用户的好评推荐，资深定制师实地考察匠心打造</p>
-                    <img className="headImg" src={routes[0].headImg} />
-                    <p className="route-intro">【{routes[0].name}】{routes[0].title}</p>
-                    <div className="row">
-                    </div>
-                    <p className="price">
-                        <strong>{routes[0].minPrice}</strong>/人 起
-                    </p>
-                    <hr/>
-                    <div className="more">
-                        <span>查看详情</span>
-                    </div>
+                <div className="h2">
+                    <h1>{a1}</h1>
+                    <h2><span className="t1">段落样式1</span></h2>
+                    <h1>{b1}</h1>
+                    <h2><span className="t2">段落样式2</span></h2>
+                    <h1>{c1}</h1>
+                    <h2><span className="t3">段落样式3</span></h2>
+                    <h1>{d1}</h1>
+                    <h2><span className="t4">段落样式4</span></h2>
+                    <h1>{e1}</h1>
+                    <h2><span className="t5">段落样式5</span></h2>
+                    <h1>{f1}</h1>
+                    <h2><span className="t6">段落样式6</span></h2>
+                    <h1>{g1}</h1>
+                    <h2><span className="t7">段落样式7</span></h2>
+                    <h1>{h1}</h1>
+                    <h2><span className="t8">段落样式8</span></h2>
                 </div>
-                <div className="routes">
-                    <div className="head-title"><span className="pinyin">chū fā</span>出发趁年轻</div>
-                    <p className="second-title">基于20万用户的好评推荐，资深定制师实地考察匠心打造</p>
-                    {routeList}
-                    <hr/>
-                    <div className="more">
-                        <span>查看详情</span>
-                    </div>
+                <div className="p">
+                    <h1>{a2}</h1>
+                    <p><span className="p1">文字样式1</span>普通的文字</p>
+                    <h1>{b2}</h1>
+                    <p><span className="p2">文字样式2</span>普通的文字</p>
+                    <h1>{c2}</h1>
+                    <p><span className="p3">文字样式3</span>普通的文字</p>
+                    <h1>{d2}</h1>
+                    <p><span className="p4">文字样式4</span>普通的文字</p>
+                    <h1>{e2}</h1>
+                    <p><span className="p5">文字样式5</span>普通的文字</p>
+                    <h1>{f2}</h1>
+                    <p><span className="p6">文字样式6</span>普通的文字</p>
                 </div>
-                <div className="tab-bar">
-                    <div className="row">
-                        <div className="Athird">
-                            <div className="tab-btn">
-                                <Icon type="home" />主页
-                            </div>
-                        </div>
-                        <div className="Athird">
-                            <div className="tab-btn">
-                                <Icon type="pay-circle-o" />我的
-                            </div>
-                        </div>
-                        <div className="Athird">
-                            <div className="tab-btn">
-                                <Icon type="book" />行程
-                            </div>
-                        </div>
-                    </div>
+                <div className="img">
+                    <h1>{a3}</h1>
+                    <p><img src={img} /><span className="m1">图片样式1</span></p>
+                    <h1>{b3}</h1>
+                    <p><img src={img} /><span className="m2">图片样式2</span></p>
+                    <h1>{c3}</h1>
+                    <p><img src={img} /><span className="m3">图片样式3</span></p>
+                    <h1>{d3}</h1>
+                    <p><img src={img} /><span className="m4">图片样式4</span></p>
+                    <h1>{e3}</h1>
+                    <p><img src={img} /><span className="m5">图片样式5</span></p>
                 </div>
             </div>
         );
     }
 });
-
-var Routes =React.createClass({
-
-    getInitialState: function() {
-        return{
-            'detailVisible': 'false'
-        }
-    },
-
-    onClick: function() {
-        var routeid = this.props.route.routeid;
-        window.location.pathname= `${url.travel}/${routeid}`;
-    },
-
-    render: function() {
-        var route = this.props.route;
-
-        return (
-            <div className="route-container">
-                <img className="headImg" src={route.headImg} />
-                <p className="route-intro">【{route.name}】{route.title}</p>
-                <div className="row">
-                </div>
-            </div>
-        )
-    }
-})
 
 module.exports = App;
