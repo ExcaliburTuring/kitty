@@ -62,9 +62,11 @@ var Index = React.createClass({
         }
         var data = this.state.data;
         if (data.status != 0) {
-            <div>
-                <p>订单查询失败, 请联系客服： {defaultValue.hotline}</p>
-            </div>
+            return (
+                <div>
+                    <p>订单查询失败, 请联系客服： {defaultValue.hotline}</p>
+                </div>
+            )
         }
 
         var ordersList = null;
