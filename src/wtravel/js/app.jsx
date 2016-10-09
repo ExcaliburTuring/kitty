@@ -1,19 +1,46 @@
 import React from 'react';
 import Reflux from 'reflux';
+import marked from 'marked';
 
 import { url } from 'config';
 import Rabbit from 'rabbit';
 
 import img from '../img/img.jpg';
 
-
+var RouteFlux = Rabbit.create(url.route);
+var GroupsFlux = Rabbit.create(url.group);
 
 var App = React.createClass({
 
+     mixins: [
+        Reflux.connect(RouteFlux.store, 'routes'),
+        Reflux.connect(GroupsFlux.store, 'groups'),
+    ],
 
     getInitialState() {
+        var routeid = window.location.pathname.split('/')[2];
+        RouteFlux.actions.load({
+            'routeids': routeid, 
+            'isImgtextRequired': true
+        });
+        GroupsFlux.actions.load({'routeid': routeid});
         return {
-
+            'routes': {
+                'status': 1,
+                'routes': [{
+                    'days': 0,
+                    'name': '',
+                    'title': '',
+                    'route': '',
+                    'minPrice': '¥0',
+                    'maxPrice': '¥0'
+                }],
+                'mdtext': ''
+            },
+            'groups': {
+                'status': 1,
+                'groups': []
+            }
         };
     },
 
@@ -42,8 +69,15 @@ var App = React.createClass({
         var e3="![](url)$m5{文字样式5}";
         var f3="![](url)$m6{文字样式6}";
 
+        var mdtext = this.state.routes.mdtext;
+
         return (
             <div>
+                {
+                    mdtext
+                    ? <div dangerouslySetInnerHTML={{__html: marked(mdtext)}}></div>
+                    : null
+                }
                 <div className="h2">
                     <h1>{a1}</h1>
                     <h2><span className="t1">段落样式1</span></h2>
