@@ -14,7 +14,21 @@ import 'antd/lib/index.css';
 var OrderBrief = Rabbit.create(url.orderBrief);
 var Order = React.createClass({
 
+    orderType: orderType.CURRENT,
+
     mixins: [Reflux.connect(OrderBrief.store, 'data')],
+
+    // callback method
+
+    onSelectOrderType: function(type) {
+        if (this.orderType == type) {
+            return;
+        }
+        OrderBrief.actions.load({'orderType': type});
+        this.orderType = type;
+    },
+
+    // compoment specs
 
     getInitialState: function() {
         OrderBrief.actions.load({'orderType': orderType.CURRENT});
@@ -23,7 +37,8 @@ var Order = React.createClass({
                 'status': 1,
                 'briefOrders': [],
                 'currentOrderCount': 0,
-                'historyOrderCount': 0
+                'historyOrderCount': 0,
+                'allOrderCount': 0
             },
         };
     },
@@ -54,16 +69,22 @@ var Order = React.createClass({
             <div className="order-container">
                 <div className="order-header row">
                     <div className="order-count-container Afourth">
-                        <span className="bar">当前：</span>
-                        <span className="order-count">{data.currentOrderCount}</span>
+                        <span>当前：</span>
+                        <a onClick={()=>{this.onSelectOrderType(orderType.CURRENT);}} className="order-count">
+                            {data.currentOrderCount}
+                        </a>
                     </div>
                     <div className="order-count-container Afourth">
-                        <span className="bar">历史：</span>
-                        <span className="order-count">{data.historyOrderCount}</span>
+                        <span>历史：</span>
+                        <a onClick={()=>{this.onSelectOrderType(orderType.HISTORY);}} className="order-count">
+                            {data.historyOrderCount}
+                        </a>
                     </div>
                     <div className="order-count-container Afourth">
-                        <span className="bar">所有：</span>
-                        <span className="order-count">{data.allOrderCount}</span>
+                        <span>所有：</span>
+                        <a onClick={()=>{this.onSelectOrderType(orderType.VISIBLE);}} className="order-count">
+                            {data.allOrderCount}
+                        </a>
                     </div>
                 </div>
                 <div className="order-list">
