@@ -112,7 +112,8 @@ var config = {
     },
     resolve: {
         alias: config.PATH_MAP,
-        extensions: ['', '.js', '.jsx', '.json', '.css', '.less', '.jpg', '.png', '.gif']
+        modulesDirectories: ['node_modules', path.join(__dirname, '../node_modules')],
+        extensions: ['', '.web.js', '.js', '.jsx', '.json', '.css', '.less', '.jpg', '.png', '.gif']
     },
     externals: {
         // 'react-bootstrap': 'ReactBootstrap',

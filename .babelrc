@@ -4,5 +4,11 @@
         "development": {
             "presets": ["react-hmre"]
         }
-    }
+    },
+    "plugins": [
+        ["import", {
+            style: 'css',  // 'less',
+            libraryName: 'antd-mobile',
+        }]
+    ]
 }
