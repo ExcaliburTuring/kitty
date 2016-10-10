@@ -14,7 +14,7 @@ var App = React.createClass({
 
     onTabBarItemPress: function(selected) {
         this.setState({
-            selectedTab: selected
+            'selectedTab': selected
         });
     },
 
@@ -27,7 +27,7 @@ var App = React.createClass({
                     'avatarUrl': ''
                 }
             },
-            selectedTab: 'home'
+            'selectedTab': 'home'
         };
     },
 
@@ -49,7 +49,8 @@ var App = React.createClass({
                     selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/WadBBxOIZtDzsgP.png' }}
                     selected={this.state.selectedTab === 'mine'}
                     onPress={() => {this.onTabBarItemPress('mine')}}>
-                    <Mine basicInfo={this.state.basicInfo}/>
+                    <Mine basicInfo={this.state.basicInfo}
+                        onOrdersClick={() => {this.onTabBarItemPress('order')}}/>
                 </TabBar.Item>
                 <TabBar.Item
                     title="行程" key="order"
