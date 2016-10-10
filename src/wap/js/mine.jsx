@@ -20,6 +20,18 @@ var Mine = React.createClass({
         Reflux.connect(AccountContacts.store, 'contacts')
     ],
 
+    onOrdersClick: function() {
+        this.props.onOrdersClick();
+    },
+
+    onDiscountCodesClick: function() {
+        window.location.href = '/account/wdiscount';
+    },
+
+    onContactsClick: function() {
+        window.location.href = '/account/wcontact';
+    },
+
     getInitialState: function() {
         OrderBrief.actions.load({'orderType': orderType.CURRENT});
         DiscountCode.actions.load();
@@ -36,7 +48,7 @@ var Mine = React.createClass({
             },
             'contacts': {
                 'contacts': []
-           },
+            }
         };
     },
 
@@ -59,7 +71,7 @@ var Mine = React.createClass({
                 </div>
                 <div className="mine-order">
                     <Title title="我的行程" className="mine-order-title">
-                        <a href="javascript:">查看全部</a>
+                        <a href="javascript:" onClick={this.onOrdersClick}>查看全部</a>
                     </Title>
                     <span className="bar">当前：</span>
                     <span className="order-count">{data.currentOrderCount}</span>
@@ -71,17 +83,21 @@ var Mine = React.createClass({
                 <div className="mine-block">
                     <h3>
                         我的优惠券
-                        <span className="mine-count pull-right">
-                            {this.state.discountCode.discountCodes.length}
-                        </span>
+                        <a href="javascript:" onClick={this.onDiscountCodesClick}>
+                            <span className="mine-count pull-right">
+                                {this.state.discountCode.discountCodes.length}
+                            </span>
+                        </a>
                     </h3>
                 </div>
                 <div className="mine-block">
                     <h3>
                         出行人
-                        <span className="mine-count pull-right">
-                            {this.state.contacts.contacts.length}
-                        </span>
+                        <a href="javascript:" onClick={this.onContactsClick}>
+                            <span className="mine-count pull-right">
+                                {this.state.contacts.contacts.length}
+                            </span>
+                        </a>
                     </h3>
                 </div>
                 <div className="mine-block">
