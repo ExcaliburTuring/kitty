@@ -61,6 +61,8 @@ var Home = React.createClass({
                         <Routes route={route} key={route.routeid}/>
                 );
             });
+        } else {
+            return (<div></div>);
         }
 
         return (

@@ -33,6 +33,8 @@ var mockConfig = [
     config('/order*', 'order.html'),
     config('/wap*', 'wap.html'),
     config('/wtravel*', 'wtravel.html'),
+    config('/wdiscount*', 'wdiscount.html'),
+    config('/wcontact*', 'wcontact.html'),
     config('/login', 'login.html'),
     config('/notauth', 'notauth.html'),
     config('/notfound', 'notfound.html'),
