@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "antd": "^0.12.17",
-    "antd-mobile": "^0.9.0",
+    "antd-mobile": "^0.9.1",
     "classnames": "^2.2.1",
     "history": "^1.17.0",
     "id-validator": "^1.2.1",
