@@ -165,3 +165,47 @@ p {
 .m6 {
     background-image:  url(../img/p6.png);
 }
+
+.days-list-sidebar {
+    background-color: @white;
+    width: 300px;
+    height: 100%;
+    overflow: scroll;
+
+    p {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .am-list-view-scrollview {
+        height: 100%;
+    }
+
+    .days-separator {
+        background-color: #F5F5F9;
+        height: 8px;
+        border-top: 1px solid #ECECED;
+        border-bottom: 1px solid #ECECED;
+    }
+
+    .day-item-container {
+        border: 1px solid @currency;
+    }
+}
+
+.days-list-toggle {
+    position: absolute;
+    left: 0;
+    bottom: 60px;
+    z-index: 1;
+    border-color: @currency;
+}
+
+.travel-dairy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+}
