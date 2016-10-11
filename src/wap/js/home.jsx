@@ -23,14 +23,20 @@ import iconc from '../img/C.svg';
 import 'antd/lib/index.css';
 
 var RouteList = Rabbit.create(url.route); 
-
+var DiscountCode = Rabbit.create(url.discountCode);
 var Home = React.createClass({
 
-    mixins: [Reflux.connect(RouteList.store, 'data')],
+    mixins: [
+        Reflux.connect(RouteList.store, 'data'),
+        Reflux.connect(DiscountCode.store, 'discountCode')
+    ],
 
     getInitialState: function() {
         return {
-          data: {}
+            'data': {},
+            'discountCode': {
+                'discountCodes': []
+            },
         };
     },
 
@@ -46,6 +52,7 @@ var Home = React.createClass({
             pagination : this.refs.pagination,
         });
         RouteList.actions.load();
+        DiscountCode.actions.load();
     },
 
     render: function() {
@@ -81,26 +88,32 @@ var Home = React.createClass({
                 <div className="daohang row">
                     <div className="Athird">
                         <div className="mylabel left">
-                            <i className="icon"><img src={icona}/>
-                            </i>
-                            <p>优惠券</p>
-                            <p className="status"><span className="red">0</span>张</p>
+                            <a href="/account/wdiscount">
+                                <i className="icon"><img src={icona}/></i>
+                                <p>优惠券</p>
+                                <p className="status">
+                                    <span className="red">{this.state.discountCode.discountCodes.length}</span>
+                                    张
+                                </p>
+                            </a>
                         </div>
                     </div>
                     <div className="Athird">
                         <div className="mylabel right">
-                            <i className="icon"><img src={iconb}/>
-                            </i>
-                            <p>红包</p>
-                            <p className="status"><span className="red">0</span>元</p>
+                            <a href="javascript:">
+                                <i className="icon"><img src={iconb}/></i>
+                                <p>红包</p>
+                                <p className="status"><span className="red">0</span>元</p>
+                            </a>
                         </div>
                     </div>
                     <div className="Athird">
                         <div className="mylabel right">
-                            <i className="icon"><img src={iconc}/>
-                            </i>
-                            <p>活动</p>
-                            <p className="status"><span className="red">3</span>个进行中</p>
+                            <a href="/account/wdiscount">
+                                <i className="icon"><img src={iconc}/></i>
+                                <p>活动</p>
+                                <p className="status"><span className="red">3</span>个进行中</p>
+                            </a>
                         </div>
                     </div>
                 </div>

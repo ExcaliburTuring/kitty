@@ -4,7 +4,56 @@
     border: 1px solid @currency;
     margin-bottom: 20px;
 
+    .discountcode-header {
+        height: 10px;
+    }
+
     .discountcode-body {
         margin: 10px 20px;
     }
+
+    &.discountcode-unusable {
+        color: @light-gray;
+        border-color: @light-gray;
+
+        .discountcode-price-container {
+            color: @light-gray;
+            border-right-color: @light-gray;
+        }
+    }
+}
+
+.discountcode-price-container {
+    color: @currency;
+    padding: 15px 15px 10px 0;
+    margin-right: 15px;
+    font-size: 24px;
+    border-right: 1px solid @currency;
+
+    .discountcode-price {
+        margin-left: 3px;
+        font-size: 48px;
+    }
+
+}
+
+.discountcode-rule-container {
+    padding-top: 8px;
+    font-size: 14px;
+
+    .discountcode {
+        font-size: 18px;
+        font-weight: bolder;
+        margin-bottom: 3px;
+
+        .discountcode-text {
+            font-size: 14px;
+            font-weight: normal;
+        }
+    }
+
+    .discountcode-rule {
+        padding-left: 15px;
+    }
+
 }
