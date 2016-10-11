@@ -24,14 +24,6 @@ var Mine = React.createClass({
         this.props.onOrdersClick();
     },
 
-    onDiscountCodesClick: function() {
-        window.location.href = '/account/wdiscount';
-    },
-
-    onContactsClick: function() {
-        window.location.href = '/account/wcontact';
-    },
-
     getInitialState: function() {
         OrderBrief.actions.load({'orderType': orderType.CURRENT});
         DiscountCode.actions.load();
@@ -83,7 +75,7 @@ var Mine = React.createClass({
                 <div className="mine-block">
                     <h3>
                         我的优惠券
-                        <a href="javascript:" onClick={this.onDiscountCodesClick}>
+                        <a href="/account/wdiscount">
                             <span className="mine-count pull-right">
                                 {this.state.discountCode.discountCodes.length}
                             </span>
@@ -93,7 +85,7 @@ var Mine = React.createClass({
                 <div className="mine-block">
                     <h3>
                         出行人
-                        <a href="javascript:" onClick={this.onContactsClick}>
+                        <a href="/account/wcontact" onClick={this.onContactsClick}>
                             <span className="mine-count pull-right">
                                 {this.state.contacts.contacts.length}
                             </span>
