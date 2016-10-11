@@ -53,21 +53,34 @@ var DiscountCodeItem = React.createClass({
         var discountCode = this.props.discountCode;
         var usable = discountCodeStatus.isUsable(discountCode.status);
         return (
-            <div className="discountcode-container">
+            <div className={`discountcode-container ${usable ? null : 'discountcode-unusable'}`}>
                 <div className="discountcode-header">
-                    <Image href="#" alt="优惠券的图片而已" responsive
-                        src={"https://c3-q.mafengwo.net/s9/M00/C7/A1/wKgBs1fDSCmAH_MLAA25B6q9eNw96.jpeg?imageMogr2%2Fthumbnail%2F%21450x180r%2Fgravity%2FCenter%2Fcrop%2F%21450x180%2Fquality%2F90"} />
                 </div>
                 <div className="discountcode-body clearfix">
-                    <div className="pull-left">
-                        <p>{`优惠码：${discountCode.discountCode}`}</p>
-                        <p>{`金额：${discountCode.value}`}</p>
-                        <p>{`状态：${discountCodeStatus.getDesc(discountCode.status)}`}</p>
+                    <div className="pull-left discountcode-price-container">
+                        <p>¥
+                            <span className="discountcode-price">{discountCode.value.replace("￥", "")}</span>
+                        </p>
                     </div>
-                    <div className="pull-right">
-                        <p>{`开始日期: ${discountCode.startTime}`}</p>
-                        <p>{`截止日期: ${usable ?  discountCode.endTime : discountCodeStatus.getDesc(discountCode.status)}`}</p>
+                    <div className="pull-left discountcode-rule-container">
+                        <p className="discountcode">优惠码：
+                            <span className="discountcode-text">{discountCode.discountCode}</span>
+                        </p>
+                        <ul className="discountcode-rule">
+                            <li>{`状态：${discountCodeStatus.getDesc(discountCode.status)}`}</li>
+                            <li>只限当前帐号下单使用</li>
+                            <li>{`${discountCode.startTime}  -  ${discountCode.endTime}`}</li>
+                        </ul>
                     </div>
+                    {
+                        usable
+                        ? null
+                        : (
+                            <div className="discountcode-unusable-overlay">
+                                
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         );

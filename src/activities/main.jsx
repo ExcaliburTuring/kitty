@@ -16,6 +16,7 @@ const App = React.createClass({
       <div>
         <Navbar name="activities" fixedTop/>
         {this.props.children}
+        <Footer/>
       </div>
     )
   }
