@@ -1,10 +1,171 @@
 @import "~base.less";
 
+body {
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.contact-list {
+    margin-bottom: 20px;
+}
+
 .contact-container {
     border: 1px solid @currency;
     margin-bottom: 20px;
 
     .contact-body {
-        margin: 10px 20px;
+        position: relative;
+        padding: 10px 20px;
+        border-bottom: 1px solid @light-gray;
+
+        .contact-avatar {
+            width: 64px;
+        }
+
+        .contact-detail {
+            position: absolute;
+            right: 20px;
+            left: 104px;
+            top: 10px;
+
+            p {
+                margin-bottom: 3px;
+            }
+        }
+    }
+
+    .contact-edit-container {
+        width: 100%;
+        padding: 10px 20px;
+
+        button {
+            font-size: 14px;
+            height: 30px;
+            border-radius: 5px;
+            line-height: 30px;
+            margin-left: 10px;
+
+            &:after {
+                border: none;
+            }
+        }
+
+        /**
+         * 为了让左边checkbox和右边的button能对齐
+         */
+        .pull-left {
+            margin-top: 3px;
+        }
+
+        .am-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+
+            .am-checkbox-inner {
+                width: 20px;
+                height: 20px;
+
+                 &:after {
+                    width: 6px;
+                    height: 12px;
+                    left: 5px;
+                    top: 1px;
+                }
+            }
+        }
     }
 }
+
+.contact-addbtn-container {
+    margin-bottom: 20px;
+}
+
+.contact-edit-dialog {
+    
+    /**
+     * 覆盖antd-mobile的样式
+     */
+    .am-list-item.am-input-item,
+    .am-list-item.am-list-item-middle {
+        height: 60px;
+        min-height: 60px;
+
+        input,
+        .am-input-label,
+        .am-list-content {
+            font-size: 24px;
+            margin-right: 10px;
+            overflow: visible;
+        }
+    }
+
+    .am-list-item .am-list-line {
+        min-height: 60px;
+    }
+
+    .am-list .am-list-item .am-input-label.am-input-label-4 {
+        width: 100px;
+    }
+
+    .am-list .am-list-item .am-input-control input::-webkit-input-placeholder {
+        font-size: inherit;
+    }
+
+    .am-list-item .am-list-line .am-list-extra {
+        font-size: 24px;
+        color: #ccc;
+    }
+
+    .am-switch, 
+    .am-switch .checkbox {
+        width: 51px;
+        height: 31px;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    .am-switch .checkbox:after, 
+    .am-switch .checkbox:before {
+        height: 28px;
+    }
+
+    .am-switch .checkbox:before {
+        width: 48px;
+        -webkit-transition: all .2s;
+        transition: all .2s;
+    }
+
+    .am-switch .checkbox:after {
+        width: 28px;
+        top: 2px;
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+        -webkit-box-shadow: .04rem .04rem .08rem hsla(0,0%,39%,.2);
+    }
+
+    .am-switch input[type=checkbox]:checked+.checkbox:before {
+        -webkit-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+    }
+
+    .am-switch input[type=checkbox]:checked+.checkbox:after {
+        -webkit-transform: translateX(.4rem);
+        -ms-transform: translateX(.4rem);
+        transform: translateX(.4rem);
+    }
+
+    .contact-form {
+        margin-bottom: 20px;
+    }
+
+    .contact-btn-container {
+        
+        button {
+            margin-bottom: 20px;
+        }
+    }
+}
+
