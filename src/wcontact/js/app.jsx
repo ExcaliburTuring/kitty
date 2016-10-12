@@ -3,12 +3,14 @@ import Reflux from 'reflux';
 import { Image } from 'react-bootstrap';
 import { Icon, Button, Checkbox, Toast, List, InputItem, DatePicker, Switch, ActionSheet } from 'antd-mobile';
 import moment from 'moment';
+import 'moment/locale/zh-cn';
 import { createForm } from 'rc-form';
 
 import AccountBasicInfo from 'account_basicinfo';
 import Rabbit from 'rabbit';
 import { url, gender } from 'config';
 
+const zhNow = moment().locale('zh-cn').utcOffset(8);
 const maxDate = moment('2018-12-03 +0800', 'YYYY-MM-DD Z').utcOffset(8);
 const minDate = moment('2015-08-06 +0800', 'YYYY-MM-DD Z').utcOffset(8);
 
@@ -106,6 +108,18 @@ var ContactList = React.createClass({
 
 var Contact = React.createClass({
 
+    onChange(date) {
+        this.setState({
+            'date': date
+        });
+    },
+
+    getInitialState() {
+        return {
+          date: zhNow,
+        };
+    },
+
     render: function () {
         var contact = this.props.contact;
         var isMale = contact.gender == gender.MALE;
@@ -183,18 +197,21 @@ var ContactEditDialog = React.createClass({
                             placeholder="输入证件号">证件</InputItem>
                         <List.Item arrow="horizontal" onClick={this.showGenderSheet}>性别</List.Item>
                         <DatePicker
-                              mode="date"
-                              title="选择日期"
-                              extra="可选,小于结束日期"
-                              minDate={minDate}
-                              maxDate={maxDate}>
+                            mode="date"
+                            title="选择日期"
+                            extra="可选,小于结束日期"
+                            minDate={minDate}
+                            maxDate={maxDate}
+                             {...getFieldProps('date1', {
+            initialValue: zhNow,
+          })}>
                             <List.Item arrow="horizontal">日期</List.Item>
                         </DatePicker>
                         <InputItem clear type="phone"
                             placeholder="请输入正确手机号">手机号码</InputItem>
                         <InputItem clear
                             placeholder="输入证件号">邮箱</InputItem>
-                        <List.Item
+                        <List.Item className="contact-emergency-container"
                             extra={<Switch checked
                                 {...getFieldProps('Switch1', {
                                     initialValue: true,
