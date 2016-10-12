@@ -82,14 +82,12 @@ export var gender = {
     FEMALE: 2,
 
     getDesc: function(gender) {
-        if (gender === this.UNKNOW) {
-            return '未知';
-        } else if (gender === this.MALE) {
+        if (gender === this.MALE) {
             return '男';
         } else if (gender === this.FEMALE) {
             return '女';
         } else {
-            return null;
+            return '未知';
         }
     }
 
