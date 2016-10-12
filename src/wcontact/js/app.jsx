@@ -1,18 +1,12 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Image } from 'react-bootstrap';
-import { Icon, Button, Checkbox, Toast, List, InputItem, DatePicker, Switch, ActionSheet } from 'antd-mobile';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import { createForm } from 'rc-form';
+import { Icon, Button, Checkbox, Toast } from 'antd-mobile';
 
 import AccountBasicInfo from 'account_basicinfo';
 import Rabbit from 'rabbit';
 import { url, gender } from 'config';
-
-const zhNow = moment().locale('zh-cn').utcOffset(8);
-const maxDate = moment('2018-12-03 +0800', 'YYYY-MM-DD Z').utcOffset(8);
-const minDate = moment('2015-08-06 +0800', 'YYYY-MM-DD Z').utcOffset(8);
+import WContact from 'wcontact';
 
 var AccountContacts = Rabbit.create(url.contacts);
 var App = React.createClass({
@@ -69,9 +63,8 @@ var App = React.createClass({
 
     render: function() {
         return (
-            <ContactEditDialog />
+            <WContact onSaveSuccessful={()=>{console.log('kdkdkdk')}}/>
         );
-        
         // return (
         //     <ContactList contacts={this.state.contacts.contacts}
         //         onEditBtnClick={this.onEditBtnClick}
@@ -107,18 +100,6 @@ var ContactList = React.createClass({
 });
 
 var Contact = React.createClass({
-
-    onChange(date) {
-        this.setState({
-            'date': date
-        });
-    },
-
-    getInitialState() {
-        return {
-          date: zhNow,
-        };
-    },
 
     render: function () {
         var contact = this.props.contact;
@@ -164,70 +145,5 @@ var Contact = React.createClass({
         );
     }
 });
-
-var ContactEditDialog = React.createClass({
-
-    getInitialState: function() {
-        return {
-        };
-    },
-
-    showGenderSheet() {
-        var self = this;
-        const BUTTONS = ['男', '女', '未知', '取消'];
-        ActionSheet.showActionSheetWithOptions({
-            options: BUTTONS,
-            cancelButtonIndex: BUTTONS.length - 1,
-            message: '请选择性别',
-            maskClosable: true
-        }, function(buttonIndex) {
-            self.setState({ clicked: BUTTONS[buttonIndex] });
-        });
-    },
-
-    render: function() {
-        const { getFieldProps } = this.props.form;
-        return (
-            <div className="contact-edit-dialog">
-                <div className="contact-form">
-                    <List>
-                        <InputItem clear
-                            placeholder="请与证件姓名一致">姓名</InputItem>
-                        <InputItem clear
-                            placeholder="输入证件号">证件</InputItem>
-                        <List.Item arrow="horizontal" onClick={this.showGenderSheet}>性别</List.Item>
-                        <DatePicker
-                            mode="date"
-                            title="选择日期"
-                            extra="可选,小于结束日期"
-                            minDate={minDate}
-                            maxDate={maxDate}
-                             {...getFieldProps('date1', {
-            initialValue: zhNow,
-          })}>
-                            <List.Item arrow="horizontal">日期</List.Item>
-                        </DatePicker>
-                        <InputItem clear type="phone"
-                            placeholder="请输入正确手机号">手机号码</InputItem>
-                        <InputItem clear
-                            placeholder="输入证件号">邮箱</InputItem>
-                        <List.Item className="contact-emergency-container"
-                            extra={<Switch checked
-                                {...getFieldProps('Switch1', {
-                                    initialValue: true,
-                                    valuePropName: 'checked',
-                            })}/>}>设置为紧急联系人</List.Item>
-                    </List>
-                </div>
-                <div className="contact-btn-container">
-                    <Button type="primary" size="small">删除新联系人</Button>
-                    <Button type="primary" size="small">保存新联系人</Button>
-                </div>
-            </div>
-        );
-    }
-});
-
-ContactEditDialog = createForm()(ContactEditDialog);
 
 module.exports = App;
