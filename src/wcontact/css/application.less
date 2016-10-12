@@ -88,24 +88,28 @@ body {
      */
     .am-list-item.am-input-item,
     .am-list-item.am-list-item-middle {
-        height: 60px;
-        min-height: 60px;
+        height: 61px;
+        min-height: 40px;
 
         input,
         .am-input-label,
         .am-list-content {
-            font-size: 24px;
-            margin-right: 10px;
+            font-size: 18px;
+            margin-right: 20px;
             overflow: visible;
         }
     }
 
     .am-list-item .am-list-line {
-        min-height: 60px;
+        min-height: 40px;
     }
 
     .am-list .am-list-item .am-input-label.am-input-label-4 {
-        width: 100px;
+        width: 64px;
+    }
+
+    .am-list .am-list-item .am-input-control  {
+        margin-top: -10px;
     }
 
     .am-list .am-list-item .am-input-control input::-webkit-input-placeholder {
@@ -113,8 +117,25 @@ body {
     }
 
     .am-list-item .am-list-line .am-list-extra {
-        font-size: 24px;
+        font-size: 18px;
         color: #ccc;
+        opacity: 0.54;
+    }
+
+    .am-list-arrow.am-list-arrow-horizontal {
+        width: 18px;
+        height: 18px;
+    }
+
+    /**
+     * 滑动按钮，覆盖上面设置的0.54透明度
+     */
+    .contact-emergency-container.am-list-item .am-list-line .am-list-extra {
+        opacity: 1;
+    }
+
+    .am-switch {
+        margin-top: 4px;
     }
 
     .am-switch, 
@@ -132,6 +153,8 @@ body {
 
     .am-switch .checkbox:before {
         width: 48px;
+        left: 1.5px;
+        top: 1.5px;
         -webkit-transition: all .2s;
         transition: all .2s;
     }
@@ -139,6 +162,7 @@ body {
     .am-switch .checkbox:after {
         width: 28px;
         top: 2px;
+        left: 2.5px;
         -webkit-transform: translateX(0);
         -ms-transform: translateX(0);
         transform: translateX(0);
@@ -155,6 +179,7 @@ body {
         -webkit-transform: translateX(.4rem);
         -ms-transform: translateX(.4rem);
         transform: translateX(.4rem);
+        -webkit-box-shadow: none;
     }
 
     .contact-form {
@@ -169,3 +194,51 @@ body {
     }
 }
 
+/**
+ * 性别选择的控件, 他的dom直接放在body节点下面
+ */
+.am-action-sheet-message {
+    font-size: 18px;
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+.am-action-sheet-button-list-item {
+    font-size: 18px;
+    height: 61px;
+    line-height: 61px;
+}
+
+/**
+ * 生日选择控件，他的dom也是直接放在body节点下面
+ */
+.am-picker-popup-item {
+    font-size: 18px;
+    text-align: center;
+}
+
+.am-picker-col {
+    height: 238px;
+}
+
+.am-picker-col-item {
+    font-size: 18px;
+    height: 34px;
+    text-align: center;
+    touch-action: manipulation;
+    line-height: 34px;
+
+    &.am-picker-col-item-selected {
+        font-size: 20px;
+    }
+}
+
+.am-picker-col-mask {
+    background-image: linear-gradient(180deg,hsla(0,0%,100%,.95),hsla(0,0%,100%,.6)),linear-gradient(0deg,hsla(0,0%,100%,.95),hsla(0,0%,100%,.6));
+    background-size: 100% 102px;
+}
+
+.am-picker-col-indicator {
+    height: 34px;
+    top: 102px;
+}
