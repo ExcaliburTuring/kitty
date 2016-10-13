@@ -10,7 +10,7 @@ var Brief = React.createClass({
 
     componentDidUpdate: function(nextProps, nextState){
         var mySwiper = new Swiper (this.refs.swiper, {
-            slidesPerView: 8,
+            slidesPerView: 7,
             spaceBetween: 30,
             prevButton: this.refs.prev,
             nextButton: this.refs.next,
