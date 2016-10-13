@@ -12,6 +12,7 @@ import Title from 'title';
 var OrderBrief = Rabbit.create(url.orderBrief);
 var DiscountCode = Rabbit.create(url.discountCode);
 var AccountContacts = Rabbit.create(url.contacts);
+
 var Mine = React.createClass({
 
     mixins: [
@@ -20,9 +21,17 @@ var Mine = React.createClass({
         Reflux.connect(AccountContacts.store, 'contacts')
     ],
 
+    // callback method
+
+    onAccountEditClick: function() {
+        this.props.onAccountEditClick();
+    },
+
     onOrdersClick: function() {
         this.props.onOrdersClick();
     },
+
+    // component specs
 
     getInitialState: function() {
         OrderBrief.actions.load({'orderType': orderType.CURRENT});
@@ -74,7 +83,17 @@ var Mine = React.createClass({
                 </div>
                 <div className="mine-block">
                     <h3>
-                        我的优惠券
+                        个人信息
+                        <a href="javascript:" onClick={this.onAccountEditClick}>
+                            <span className="mine-count pull-right">
+                                >
+                            </span>
+                        </a>
+                    </h3>
+                </div>
+                <div className="mine-block">
+                    <h3>
+                        优惠券
                         <a href="/account/wdiscount">
                             <span className="mine-count pull-right">
                                 {this.state.discountCode.discountCodes.length}
