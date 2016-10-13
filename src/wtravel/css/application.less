@@ -1,173 +1,12 @@
 @import "~base.less";
 
+html {
+    font-size: 12px;
+}
+
 body {
     margin: 0;
-}
-
-h1 {
-    font-size: 20px;
-    font-family: "Microsoft YaHei";
-    font-weight: normal;
-    color: #333639;
-}
-
-h2 {
-    font-size: 18px;
-    overflow: hidden;
-    font-family: "Microsoft YaHei";
-    font-weight: normal;
-    color: #333639;
-
-    span {
-        line-height: 50px;
-        display: block;
-        background-size: 370px 47px;
-        background-repeat: no-repeat;
-    }
-}
-
-p {
-    font-family: "Microsoft YaHei";
-    font-size: 14px;
-}
-
-.t1, .t2 {
-    text-align: center;
-}
-
-.t3, .t4, .t5, .t6, .t7, .t8 {
-    text-align: left;
-}
-
-.t1 {
-    background-image: url(../img/t1.gif);
-}
-
-.t2 {
-    background-image: url(../img/t2.gif);
-}
-
-.t3 {
-    background-image: url(../img/t3.gif);
-    line-height: 55px;
-    color: #8470A9;
-    padding-left: 40px;
-}
-
-.t4 {
-    background-image: url(../img/t4.gif);
-    padding-left: 10px;
-    color: #71A1C2;
-}
-
-.t5 {
-    background-image: url(../img/t5.gif);
-    padding-left: 40px;
-}
-
-.t6 {
-    background-image: url(../img/t6.gif);
-    color: #92D5C9;
-    padding-left: 60px;
-}
-
-.t7 {
-    background-image: url(../img/t7.gif);
-    color: #CE1D22;
-    padding-left: 10px;
-}
-
-.t8 {
-    background-image: url(../img/t8.gif);
-    line-height: 60px;
-    padding-left: 20px;
-}
-
-p span {
-    font-size: 14px;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.p1, .p2, .p3, .p4, .p5, .p6 {
-    padding-left: 24px;
-}
-
-.p1 {
-    background-image: url(../img/p1.png);
-    color: #7AA9F7;
-}
-
-.p2 {
-    background-image: url(../img/p2.png);
-    color: #5DC768;
-}
-
-.p3 {
-    background-image: url(../img/p3.png);
-    color: #FF614C;
-}
-
-.p4 {
-    background-image: url(../img/p4.png);
-    color: #9CD925;
-}
-
-.p5 {
-    background-image: url(../img/p5.png);
-    color: #B96BE6;
-}
-
-.p6 {
-    background-image: url(../img/p6.png);
-    color: #F8782B;
-}
-
-p {
-    img {
-        display: block;
-        margin: 10px 0;
-        width: 100%;
-    }
-}
-
-.m1, .m2, .m3, .m4, .m5, .m6 {
-    position: absolute;
-    margin-top: -45px;
-    margin-left: 5px;
-    padding-left: 32px;
-    padding-right: 6px;
-    line-height: 30px;
-    color: @white;
-    border-radius: 18px;
-    background-color: @trans-black;
-    background-position: 10px;
-    background-size: 20px 20px;
-    background-repeat: no-repeat;
-}
-
-.m1 {
-    background-image:  url(../img/p1.png);
-}
-
-.m2 {
-    background-image:  url(../img/p2.png);
-}
-
-.m3 {
-    background-image:  url(../img/p3.png);
-}
-
-.m4 {
-    background-image:  url(../img/p4.png);
-}
-
-.m5 {
-    background-image:  url(../img/p5.png);
-}
-
-.m6 {
-    background-image:  url(../img/p6.png);
+    background-color: @white;
 }
 
 .days-list-sidebar {
@@ -185,24 +24,48 @@ p {
         height: 100%;
     }
 
-    .days-separator {
-        background-color: #F5F5F9;
-        height: 8px;
-        border-top: 1px solid #ECECED;
-        border-bottom: 1px solid #ECECED;
-    }
-
     .day-item-container {
-        border: 1px solid @currency;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 10px;
+        border: 1px solid @gray;
+
+        .day-item p {
+            width: 230px;
+            line-height: 20px;
+            color: @gray;
+            font-size: 1rem;
+            text-overflow:ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
     }
 }
 
 .days-list-toggle {
     position: absolute;
     left: 0;
-    bottom: 60px;
+    bottom: 10%;
     z-index: 1;
-    border-color: @currency;
+    border-radius: 0;
+    border-top-right-radius: 40%;
+    border-bottom-right-radius: 40%;
+    border:  none;
+    box-shadow: 7px 7px 10px -3px rgba(195, 195, 195, 0.3), 7px -7px 10px -3px rgba(195, 195, 195, 0.3);
+    width: 20%;
+    height: 50px;
+    line-height: 50px;
+    background-color: @white;
+    font-size: 1.4rem;
+    color: @black;
+}
+
+.am-button-primary:after {
+    border: none;
+}
+
+.am-button-touchFeedback {
+    background-color: rgba(195, 195, 195, 1)!important;
 }
 
 .travel-dairy {
@@ -211,5 +74,12 @@ p {
     left: 0;
     right: 0;
     bottom: 0;
+    padding: 0 10px;
     overflow: scroll;
+}
+
+.days-list-sidebar {
+    p {
+        font-size: 1.2rem;
+    }
 }
