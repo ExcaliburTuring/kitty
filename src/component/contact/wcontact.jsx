@@ -23,7 +23,6 @@ var WContact = React.createClass({
     // helper method
 
     _createContact: function(contact) {
-        contact = contact || {}
         return {
             'accountid': contact.accountid,
             'contactid': contact.contactid,
@@ -42,8 +41,8 @@ var WContact = React.createClass({
         var contact = this.props.contact;
         return {
             'contact': this._createContact(contact),
-            'isNew': !contact,
-            'isAccount': contact ? contact.contactid == 0 : false
+            'isNew': !contact.accountid, // 空对象是要新建
+            'isAccount': contact.accountid && contact.contactid == 0  // contactid为0，则是账户
         };
     },
 
@@ -272,6 +271,7 @@ var WContact = React.createClass({
                         : <Button type="warning" size="small"
                             onClick={this.onDeleteBtnClick}>删除联系人</Button>
                     }
+                    <Button size="small" onClick={this.props.onCancleBtnClick}>取消编辑</Button>
                 </div>
             </div>
         );

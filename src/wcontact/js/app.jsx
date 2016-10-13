@@ -19,7 +19,7 @@ var App = React.createClass({
     // callback 
 
     onEditBtnClick: function(contact) {
-
+        this.setState({'contact': contact});
     },
 
     onDeleteBtnClick: function(contact) {
@@ -43,6 +43,14 @@ var App = React.createClass({
         });
     },
 
+    onSaveSuccessful: function() {
+        this.setState({'contact': null});
+    },
+
+    onCancleBtnClick: function() {
+        this.setState({'contact': null});
+    },
+
     // component specs
 
     getInitialState: function() {
@@ -57,19 +65,25 @@ var App = React.createClass({
             },
             'contacts': {
                 'contacts': []
-            }
+            },
+            'contact': null 
         };
     },
 
     render: function() {
-        return (
-            <WContact onSaveSuccessful={()=>{console.log('kdkdkdk')}}/>
-        );
-        // return (
-        //     <ContactList contacts={this.state.contacts.contacts}
-        //         onEditBtnClick={this.onEditBtnClick}
-        //         onDeleteBtnClick={this.onDeleteBtnClick}/>
-        // );
+        if (this.state.contact) {
+            return (
+                <WContact contact={this.state.contact}
+                    onSaveSuccessful={this.onSaveSuccessful}
+                    onCancleBtnClick={this.onCancleBtnClick}/>
+            );
+        } else {
+            return (
+                <ContactList contacts={this.state.contacts.contacts}
+                    onEditBtnClick={this.onEditBtnClick}
+                    onDeleteBtnClick={this.onDeleteBtnClick}/>
+            );
+        }
     }
 });
 
@@ -91,7 +105,7 @@ var ContactList = React.createClass({
                     {contactList}
                 </div>
                 <div className="contact-addbtn-container">
-                    <Button type="primary" size="small">添加新联系人</Button>
+                    <Button type="primary" size="small" onClick={()=>{this.props.onEditBtnClick({})}}>添加新联系人</Button>
                 </div>
             </div>
         );
