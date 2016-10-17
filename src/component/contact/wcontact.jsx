@@ -30,7 +30,7 @@ var WContact = React.createClass({
             'id': contact.id,
             'idType': contact.idType || idType.IDENTIFICATION,
             'gender': contact.gender || gender.MALE,
-            'birthday': contact.birthday ?  moment(contact.birthday, 'YYYY-MM-DD').locale('zh-cn').utcOffset(8) : zhNow,
+            'birthday': contact.birthday ?  moment(contact.birthday, 'YYYY-MM-DD') : zhNow,
             'mobile': contact.mobile,
             'email': contact.email,
             'emergency': contact.emergency || false

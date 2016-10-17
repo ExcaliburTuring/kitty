@@ -45,6 +45,7 @@ var App = React.createClass({
 
     onSaveSuccessful: function() {
         this.setState({'contact': null});
+        AccountContacts.actions.load();
     },
 
     onCancleBtnClick: function() {
@@ -79,7 +80,9 @@ var App = React.createClass({
             );
         } else {
             return (
-                <ContactList contacts={this.state.contacts.contacts}
+                <ContactList 
+                    accountInfo={this.state.basicInfo.accountInfo}
+                    contacts={this.state.contacts.contacts}
                     onEditBtnClick={this.onEditBtnClick}
                     onDeleteBtnClick={this.onDeleteBtnClick}/>
             );
@@ -89,8 +92,28 @@ var App = React.createClass({
 
 var ContactList = React.createClass({
 
+     /**
+     * 创建账户对应的出行人
+     */
+    _createAccountContact: function() {
+        var accountInfo = this.props.accountInfo;
+        return {
+            'accountid': accountInfo.accountid,
+            'contactid': 0,
+            'name': accountInfo.name || accountInfo.nickname,
+            'id': accountInfo.id,
+            'idType': accountInfo.idType,
+            'gender': accountInfo.gender,
+            'birthday': accountInfo.birthday,
+            'email': accountInfo.email,
+            'mobile': accountInfo.mobile,
+            'avatarUrl': accountInfo.avatarUrl
+        };
+    },
+
     render: function() {
         var self = this;
+        var accountContact = this._createAccountContact();
         var contactList = this.props.contacts.map(function(contact, index) {
             return (
                 <Contact contact={contact} key={contact.contactid} 
@@ -98,9 +121,12 @@ var ContactList = React.createClass({
                     onDeleteBtnClick={self.props.onDeleteBtnClick}/>
             );
         })
-
         return (
             <div>
+                <div className="account-contact">
+                    <Contact contact={accountContact} key={'account-contact'}
+                        onEditBtnClick={this.props.onEditBtnClick}/>
+                </div>
                 <div className="contact-list">
                     {contactList}
                 </div>
@@ -117,15 +143,17 @@ var Contact = React.createClass({
 
     render: function () {
         var contact = this.props.contact;
+        var isAccount = contact.contactid == 0;
         var isMale = contact.gender == gender.MALE;
+        var avatarUrl = contact.avatarUrl ? contact.avatarUrl 
+                            : isMale 
+                                ? 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=850188828,2295753763&fm=58'
+                                : 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=481252135,1456887421&fm=58';
         return (
             <div className="contact-container">
                 <div className="contact-body clearfix">
                      <div className="contact-avatar pull-left">
-                        <Image alt="头像" responsive
-                            src={isMale 
-                                ? 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=850188828,2295753763&fm=58'
-                                : 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=481252135,1456887421&fm=58'}/>
+                        <Image alt="头像" responsive src={avatarUrl}/>
                     </div>
                     <div className="contact-detail pull-left">
                         <div className="clearfix">
@@ -141,18 +169,26 @@ var Contact = React.createClass({
                 </div>
                 <div className="contact-edit-container clearfix">
                     <div className="pull-left">
-                        <label>
-                            <Checkbox checked={contact.emergency} disabled></Checkbox>
-                            紧急联系人
-                        </label>
+                        {
+                            isAccount
+                            ? <p>本人</p>
+                            : <label>
+                                <Checkbox checked={contact.emergency} disabled></Checkbox>
+                                紧急联系人
+                            </label>
+                        }
                     </div>
                     <div className="pull-right">
                         <Button inline size="small" onClick={()=>{this.props.onEditBtnClick(contact)}}>
                             <Icon type="edit"/>编辑
                         </Button>
-                        <Button inline size="small" onClick={()=>{this.props.onDeleteBtnClick(contact)}}>
-                            <Icon type="delete"/>删除
-                        </Button>
+                        {
+                            isAccount
+                            ? null
+                            :  <Button inline size="small" onClick={()=>{this.props.onDeleteBtnClick(contact)}}>
+                                <Icon type="delete"/>删除
+                            </Button>
+                        }
                     </div>
                 </div>
             </div>
