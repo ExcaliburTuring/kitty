@@ -56,18 +56,17 @@ var Contacts = React.createClass({
 
         if (contacts.length > 0) {
             contacts.forEach(function(contact, index) {
+                contactsList.push(
+                    <Col md={3} key={`contacts-list-${index}`}>
+                        <Contact contact={contact} totop onEditBtnClick={self.onEditBtnClick}/>
+                    </Col>
+                );
                 if (contact.emergency) {
                     ermergencyList.push(
                         <Col md={3} key={`emergency-list-${index}`}>
                             <Contact contact={contact} onEditBtnClick={self.onEditBtnClick}/>
                         </Col>
                     )
-                } else {
-                    contactsList.push(
-                        <Col md={3} key={`contacts-list-${index}`}>
-                            <Contact contact={contact} totop onEditBtnClick={self.onEditBtnClick}/>
-                        </Col>
-                    );
                 }
             }); 
         }
@@ -84,14 +83,14 @@ var Contacts = React.createClass({
                 <div className="basic-info-container"/>
                 <div className="contact-group emergency">
                     <Row>
-                        {ermergencyList}
+                        {contactsList}
                     </Row>
                 </div>
                 <Title title="紧急联系人" className="info-title" />
                 <div className="basic-info-container"/>
                 <div className="contact-group emergency">
                     <Row>
-                        {contactsList}
+                        {ermergencyList}
                         <Col md={2}>
                             <NewBtn onNewBtnClick={this.onNewBtnClick}/>
                         </Col>

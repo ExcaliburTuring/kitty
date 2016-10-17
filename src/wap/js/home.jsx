@@ -32,6 +32,8 @@ var Home = React.createClass({
     ],
 
     getInitialState: function() {
+        RouteList.actions.load();
+        DiscountCode.actions.load();
         return {
             'data': {},
             'discountCode': {
@@ -40,32 +42,13 @@ var Home = React.createClass({
         };
     },
 
-    componentDidMount: function() {
-        var mySwiper = new Swiper (this.refs.swiper, {
-            direction: 'horizontal',
-            autoplay: 2000,
-            speed: 600,
-            loop: true,
-            noSwiping : false,
-            autoplayDisableOnInteraction : true,
-            mousewheelControl : false,
-            pagination : this.refs.pagination,
-        });
-        RouteList.actions.load();
-        DiscountCode.actions.load();
-    },
-
     render: function() {
-        var abg = {backgroundImage: "url(" + a + ")"};
-        var bbg = {backgroundImage: "url(" + b + ")"};
-        var cbg = {backgroundImage: "url(" + c + ")"};
-
         var routeList = null;
         var routes = this.state.data.routes;
         if (routes) {
             routeList = routes.map(function(route) {
                 return (
-                        <Routes route={route} key={route.routeid}/>
+                    <Routes route={route} key={route.routeid}/>
                 );
             });
         } else {
@@ -76,14 +59,7 @@ var Home = React.createClass({
             <div>
                 <div className="row">
                     <img className="wh-container" src={WH} />
-                    <div className="swiper-container Aone" ref="swiper">
-                        <div className="swiper-wrapper">
-                            <div className="swiper-slide swiper-no-swiping" style={abg}></div>
-                            <div className="swiper-slide swiper-no-swiping" style={bbg}></div>
-                            <div className="swiper-slide swiper-no-swiping" style={cbg}></div>
-                        </div>
-                        <div className="swiper-pagination swiper-pagination-bullets" ref="pagination"></div>
-                    </div>
+                    <Slider />
                 </div>
                 <div className="daohang row">
                     <div className="Athird">
@@ -149,7 +125,41 @@ var Home = React.createClass({
     }
 });
 
-var Routes =React.createClass({
+var Slider = React.createClass({
+
+    componentDidMount: function() {
+        
+        var mySwiper = new Swiper (this.refs.swiper, {
+            direction: 'horizontal',
+            autoplay: 2000,
+            speed: 600,
+            loop: true,
+            noSwiping : false,
+            autoplayDisableOnInteraction : true,
+            mousewheelControl : false,
+            pagination : this.refs.pagination,
+            paginationClickable: true
+        });
+    },
+
+    render: function() {
+        var abg = {backgroundImage: "url(" + a + ")"};
+        var bbg = {backgroundImage: "url(" + b + ")"};
+        var cbg = {backgroundImage: "url(" + c + ")"};
+        return (
+            <div className="swiper-container Aone" ref="swiper">
+                <div className="swiper-wrapper">
+                    <div className="swiper-slide swiper-no-swiping" style={abg}></div>
+                    <div className="swiper-slide swiper-no-swiping" style={bbg}></div>
+                    <div className="swiper-slide swiper-no-swiping" style={cbg}></div>
+                </div>
+                <div className="swiper-pagination swiper-pagination-bullets" ref="pagination"></div>
+            </div>
+        );
+    }
+});
+
+var Routes = React.createClass({
 
     getInitialState: function() {
         return{
