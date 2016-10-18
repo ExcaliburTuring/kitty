@@ -7,7 +7,7 @@ var  OrderShow = React.createClass({
 
     render: function () {
         return (
-            <div></div>
+            <div>这个还没实现</div>
         );
     }
 
