@@ -1,0 +1,115 @@
+@import "~base.less";
+
+body {
+    font-size: 12px;
+    margin: 0;
+    background-color: @white;
+}
+
+.order-form-container {
+
+}
+
+.travel-info-container,
+.travellers-container,
+.roommate-container,
+.emergency-container,
+.discount-container,
+.agreement-container,
+.footer-container {
+    border: 1px solid @currency;
+    margin-top: 20px;
+
+    h3 {
+        border-bottom: 1px solid @currency;
+        padding-left: 20px;
+    }
+}
+
+/**
+ * 出行人选择
+ */
+.travellers-container {
+
+    .traveller-container {
+        border: 1px solid @currency;
+        margin: 20px;
+
+        .traveller-body {
+            position: relative;
+            padding: 10px 20px;
+            border-bottom: 1px solid @light-gray;
+
+            .traveller-avatar {
+                width: 64px;
+            }
+
+            .traveller-detail {
+                position: absolute;
+                right: 20px;
+                left: 104px;
+                top: 10px;
+
+                p {
+                    margin-bottom: 3px;
+                }
+            }
+        }
+
+        .traveller-edit-container {
+            width: 100%;
+            padding: 5px 20px;
+
+            button {
+                font-size: 14px;
+                height: 30px;
+                border-radius: 5px;
+                line-height: 30px;
+                margin-left: 10px;
+
+                &:after {
+                    border: none;
+                }
+            }
+        }
+    }
+}
+
+.travellers-selector-container {
+
+    /**
+     * 覆盖antd-mobile的样式
+     */
+    .am-list-header {
+        padding: 18px;
+        text-align: center;
+        font-size: 22px;
+    }
+
+    // .am-list-item {
+    //     height: 52px;
+    //     min-height: 52px;
+    //     font-size: 18px;
+    // }
+}
+
+/**
+ * 睡友选择
+ */
+.roommate-container {
+
+
+}
+
+
+.footer-container {
+
+    p.pull-left {
+        margin-top: 10px;
+        margin-left: 10px;
+
+        span {
+            font-size: 14px;
+        }
+    }
+}

@@ -35,6 +35,7 @@ var mockConfig = [
     config('/wtravel*', 'wtravel.html'),
     config('/wdiscount*', 'wdiscount.html'),
     config('/wcontact*', 'wcontact.html'),
+    config('/worder*', 'worder.html'),
     config('/login', 'login.html'),
     config('/notauth', 'notauth.html'),
     config('/notfound', 'notfound.html'),
