@@ -7,7 +7,7 @@ import { Image } from 'react-bootstrap';
 import { List, Button, InputItem, ActionSheet, Stepper } from 'antd-mobile';
 import { createForm } from 'rc-form';
 
-import { priceUtil }  from 'config';
+import { priceUtil, discountCodeStatus }  from 'config';
 
 var Discount = React.createClass({
 
@@ -44,7 +44,9 @@ var Discount = React.createClass({
         var self = this, discountCodes = this.props.accountDiscountCodeData.discountCodes;
         var BUTTONS = ['不使用优惠码'];
         for (var i = 0, n = discountCodes.length; i < n; i++) {
-            BUTTONS.push(discountCodes[i].discountCode);
+            if (discountCodeStatus.isUsable(discountCodes[i].status)) {
+                BUTTONS.push(discountCodes[i].discountCode);
+            }
         }
         BUTTONS.push('取消');
         ActionSheet.showActionSheetWithOptions({
@@ -82,6 +84,10 @@ var Discount = React.createClass({
         var discountCode = this.props.discountCode;
         var studentDiscount = this.props.studentDiscount;
         var count = this.props.selectTravellers.length;
+        var discountPrice = priceUtil.getPriceStr(
+            priceUtil.getPrice(this.props.policyDiscount.value)
+            + priceUtil.getPrice(this.props.discountCode.value)
+            + priceUtil.getPrice(this.props.studentDiscount.value))
         return (
             <div className="discount-container">
                 <h3>优惠政策</h3>
@@ -111,6 +117,10 @@ var Discount = React.createClass({
                                 onChange={this.onStudentDiscountChange} />
                         }>
                         学生优惠
+                    </List.Item>
+                    <List.Item
+                        extra={discountPrice}>
+                        总共优惠
                     </List.Item>
                 </List>
             </div>
