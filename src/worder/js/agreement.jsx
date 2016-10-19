@@ -13,11 +13,6 @@ import Rabbit from 'rabbit';
 
 var Agreement = React.createClass({
 
-    isAgreed: function() {
-        var fieldsValue = this.props.form.getFieldsValue();
-        console.log(fieldsValue);
-    },
-
     render: function() {
         const { getFieldProps } = this.props.form;
         return (
@@ -26,7 +21,7 @@ var Agreement = React.createClass({
                     <Button size="small">注意事项及合同下载</Button>
                     <AgreeItem data-seed="logId"
                         {
-                            ...getFieldProps('agreeitem', {
+                            ...getFieldProps('agreement', {
                                 initialValue: false,
                                 valuePropName: 'checked',
                             })
