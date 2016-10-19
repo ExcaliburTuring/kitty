@@ -7,13 +7,6 @@ import { createForm } from 'rc-form';
 
 var Roommate = React.createClass({
 
-    // api method
-
-    getRoommate: function() {
-        var fieldsValue = this.props.form.getFieldsValue();
-        console.log(fieldsValue);
-    },
-
     render: function() {
         const { getFieldProps } = this.props.form;
         var self = this;
@@ -39,7 +32,6 @@ var Roommate = React.createClass({
                         {travellerList}
                     </List>
                 </div>
-                <div className="roommate-show"></div>
                 <p>如果不输入睡友姓名，海逍遥将会自动为您选择同性拼房</p>
             </div>
         );

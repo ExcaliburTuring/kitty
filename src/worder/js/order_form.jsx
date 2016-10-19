@@ -4,12 +4,12 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Image } from 'react-bootstrap';
-import { List, Button, Popup, Checkbox, Icon, InputItem, ActionSheet } from 'antd-mobile';
+import { List, Button, Popup, Checkbox, Icon, InputItem, ActionSheet, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
 
-import { url, gender, priceUtil, discountCodeStatus }  from 'config';
+import { url, gender, priceUtil, discountCodeStatus, defaultValue, accountStatus }  from 'config';
 import Rabbit from 'rabbit';
 import WContact from 'wcontact';
 
@@ -142,7 +142,149 @@ var  OrderForm = React.createClass({
         return null;
     },
 
+    /**
+     * 获取紧急联系人，多人则分号分隔
+     */
+    _getEmergency: function() {
+        var name = '', mobile = '',emergencies = this.state.emergency;
+        for (var key in emergencies) {
+            if (key != 'size' && emergencies.hasOwnProperty(key)) {
+                var emergency = emergencies[key];
+                name = name + emergency.name + ';';
+                mobile = mobile + emergency.mobile + ';';
+            }
+        }
+        if (name.length > 1) {
+            name = name.substring(0, name.length - 1);
+        } else {
+            return {};
+        }
+        if (mobile.length > 1) {
+            mobile = mobile.substring(0, mobile.length - 1);
+        } else {
+            return {};
+        }
+        return {'name': name, 'mobile': mobile};
+    },
+
+    /**
+     * 获取优惠
+     */
+    _getDiscount: function() {
+        var studentDiscount = this.state.discountData.studentDiscount; 
+        return {
+            'actualPrice': this._getActualPrice(),
+            'policyDiscountid': this.state.policyDiscount.discountid,
+            'discountCode': this.state.discountCode.discountCode,
+            'studentDiscountid': studentDiscount != null ? studentDiscount.discountid : null,
+            'studentCount': this.state.studentDiscount.count
+        };
+    },
+
+    /**
+     * 获取原始价格
+     */
+    _getPrice: function() {
+        var travelGroup = this.props.orderInfoData.travelGroup;
+        var count = this.state.selectTravellers.length; 
+        return priceUtil.getPrice(travelGroup.price) * count;
+    },
+
+    /**
+     * 获取优惠后的实际价格
+     */
+    _getActualPrice: function() {
+        return priceUtil.getPriceStr(
+                    this._getPrice()
+                    - priceUtil.getPrice(this.state.policyDiscount.value)
+                    - priceUtil.getPrice(this.state.discountCode.value)
+                    - priceUtil.getPrice(this.state.studentDiscount.value)
+                );
+    },
+
+    /**
+     * 获取roommates
+     */
+    _getRoommates: function() {
+        return this.refs.roommate.getFieldsValue();
+    },
+
+    /**
+     * 创建订单
+     */
+    _createOrder: function(async, success) {
+        var travellers = this.state.selectTravellers;
+        if (travellers.length == 0) {
+            Toast.fail('请选择出行人', 1);
+            this.refs.footer.enableBtn();
+            return;
+        } 
+        if (!this.refs.agreement.getFieldsValue().agreement) {
+            Toast.fail('请同意安全协议', 1);
+            this.refs.footer.enableBtn();
+            return;
+        }
+        if (this.props.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
+            Toast.fail('请先完善个人信息。', 1);
+            this.refs.footer.enableBtn();
+            return;
+        }
+
+        var discountData = this._getDiscount();
+        if (priceUtil.getPrice(discountData.actualPrice) <= 0) {
+            Toast.fail(`出现负数价格太不科学了，请联系海逍遥${defaultValue.hotline}`, 1);
+            this.refs.footer.enableBtn();
+            return;
+        }
+        var self = this;
+        var selectTravellers = this.state.selectTravellers;
+        var roommates = this._getRoommates();
+        selectTravellers.forEach(function(selectTraveller) {
+            selectTraveller['roommate'] = roommates[`${selectTraveller.accountid}-${selectTraveller.contactid}`] || null;
+        });
+        var emergency = this._getEmergency(); 
+        var request = {
+            'orderid': this.props.orderInfoData.orderInfo.orderid,
+            'travellers': selectTravellers,
+            'policyDiscountid': discountData.policyDiscountid,
+            'discountCode': discountData.discountCode,
+            'studentDiscountid': discountData.studentDiscountid,
+            'studentCount': discountData.studentCount,
+            'actualPrice': discountData.actualPrice,
+            'emergencyContact': emergency.name,
+            'emergencyMobile': emergency.mobile
+        };
+        console.log(request);
+        $.ajax({
+            'url': url.orderOrder,
+            'type': 'post',
+            'async': async,
+            'data': JSON.stringify(request),
+            'dataType': 'json',
+            'contentType': 'application/json;charset=UTF-8',
+            'success': function(data) {
+                if (data.status != 0) {
+                    self.refs.step2.enableBtn();
+                    Toast.fail(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                } else {
+                    success();
+                }
+            },
+            'error': function() {
+                self.refs.step2.enableBtn();
+               Toast.fail(`订单创建失败，您可以联系${defaultValue.hotline}`);
+            }
+        });
+    },
+
     // callback method
+
+    /**
+     * 新建联系人
+     */
+    onNewContactBtnClick: function() {
+        this.setState({'contact': {}});
+    },
 
     /**
      * 出行人改变
@@ -203,14 +345,16 @@ var  OrderForm = React.createClass({
      * 保存订单
      */
     onSaveOrderClick: function() {
-
+        this._createOrder(true, function() {
+            setTimeout('location.reload(true);', 500);
+        });
     },
 
     /**
      * 支付订单
      */
     onPayOrderClick: function() {
-
+        this._createOrder(false, function() {});
     },
 
     // component specs
@@ -239,7 +383,6 @@ var  OrderForm = React.createClass({
 
             // 临时变量
             'selectTravellers': [this._createAccountTraveller()],
-            'roommates': {},
             'emergency': {
                 'size': 0
             },
@@ -281,9 +424,11 @@ var  OrderForm = React.createClass({
                     travelGroup={orderInfoData.travelGroup}/>
                 <SelectTraveller travellers={travellers}
                     selectTravellers={selectTravellers}
+                    onNewContactBtnClick={this.onNewContactBtnClick}
                     onSelectTravellersChange={this.onSelectTravellersChange}
                     onTravellerEditBtnClick={this.onTravellerEditBtnClick}/>
-                <Roommate travellers={travellers} 
+                <Roommate ref="roommate" 
+                    travellers={travellers} 
                     selectTravellers={selectTravellers}/>
                 <SelectEmergency travellers={travellers}
                     selectTravellers={selectTravellers}
@@ -298,12 +443,10 @@ var  OrderForm = React.createClass({
                     onPolicyDiscountChange={this.onPolicyDiscountChange}
                     onDiscountCodeChange={this.onDiscountCodeChange}
                     onStudentDiscountChange={this.onStudentDiscountChange}/>
-                <Agreement />
-                <Footer selectTravellers={selectTravellers}
-                    travelGroup={orderInfoData.travelGroup}
-                    policyDiscount={this.state.policyDiscount}
-                    discountCode={this.state.discountCode}
-                    studentDiscount={this.state.studentDiscount}
+                <Agreement ref="agreement"/>
+                <Footer ref="footer"
+                    orderid={orderInfoData.orderInfo.orderid}
+                    actualPrice={this._getActualPrice()}
                     onSaveOrderClick={this.onSaveOrderClick}
                     onPayOrderClick={this.onPayOrderClick}/>
             </div>
