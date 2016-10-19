@@ -2,10 +2,10 @@ import React from 'react';
 import Reflux from 'reflux';
 import marked from 'marked';
 import Swiper from 'swiper';
-import { Drawer, ListView, Button, Grid } from 'antd-mobile';
+import { Drawer, ListView, Button, Grid, Toast } from 'antd-mobile';
 import { Image } from 'react-bootstrap';
 
-import { url } from 'config';
+import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
 
 import img from '../img/img.jpg';
@@ -243,6 +243,26 @@ var Group = React.createClass({
         );
     },
 
+    onClick: function(el, index) {
+        var group = el;
+        if (group.status != groupStatus.OPEN) {
+            Toast.fail('本团可不可报名');
+            return ;
+        }
+
+        $.post(url.orderNew, {'routeid': group.routeid, 'groupid': group.groupid})
+        .done(function(data) {
+            if (data.status != 0) {
+                Toast.fail(defaultValue.newOrderMsg);
+            } else {
+                window.location.pathname = `${url.order}/${data.orderid}`;
+            }
+        })
+        .fail(function() {
+            Toast.fail(defaultValue.newOrderMsg);
+        });
+    },
+
     render: function() {
         return (
             <div className="group-container">
@@ -251,7 +271,8 @@ var Group = React.createClass({
                     data={this.props.groups}
                     columnNum={3}
                     hasLine={false}
-                    renderItem={this._renderItem}/>
+                    renderItem={this._renderItem}
+                    onClick={this.onClick}/>
             </div>
         );
     }
