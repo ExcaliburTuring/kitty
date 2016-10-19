@@ -79,8 +79,11 @@ var EmergencySelector = React.createClass({
         var emergency = this.props.emergency;
         var checkBoxItemList = travellers.map(function(traveller, index) {
             var id = `${traveller.accountid}-${traveller.contactid}`;
-            if (selectTravellers.hasOwnProperty(id)) { // 已经选作出行人，不能作为紧急联系人了
-                return null;
+            for (var i = 0, n = selectTravellers.length; i < n; i++) {
+                var selectTraveller = selectTravellers[i];
+                if (id == `${selectTraveller.accountid}-${selectTraveller.contactid}`) { // 已经选作出行人，不能作为紧急联系人了
+                    return null;
+                }
             }
             return (
                 <CheckboxItem key={index}
