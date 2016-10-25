@@ -264,14 +264,14 @@ var WContact = React.createClass({
                     </List>
                 </div>
                 <div className="contact-btn-container">
-                    <Button size="small" onClick={this.onSaveBtnClick}>保存</Button>
+                    <Button onClick={this.onSaveBtnClick}>保存</Button>
                     {
                         this.state.isNew || this.state.isAccount
                         ? null
-                        : <Button type="warning" size="small"
+                        : <Button type="warning"
                             onClick={this.onDeleteBtnClick}>删除</Button>
                     }
-                    <Button size="small" onClick={this.props.onCancleBtnClick}>返回</Button>
+                    <Button onClick={this.props.onCancleBtnClick}>返回</Button>
                 </div>
             </div>
         );
