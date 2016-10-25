@@ -249,7 +249,9 @@ var OrderForm = React.createClass({
             'gender': accountInfo.gender,
             'birthday': accountInfo.birthday,
             'email': accountInfo.email,
-            'mobile': accountInfo.mobile
+            'mobile': accountInfo.mobile,
+            'area': accountInfo.area,
+            'address': accountInfo.address
         };
     },
 

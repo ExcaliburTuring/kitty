@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import { Image } from 'react-bootstrap';
 import { Icon, Button, Checkbox, Toast } from 'antd-mobile';
 
 import AccountBasicInfo from 'account_basicinfo';
@@ -22,6 +21,27 @@ var App = React.createClass({
         this.setState({'contact': contact});
     },
 
+    onEmergencyChange: function(e, contact) {
+        var checked = e.target.checked;
+        var contacts = this.state.contacts.contacts;
+        var target = null;
+        for (var i = contacts.length - 1; i >= 0; i--) {
+            target = contacts[i];
+            if (target.contactid == contact.contactid) {
+                target.emergency = checked;
+                break;
+            }
+        }
+        if (target != null) {
+            var self = this;
+            $.post(url.contacts, target)
+            .complete(function(data) {
+                AccountContacts.actions.load();
+            });
+            this.setState({'contacts': {'contacts': contacts}});
+        }
+    },
+
     onDeleteBtnClick: function(contact) {
         if (!contact || !contact.contactid) {
             return;
@@ -35,8 +55,8 @@ var App = React.createClass({
             if (data.status != 0) {
                 Toast.fail(defaultValue.deleteContactsMsg, 1);
             } else {
-                Toast.success('删除成功', 1);
                 AccountContacts.actions.load();
+                setTimeout('Toast.success("删除成功", 1);', 300);
             }
         }).fail(function() {
             Toast.fail(defaultValue.deleteContactsMsg, 1);
@@ -44,8 +64,13 @@ var App = React.createClass({
     },
 
     onSaveSuccessful: function() {
+        var contact = this.state.contact;
+        if (contact.accountid && contact.contactid == 0) {
+            AccountBasicInfo.actions.load();
+        } else {
+            AccountContacts.actions.load();
+        }
         this.setState({'contact': null});
-        AccountContacts.actions.load();
     },
 
     onCancleBtnClick: function() {
@@ -73,6 +98,7 @@ var App = React.createClass({
 
     render: function() {
         if (this.state.contact) {
+            console.log(this.state.contact)
             return (
                 <WContact contact={this.state.contact}
                     onSaveSuccessful={this.onSaveSuccessful}
@@ -84,7 +110,8 @@ var App = React.createClass({
                     accountInfo={this.state.basicInfo.accountInfo}
                     contacts={this.state.contacts.contacts}
                     onEditBtnClick={this.onEditBtnClick}
-                    onDeleteBtnClick={this.onDeleteBtnClick}/>
+                    onDeleteBtnClick={this.onDeleteBtnClick}
+                    onEmergencyChange={this.onEmergencyChange}/>
             );
         }
     }
@@ -107,7 +134,9 @@ var ContactList = React.createClass({
             'birthday': accountInfo.birthday,
             'email': accountInfo.email,
             'mobile': accountInfo.mobile,
-            'avatarUrl': accountInfo.avatarUrl
+            'avatarUrl': accountInfo.avatarUrl,
+            'area': accountInfo.area,
+            'address': accountInfo.address
         };
     },
 
@@ -118,20 +147,19 @@ var ContactList = React.createClass({
             return (
                 <Contact contact={contact} key={contact.contactid} 
                     onEditBtnClick={self.props.onEditBtnClick}
-                    onDeleteBtnClick={self.props.onDeleteBtnClick}/>
+                    onDeleteBtnClick={self.props.onDeleteBtnClick}
+                    onEmergencyChange={self.props.onEmergencyChange}/>
             );
         })
         return (
             <div>
-                <div className="account-contact">
-                    <Contact contact={accountContact} key={'account-contact'}
-                        onEditBtnClick={this.props.onEditBtnClick}/>
-                </div>
-                <div className="contact-list">
-                    {contactList}
-                </div>
+                <Contact contact={accountContact} key={'account-contact'}
+                    onEditBtnClick={this.props.onEditBtnClick}/>
+                {contactList}
                 <div className="contact-addbtn-container">
-                    <Button type="primary" size="small" onClick={()=>{this.props.onEditBtnClick({})}}><Icon type="plus-circle" /></Button>
+                    <Button onClick={()=>{this.props.onEditBtnClick({})}}>
+                        添加新出行人
+                    </Button>
                 </div>
             </div>
         );
@@ -152,13 +180,11 @@ var Contact = React.createClass({
         return (
             <div className="contact-container">
                 <div className="contact-body">
-                    <div className="contact-detail">
-                        <p>
-                            <span>{`${contact.name}`}</span>
-                            <span className="pull-right">{`${contact.mobile}`}</span>
-                        </p>
-                        <p>{`${contact.id}`}</p>
-                    </div>
+                    <p>
+                        {contact.name}
+                        <span className="pull-right">{contact.mobile}</span>
+                    </p>
+                    <p className="contact-id">{contact.id}</p>
                 </div>
                 <div className="contact-edit-container clearfix">
                     <div className="pull-left">
@@ -166,7 +192,7 @@ var Contact = React.createClass({
                             isAccount
                             ? <p>本人</p>
                             : <label>
-                                <Checkbox checked={contact.emergency} disabled></Checkbox>
+                                <Checkbox checked={contact.emergency} onChange={(e)=>{this.props.onEmergencyChange(e, contact)}}></Checkbox>
                                 紧急联系人
                             </label>
                         }
