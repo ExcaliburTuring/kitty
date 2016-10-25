@@ -6,10 +6,16 @@ import Reflux from 'reflux';
 import { Image } from 'react-bootstrap';
 import { Icon, Tooltip } from 'antd';
 
+import { Tabs, WhiteSpace } from 'antd-mobile';
+
 import { url, orderType, defaultValue, orderStatus, refundStatus, refundType, priceUtil } from 'config';
 import Rabbit from 'rabbit';
 
 import 'antd/lib/index.css';
+
+function callback(key) {
+  console.log(key);
+}
 
 var OrderBrief = Rabbit.create(url.orderBrief);
 var Order = React.createClass({
@@ -45,6 +51,7 @@ var Order = React.createClass({
 
     render: function() {
         var data = this.state.data;
+        const TabPane = Tabs.TabPane;
         if (data.status != 0) {
             <div>
                 <p>订单查询失败, 请联系客服： {defaultValue.hotline}</p>
@@ -67,25 +74,25 @@ var Order = React.createClass({
 
         return (
             <div className="order-container">
-                <div className="order-header row">
-                    <div className="order-count-container Afourth">
-                        <span>当前：</span>
-                        <a onClick={()=>{this.onSelectOrderType(orderType.CURRENT);}} className="order-count">
-                            {data.currentOrderCount}
-                        </a>
-                    </div>
-                    <div className="order-count-container Afourth">
-                        <span>历史：</span>
-                        <a onClick={()=>{this.onSelectOrderType(orderType.HISTORY);}} className="order-count">
-                            {data.historyOrderCount}
-                        </a>
-                    </div>
-                    <div className="order-count-container Afourth">
-                        <span>所有：</span>
-                        <a onClick={()=>{this.onSelectOrderType(orderType.VISIBLE);}} className="order-count">
-                            {data.allOrderCount}
-                        </a>
-                    </div>
+                <div className="order-header">
+                    <Tabs defaultActiveKey="1" onChange={callback}>
+                      <TabPane tab="选项卡一" key="1">
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
+                          选项卡一内容
+                        </div>
+                      </TabPane>
+                      <TabPane tab="选项卡二" key="2">
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
+                          选项卡二内容
+                        </div>
+                      </TabPane>
+                      <TabPane tab="选项卡三" key="3">
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
+                          选项卡三内容
+                        </div>
+                      </TabPane>
+                    </Tabs>
+                    <WhiteSpace />
                 </div>
                 <div className="order-list">
                     {orderList}
@@ -104,21 +111,23 @@ var OrderItem = React.createClass({
         var travelGroup = briefOrder.travelGroup;
         return (
             <div className="order-item-container">
-                <a href={`/travel/${travelRoute.routeid}`} target="_blank">
-                    <Image src={travelRoute.headImg} responsive/>
-                </a>
-
-                <div className="travel-info">
-                    <span className="travel-name">{travelRoute.name}</span>
+                <div className="travel-img">
+                    <a href={`/travel/${travelRoute.routeid}`} target="_blank">
+                        <Image src={travelRoute.headImg} responsive/>
+                    </a>
                 </div>
-                <span className="travel-time">{travelGroup.startDate} 到 {travelGroup.endDate}</span>
-                <div className="order-info">
+                <div className="travel-info">
+                    <p className="travel-name">{travelRoute.name}</p>
+                    <p className="travel-time">{travelGroup.startDate} 到 {travelGroup.endDate}</p>
                     <TravellerList names={briefOrder.travellerNames} keyPrefix={orderInfo.orderid}/>
                     <OrderPrice orderInfo={orderInfo} travelGroup={travelGroup}
                         policy={briefOrder.policy} code={briefOrder.code} student={briefOrder.student}/>
                     <Refund status={orderInfo.status} orderRefound={briefOrder.orderRefound}/>
                 </div>
-
+                <div className="other-info">
+                    <p className="travel-status">已付款</p>
+                    <div className="buttons">查看</div>
+                </div>
             </div>
         );
     }
@@ -132,14 +141,13 @@ var TravellerList = React.createClass({
         var travellers = this.props.names.map(function(name, index) {
             return (
                 <span key={`${keyPrefix}-${index}`} className="traveller-name ellipsis">
-                    <i className="fa fa-check-square-o" />
-                    {name}
+                    {name} 
                 </span>
             );
         });
         return (
             <div className="traveller-names">
-                <span className="order-label">成员</span>
+                <span className="order-label">成员：</span>
                 {travellers}
             </div>
         );
@@ -190,9 +198,6 @@ var OrderPrice = React.createClass({
         return (
             <div className="order-price">
                 <span className="order-label">价格</span>
-                <Tooltip placement="top" title={discountTip}>
-                    <span className="price-before">{this.props.orderInfo.price}</span>
-                </Tooltip>
                 <span className="price">  {this.props.orderInfo.actualPrice}</span>
             </div>
         );
