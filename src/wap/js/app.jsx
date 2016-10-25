@@ -9,6 +9,13 @@ import Home from './home';
 import Mine from './mine';
 import Order from './order';
 
+import home1 from '../img/home1.png';
+import home2 from '../img/home2.png';
+import user1 from '../img/user1.png';
+import user2 from '../img/user2.png';
+import compass1 from '../img/compass1.png';
+import compass2 from '../img/compass2.png';
+
 var App = React.createClass({
 
     mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
@@ -65,19 +72,19 @@ var App = React.createClass({
         }
         return (
             <TabBar 
-                unselectedTintColor="#949494" tintColor="#33A3F4" barTintColor="white">
+                unselectedTintColor="#949494" tintColor="#FF5310" barTintColor="white">
                 <TabBar.Item
                     title="主页" key="home"
-                    icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/XLdKiKAwDRXQNhC.png' }}
-                    selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/iKfBQdGdTMubhXy.png' }}
+                    icon={{ uri: home1 }}
+                    selectedIcon={{ uri: home2 }}
                     selected={this.state.selectedTab === 'home'}
                     onPress={() => {this.onTabBarItemPress('home')}}>
                     <Home />
                 </TabBar.Item>
                 <TabBar.Item
                     title="我的" key="mine"
-                    icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/YWpPVCVOnJoCYhs.png' }}
-                    selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/WadBBxOIZtDzsgP.png' }}
+                    icon={{ uri: user1 }}
+                    selectedIcon={{ uri: user2 }}
                     selected={this.state.selectedTab === 'mine'}
                     onPress={() => {this.onTabBarItemPress('mine')}}>
                     <Mine basicInfo={this.state.basicInfo}
@@ -86,8 +93,8 @@ var App = React.createClass({
                 </TabBar.Item>
                 <TabBar.Item
                     title="行程" key="order"
-                    icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/XLdKiKAwDRXQNhC.png' }}
-                    selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/iKfBQdGdTMubhXy.png' }}
+                    icon={{ uri: compass1 }}
+                    selectedIcon={{ uri: compass2 }}
                     selected={this.state.selectedTab === 'order'}
                     onPress={() => {this.onTabBarItemPress('order')}}>
                     <Order />

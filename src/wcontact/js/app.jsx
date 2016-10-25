@@ -131,7 +131,7 @@ var ContactList = React.createClass({
                     {contactList}
                 </div>
                 <div className="contact-addbtn-container">
-                    <Button type="primary" size="small" onClick={()=>{this.props.onEditBtnClick({})}}>添加新联系人</Button>
+                    <Button type="primary" size="small" onClick={()=>{this.props.onEditBtnClick({})}}><Icon type="plus-circle" /></Button>
                 </div>
             </div>
         );
@@ -151,20 +151,13 @@ var Contact = React.createClass({
                                 : 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=481252135,1456887421&fm=58';
         return (
             <div className="contact-container">
-                <div className="contact-body clearfix">
-                     <div className="contact-avatar pull-left">
-                        <Image alt="头像" responsive src={avatarUrl}/>
-                    </div>
-                    <div className="contact-detail pull-left">
-                        <div className="clearfix">
-                            <p className="pull-left">{`${contact.name}`}</p>
-                            <p className="pull-right">{`${contact.mobile}`}</p>
-                        </div>
-                        <div className="clearfix">
-                            <p className="pull-left">{`${contact.id}`}</p>
-                            <p className="pull-right">{`${contact.birthday}`}</p>
-                        </div>
-                        <p>{`${contact.email}`}</p>
+                <div className="contact-body">
+                    <div className="contact-detail">
+                        <p>
+                            <span>{`${contact.name}`}</span>
+                            <span className="pull-right">{`${contact.mobile}`}</span>
+                        </p>
+                        <p>{`${contact.id}`}</p>
                     </div>
                 </div>
                 <div className="contact-edit-container clearfix">

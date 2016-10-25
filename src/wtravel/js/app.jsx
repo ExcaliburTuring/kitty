@@ -9,6 +9,14 @@ import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
 
 import img from '../img/img.jpg';
+import bg from '../img/11.png';
+import b1 from '../img/b1.png';
+import b2 from '../img/b2.png';
+import b3 from '../img/b3.png';
+import b4 from '../img/b4.png';
+import b5 from '../img/b5.png';
+import b6 from '../img/b6.png';
+import b7 from '../img/b7.png';
 
 var RouteFlux = Rabbit.create(url.route);
 var GroupsFlux = Rabbit.create(url.group);
@@ -84,24 +92,12 @@ var App = React.createClass({
                     <Slider route={routes} sliderImgs={imgtext.sliderImgs} 
                             descriptions={imgtext.descriptions}/>
                     <div className="travel-info-container">
-                        <div>
-                            <h3>{routes.name}</h3>
-                        </div>
-                        <div className="clearfix">
-                            <p>{routes.title}
-                                <span className="pull-right">{routes.minPrice}
-                                </span>
-                            </p>
-                        </div>
-                        <div className="clearfix">
-                            <p>旅游天数: {routes.days}
-                                <span className="pull-right">季节: {"还有没有这个字段"}</span>
-                            </p>
-                        </div>
-                        <div className="clearfix">
-                            <p>集合地点: {routes.distination}
-                                <span className="pull-right">人数上限: {"还没有这个字段"}</span>
-                            </p>
+                        <h1>{routes.minPrice}</h1>
+                        <div className="detail row">
+                            <div className="Asecond a1">旅游天数: {routes.days}</div>
+                            <div className="Asecond a2">季节: {"夏天"}</div>
+                            <div className="Asecond a3">集合地点: {routes.distination}</div>
+                            <div className="Asecond a4">人数上限: {"20人"}</div>
                         </div>
                     </div>
                     <div className="travel-dairy-container"
@@ -224,8 +220,8 @@ var Slider = React.createClass({
                     <div className="swiper-wrapper">
                         {slideItemList}
                     </div>
-                    <div className="swiper-pagination" ref="pagination"></div>
                 </div>
+                <div className="bottom">【{route.name}】{route.title}</div>
             </div>
         );
     }
@@ -246,7 +242,7 @@ var Group = React.createClass({
     onClick: function(el, index) {
         var group = el;
         if (group.status != groupStatus.OPEN) {
-            Toast.fail('本团可不可报名');
+            Toast.fail('本团不可报名');
             return ;
         }
 
@@ -280,32 +276,58 @@ var Group = React.createClass({
 
 var AdditionInfo = React.createClass({
 
-    _data: [
-        '当地气候',
-        '物资准备',
-        '集合地点',
-        '费用详细',
-        '退款&保证',
-        '合同预览',
-        '客服'
-    ],
-
-    _renderItem: function(data, index) {
-        return (
-            <div className="addition-info-item-container">
-                <p>{data}</p>
-            </div>
-        );
-    },
-
     render: function() {
         return (
-            <div className="addition-info-container">
-                <Grid
-                    data={this._data}
-                    columnNum={3}
-                    hasLine={false}
-                    renderItem={this._renderItem}/>
+            <div className="addition-info-container row">
+                <div className="Afourth">
+                    <img className="bg" src={bg} />
+                    <div className="b1">
+                        <img className="icon" src={b1} />
+                        <div className="p">当地气候</div>
+                    </div>
+                </div>
+                <div className="Afourth">
+                    <img className="bg" src={bg} />
+                    <div className="b2">
+                        <img className="icon" src={b2} />
+                        <div className="p">物资准备</div>
+                    </div>
+                </div>
+                <div className="Afourth">
+                    <img className="bg" src={bg} />
+                    <div className="b3">
+                        <img className="icon" src={b3} />
+                        <div className="p">集合地点</div>
+                    </div>
+                </div>
+                <div className="Afourth">
+                    <img className="bg" src={bg} />
+                    <div className="b4">
+                        <img className="icon" src={b4} />
+                        <div className="p">费用详细</div>
+                    </div>
+                </div>
+                <div className="Afourth">
+                    <img className="bg" src={bg} />
+                    <div className="b5">
+                        <img className="icon" src={b5} />
+                        <div className="p">合同预览</div>
+                    </div>
+                </div>
+                <div className="Afourth">
+                    <img className="bg" src={bg} />
+                    <div className="b6">
+                        <img className="icon" src={b6} />
+                        <div className="p">客服</div>
+                    </div>
+                </div>
+                <div className="Afourth">
+                    <img className="bg" src={bg} />
+                    <div className="b7">
+                        <img className="icon" src={b7} />
+                        <div className="p">退款&保证</div>
+                    </div>
+                </div>
             </div>
         )
     }
