@@ -24,7 +24,8 @@ export var url = {
     'orderRefund': '/order/refund',
     'orderBrief': '/order/brief',
     'orderDiscount': '/order/discount',
-    'orderDiscountCode': '/order/discountcode'
+    'orderDiscountCode': '/order/discountcode',
+    'orderPayResult': '/order/payresult',
 };
 
 export var defaultValue = {
