@@ -2,7 +2,9 @@
 
 body {
     font-size: 14px;
-    background-color: #fff;
+    background-color: @gray-bg;
+    font-family: "Microsoft YaHei";
+    padding-top: 10px;
 }
 
 .contact-list {
@@ -10,25 +12,20 @@ body {
 }
 
 .contact-container {
-    border: 1px solid @currency;
+    background-color: @white;
     margin-bottom: 20px;
 
     .contact-body {
-        position: relative;
-        padding: 10px 20px;
-        border-bottom: 1px solid @light-gray;
-
-        .contact-avatar {
-            width: 64px;
-        }
+        color: black;
+        display: inline-table;
+        width: 100%;
+        padding: 5px 20px 0;
+        border-bottom: 1px solid @gray-bg;
 
         .contact-detail {
-            position: absolute;
-            right: 20px;
-            left: 104px;
-            top: 10px;
-
             p {
+                display: block;
+                line-height: 30px;
                 margin-bottom: 3px;
             }
         }
@@ -36,7 +33,11 @@ body {
 
     .contact-edit-container {
         width: 100%;
-        padding: 10px 20px;
+        padding: 0 20px;
+
+        p {
+            margin: 0;
+        }
 
         button {
             font-size: 14px;
@@ -44,6 +45,7 @@ body {
             border-radius: 5px;
             line-height: 30px;
             margin-left: 10px;
+            color: @black;
 
             &:after {
                 border: none;
@@ -54,11 +56,33 @@ body {
          * 为了让左边checkbox和右边的button能对齐
          */
         .pull-left {
-            margin-top: 3px;
+            padding-top: 5px;
+        }
+
+        label {
+            font-weight: normal;
         }
     }
 }
 
 .contact-addbtn-container {
     margin-bottom: 20px;
+
+    button {
+        height: 100px;
+        background-color: rgba(0,0,0,0.1);
+
+        .anticon {
+            font-size: 50px;
+            color: @currency;
+        }
+
+        &:after {
+            border: none;
+        }
+    }
+}
+
+.am-button-primary.am-button-touchFeedback {
+    background-color: rgba(0,0,0,0.5);
 }

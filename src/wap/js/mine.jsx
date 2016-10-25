@@ -4,6 +4,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Image } from 'react-bootstrap';
+import { Icon } from 'antd';
 
 import { url, orderType, defaultValue } from 'config';
 import Rabbit from 'rabbit';
@@ -70,49 +71,43 @@ var Mine = React.createClass({
                         src={accountInfo.avatarUrl} />
                     <p>{accountInfo.name ? accountInfo.name : accountInfo.nickname}</p>
                 </div>
-                <div className="mine-order">
-                    <Title title="我的行程" className="mine-order-title">
-                        <a href="javascript:" onClick={this.onOrdersClick}>查看全部</a>
-                    </Title>
-                    <span className="bar">当前：</span>
-                    <span className="order-count">{data.currentOrderCount}</span>
-                    <span className="bar">历史：</span>
-                    <span className="order-count">{data.historyOrderCount}</span>
-                    <span className="bar">所有：</span>
-                    <span className="order-count">{data.allOrderCount}</span>
+                <div className="mine-order row">
+                    <div className="mine-order-title">
+                        <h3 className="t1">
+                            我的行程
+                            <a href="javascript:" onClick={this.onOrdersClick} className="pull-right">查看全部<Icon type="right" /></a>
+                        </h3>
+                    </div>
+                    <div className="Athird bar">当前：{data.currentOrderCount}</div>
+                    <div className="Athird bar">历史：{data.historyOrderCount}</div>
+                    <div className="Athird bar">所有：{data.allOrderCount}</div>
                 </div>
-                <div className="mine-block">
-                    <h3>
+                <div className="mine-block" href="javascript:" onClick={this.onAccountEditClick}>
+                    <h3 className="t2">
                         个人信息
-                        <a href="javascript:" onClick={this.onAccountEditClick}>
-                            <span className="mine-count pull-right">
-                                >
-                            </span>
+                        <a className="pull-right">
+                            <Icon type="right" />
                         </a>
                     </h3>
                 </div>
                 <div className="mine-block">
-                    <h3>
-                        优惠券
-                        <a href="/account/wdiscount">
-                            <span className="mine-count pull-right">
-                                {this.state.discountCode.discountCodes.length}
-                            </span>
+                    <h3 className="t3">
+                        我的优惠券
+                        <a href="/account/wdiscount" className="pull-right">
+                            <span className="mine-count">{this.state.discountCode.discountCodes.length}</span><Icon type="right" />
                         </a>
                     </h3>
                 </div>
                 <div className="mine-block">
-                    <h3>
+                    <h3 className="t4">
                         出行人
-                        <a href="/account/wcontact" onClick={this.onContactsClick}>
-                            <span className="mine-count pull-right">
-                                {this.state.contacts.contacts.length}
-                            </span>
+                        <a href="/account/wcontact" onClick={this.onContactsClick} className="pull-right">
+                            <span className="mine-count"></span><Icon type="right" />
                         </a>
                     </h3>
                 </div>
                 <div className="mine-block">
-                    <h3>联系客服</h3>
+                    <h3 className="t5">联系客服</h3>
                 </div>
             </div>
         );

@@ -16,9 +16,9 @@ import lsa from '../img/lsa.png';
 import lsb from '../img/lsb.png';
 import lsc from '../img/lsc.png';
 import WH from '../img/51.png';
-import icona from '../img/A.svg';
-import iconb from '../img/B.svg';
-import iconc from '../img/C.svg';
+import icona from '../img/D.png';
+import iconb from '../img/E.png';
+import iconc from '../img/F.png';
 
 import 'antd/lib/index.css';
 
@@ -66,11 +66,7 @@ var Home = React.createClass({
                         <div className="mylabel left">
                             <a href="/account/wdiscount">
                                 <i className="icon"><img src={icona}/></i>
-                                <p>优惠券</p>
-                                <p className="status">
-                                    <span className="red">{this.state.discountCode.discountCodes.length}</span>
-                                    张
-                                </p>
+                                <p>行程</p>
                             </a>
                         </div>
                     </div>
@@ -79,7 +75,6 @@ var Home = React.createClass({
                             <a href="javascript:">
                                 <i className="icon"><img src={iconb}/></i>
                                 <p>红包</p>
-                                <p className="status"><span className="red">0</span>元</p>
                             </a>
                         </div>
                     </div>
@@ -88,23 +83,19 @@ var Home = React.createClass({
                             <a href="/account/wdiscount">
                                 <i className="icon"><img src={iconc}/></i>
                                 <p>活动</p>
-                                <p className="status"><span className="red">3</span>个进行中</p>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div className="special">
-                    <div className="head-title"><span className="pinyin">dú jiā</span>独家精品</div>
-                    <p className="second-title">基于20万用户的好评推荐，资深定制师实地考察匠心打造</p>
-                    <img className="headImg" src={routes[0].headImg} />
-                    <p className="route-intro">【{routes[0].name}】{routes[0].title}</p>
-                    <div className="row">
-                        <div className="Athird light-spot"><img src={lsa}/>深度西北</div>
-                        <div className="Athird light-spot"><img src={lsb}/>茶卡盐湖</div>
-                        <div className="Athird light-spot"><img src={lsc}/>银河星空</div>
-                    </div>
+                    <div className="head-title">独家精品</div>
+                    <img className="headImg" src="http://a4-q.mafengwo.net/s8/M00/A5/CB/wKgBpVVplheAICRbAAiwM6iUi8E25.jpeg" />
+                    <p className="route-intro">{routes[1].name}</p>
                     <p className="price">
-                        <strong>{routes[0].minPrice}</strong>/人 起
+                        {routes[1].title}
+                    </p>
+                    <p className="price">
+                        <strong>{routes[1].minPrice}</strong>/人 起
                     </p>
                     <hr/>
                     <div className="more">
@@ -112,12 +103,11 @@ var Home = React.createClass({
                     </div>
                 </div>
                 <div className="routes">
-                    <div className="head-title"><span className="pinyin">chū fā</span>出发趁年轻</div>
-                    <p className="second-title">基于20万用户的好评推荐，资深定制师实地考察匠心打造</p>
+                    <div className="head-title">出发趁年轻</div>
                     {routeList}
                     <hr/>
                     <div className="more">
-                        <span>查看详情</span>
+                        <span>查看更多</span>
                     </div>
                 </div>
             </div>
