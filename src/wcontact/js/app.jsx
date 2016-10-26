@@ -73,6 +73,11 @@ var App = React.createClass({
         this.setState({'contact': null});
     },
 
+    onDeleteSuccessful: function() {
+        AccountContacts.actions.load();
+        this.setState({'contact': null});
+    },
+
     onCancleBtnClick: function() {
         this.setState({'contact': null});
     },
@@ -98,10 +103,10 @@ var App = React.createClass({
 
     render: function() {
         if (this.state.contact) {
-            console.log(this.state.contact)
             return (
                 <WContact contact={this.state.contact}
                     onSaveSuccessful={this.onSaveSuccessful}
+                    onDeleteSuccessful={this.onDeleteSuccessful}
                     onCancleBtnClick={this.onCancleBtnClick}/>
             );
         } else {

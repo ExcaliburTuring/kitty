@@ -1,28 +1,102 @@
 @import "~base.less";
 
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 body {
-    font-size: 12px;
+    background-color: @gray-bg;
+    font-family: "Microsoft YaHei";
+    font-size: .32rem;
     margin: 0;
-    background-color: @white;
+}
+
+p {
+    margin: 0;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: " ";
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
 }
 
 .order-form-container {
 
+    margin-bottom: 1.3rem;
 }
 
-.travel-info-container,
 .travellers-container,
 .roommate-container,
 .emergency-container,
 .discount-container,
-.agreement-container,
-.footer-container {
-    border: 1px solid @currency;
-    margin-top: 20px;
+.agreement-container {
+    border-top: 1px solid @light-gray;
+    border-bottom: 1px solid @light-gray;
+    box-shadow: 0 0 3px @light-gray;
+    margin-top: .3rem;
+    margin-bottom: .3rem;
+    background: white;
 
     h3 {
-        border-bottom: 1px solid @currency;
-        padding-left: 20px;
+        padding-left: .2rem;
+        margin-top: .2rem;
+        margin-bottom: .2rem;
+        font-weight: normal;
+        border-left: .04rem solid @currency;
+    }
+}
+
+/**
+ * 路线信息
+ */
+.travel-info-container {
+    position: relative;
+    border-bottom: 2px dashed @currency;
+    box-shadow: 0 0px 5px @light-gray;
+
+    .travel-title {
+        font-size: .4rem;
+        color: white;
+        position: absolute;
+        top: .3rem;
+        left: .2rem;
+    }
+
+    .travel-detail {
+        font-size: .28rem;
+        padding: .2rem .3rem;
+        background: white;
+
+        .travel-date,
+        .travel-price {
+            font-size: .35rem;
+            color: @currency;
+            font-weight: bolder;
+            margin-right: .1rem;
+            margin-left: .1rem;
+        }
     }
 }
 
@@ -32,40 +106,50 @@ body {
 .travellers-container {
 
     .traveller-container {
-        border: 1px solid @currency;
-        margin: 20px;
+        border: 1px solid @light-gray;
+        padding-top: .2rem;
+        margin-top: .2rem;
+        margin-bottom: .2rem;
 
-        .traveller-body {
-            position: relative;
-            padding: 10px 20px;
-            border-bottom: 1px solid @light-gray;
+        .traveller-avatar {
+            padding-left: .15rem;
+            width: 8%;
 
-            .traveller-avatar {
-                width: 64px;
+            .fa.fa-female {
+                color: #FF69B4;
             }
 
-            .traveller-detail {
-                position: absolute;
-                right: 20px;
-                left: 104px;
-                top: 10px;
+            .fa.fa-male {
+                color: #00BFFF; 
+            }
+
+            .fa.fa-female,
+            .fa.fa-male {
+                font-size: .35rem;
+            }
+        }
+
+        .traveller-info {
+            width: 80%;
+            border-right: 1px dashed @currency;
+            padding-right: .3rem;
+
+            .traveller-addition-info {
+                margin-top: .15rem;
+                font-size: .27rem;
 
                 p {
-                    margin-bottom: 3px;
+                    margin-bottom: .1rem;
                 }
             }
         }
 
         .traveller-edit-container {
-            width: 100%;
-            padding: 5px 20px;
+            width: 10%;
 
-            button {
-                font-size: 14px;
-                height: 30px;
-                border-radius: 5px;
-                line-height: 30px;
-                margin-left: 10px;
+            button { 
+                font-size: .4rem;
+                padding: .15rem;
 
                 &:after {
                     border: none;
@@ -73,24 +157,11 @@ body {
             }
         }
     }
-}
 
-.travellers-selector-container {
-
-    /**
-     * 覆盖antd-mobile的样式
-     */
-    .am-list-header {
-        padding: 18px;
-        text-align: center;
-        font-size: 22px;
+    .traveller-selector-trigger {
+        margin-top: .2rem;
+        margin-bottom: .2rem;
     }
-
-    // .am-list-item {
-    //     height: 52px;
-    //     min-height: 52px;
-    //     font-size: 18px;
-    // }
 }
 
 /**
@@ -98,22 +169,109 @@ body {
  */
 .roommate-container {
 
-
+    .roommate-selector .am-list-body{
+        border-top: none;
+    }
 }
 
+/**
+ * 紧急联系人选择
+ */
+ .emergency-container {
 
+    .emergency-show .am-list-body {
+        border-top: none;
+    }
+
+    .emergency-selector-trigger {
+        margin-top: .2rem;
+        margin-bottom: .2rem;
+    }
+ }
+
+/**
+ * 出行人选择器, 紧急联系人选择器
+ */
+.travellers-selector-container,
+ .emergency-selector-container {
+
+    background: @gray-bg;
+
+    /**
+     * 覆盖antd-mobile的样式
+     */
+    .am-list {
+        margin-bottom: .2rem;
+
+        .am-list-header {
+            text-align: center;
+            font-size: .35rem;
+        }
+    }
+ }
+
+/**
+ * 修改antd-mobile button的一些样式
+ */
+ button.am-button.am-button-fix {
+    border: 1px solid #ddd;
+    border-radius: 0;
+
+    &:after {
+        border: none;
+    }
+ }
+
+/**
+ * 优惠选择
+ */
+ .discount-container {
+
+    .discount-price {
+        color: @currency;
+        margin-right: .5rem;
+    }
+ }
+
+/**
+ * 优惠政策选择弹窗，优惠码选择弹窗
+ */
+.am-action-sheet-message {
+    font-size: .35rem;
+}
+
+/**
+ * 底部支付按钮
+ */
 .footer-container {
+    background: white;
+    border-top: 1px solid @light-gray;
+    height: 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     p.pull-left {
-        margin-top: 10px;
-        margin-left: 10px;
+        margin-top: .2rem;
 
-        span {
-            font-size: 14px;
+        span.order-price {
+            font-size: .4rem;
+            color: @currency;
+            margin-left: .1rem;
         }
     }
 
     form {
         display: inline;
+        height: 100%
+    }
+
+    button {
+        background-color: @currency;
+        color: white;
+        border-radius: 0;
+        height: 100%;
+        font-weight: normal;
     }
 }

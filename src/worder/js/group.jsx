@@ -2,7 +2,6 @@
  * @author xiezhenzong 
  */
 import React from 'react';
-import { Image } from 'react-bootstrap';
 
 var GroupInfo = React.createClass({
 
@@ -12,16 +11,21 @@ var GroupInfo = React.createClass({
         var selectTraveller = this.props.selectTraveller;
         return (
             <div className="travel-info-container">
-                <div>
-                    <Image responsive src={travelRoute.headImg}/>
-                    <div className="travel-info">
-                        <h4>{travelRoute.name}</h4>
-                        <p>{travelRoute.title}</p>
-                        <p>{travelGroup.startDate} 至 {travelGroup.endDate}</p>
-                    </div>
-                     <div>
-                        <p>单价：<span className="price-right">{travelGroup.price}</span></p>
-                    </div>
+                <img className="img-responsive" src={travelRoute.headImg}/>
+                <div className="travel-title">
+                    <p>【{travelRoute.name}】{travelRoute.title}</p>
+                </div>
+                <div className="travel-detail clearfix">
+                    <p className="pull-left">
+                        <span className="travel-date">{travelGroup.startDate}</span>
+                        至
+                        <span className="travel-date">{travelGroup.endDate}</span>
+                    </p>
+                    <p className="pull-right">
+                        ¥<span className="travel-price">
+                            {travelGroup.price.replace("￥", "")}
+                        </span>元
+                    </p>
                 </div>
             </div>
         );

@@ -3,8 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Image } from 'react-bootstrap';
-import { List, Button, InputItem, ActionSheet, Stepper } from 'antd-mobile';
+import { List, Button, InputItem, ActionSheet, Stepper, WingBlank } from 'antd-mobile';
 import { createForm } from 'rc-form';
 
 import { priceUtil, discountCodeStatus }  from 'config';
@@ -83,14 +82,15 @@ var Discount = React.createClass({
         var policyDiscount = this.props.policyDiscount;
         var discountCode = this.props.discountCode;
         var studentDiscount = this.props.studentDiscount;
-        var count = this.props.selectTravellers.length;
         var discountPrice = priceUtil.getPriceStr(
             priceUtil.getPrice(this.props.policyDiscount.value)
             + priceUtil.getPrice(this.props.discountCode.value)
             + priceUtil.getPrice(this.props.studentDiscount.value))
         return (
             <div className="discount-container">
-                <h3>优惠政策</h3>
+                <WingBlank>
+                    <h3>优惠政策</h3>
+                </WingBlank>
                 <List>
                     <List.Item
                         extra={policyDiscount.value}
@@ -107,19 +107,21 @@ var Discount = React.createClass({
                         onClick={this.onDicountCodeClick}>
                         {
                             discountCode.discountCode != ''
-                                ? discountCode.discountCode : '不使用优惠码'
+                                ? '优惠码' : '不使用优惠码'
                         }
                     </List.Item>
                     <List.Item
                         extra={
-                            <Stepper showNumber size="small" max={count} min={0} step={1}
+                            <Stepper showNumber size="small" max={this.props.count} min={0} step={1}
                                 defaultValue={studentDiscount.count} 
                                 onChange={this.onStudentDiscountChange} />
                         }>
                         学生优惠
                     </List.Item>
                     <List.Item
-                        extra={discountPrice}>
+                        extra={
+                            <p className="discount-price">{discountPrice}</p>
+                        }>
                         总共优惠
                     </List.Item>
                 </List>

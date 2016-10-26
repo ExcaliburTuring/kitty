@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Image } from 'react-bootstrap';
 import { List, Button, Popup, Checkbox, Icon, InputItem, ActionSheet, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const CheckboxItem = Checkbox.CheckboxItem;
@@ -88,14 +87,17 @@ var  OrderForm = React.createClass({
      * 创建出行人数组
      */
     _createTravellers: function() {
+        var travellers = {}, contacts = this.state.contactsData.contacts;
         var accountTraveller = this._createAccountTraveller();
-        var contacts = this._copyArray(this.state.contactsData.contacts);
-        if (contacts.length == 0) {
-            return [accountTraveller];
-        } else {
-            contacts.unshift(accountTraveller);
-            return contacts;
+        travellers[`${accountTraveller.accountid}-0`] = accountTraveller;
+
+        if (contacts.length != 0) {
+            for (var i = contacts.length - 1; i >= 0; i--) {
+                var contact = contacts[i];
+                travellers[`${contact.accountid}-${contact.contactid}`] = contact;
+            }
         }
+        return travellers;
     },
 
     /**
@@ -256,7 +258,6 @@ var  OrderForm = React.createClass({
             'emergencyContact': emergency.name,
             'emergencyMobile': emergency.mobile
         };
-        console.log(request);
         $.ajax({
             'url': url.orderOrder,
             'type': 'post',
@@ -311,8 +312,34 @@ var  OrderForm = React.createClass({
      * 出行人编辑成功
      */
     onTravellerEditSaveSuccessful: function() {
+        var contact = this.state.contact;
+        if (contact.accountid && contact.contactid == 0) {
+            this.props.onAccountInfoChange();
+        } else {
+            AccountContacts.actions.load();
+        }
         this.setState({'contact': null});
+    },
+
+    /**
+     * 出行人删除成功
+     */
+    onDeleteSuccessful: function() {
+        var contact = this.state.contact;
+        var id = `${contact.accountid}-${contact.contactid}`;
+        var selectTravellers = [];
+        for (var index in this.state.selectTravellers) {
+            if (id != this.state.selectTravellers[index]) {
+                selectTravellers.push(id);
+            }
+        }
+        this.setState({'contact': null, 'selectTravellers': selectTravellers});
         AccountContacts.actions.load();
+        OrderDiscount.actions.load({
+            'routeid': this.props.orderInfoData.orderInfo.routeid, 
+            'groupid': this.props.orderInfoData.orderInfo.groupid,
+            'count': selectTravellers.length
+        });
     },
 
     /**
@@ -384,7 +411,7 @@ var  OrderForm = React.createClass({
             },
 
             // 临时变量
-            'selectTravellers': [this._createAccountTraveller()],
+            'selectTravellers': [`${this.props.accountInfo.accountid}-0`], // 选中出行人的id
             'emergency': {
                 'size': 0
             },
@@ -414,6 +441,7 @@ var  OrderForm = React.createClass({
             return (
                 <WContact contact={this.state.contact}
                     onSaveSuccessful={this.onTravellerEditSaveSuccessful}
+                    onDeleteSuccessful={this.onDeleteSuccessful}
                     onCancleBtnClick={()=>{this.setState({'contact': null})}}/>
             );
         } 
@@ -429,14 +457,14 @@ var  OrderForm = React.createClass({
                     onNewContactBtnClick={this.onNewContactBtnClick}
                     onSelectTravellersChange={this.onSelectTravellersChange}
                     onTravellerEditBtnClick={this.onTravellerEditBtnClick}/>
-                <Roommate ref="roommate" 
+                <Roommate ref="roommate"
                     travellers={travellers} 
                     selectTravellers={selectTravellers}/>
                 <SelectEmergency travellers={travellers}
                     selectTravellers={selectTravellers}
                     emergency={this.state.emergency}
                     onEmergencyChange={this.onEmergencyChange}/>
-                <Discount selectTravellers={selectTravellers}
+                <Discount count={selectTravellers.length}
                     discountData={this.state.discountData}
                     accountDiscountCodeData={this.state.accountDiscountCodeData}
                     policyDiscount={this.state.policyDiscount}

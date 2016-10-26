@@ -153,7 +153,7 @@ var WContact = React.createClass({
     },
 
     onDeleteBtnClick: function() {
-        if (isNew) {
+        if (this.state.isNew || this.state.isAccount) {
             return;
         }
         var self = this;
@@ -165,8 +165,7 @@ var WContact = React.createClass({
             if (data.status != 0) {
                 Toast.fail(defaultValue.deleteContactsMsg, 1);
             } else {
-                Toast.success('删除成功', 1);
-                AccountContacts.actions.load();
+                self.props.onDeleteSuccessful();
             }
         }).fail(function() {
             Toast.fail(defaultValue.deleteContactsMsg, 1);
