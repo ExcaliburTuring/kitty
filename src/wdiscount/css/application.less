@@ -1,20 +1,57 @@
 @import "~base.less";
 
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: @gray-bg;
+    font-family: "Microsoft YaHei";
+    font-size: .32rem;
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: " ";
+}
+
+.clearfix:after {
+    clear: both;
+}
+
 .discountcode-container {
     border: 1px solid @currency;
-    margin-bottom: 20px;
+    margin-bottom: .2rem;
+    border-radius: .05rem;
+    box-shadow: 0 0 3px 0 @currency;
 
     .discountcode-header {
         height: 10px;
     }
 
     .discountcode-body {
-        margin: 10px 20px;
+        margin: .3rem .2rem;
     }
 
     &.discountcode-unusable {
         color: @light-gray;
         border-color: @light-gray;
+        box-shadow: 0 0 3px 0 @light-gray;
 
         .discountcode-price-container {
             color: @light-gray;
@@ -25,35 +62,40 @@
 
 .discountcode-price-container {
     color: @currency;
-    padding: 15px 15px 10px 0;
-    margin-right: 15px;
-    font-size: 24px;
-    border-right: 1px solid @currency;
+    padding: .3rem .2rem .3rem 0;
+    margin-right: .4rem;
+    font-size: .5rem;
+    border-right: 1px dashed @currency;
+    text-align: center;
+    font-weight: bolder;
 
     .discountcode-price {
-        margin-left: 3px;
-        font-size: 48px;
+        margin-left: .2rem;
+        font-size: .8rem;
     }
-
 }
 
 .discountcode-rule-container {
-    padding-top: 8px;
-    font-size: 14px;
+    font-size: .25rem;
 
     .discountcode {
-        font-size: 18px;
+        font-size: .35rem;
         font-weight: bolder;
-        margin-bottom: 3px;
 
         .discountcode-text {
-            font-size: 14px;
+            font-size: .25rem;
             font-weight: normal;
         }
     }
 
     .discountcode-rule {
-        padding-left: 15px;
+        padding-left: .35rem;
+        margin-top: .1rem;
+        margin-bottom: .1rem;
+
+        li {
+            margin-bottom: .1rem;
+        }
     }
 
 }

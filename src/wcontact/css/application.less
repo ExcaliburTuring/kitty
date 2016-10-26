@@ -1,81 +1,109 @@
 @import "~base.less";
 
-body {
-    font-size: 14px;
-    background-color: @gray-bg;
-    font-family: "Microsoft YaHei";
-    padding-top: 10px;
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-.contact-list {
-    margin-bottom: 20px;
+body {
+    background-color: @gray-bg;
+    font-family: "Microsoft YaHei";
+    font-size: .32rem;
+}
+
+p {
+    margin: 0;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: " ";
+}
+
+.clearfix:after {
+    clear: both;
 }
 
 .contact-container {
     background-color: @white;
-    margin-bottom: 20px;
+    margin-bottom: .4rem;
 
     .contact-body {
         color: black;
         display: inline-table;
         width: 100%;
-        padding: 5px 20px 0;
-        border-bottom: 1px solid @gray-bg;
+        padding: .15rem .6rem;
+        border-bottom: 3px solid @gray-bg;
 
-        .contact-detail {
-            p {
-                display: block;
-                line-height: 30px;
-                margin-bottom: 3px;
-            }
+        .contact-id {
+            margin-top: .2rem;
         }
     }
 
     .contact-edit-container {
         width: 100%;
-        padding: 0 20px;
+        padding: .15rem .6rem;
 
         p {
-            margin: 0;
+            font-size: .3rem;
+            color: black;
+        }
+
+        label {
+            font-weight: normal;
+            font-size: .24rem;
+            color: black;
+
+            .am-checkbox {
+                margin-right: .12rem;
+                width: .4rem;
+                height: .4rem;
+
+                .am-checkbox-inner {
+                    width: .4rem;
+                    height: .4rem;
+                    border-width: .03rem;
+
+                    &:after {
+                        width: .1rem;
+                        height: .2rem;
+                        border-width: 0 .03rem .03rem 0;
+                    }
+                }
+            }
         }
 
         button {
-            font-size: 14px;
-            height: 30px;
-            border-radius: 5px;
-            line-height: 30px;
-            margin-left: 10px;
-            color: @black;
+            font-size: .24rem;
 
             &:after {
                 border: none;
             }
         }
-
-        /**
-         * 为了让左边checkbox和右边的button能对齐
-         */
-        .pull-left {
-            padding-top: 5px;
-        }
-
-        label {
-            font-weight: normal;
-        }
     }
 }
 
 .contact-addbtn-container {
-    margin-bottom: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     button {
-        height: 100px;
-        background-color: rgba(0,0,0,0.1);
-
-        .anticon {
-            font-size: 50px;
-            color: @currency;
-        }
+        font-size: .34rem;
+        height: 1rem;
+        background-color: @currency;
+        border-radius: 0;
+        color: white;
 
         &:after {
             border: none;

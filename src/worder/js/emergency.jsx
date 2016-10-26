@@ -3,8 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Image } from 'react-bootstrap';
-import { List, Button, Popup, Checkbox, InputItem } from 'antd-mobile';
+import { List, Button, Popup, Checkbox, InputItem, WingBlank } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const CheckboxItem = Checkbox.CheckboxItem;
 
@@ -31,22 +30,30 @@ var SelectEmergency = React.createClass({
         for(var mobile in emergencies) {
             if (mobile != 'size') {
                 emergencyList.push(
-                    <List.Item key={mobile}>{emergencies[mobile].name}-{mobile}</List.Item>
+                    <List.Item key={mobile}
+                        extra={mobile}>{emergencies[mobile].name}
+                    </List.Item>
                 );
             }
         }
         return (
             <div className="emergency-container">
-                <h3>紧急联系人</h3>
-                <div className="emergency-selector">
-                    <Button size="small" onClick={this.onEmergencySelectorClick}> 选择紧急联系人 </Button>
-                </div>
-                <div className="emergency-show">
-                    <List>
-                        {emergencyList}
-                    </List>
-                </div>
-                <Button size="small">新建紧急联系人</Button>
+                <WingBlank>
+                    <h3>紧急联系人</h3>
+                    <div className="emergency-show">
+                        {
+                            emergencyList.length == 0
+                            ? null
+                            : <List>
+                                {emergencyList}
+                            </List>
+                        }
+                    </div>
+                    <div className="emergency-selector-trigger">
+                        <Button className="am-button-fix" 
+                            onClick={this.onEmergencySelectorClick}>选择紧急联系人</Button>
+                    </div>
+                </WingBlank>
             </div>
         );
     }
@@ -77,16 +84,20 @@ var EmergencySelector = React.createClass({
         var travellers = this.props.travellers;
         var selectTravellers = this.props.selectTravellers;
         var emergency = this.props.emergency;
-        var checkBoxItemList = travellers.map(function(traveller, index) {
-            var id = `${traveller.accountid}-${traveller.contactid}`;
+        var checkBoxItemList = [];
+        for(var id in travellers) {
+            var traveller = travellers[id], isSelect = false;
             for (var i = 0, n = selectTravellers.length; i < n; i++) {
-                var selectTraveller = selectTravellers[i];
-                if (id == `${selectTraveller.accountid}-${selectTraveller.contactid}`) { // 已经选作出行人，不能作为紧急联系人了
-                    return null;
+                if (id == selectTravellers[i]) { // 已经选作出行人，不能作为紧急联系人了
+                    isSelect = true;
+                    break;
                 }
             }
-            return (
-                <CheckboxItem key={index}
+            if (isSelect) {
+                continue;
+            }
+            checkBoxItemList.push(
+                <CheckboxItem key={id}
                     {
                         ...getFieldProps(traveller.mobile, {
                             initialValue: emergency.hasOwnProperty(traveller.mobile),
@@ -96,13 +107,14 @@ var EmergencySelector = React.createClass({
                     {traveller.name}
                 </CheckboxItem>
             );
-        });
+        }
         return (
             <div className="emergency-selector-container">
                 <List renderHeader={() => '选择紧急联系人'}>
                     {checkBoxItemList}
                 </List>
-                <Button onClick={this.onEmergencyChange}>确定</Button>
+                <Button className="am-button-fix" 
+                    onClick={this.onEmergencyChange}>确定</Button>
             </div>
         );
     }

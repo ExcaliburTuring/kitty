@@ -1,16 +1,79 @@
 @import "~base.less";
 
-.contact-edit-dialog-1 {
+.contact-edit-dialog {
 
     .contact-form {
-        margin: 10px 0 20px;
+
+        .am-list {
+            margin-bottom: .2rem;
+        }
     }
 
     .contact-btn-container {
         
         button {
-            margin-bottom: 20px;
+            margin-bottom: .2rem;
+            border: 1px solid #ddd;
+            border-left: none;
+            border-right: none;
+            border-radius: 0;
+        }
+
+        .am-button-warning:after {
+            border: none;
         }
     }
 }
 
+// 覆盖jquery-weui库
+.weui-picker-modal {
+
+    height: auto;
+
+    .toolbar,
+    .toolbar .title {
+        font-size: .34rem;
+    }
+
+    .toolbar {
+        .title,
+        .picker-button {
+            height: 1rem;
+            line-height: 1rem;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .toolbar-inner {
+            height: 1rem;
+        }
+    }
+
+    .picker-items {
+        font-size: .4rem;
+    }
+
+    .picker-item {
+        height: .6rem;
+        line-height: .6rem;
+        text-align: center;
+    }
+
+    .picker-center-highlight {
+        height: .6rem;
+        margin-top: -0.3rem;
+    }
+
+    .picker-modal-inner {
+        height: 5rem;
+    }
+}
+
+.city-picker {
+
+    .col-province,
+    .col-city,
+    .col-district {
+        width: 33%;
+    }
+}
