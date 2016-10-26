@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Grid, Row, Col } from 'react-bootstrap';
 
 import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url, orderStatus } from 'config';
@@ -20,6 +19,10 @@ var App = React.createClass({
         Reflux.connect(AccountBasicInfo.store, 'basicInfo'),
         Reflux.connect(OrderInfo.store, 'data')
     ],
+
+    onAccountInfoChange: function() {
+        AccountBasicInfo.actions.load();
+    },
 
     // compoment specs
 
@@ -59,7 +62,8 @@ var App = React.createClass({
             <div className="order-container">
                 {
                     data.orderInfo.status === orderStatus.NEW
-                    ? <OrderForm accountInfo={accountInfo} orderInfoData={this.state.data}/>
+                    ? <OrderForm accountInfo={accountInfo} orderInfoData={this.state.data}
+                        onAccountInfoChange={this.onAccountInfoChange}/>
                     : <OrderShow orderInfoData={this.state.data}/>
                 }
             </div>

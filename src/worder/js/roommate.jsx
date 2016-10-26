@@ -2,37 +2,67 @@
  * @author xiezhenzong 
  */
 import React from 'react';
-import { List, InputItem } from 'antd-mobile';
+import { List, InputItem, Checkbox, WingBlank } from 'antd-mobile';
 import { createForm } from 'rc-form';
+const CheckboxItem = Checkbox.CheckboxItem;
 
 var Roommate = React.createClass({
 
+    onIsFollowChange: function(e) {
+        this.setState({'isFollow': e.target.checked});
+    },
+
+    getInitialState: function() {
+        return {
+            'isFollow': true // 是否尊从组织安排
+        }
+    },
+
     render: function() {
         const { getFieldProps } = this.props.form;
-        var self = this;
-        var travellerList = this.props.selectTravellers.map(function(traveller, index) {
-            var id = `${traveller.accountid}-${traveller.contactid}`
-            return (
-                 <InputItem key={index} clear
-                    {
-                        ...getFieldProps(id, {
-                            initialValue: '',
-                        })
-                    }
-                    placeholder="输入睡友姓名">
-                    {traveller.name}
-                </InputItem>
-            );
-        })
+        var travellerList = null, travellers = this.props.travellers;
+        if (!this.state.isFollow) {
+            travellerList = this.props.selectTravellers.map(function(id, index) {
+                return (
+                     <InputItem key={index} clear
+                        {
+                            ...getFieldProps(id, {
+                                initialValue: '',
+                            })
+                        }
+                        placeholder="输入睡友姓名">
+                        {travellers[id].name}
+                    </InputItem>
+                );
+            });
+        }
         return (
             <div className="roommate-container">
-                <h3>睡友选择</h3>
+                <WingBlank>
+                    <h3>睡友选择</h3>
+                </WingBlank>
                 <div className="roommate-selector">
                     <List>
-                        {travellerList}
+                        <CheckboxItem
+                            checked={this.state.isFollow}
+                            onChange={this.onIsFollowChange}>
+                            服从组织安排
+                        </CheckboxItem>
+                        {
+                            this.state.isFollow
+                            ? null
+                            : travellerList
+                        }
+                        {
+                            this.state.isFollow
+                            ? null
+                            : <List.Item wrap
+                                thumb="https://zos.alipayobjects.com/rmsportal/zotStpFiYpNtZNl.png">
+                                如果不设置，海逍遥将为您随机同性拼房
+                            </List.Item>
+                        }
                     </List>
                 </div>
-                <p>如果不输入睡友姓名，海逍遥将会自动为您选择同性拼房</p>
             </div>
         );
     }

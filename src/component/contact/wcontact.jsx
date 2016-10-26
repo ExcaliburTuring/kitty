@@ -33,7 +33,9 @@ var WContact = React.createClass({
             'birthday': contact.birthday ?  moment(contact.birthday, 'YYYY-MM-DD') : zhNow,
             'mobile': contact.mobile,
             'email': contact.email,
-            'emergency': contact.emergency || false
+            'emergency': contact.emergency || false,
+            'area': contact.area,
+            'address': contact.address
         }
     },
 
@@ -123,15 +125,19 @@ var WContact = React.createClass({
         
         var newContact = {
             'accountid': contact.accountid,
-            'contactid': contact.contactid,
             'name': getFieldProps('name').value,
             'id': id,
             'idType': idTypeValue,
             'gender': gender,
             'birthday': birthday,
             'mobile': getFieldProps('mobile').value.replace(' ', '').replace(' ', ''),
-            'email': getFieldProps('email').value,
-            'emergency': getFieldProps('emergency').value
+            'area': $('.contact-area-picker input').val(),
+            'address': getFieldProps('address').value,
+            'email': getFieldProps('email').value
+        }
+        if (!this.state.isAccount) {
+            newContact['contactid'] = contact.contactid;
+            newContact['emergency'] = getFieldProps('emergency').value;
         }
         var self = this;
         $.post(this.state.isAccount ? url.accountInfo : url.contacts, newContact)
@@ -147,7 +153,7 @@ var WContact = React.createClass({
     },
 
     onDeleteBtnClick: function() {
-        if (isNew) {
+        if (this.state.isNew || this.state.isAccount) {
             return;
         }
         var self = this;
@@ -159,8 +165,7 @@ var WContact = React.createClass({
             if (data.status != 0) {
                 Toast.fail(defaultValue.deleteContactsMsg, 1);
             } else {
-                Toast.success('删除成功', 1);
-                AccountContacts.actions.load();
+                self.props.onDeleteSuccessful();
             }
         }).fail(function() {
             Toast.fail(defaultValue.deleteContactsMsg, 1);
@@ -177,6 +182,12 @@ var WContact = React.createClass({
         if (newProps.contact != this.props.contact) {
             this.setState(this._createInitState(newProps));
         }
+    },
+
+    componentDidMount: function() {
+        $('.contact-area-picker input').cityPicker({
+            title: "请选择地区"
+        });
     },
 
     render: function() {
@@ -229,6 +240,8 @@ var WContact = React.createClass({
                             }>
                             <List.Item arrow="horizontal">日期</List.Item>
                         </DatePicker>
+                    </List>
+                    <List>
                         <InputItem clear type="phone"
                             placeholder="请输入手机"
                             {
@@ -251,27 +264,47 @@ var WContact = React.createClass({
                                     }]
                                 })
                             }>邮箱</InputItem>
-                        <List.Item className="contact-emergency-container"
-                            extra={
-                                <Switch checked
-                                    {
-                                        ...getFieldProps('emergency', {
-                                            initialValue: contact.emergency,
-                                            valuePropName: 'checked'
-                                        })
-                                    }/>
-                            }>设置为紧急联系人</List.Item>
+                        <InputItem clear className="contact-area-picker"
+                            placeholder="请选择地区"
+                            {
+                                ...getFieldProps('area', {
+                                    initialValue: contact.area,
+                                })
+                            }>地址</InputItem>
+                        <InputItem clear
+                            placeholder="街道门牌，无需重复地区信息"
+                            {
+                                ...getFieldProps('address', {
+                                    initialValue: contact.address,
+                                })
+                            }>街道</InputItem>
                     </List>
+                    {
+                        this.state.isAccount
+                        ? null
+                        : <List>
+                            <List.Item className="contact-emergency-container"
+                                extra={
+                                    <Switch checked
+                                        {
+                                            ...getFieldProps('emergency', {
+                                                initialValue: contact.emergency,
+                                                valuePropName: 'checked'
+                                            })
+                                        }/>
+                                }>设为紧急联系人</List.Item>
+                        </List>
+                    }
                 </div>
                 <div className="contact-btn-container">
                     <Button onClick={this.onSaveBtnClick}>保存</Button>
+                    <Button onClick={this.props.onCancleBtnClick}>返回</Button>
                     {
                         this.state.isNew || this.state.isAccount
                         ? null
                         : <Button type="warning"
                             onClick={this.onDeleteBtnClick}>删除</Button>
                     }
-                    <Button onClick={this.props.onCancleBtnClick}>返回</Button>
                 </div>
             </div>
         );

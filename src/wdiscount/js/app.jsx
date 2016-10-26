@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Image } from 'react-bootstrap';
+import { WingBlank, WhiteSpace } from 'antd-mobile';
 
 import AccountBasicInfo from 'account_basicinfo';
 import Rabbit from 'rabbit';
@@ -40,8 +40,12 @@ var App = React.createClass({
             ); 
         });
         return (
-            <div className="discountcode-list">
-                {discountCodeList}  
+            <div>
+                <WhiteSpace size="lg"/>
+                <WingBlank className="discountcode-list">
+                    {discountCodeList}
+                </WingBlank>
+                <WhiteSpace size="lg"/>
             </div>
         );
     }
@@ -53,9 +57,8 @@ var DiscountCodeItem = React.createClass({
         var discountCode = this.props.discountCode;
         var usable = discountCodeStatus.isUsable(discountCode.status);
         return (
-            <div className={`discountcode-container ${usable ? null : 'discountcode-unusable'}`}>
-                <div className="discountcode-header">
-                </div>
+            <div className={`discountcode-container ${usable ? '' : 'discountcode-unusable'}`}>
+                <div className="discountcode-header"></div>
                 <div className="discountcode-body clearfix">
                     <div className="pull-left discountcode-price-container">
                         <p>¥
