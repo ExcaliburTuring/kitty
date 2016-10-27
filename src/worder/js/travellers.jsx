@@ -9,6 +9,7 @@ const CheckboxItem = Checkbox.CheckboxItem;
 
 import { url, gender, priceUtil }  from 'config';
 import Rabbit from 'rabbit';
+import Traveller from './traveller';
 
 var SelectTraveller = React.createClass({
 
@@ -112,39 +113,39 @@ var TravellerSelector = React.createClass({
 });
 TravellerSelector = createForm()(TravellerSelector);
 
-var Traveller = React.createClass({
+// var Traveller = React.createClass({
 
-    render: function () {
-        var traveller = this.props.traveller;
-        var isAccount = traveller.contactid == 0;
-        var isMale = traveller.gender == gender.MALE;
-        return (
-            <div className="traveller-container clearfix">
-                <div className="traveller-avatar pull-left">
-                    <i className={`fa ${isMale ? 'fa-male' : 'fa-female'}`} aria-hidden="true"></i>
-                </div>
-                <div className="traveller-info pull-left">
-                    <div className="clearfix">
-                        <p className="pull-left">姓名：{traveller.name}</p>
-                        <p className="pull-right">{traveller.mobile}</p>
-                    </div>
-                    <div className="traveller-addition-info">
-                        <p>证件：{traveller.id}</p>
-                        {
-                            /**
-                             <p>邮箱：{traveller.email}</p>
-                             */
-                        }
-                    </div>
-                </div>
-                <div className="traveller-edit-container pull-left">
-                    <Button inline onClick={()=>{this.props.onTravellerEditBtnClick(traveller)}}>
-                        <Icon type="edit"/>
-                    </Button>
-                </div>
-            </div>
-        );
-    }
-});
+//     render: function () {
+//         var traveller = this.props.traveller;
+//         var isAccount = traveller.contactid == 0;
+//         var isMale = traveller.gender == gender.MALE;
+//         return (
+//             <div className="traveller-container clearfix">
+//                 <div className="traveller-avatar pull-left">
+//                     <i className={`fa ${isMale ? 'fa-male' : 'fa-female'}`} aria-hidden="true"></i>
+//                 </div>
+//                 <div className="traveller-info pull-left">
+//                     <div className="clearfix">
+//                         <p className="pull-left">姓名：{traveller.name}</p>
+//                         <p className="pull-right">{traveller.mobile}</p>
+//                     </div>
+//                     <div className="traveller-addition-info">
+//                         <p>证件：{traveller.id}</p>
+//                         {
+//                             /**
+//                              <p>邮箱：{traveller.email}</p>
+//                              */
+//                         }
+//                     </div>
+//                 </div>
+//                 <div className="traveller-edit-container pull-left">
+//                     <Button inline onClick={()=>{this.props.onTravellerEditBtnClick(traveller)}}>
+//                         <Icon type="edit"/>
+//                     </Button>
+//                 </div>
+//             </div>
+//         );
+//     }
+// });
 
 module.exports = SelectTraveller;

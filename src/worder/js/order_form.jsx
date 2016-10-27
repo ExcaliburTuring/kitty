@@ -3,12 +3,8 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { List, Button, Popup, Checkbox, Icon, InputItem, ActionSheet, Toast } from 'antd-mobile';
-import { createForm } from 'rc-form';
-const CheckboxItem = Checkbox.CheckboxItem;
-const AgreeItem = Checkbox.AgreeItem;
 
-import { url, gender, priceUtil, discountCodeStatus, defaultValue, accountStatus }  from 'config';
+import { url, priceUtil, discountCodeStatus, defaultValue, accountStatus }  from 'config';
 import Rabbit from 'rabbit';
 import WContact from 'wcontact';
 
