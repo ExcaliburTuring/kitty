@@ -51,7 +51,8 @@ p {
 .roommate-container,
 .emergency-container,
 .discount-container,
-.agreement-container {
+.agreement-container,
+.order-status-container {
     border-top: 1px solid @light-gray;
     border-bottom: 1px solid @light-gray;
     box-shadow: 0 0 3px @light-gray;
@@ -139,6 +140,11 @@ p {
                 margin-top: .15rem;
                 font-size: .27rem;
             }
+        }
+
+        &.readOnly .traveller-info {
+            width: 90%;
+            border-right: none;
         }
 
         .traveller-edit-container {
@@ -272,3 +278,11 @@ p {
         font-weight: normal;
     }
 }
+
+/**
+ * 订单状态显示
+ */
+.order-status-container {
+
+}
+
