@@ -85,7 +85,7 @@ var Mine = React.createClass({
                 <div className="mine-block" href="javascript:" onClick={this.onAccountEditClick}>
                     <h3 className="t2">
                         个人信息
-                        <a className="pull-right">
+                        <a className="right">
                             <Icon type="right" />
                         </a>
                     </h3>
@@ -93,7 +93,7 @@ var Mine = React.createClass({
                 <div className="mine-block">
                     <h3 className="t3">
                         我的优惠券
-                        <a href="/account/wdiscount" className="pull-right">
+                        <a href="/account/wdiscount" className="right">
                             <span className="mine-count">{this.state.discountCode.discountCodes.length}</span><Icon type="right" />
                         </a>
                     </h3>
@@ -101,7 +101,7 @@ var Mine = React.createClass({
                 <div className="mine-block">
                     <h3 className="t4">
                         出行人
-                        <a href="/account/wcontact" onClick={this.onContactsClick} className="pull-right">
+                        <a href="/account/wcontact" onClick={this.onContactsClick} className="right">
                             <span className="mine-count"></span><Icon type="right" />
                         </a>
                     </h3>

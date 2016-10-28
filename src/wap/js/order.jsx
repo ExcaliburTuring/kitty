@@ -76,19 +76,19 @@ var Order = React.createClass({
             <div className="order-container">
                 <div className="order-header">
                     <Tabs defaultActiveKey="1" onChange={callback}>
-                      <TabPane tab="选项卡一" key="1">
+                      <TabPane tab="所有订单" key="1">
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
-                          选项卡一内容
+                            {data.allOrderCount}
                         </div>
                       </TabPane>
-                      <TabPane tab="选项卡二" key="2">
+                      <TabPane tab="当前订单" key="2">
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
-                          选项卡二内容
+                            {data.currentOrderCount}
                         </div>
                       </TabPane>
-                      <TabPane tab="选项卡三" key="3">
+                      <TabPane tab="历史订单" key="3">
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
-                          选项卡三内容
+                            {data.historyOrderCount}
                         </div>
                       </TabPane>
                     </Tabs>
