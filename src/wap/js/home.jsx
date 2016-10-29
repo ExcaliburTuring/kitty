@@ -12,9 +12,6 @@ import Rabbit from 'rabbit';
 import a from '../img/A.png';
 import b from '../img/B.png';
 import c from '../img/C.png';
-import lsa from '../img/lsa.png';
-import lsb from '../img/lsb.png';
-import lsc from '../img/lsc.png';
 import WH from '../img/51.png';
 import icona from '../img/D.png';
 import iconb from '../img/E.png';
@@ -169,11 +166,6 @@ var Routes = React.createClass({
             <div className="route-container">
                 <img className="headImg" src={route.headImg} />
                 <p className="route-intro">【{route.name}】{route.title}</p>
-                <div className="row">
-                    <div className="Athird light-spot"><img src={lsa}/>深度西北</div>
-                    <div className="Athird light-spot"><img src={lsb}/>茶卡盐湖</div>
-                    <div className="Athird light-spot"><img src={lsc}/>银河星空</div>
-                </div>
             </div>
         )
     }
