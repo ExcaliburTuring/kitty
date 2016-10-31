@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Image } from 'react-bootstrap';
 import { Icon, Tooltip } from 'antd';
 
 import { Tabs, WhiteSpace } from 'antd-mobile';
@@ -12,10 +11,6 @@ import { url, orderType, defaultValue, orderStatus, refundStatus, refundType, pr
 import Rabbit from 'rabbit';
 
 import 'antd/lib/index.css';
-
-function callback(key) {
-  console.log(key);
-}
 
 var OrderBrief = Rabbit.create(url.orderBrief);
 var Order = React.createClass({
@@ -37,7 +32,8 @@ var Order = React.createClass({
     // compoment specs
 
     getInitialState: function() {
-        OrderBrief.actions.load({'orderType': orderType.CURRENT});
+        OrderBrief.actions.load({'orderType': this.props.orderType});
+        this.orderType = this.props.orderType;
         return {
             'data': {
                 'status': 1,
@@ -47,6 +43,13 @@ var Order = React.createClass({
                 'allOrderCount': 0
             },
         };
+    },
+
+    componentWillReceiveProps: function(newProps) {
+        if (newProps.orderType != this.orderType) {
+            OrderBrief.actions.load({'orderType': newProps.orderType});
+            this.orderType = newProps.orderType;
+        }
     },
 
     render: function() {
@@ -73,30 +76,36 @@ var Order = React.createClass({
         }
 
         return (
-            <div className="order-container">
-                <div className="order-header">
-                    <Tabs defaultActiveKey="1" onChange={callback}>
-                      <TabPane tab="所有订单" key="1">
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
-                            {data.allOrderCount}
+            <div className="orders-container">
+                <Tabs activeKey={`${this.orderType}`} onTabClick={this.onSelectOrderType}>
+                    <TabPane tab="当前订单" key={`${orderType.CURRENT}`}>
+                        <div className="order-list">
+                            {
+                                this.orderType == orderType.CURRENT
+                                ? orderList
+                                : null
+                            }
                         </div>
-                      </TabPane>
-                      <TabPane tab="当前订单" key="2">
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
-                            {data.currentOrderCount}
+                    </TabPane>
+                    <TabPane tab="历史订单" key={`${orderType.HISTORY}`}>
+                        <div className="order-list">
+                            {
+                                this.orderType == orderType.HISTORY
+                                ? orderList
+                                : null
+                            }
                         </div>
-                      </TabPane>
-                      <TabPane tab="历史订单" key="3">
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
-                            {data.historyOrderCount}
+                    </TabPane>
+                    <TabPane tab="所有订单" key={`${orderType.VISIBLE}`}>
+                         <div className="order-list">
+                            {
+                                this.orderType == orderType.VISIBLE
+                                ? orderList
+                                : null
+                            }
                         </div>
-                      </TabPane>
-                    </Tabs>
-                    <WhiteSpace />
-                </div>
-                <div className="order-list">
-                    {orderList}
-                </div>
+                    </TabPane>
+                </Tabs>
             </div>
         );
     }
@@ -113,7 +122,7 @@ var OrderItem = React.createClass({
             <div className="order-item-container">
                 <div className="travel-img">
                     <a href={`/travel/${travelRoute.routeid}`} target="_blank">
-                        <Image src={travelRoute.headImg} responsive/>
+                        <img src={travelRoute.headImg} className="img-responsive"/>
                     </a>
                 </div>
                 <div className="travel-info">
