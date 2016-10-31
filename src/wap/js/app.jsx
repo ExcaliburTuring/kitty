@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import { TabBar } from 'antd-mobile';
 
+import { orderType } from 'config';
 import AccountBasicInfo from 'account_basicinfo';
 import WContact from 'wcontact';
 
@@ -38,6 +39,8 @@ var App = React.createClass({
         };
     },
 
+    // callback method
+
     onTabBarItemPress: function(selected) {
         this.setState({
             'selectedTab': selected
@@ -46,6 +49,13 @@ var App = React.createClass({
 
     onAccountEditClick: function() {
         this.setState({'contact': this._createAccountContact()});
+    },
+
+    onOrdersClick: function(orderType) {
+        this.setState({
+            'selectedTab': 'order',
+            'orderType': orderType
+        });
     },
 
     getInitialState: function() {
@@ -58,6 +68,7 @@ var App = React.createClass({
                 }
             },
             'selectedTab': 'home',
+            'orderType': orderType.CURRENT,
             'contact': null
         };
     },
@@ -88,7 +99,7 @@ var App = React.createClass({
                     selected={this.state.selectedTab === 'mine'}
                     onPress={() => {this.onTabBarItemPress('mine')}}>
                     <Mine basicInfo={this.state.basicInfo}
-                        onOrdersClick={() => {this.onTabBarItemPress('order')}}
+                        onOrdersClick={this.onOrdersClick}
                         onAccountEditClick={this.onAccountEditClick}/>
                 </TabBar.Item>
                 <TabBar.Item
@@ -97,7 +108,7 @@ var App = React.createClass({
                     selectedIcon={{ uri: compass2 }}
                     selected={this.state.selectedTab === 'order'}
                     onPress={() => {this.onTabBarItemPress('order')}}>
-                    <Order />
+                    <Order orderType={this.state.orderType}/>
                 </TabBar.Item>
             </TabBar>
         );
