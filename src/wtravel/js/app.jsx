@@ -28,8 +28,8 @@ var App = React.createClass({
         Reflux.connect(GroupsFlux.store, 'groups'),
     ],
 
-    onOpenChange(isOpen) {
-        this.setState({ 'open': !this.state.open });
+    onOpenChange: function() {
+        this.setState({'open': !this.state.open});
     },
 
     getInitialState() {
@@ -76,6 +76,7 @@ var App = React.createClass({
                 'groups': []
             },
             'open': false,
+            'toggleHidden': false
         };
     },
 
@@ -86,8 +87,6 @@ var App = React.createClass({
        
         return (
             <div className="travel-container">
-                <Siderbar routes={routes} days={imgtext.days}
-                    open={this.state.open} onOpenChange={this.onOpenChange}/>
                 <div className="travel-main-container">
                     <Slider route={routes} sliderImgs={imgtext.sliderImgs} 
                             descriptions={imgtext.descriptions}/>
@@ -106,8 +105,11 @@ var App = React.createClass({
                     <Group groups={this.state.groups.groups} />
                     <AdditionInfo />
                 </div>
-                 <Button type="primary" className="days-list-toggle"
-                        onClick={this.onOpenChange}>目录</Button>
+                <Siderbar routes={routes} days={imgtext.days}
+                    open={this.state.open} onOpenChange={this.onOpenChange}/>
+                <Button type="primary" className="days-list-toggle"
+                    style={this.state.open ? {'zIndex': 0}: null}
+                    onClick={this.onOpenChange}>目录</Button>
             </div>
         );
     }

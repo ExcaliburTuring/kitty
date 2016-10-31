@@ -13,12 +13,41 @@ const SRC_PATH = config.SRC_PATH;
 const PUBLIC_PATH = config.PUBLIC_PATH;
 const STATIC_PATH = config.STATIC_PATH;
 
+var targetDir = [];
+(function(){
+    fs.readdirSync(SRC_PATH)
+    .filter(function(dir) {
+        return config.ENTRY_EXCLUDE.indexOf(dir) < 0 
+            && fs.statSync(path.join(SRC_PATH, dir)).isDirectory();
+    }).forEach(function(dir) {
+        targetDir.push(dir);
+    });
+}());
+var pcDir = [], wapDir = [];
+for (var i = 0, n = targetDir.length; i < n; i++) {
+    var dir = targetDir[i];
+    if (/^w/.test(dir)) {
+        wapDir.push(dir);
+    } else {
+        pcDir.push(dir);
+    }
+}
+console.log(pcDir);
+console.log(wapDir);
+
 var plugins = [
     new webpack.optimize.CommonsChunkPlugin({
         name: 'common',
         filename: debug ? 'common.js' : 'common-[chunkhash].js',
-        minChunks: 3
-    })
+        minChunks: 3,
+        chunks: pcDir
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'wcommon',
+        filename: debug ? 'wcommon.js' : 'wcommon-[chunkhash].js',
+        minChunks: 3,
+        chunks: wapDir
+    }),
 ];
 (function(){
     if (debug) {
@@ -46,11 +75,7 @@ var plugins = [
 
 var entries = {};
 (function(){
-    fs.readdirSync(SRC_PATH)
-    .filter(function(dir) {
-        return config.ENTRY_EXCLUDE.indexOf(dir) < 0 
-            && fs.statSync(path.join(SRC_PATH, dir)).isDirectory();
-    }).forEach(function(dir) {
+    targetDir.forEach(function(dir) {
         var dirPath = path.join(SRC_PATH, dir);
         entries[dir] = [path.resolve(dirPath, 'main.jsx')];
         if (debug) {
@@ -60,7 +85,7 @@ var entries = {};
         plugins.push(new HtmlWebpackPlugin({
             filename: "../" + htmlFileName,
             template: path.resolve(dirPath, htmlFileName),
-            chunks:['common', dir] // also add common chunk
+            chunks:[ /^w/.test(dir) ? 'wcommon' : 'common', dir] // also add common chunk
         }));
     });
 }());
