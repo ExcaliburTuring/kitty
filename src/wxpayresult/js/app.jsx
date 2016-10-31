@@ -39,16 +39,13 @@ var App = React.createClass({
     },
 
     render: function() {
-        var orderInfo = this.state.data.orderInfo;
         return (
             <div className="payresult-container">
                 <Result
                     imgUrl="https://zos.alipayobjects.com/rmsportal/yRUDxcBPvzZTDHK.png"
                     title="支付成功"
                     message={
-                        <div>
-                            <div>{orderInfo.actualPrice}</div><del>{orderInfo.price}</del>
-                        </div>
+                        JSON.stringify(this.state.data)
                     }/>
             </div>
         );

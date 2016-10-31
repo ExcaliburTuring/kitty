@@ -49,6 +49,10 @@ var AccountBasicInfoStore = Reflux.createStore({
     }
 });
 
+window.reloadAccountBasicInfo = function() {
+    AccountBasicInfoActions.load();
+};
+
 module.exports = {
     actions: AccountBasicInfoActions,
     store: AccountBasicInfoStore
