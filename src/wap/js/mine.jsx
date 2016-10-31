@@ -13,7 +13,7 @@ import t1 from '../img/t1.png';
 import t2 from '../img/t2.png';
 import t3 from '../img/t3.png';
 import t4 from '../img/t4.png';
-
+import t5 from '../img/t5.png';
 
 var OrderBrief = Rabbit.create(url.orderBrief);
 var DiscountCode = Rabbit.create(url.discountCode);
@@ -98,7 +98,7 @@ var Mine = React.createClass({
                     </List.Item>
                 </List>
                 <List>
-                    <List.Item >
+                    <List.Item thumb={t5}>
                         联系客服
                     </List.Item>
                 </List>
