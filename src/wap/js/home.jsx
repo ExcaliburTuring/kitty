@@ -4,7 +4,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Swiper from 'swiper';
-import { Icon } from 'antd';
 
 import { url } from 'config';
 import Rabbit from 'rabbit';
@@ -13,9 +12,9 @@ import a from '../img/A.png';
 import b from '../img/B.png';
 import c from '../img/C.png';
 import WH from '../img/51.png';
-import icona from '../img/D.png';
-import iconb from '../img/E.png';
-import iconc from '../img/F.png';
+import d from '../img/D.png';
+import e from '../img/E.png';
+import f from '../img/F.png';
 
 import 'antd/lib/index.css';
 
@@ -62,23 +61,23 @@ var Home = React.createClass({
                     <div className="Athird">
                         <div className="mylabel left">
                             <a href="/account/wdiscount">
-                                <i className="icon"><img src={icona}/></i>
+                                <i className="icon"><img src={d}/></i>
                                 <p>行程</p>
                             </a>
                         </div>
                     </div>
                     <div className="Athird">
                         <div className="mylabel right">
-                            <a href="javascript:">
-                                <i className="icon"><img src={iconb}/></i>
+                            <a href="/account/wdiscount">
+                                <i className="icon"><img src={e}/></i>
                                 <p>红包</p>
                             </a>
                         </div>
                     </div>
                     <div className="Athird">
                         <div className="mylabel right">
-                            <a href="/account/wdiscount">
-                                <i className="icon"><img src={iconc}/></i>
+                            <a href="javascript:">
+                                <i className="icon"><img src={f}/></i>
                                 <p>活动</p>
                             </a>
                         </div>
