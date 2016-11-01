@@ -10,12 +10,12 @@ import Home from './home';
 import Mine from './mine';
 import Order from './order';
 
-import home1 from '../img/home1.png';
-import home2 from '../img/home2.png';
-import user1 from '../img/user1.png';
-import user2 from '../img/user2.png';
-import compass1 from '../img/compass1.png';
-import compass2 from '../img/compass2.png';
+import home1 from '../img/home1.svg';
+import home2 from '../img/home2.svg';
+import user1 from '../img/user1.svg';
+import user2 from '../img/user2.svg';
+import compass1 from '../img/compass1.svg';
+import compass2 from '../img/compass2.svg';
 
 var App = React.createClass({
 
