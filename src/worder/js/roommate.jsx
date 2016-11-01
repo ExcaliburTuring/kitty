@@ -38,15 +38,12 @@ var Roommate = React.createClass({
         }
         return (
             <div className="roommate-container">
-                <WingBlank>
-                    <h3>睡友选择</h3>
-                </WingBlank>
                 <div className="roommate-selector">
                     <List>
                         <CheckboxItem
                             checked={this.state.isFollow}
                             onChange={this.onIsFollowChange}>
-                            服从组织安排
+                            随机同性拼房
                         </CheckboxItem>
                         {
                             this.state.isFollow
