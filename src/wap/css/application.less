@@ -1,8 +1,49 @@
 @import "~base.less";
 
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 body {
-    margin: 0;
     background-color: @gray-bg;
+    font-family: "Microsoft YaHei";
+    font-size: .32rem;
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: " ";
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+.img-circle {
+    border-radius: 50%;
 }
 
 .row {
@@ -236,45 +277,13 @@ body {
         }
     }
 
-    .anticon {
-        line-height: 0.8rem;
-        font-size: 0.26rem;
-        vertical-align: 1px;
-        margin-left: 0.2rem;
-    }
-
-    .mine-order-title ,
-    .mine-block {
-        background-color: @white;
-
-        .mine-count {
-            color: @currency;
-            font-size: 0.36rem;
-        }
-
-        h3 {
-            font-size: 0.32rem;
-            font-weight: normal;
-            color: @gray;
-            line-height: 0.8rem;
-            margin-left: 0.2rem;
-            padding-left: 0.5rem;
-            background-repeat: no-repeat;
-            background-position: center left;
-            background-size: 0.36rem;
-        }
-
-        a {
-            padding-right: 0.2rem;
-            font-size: 0.28rem;
-            color: @gray;
-            line-height: 0.8rem;
-        }
-    }
-
     .mine-order {
-        margin: 0.32rem 0 0.2rem;
+        margin-top: .2rem;
         background-color: @white;
+
+        .am-list {
+            margin-top: 0;
+        }
 
         .mine-order-title {
             border-bottom: 1px solid @gray-line; 
@@ -290,63 +299,17 @@ body {
         .order-count {
             font-size: 0.4rem;
             color: @currency;
-
-            &:hover {
-                text-decoration: underline;
-            }
         }
     }
 
-    .mine-block {
-        border-bottom: 1px solid @gray-line;
-
-        .right {
-            position: absolute;
-            right: 0.1rem;
-        }
-    }
-
-    h3.t1{
-        background-image: url(../img/t1.png);
-    }
-
-    h3.t2{
-        background-image: url(../img/t2.png);
-    }
-
-    h3.t3{
-        background-image: url(../img/t3.png);
-    }
-
-    h3.t4{
-        background-image: url(../img/t4.png);
-    }
-
-    h3.t5{
-        background-image: url(../img/t5.png);
+    .am-list {
+        margin-top: .2rem;
     }
 }
 
-.order-container {
-    margin-bottom: 1.2rem;
+.orders-container {
+    
 
-    .order-header {
-        margin-bottom: 0.2rem;
-
-        .order-count-container {
-            text-align: center;
-            margin-left: 0.4rem;
-
-            .order-count {
-                font-size: 0.4rem;
-                color: @currency;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-    }
 }
 
 .order-item-container {
