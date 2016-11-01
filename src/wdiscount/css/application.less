@@ -34,21 +34,27 @@ p {
     clear: both;
 }
 
+.am-wingblank.am-wingblank-lg {
+    margin: 0 0.2rem;
+}
+
 .discountcode-container {
     border: 1px solid @currency;
     margin-bottom: .2rem;
     border-radius: .05rem;
     box-shadow: 0 0 3px 0 @currency;
+    background-color: @white;
     background-image: url(./wave.svg);
     background-repeat: no-repeat;
     background-size: contain;
+    background-origin: border-box;
 
     .discountcode-header {
         height: 10px;
     }
 
     .discountcode-body {
-        margin: .3rem .2rem;
+        margin: .3rem 0 .3rem .2rem;
     }
 
     &.discountcode-unusable {
@@ -59,7 +65,18 @@ p {
 
         .discountcode-price-container {
             color: @light-gray;
-            border-right-color: @light-gray;
+        }
+
+        .discountcode-body {
+            background-image: url(./overdue.svg);
+            background-repeat: no-repeat;
+            background-size: 1.2rem 1.2rem;
+            background-position: 95% top;
+            background-origin: border-box;
+        }
+
+        .discountcode-rule-container {
+            border-left-color: @light-gray;
         }
     }
 }
@@ -67,27 +84,27 @@ p {
 .discountcode-price-container {
     color: @currency;
     padding: .3rem .2rem .3rem 0;
-    margin-right: .4rem;
-    font-size: .5rem;
-    border-right: 1px dashed @currency;
+    font-size: .4rem;
     text-align: center;
     font-weight: bolder;
 
     .discountcode-price {
         margin-left: .2rem;
-        font-size: .8rem;
+        font-size: .7rem;
     }
 }
 
 .discountcode-rule-container {
-    font-size: .25rem;
+    border-left: 1px dashed @currency;
+    padding-left: .3rem;
+    font-size: .24rem;
 
     .discountcode {
-        font-size: .35rem;
+        font-size: .28rem;
         font-weight: bolder;
 
         .discountcode-text {
-            font-size: .25rem;
+            font-size: .24rem;
             font-weight: normal;
         }
     }

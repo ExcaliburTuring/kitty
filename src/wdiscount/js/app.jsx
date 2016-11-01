@@ -58,7 +58,6 @@ var DiscountCodeItem = React.createClass({
         var usable = discountCodeStatus.isUsable(discountCode.status);
         return (
             <div className={`discountcode-container ${usable ? '' : 'discountcode-unusable'}`}>
-                <div className="discountcode-header"></div>
                 <div className="discountcode-body clearfix">
                     <div className="pull-left discountcode-price-container">
                         <p>¥
