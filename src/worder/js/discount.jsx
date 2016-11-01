@@ -88,9 +88,6 @@ var Discount = React.createClass({
             + priceUtil.getPrice(this.props.studentDiscount.value))
         return (
             <div className="discount-container">
-                <WingBlank>
-                    <h3>优惠政策</h3>
-                </WingBlank>
                 <List>
                     <List.Item
                         extra={policyDiscount.value}

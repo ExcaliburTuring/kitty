@@ -65,25 +65,20 @@ var  OrderShow = React.createClass({
             <div className="order-form-container">
                 <GroupInfo travelRoute={orderInfoData.travelRoute}
                     travelGroup={orderInfoData.travelGroup}/>
-                <div className="order-status-container">
-                    {orderStatus.getDesc(orderInfoData.orderInfo.status)}
-                </div>
+                <div className="item-title">出行人</div>
                 <div className="travellers-container">
                     <WingBlank>
-                        <h3>出行人</h3>
                         <div className="traveller-show">
                             {travellerList}
                         </div>
                     </WingBlank>
                 </div>
+                <div className="item-title">睡友</div>
                 <div className="roommate-container">
-                    <WingBlank>
-                        <h3>睡友选择</h3>
-                    </WingBlank>
                     <List>
                         <CheckboxItem disable 
                             checked={orderInfoData.orderInfo.roommate}>
-                            服从组织安排
+                            随机同性拼房
                         </CheckboxItem>
                         {
                             roommateList.length
@@ -92,10 +87,8 @@ var  OrderShow = React.createClass({
                         }
                     </List>
                 </div>
+                <div className="item-title">紧急联系人</div>
                 <div className="emergency-container">
-                    <WingBlank>
-                        <h3>紧急联系人</h3>
-                    </WingBlank>
                     <div className="emergency-show">
                         {
                             emergencyList.length == 0
@@ -106,10 +99,8 @@ var  OrderShow = React.createClass({
                         }
                     </div>
                 </div>
+                <div className="item-title">优惠政策</div>
                 <div className="discount-container">
-                    <WingBlank>
-                        <h3>优惠政策</h3>
-                    </WingBlank>
                     <List>
                         {
                             orderInfoData.policy

@@ -1,4 +1,4 @@
-@import "~base.less";
+@import "~wbase.less";
 
 * {
     -webkit-box-sizing: border-box;
@@ -47,26 +47,43 @@ p {
     margin-bottom: 1.3rem;
 }
 
+.item-title {
+    padding-left: .3rem;
+    font-size: .28rem;
+    color: black;
+}
+
+.am-list-item .am-list-line {
+    min-height: .8rem;
+}
+
+.am-list-item .am-list-line .am-list-content {
+    color: @dark-black;
+    font-size: .28rem;
+    line-height: .8rem;
+    padding: 0;
+    min-height: .8rem;
+}
+
+.am-list-item .am-list-line .am-list-extra {
+    font-size: .28rem;
+    line-height: .8rem;
+    padding: 0;
+    min-height: .8rem;
+}
+
 .travellers-container,
 .roommate-container,
 .emergency-container,
 .discount-container,
 .agreement-container,
-.order-status-container {
-    border-top: 1px solid @light-gray;
-    border-bottom: 1px solid @light-gray;
-    box-shadow: 0 0 3px @light-gray;
-    margin-top: .3rem;
-    margin-bottom: .3rem;
+.order-status-container,
+.travellers-button {
+    border: 1px solid @gray-line;
+    margin: .2rem .1rem;
     background: white;
-
-    h3 {
-        padding-left: .2rem;
-        margin-top: .2rem;
-        margin-bottom: .2rem;
-        font-weight: normal;
-        border-left: .04rem solid @currency;
-    }
+    border-radius: .1rem;
+    overflow: hidden;
 }
 
 /**
@@ -74,27 +91,24 @@ p {
  */
 .travel-info-container {
     position: relative;
-    border-bottom: 2px dashed @currency;
+    margin-bottom: .2rem;
     box-shadow: 0 0px 5px @light-gray;
+    border-bottom: 2px dashed @currency;
+    padding: .36rem .3rem;
+    background: white;
 
     .travel-title {
-        font-size: .4rem;
-        color: white;
-        position: absolute;
-        top: .3rem;
-        left: .2rem;
+        font-size: .34rem;
+        color: @dark-black;
     }
 
     .travel-detail {
         font-size: .28rem;
-        padding: .2rem .3rem;
-        background: white;
 
         .travel-date,
         .travel-price {
-            font-size: .35rem;
+            font-size: .28rem;
             color: @currency;
-            font-weight: bolder;
             margin-right: .1rem;
             margin-left: .1rem;
         }
@@ -107,38 +121,18 @@ p {
 .travellers-container {
 
     .traveller-container {
-        border: 1px solid @light-gray;
-        padding-top: .2rem;
-        padding-bottom: .2rem;
-        margin-top: .2rem;
-        margin-bottom: .2rem;
-
-        .traveller-avatar {
-            padding-left: .15rem;
-            width: 8%;
-
-            .fa.fa-female {
-                color: #FF69B4;
-            }
-
-            .fa.fa-male {
-                color: #00BFFF; 
-            }
-
-            .fa.fa-female,
-            .fa.fa-male {
-                font-size: .35rem;
-            }
-        }
+        padding-top: .1rem;
+        padding-bottom: .1rem;
+        border-bottom: 1px solid @gray-line;
+        font-size: .28rem;
+        color: @gray;
 
         .traveller-info {
             width: 80%;
-            border-right: 1px dashed @currency;
             padding-right: .3rem;
 
             .traveller-addition-info {
                 margin-top: .15rem;
-                font-size: .27rem;
             }
         }
 
@@ -148,11 +142,13 @@ p {
         }
 
         .traveller-edit-container {
-            width: 10%;
+            width: 20%;
+            text-align: right;
 
             button { 
                 font-size: .4rem;
                 padding: .15rem;
+                color: @light-currency;
 
                 &:after {
                     border: none;
@@ -160,10 +156,29 @@ p {
             }
         }
     }
+}
 
-    .traveller-selector-trigger {
-        margin-top: .2rem;
-        margin-bottom: .2rem;
+.travellers-button {
+    box-shadow: 0 0px 3px rgba(195, 195, 195, 0.3);
+
+    .traveller-selector-trigger, .emergency-selector-trigger {
+
+        button {
+            border: none!important;
+            min-height: 1rem;
+            font-size: .34rem;
+            color: @dark-gray;
+
+            i {
+                font-size: .5rem;
+                vertical-align: -.08rem;
+                color: @light-currency;
+            }
+
+            span {
+                margin-left: .1rem;
+            }
+        }
     }
 }
 
@@ -171,9 +186,25 @@ p {
  * 睡友选择
  */
 .roommate-container {
+    .am-checkbox-inner {
+        top: .25rem!important;
+        border-color: @light-currency!important;
+
+        &:after {
+            border-color: @light-currency!important;
+        }
+    }
 
     .roommate-selector .am-list-body{
         border-top: none;
+    }
+
+    .am-list .am-list-item .am-input-label {
+        font-size: .28rem;
+    }
+
+    .am-list .am-list-item .am-input-control input {
+        font-size: .28rem;
     }
 }
 
@@ -184,11 +215,6 @@ p {
 
     .emergency-show .am-list-body {
         border-top: none;
-    }
-
-    .emergency-selector-trigger {
-        margin-top: .2rem;
-        margin-bottom: .2rem;
     }
  }
 
@@ -231,7 +257,7 @@ p {
  .discount-container {
 
     .discount-price {
-        color: @currency;
+        color: @light-currency;
         margin-right: .5rem;
     }
  }
@@ -241,6 +267,25 @@ p {
  */
 .am-action-sheet-message {
     font-size: .35rem;
+}
+
+/**
+ * 优惠政策选择弹窗，优惠码选择弹窗
+ */
+.agreement-container {
+
+    button {
+        font-size: .34rem;
+        min-height: .8rem;
+    }
+
+    .am-checkbox-agree .am-checkbox-agree-label {
+        font-size: .28rem;
+    }
+
+    .am-checkbox-agree .am-checkbox-inner {
+        top: .25rem;
+    }
 }
 
 /**
@@ -272,9 +317,14 @@ p {
 
     button {
         background-color: @currency;
+        box-shadow: 0px .14rem .1rem -.1rem @gray;
+        margin: .1rem;
+        padding: 0 .3rem;
         color: white;
-        border-radius: 0;
-        height: 100%;
+        border-radius: .1rem;
+        line-height: .8rem;
+        height: .8rem;
+        font-size: .28rem;
         font-weight: normal;
     }
 }
@@ -286,3 +336,14 @@ p {
 
 }
 
+.am-action-sheet-button-list-item {
+    font-size: .28rem;
+    line-height: .8rem;
+    height: .8rem;
+}
+
+.travellers-selector-container button, .emergency-selector-container button {
+    font-size: .28rem;
+    line-height: .8rem;
+    height: .8rem;
+}

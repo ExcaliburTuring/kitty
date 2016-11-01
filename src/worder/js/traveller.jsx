@@ -15,9 +15,6 @@ import { gender }  from 'config';
         var readOnly = this.props.readOnly;
         return (
             <div className={`traveller-container clearfix ${readOnly ? 'readOnly' : ''}`}>
-                <div className="traveller-avatar pull-left">
-                    <i className={`fa ${isMale ? 'fa-male' : 'fa-female'}`} aria-hidden="true"></i>
-                </div>
                 <div className="traveller-info pull-left">
                     <div className="clearfix">
                         <p className="pull-left">姓名：{traveller.name}</p>
