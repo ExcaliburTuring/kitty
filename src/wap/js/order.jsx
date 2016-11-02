@@ -4,6 +4,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Tabs, WhiteSpace, WingBlank, Button } from 'antd-mobile';
+const TabPane = Tabs.TabPane;
 
 import { url, orderType, defaultValue, orderStatus, refundStatus, refundType, priceUtil } from 'config';
 import Rabbit from 'rabbit';
@@ -12,51 +13,20 @@ import OrderOperationHelper from 'order_operation';
 import 'antd/lib/index.css';
 
 var OrderBrief = Rabbit.create(url.orderBrief);
+var OrderBriefHistory = Rabbit.create(url.orderBrief);
+var OrderBriefVisible = Rabbit.create(url.orderBrief);
 var Order = React.createClass({
 
-    orderType: orderType.CURRENT,
+    mixins: [
+        Reflux.connect(OrderBrief.store, 'data'),
+        Reflux.connect(OrderBriefHistory.store, 'history'),
+        Reflux.connect(OrderBriefVisible.store, 'visible')
+    ],
 
-    mixins: [Reflux.connect(OrderBrief.store, 'data')],
-
-    // callback method
-
-    onSelectOrderType: function(type) {
-        if (this.orderType == type) {
-            return;
-        }
-        OrderBrief.actions.load({'orderType': type});
-        this.orderType = type;
-    },
-
-    // compoment specs
-
-    getInitialState: function() {
-        OrderBrief.actions.load({'orderType': this.props.orderType});
-        this.orderType = this.props.orderType;
-        return {
-            'data': {
-                'status': 1,
-                'briefOrders': [],
-                'currentOrderCount': 0,
-                'historyOrderCount': 0,
-                'allOrderCount': 0
-            },
-        };
-    },
-
-    componentWillReceiveProps: function(newProps) {
-        if (newProps.orderType != this.orderType) {
-            OrderBrief.actions.load({'orderType': newProps.orderType});
-            this.orderType = newProps.orderType;
-        }
-    },
-
-    render: function() {
-        var data = this.state.data;
-        const TabPane = Tabs.TabPane;
+    _createOrderList: function(briefOrders) {
         var orderList = null;
-        if (data.briefOrders != null && data.briefOrders.length > 0) {
-            orderList = data.briefOrders.map(function(order) {
+        if (briefOrders && briefOrders.length) {
+            orderList = briefOrders.map(function(order) {
                 return (
                         <OrderItem briefOrder={order} key={order.orderInfo.orderid}/>
                 );
@@ -68,36 +38,66 @@ var Order = React.createClass({
                 </div>
             );
         }
+        return orderList;
+    },
 
+    // callback method
+
+    onSelectOrderType: function(type) {
+        this.setState({'orderType': type});
+    },
+
+    // compoment specs
+
+    getInitialState: function() {
+        OrderBrief.actions.load({'orderType': orderType.CURRENT});
+        OrderBriefHistory.actions.load({'orderType': orderType.HISTORY});
+        OrderBriefVisible.actions.load({'orderType': orderType.VISIBLE});
+        return {
+            'data': {
+                'status': 1,
+                'briefOrders': [],
+                'currentOrderCount': 0,
+                'historyOrderCount': 0,
+                'allOrderCount': 0
+            },
+            'history': {
+                'briefOrders': []
+            },
+            'visible': {
+                'briefOrders': []
+            },
+            'orderType': this.props.orderType
+        };
+    },
+
+    componentWillReceiveProps: function(newProps) {
+        if (newProps.orderType != this.state.orderType) {
+            this.setState({'orderType': newProps.orderType})
+        }
+    },
+
+    render: function() {
+        var currentOrderList = this._createOrderList(this.state.data.briefOrders);;
+        var historyOrderList = this._createOrderList(this.state.history.briefOrders);
+        var visibleOrderList = this._createOrderList(this.state.visible.briefOrders);
         return (
             <div className="orders-container">
-                <Tabs activeKey={`${this.orderType}`} onTabClick={this.onSelectOrderType}
+                <Tabs activeKey={`${this.state.orderType}`} onTabClick={this.onSelectOrderType}
                     onChange={this.onSelectOrderType}>
                     <TabPane tab="当前订单" key={`${orderType.CURRENT}`}>
                         <div className="order-list">
-                            {
-                                this.orderType == orderType.CURRENT
-                                ? orderList
-                                : null
-                            }
+                            {currentOrderList}
                         </div>
                     </TabPane>
                     <TabPane tab="历史订单" key={`${orderType.HISTORY}`}>
                         <div className="order-list">
-                            {
-                                this.orderType == orderType.HISTORY
-                                ? orderList
-                                : null
-                            }
+                            {historyOrderList}
                         </div>
                     </TabPane>
                     <TabPane tab="所有订单" key={`${orderType.VISIBLE}`}>
                          <div className="order-list">
-                            {
-                                this.orderType == orderType.VISIBLE
-                                ? orderList
-                                : null
-                            }
+                            {visibleOrderList}
                         </div>
                     </TabPane>
                 </Tabs>
