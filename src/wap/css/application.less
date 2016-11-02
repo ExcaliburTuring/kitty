@@ -70,6 +70,10 @@
                 color: red;
             }
         }
+
+        &:active {
+            background-color: @gray-bg;
+        }
     }
 }
 
@@ -173,6 +177,10 @@
     .head-title .pinyin {
         left: 0.64rem;
     }
+
+    &:active {
+        background-color: @gray-bg;
+    }
 }
 
 .routes {
@@ -184,6 +192,10 @@
 
     .route-container {
         margin-bottom: 0.4rem;
+
+        &:active {
+            background-color: @gray-bg;
+        }
     }
 }
 
@@ -301,7 +313,13 @@
 
         .travel-img {
             width: 30%;
+            line-height: 0;
+            background-size: auto 100%;
 
+            img {
+                width: 100%;
+                height: auto;
+            }
         }
 
         .travel-info {
