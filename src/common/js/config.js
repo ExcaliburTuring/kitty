@@ -16,6 +16,7 @@ export var url = {
 	'group': '/travel/group',
 
 	'indexHot': '/index/hot',
+    'wapIndexHot': '/index/wap/hot',
 
     'order': '/order',
     'orderNew': '/order/new',
