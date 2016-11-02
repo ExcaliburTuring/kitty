@@ -3,66 +3,30 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Icon, Tooltip } from 'antd';
-
-import { Tabs, WhiteSpace } from 'antd-mobile';
+import { Tabs, WhiteSpace, WingBlank, Button } from 'antd-mobile';
+const TabPane = Tabs.TabPane;
 
 import { url, orderType, defaultValue, orderStatus, refundStatus, refundType, priceUtil } from 'config';
 import Rabbit from 'rabbit';
+import OrderOperationHelper from 'order_operation';
 
 import 'antd/lib/index.css';
 
 var OrderBrief = Rabbit.create(url.orderBrief);
+var OrderBriefHistory = Rabbit.create(url.orderBrief);
+var OrderBriefVisible = Rabbit.create(url.orderBrief);
 var Order = React.createClass({
 
-    orderType: orderType.CURRENT,
+    mixins: [
+        Reflux.connect(OrderBrief.store, 'data'),
+        Reflux.connect(OrderBriefHistory.store, 'history'),
+        Reflux.connect(OrderBriefVisible.store, 'visible')
+    ],
 
-    mixins: [Reflux.connect(OrderBrief.store, 'data')],
-
-    // callback method
-
-    onSelectOrderType: function(type) {
-        if (this.orderType == type) {
-            return;
-        }
-        OrderBrief.actions.load({'orderType': type});
-        this.orderType = type;
-    },
-
-    // compoment specs
-
-    getInitialState: function() {
-        OrderBrief.actions.load({'orderType': this.props.orderType});
-        this.orderType = this.props.orderType;
-        return {
-            'data': {
-                'status': 1,
-                'briefOrders': [],
-                'currentOrderCount': 0,
-                'historyOrderCount': 0,
-                'allOrderCount': 0
-            },
-        };
-    },
-
-    componentWillReceiveProps: function(newProps) {
-        if (newProps.orderType != this.orderType) {
-            OrderBrief.actions.load({'orderType': newProps.orderType});
-            this.orderType = newProps.orderType;
-        }
-    },
-
-    render: function() {
-        var data = this.state.data;
-        const TabPane = Tabs.TabPane;
-        if (data.status != 0) {
-            <div>
-                <p>订单查询失败, 请联系客服： {defaultValue.hotline}</p>
-            </div>
-        }
+    _createOrderList: function(briefOrders) {
         var orderList = null;
-        if (data.briefOrders != null && data.briefOrders.length > 0) {
-            orderList = data.briefOrders.map(function(order) {
+        if (briefOrders && briefOrders.length) {
+            orderList = briefOrders.map(function(order) {
                 return (
                         <OrderItem briefOrder={order} key={order.orderInfo.orderid}/>
                 );
@@ -74,35 +38,66 @@ var Order = React.createClass({
                 </div>
             );
         }
+        return orderList;
+    },
 
+    // callback method
+
+    onSelectOrderType: function(type) {
+        this.setState({'orderType': type});
+    },
+
+    // compoment specs
+
+    getInitialState: function() {
+        OrderBrief.actions.load({'orderType': orderType.CURRENT});
+        OrderBriefHistory.actions.load({'orderType': orderType.HISTORY});
+        OrderBriefVisible.actions.load({'orderType': orderType.VISIBLE});
+        return {
+            'data': {
+                'status': 1,
+                'briefOrders': [],
+                'currentOrderCount': 0,
+                'historyOrderCount': 0,
+                'allOrderCount': 0
+            },
+            'history': {
+                'briefOrders': []
+            },
+            'visible': {
+                'briefOrders': []
+            },
+            'orderType': this.props.orderType
+        };
+    },
+
+    componentWillReceiveProps: function(newProps) {
+        if (newProps.orderType != this.state.orderType) {
+            this.setState({'orderType': newProps.orderType})
+        }
+    },
+
+    render: function() {
+        var currentOrderList = this._createOrderList(this.state.data.briefOrders);;
+        var historyOrderList = this._createOrderList(this.state.history.briefOrders);
+        var visibleOrderList = this._createOrderList(this.state.visible.briefOrders);
         return (
             <div className="orders-container">
-                <Tabs activeKey={`${this.orderType}`} onTabClick={this.onSelectOrderType}>
+                <Tabs activeKey={`${this.state.orderType}`} onTabClick={this.onSelectOrderType}
+                    onChange={this.onSelectOrderType}>
                     <TabPane tab="当前订单" key={`${orderType.CURRENT}`}>
                         <div className="order-list">
-                            {
-                                this.orderType == orderType.CURRENT
-                                ? orderList
-                                : null
-                            }
+                            {currentOrderList}
                         </div>
                     </TabPane>
                     <TabPane tab="历史订单" key={`${orderType.HISTORY}`}>
                         <div className="order-list">
-                            {
-                                this.orderType == orderType.HISTORY
-                                ? orderList
-                                : null
-                            }
+                            {historyOrderList}
                         </div>
                     </TabPane>
                     <TabPane tab="所有订单" key={`${orderType.VISIBLE}`}>
                          <div className="order-list">
-                            {
-                                this.orderType == orderType.VISIBLE
-                                ? orderList
-                                : null
-                            }
+                            {visibleOrderList}
                         </div>
                     </TabPane>
                 </Tabs>
@@ -113,29 +108,37 @@ var Order = React.createClass({
 
 var OrderItem = React.createClass({
 
+    onClick: function() {
+        var orderInfo = this.props.briefOrder.orderInfo;
+        window.location.href = `/order/${orderInfo.orderid}`;
+    },
+
     render: function() {
         var briefOrder = this.props.briefOrder;
         var orderInfo = briefOrder.orderInfo;
         var travelRoute = briefOrder.travelRoute;
         var travelGroup = briefOrder.travelGroup;
         return (
-            <div className="order-item-container">
-                <div className="travel-img">
-                    <a href={`/travel/${travelRoute.routeid}`} target="_blank">
-                        <img src={travelRoute.headImg} className="img-responsive"/>
-                    </a>
+            <div className="order-item-container" onClick={this.onClick}>
+                <div className="order-item-title clearfix">
+                    <p className="pull-left">订单号：{orderInfo.orderid}</p>
+                    <p className="pull-right travel-status">{orderStatus.getDesc(orderInfo.status)}</p>
                 </div>
-                <div className="travel-info">
-                    <p className="travel-name">{travelRoute.name}</p>
-                    <p className="travel-time">{travelGroup.startDate} 到 {travelGroup.endDate}</p>
-                    <TravellerList names={briefOrder.travellerNames} keyPrefix={orderInfo.orderid}/>
-                    <OrderPrice orderInfo={orderInfo} travelGroup={travelGroup}
-                        policy={briefOrder.policy} code={briefOrder.code} student={briefOrder.student}/>
-                    <Refund status={orderInfo.status} orderRefound={briefOrder.orderRefound}/>
+                <div className="order-item-body clearfix">
+                    <div className="travel-img pull-left">
+                        <a href={`/travel/${travelRoute.routeid}`}>
+                            <img src={travelRoute.headImg} className="img-responsive"/>
+                        </a>
+                    </div>
+                    <div className="travel-info pull-left">
+                        <p className="travel-name ellipsis">【{travelRoute.name}】{travelRoute.title}</p>
+                        <TravellerList names={briefOrder.travellerNames} keyPrefix={orderInfo.orderid}/>
+                        <p className="travel-time">日期：{travelGroup.startDate} ~ {travelGroup.endDate}</p>
+                    </div>
                 </div>
-                <div className="other-info">
-                    <p className="travel-status">已付款</p>
-                    <div className="buttons">查看</div>
+                <div className="order-item-footer clearfix">
+                    <OrderPrice orderInfo={orderInfo} travelGroup={travelGroup}/>
+                    <OrderOperation orderInfo={orderInfo}/>
                 </div>
             </div>
         );
@@ -147,10 +150,11 @@ var TravellerList = React.createClass({
 
     render: function() {
         var keyPrefix = this.props.keyPrefix;
+        var length = this.props.names.length - 1;
         var travellers = this.props.names.map(function(name, index) {
             return (
                 <span key={`${keyPrefix}-${index}`} className="traveller-name ellipsis">
-                    {name} 
+                    {name} {index >= length ? '': ',' }
                 </span>
             );
         });
@@ -166,71 +170,83 @@ var TravellerList = React.createClass({
 var OrderPrice = React.createClass({
 
     render: function() {
-        var policy = this.props.policy;
-        var code = this.props.code;
-        var student = this.props.student;
-        var priceTip = (
-            <div>
-                {this.props.travelGroup.price}
-                <Icon type="cross" />
-                {this.props.orderInfo.count}
-            </div>
-        );
-        if (policy == null && code == null && student == null) {
-            return (
-                <div className="order-price">
-                    <span className="order-label">价格</span>
-                    <Tooltip placement="top" title={priceTip}>
-                        <span className="price">{this.props.orderInfo.actualPrice}</span>
-                    </Tooltip>
-                </div>
-            );
-        }
-        var totalDiscount = 0;
-        if (policy != null) {
-            totalDiscount += priceUtil.getPrice(policy.value);
-        }
-        if (code != null) {
-            totalDiscount += priceUtil.getPrice(code.value);
-        }
-        if (this.props.student != null) {
-            totalDiscount += priceUtil.getPrice(student.value) * this.props.orderInfo.studentCount;
-        }
-        var discountTip = (
-            <div>
-                {policy != null ? <p>{policy.desc}:减{policy.value}</p> : null }
-                {code != null ? <p>优惠码{code.discountCode}:减{code.value}</p> : null }
-                {student != null ? <p>学生优惠每人减{student.value},共{this.props.orderInfo.studentCount}人</p> : null }
-            </div>
-        );
-
-        return (
-            <div className="order-price">
-                <span className="order-label">价格</span>
-                <span className="price">  {this.props.orderInfo.actualPrice}</span>
-            </div>
-        );
-    }
-});
-
-var Refund = React.createClass({
-
-    render: function() {
-        var status = this.props.status;
-        var orderRefound = this.props.orderRefound;
-        if (orderRefound == null
-            || (status != orderStatus.REFUNDING && status != orderStatus.REFUNDED)) {
+        var orderInfo = this.props.orderInfo;
+        if (orderInfo.status == orderStatus.REFUNDING 
+            || orderInfo.status == orderStatus.REFUNDED
+            || orderInfo.actualPrice == '￥0') {
             return null;
         }
         return (
-            <div className="order-price">
-                <span className="order-label">退款</span>
-                <span className="price">{orderRefound.refund}</span>
-                （{refundStatus.getDesc(orderRefound.status)}）
+            <div className="order-price pull-left">
+                <span className="order-label">价格:</span>
+                {
+                    orderInfo.price == orderInfo.actualPrice
+                    ? null
+                    : <span className="price">{orderInfo.price}</span>
+                }
+                <span className="actual-price">{orderInfo.actualPrice}</span>
             </div>
         );
     }
 });
 
+var OrderOperation = React.createClass({
+
+    btnText: {
+        1: '支付',
+        2: '取消订单',
+        3: '退款'
+    },
+
+    _doCancelOrder: function(orderInfo) {
+        var self = this;
+        $.ajax({
+            url: url.orderOrder,
+            type: 'post',
+            data: {'orderid': orderInfo.orderid, '_method': 'delete'}
+        }).done(function(data) {
+            if (data.status != 0) {
+                Toast.error(defaultValue.cancelOrderMsg);
+            } else {
+                setTimeout('location.reload(true);', 300);
+            }
+        }).fail(function() {
+            Toast.error(defaultValue.cancelOrderMsg);
+        });
+    },
+
+    _doRefundOrder: function(orderInfo) {
+
+    },
+
+    onClick: function(e) {
+        e.stopPropagation();
+        var orderInfo = this.props.orderInfo;
+        var status = orderInfo.status;
+        if (status == orderStatus.WAITING) {
+            // XieZhenzong: 微信支付
+        } else if (status == orderStatus.PAYING){
+            this._doCancelOrder(orderInfo);
+        } else if (status == orderStatus.PAID) {
+            this._doRefundOrder(orderInfo);
+        }
+    },
+
+    render: function() {
+        var status = this.props.orderInfo.status
+        if (status != orderStatus.WAITING
+                && status != orderStatus.PAYING
+                && status != orderStatus.PAID) {
+            return null;
+        }
+        return (
+            <div className="oder-operation pull-right">
+                <Button inline onClick={this.onClick} size="small">
+                    {this.btnText[status]}
+                </Button>
+            </div>
+        );
+    }
+})
 
 module.exports = Order;

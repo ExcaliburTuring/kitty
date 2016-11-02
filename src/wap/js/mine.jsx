@@ -91,7 +91,7 @@ var Mine = React.createClass({
                     </List.Item>
                     <List.Item arrow="horizontal" thumb={t3} onClick={this.onDiscountCodesClick}
                         extra={this.state.discountCode.discountCodes.length}>
-                        我的优惠券
+                        优惠券
                     </List.Item>
                     <List.Item arrow="horizontal" thumb={t4} onClick={this.onContactsClick}>
                         出行人
