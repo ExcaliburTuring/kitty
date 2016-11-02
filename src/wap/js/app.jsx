@@ -90,7 +90,15 @@ var App = React.createClass({
                     selectedIcon={{ uri: home2 }}
                     selected={this.state.selectedTab === 'home'}
                     onPress={() => {this.onTabBarItemPress('home')}}>
-                    <Home />
+                    <Home onOrdersClick={this.onOrdersClick}/>
+                </TabBar.Item>
+                <TabBar.Item
+                    title="行程" key="order"
+                    icon={{ uri: compass1 }}
+                    selectedIcon={{ uri: compass2 }}
+                    selected={this.state.selectedTab === 'order'}
+                    onPress={() => {this.onTabBarItemPress('order')}}>
+                    <Order orderType={this.state.orderType}/>
                 </TabBar.Item>
                 <TabBar.Item
                     title="我的" key="mine"
@@ -101,14 +109,6 @@ var App = React.createClass({
                     <Mine basicInfo={this.state.basicInfo}
                         onOrdersClick={this.onOrdersClick}
                         onAccountEditClick={this.onAccountEditClick}/>
-                </TabBar.Item>
-                <TabBar.Item
-                    title="行程" key="order"
-                    icon={{ uri: compass1 }}
-                    selectedIcon={{ uri: compass2 }}
-                    selected={this.state.selectedTab === 'order'}
-                    onPress={() => {this.onTabBarItemPress('order')}}>
-                    <Order orderType={this.state.orderType}/>
                 </TabBar.Item>
             </TabBar>
         );
