@@ -11,7 +11,6 @@ var GroupInfo = React.createClass({
         var selectTraveller = this.props.selectTraveller;
         return (
             <div className="travel-info-container">
-                <img className="img-responsive" src={travelRoute.headImg}/>
                 <div className="travel-title">
                     <p>【{travelRoute.name}】{travelRoute.title}</p>
                 </div>

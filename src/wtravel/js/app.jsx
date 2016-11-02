@@ -86,7 +86,7 @@ var App = React.createClass({
         var imgtext = this.state.routes.imgtext;
        
         return (
-            <div className="travel-container">
+            <div className="travel-container ">
                 <div className="travel-main-container">
                     <Slider route={routes} sliderImgs={imgtext.sliderImgs} 
                             descriptions={imgtext.descriptions}/>

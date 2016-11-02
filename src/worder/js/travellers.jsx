@@ -42,17 +42,22 @@ var SelectTraveller = React.createClass({
             );
         });
         return (
-            <div className="travellers-container">
-                <WingBlank>
-                    <h3>出行人</h3>
-                    <div className="traveller-show">
-                        {travellerList}
-                    </div>
-                    <div className="traveller-selector-trigger">
-                        <Button className="am-button-fix" 
-                            onClick={this.onTraverllerSelectorClick}>选择出行人</Button>
-                    </div>
-                </WingBlank>
+            <div>
+                <div className="travellers-container">
+                    <WingBlank>
+                        <div className="traveller-show">
+                            {travellerList}
+                        </div>
+                    </WingBlank>
+                </div>
+                <div className="travellers-button">
+                    <WingBlank>
+                        <div className="traveller-selector-trigger">
+                            <Button className="am-button-fix" 
+                                onClick={this.onTraverllerSelectorClick}><Icon type="plus-circle-o" />选择出行人</Button>
+                        </div>
+                    </WingBlank>
+                </div>
             </div>
         );
     }
