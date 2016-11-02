@@ -53,7 +53,7 @@ var Discount = React.createClass({
                 <InputNumber min={0} max={this.props.count} onChange={this.props.onStudentDiscountChange}/>
             );
             studentDiscountTip = (
-                <span>学生优惠须持正规学校学生证方可享受{discountData.studentDiscount.value}</span>
+                <span>须持正规学校学生证方可享受</span>
             );
         }
         return (
