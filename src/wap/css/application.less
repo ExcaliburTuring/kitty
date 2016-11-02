@@ -120,7 +120,7 @@ p {
 
         p{
             color: @black;
-            line-height: 0.4rem;
+            line-height: 0.3rem;
             margin: 0;
         }
 
@@ -129,7 +129,7 @@ p {
             color: @currency;
             
             img {
-                margin: 0.3rem 0 0.1rem;
+                margin: 0.1rem 0 0.1rem;
                 width: 0.8rem;
                 height: 0.8rem;
             }
@@ -269,6 +269,7 @@ p {
         text-align: center;
         color: @white;
         background-image: url(../img/avatarbg.jpg);
+        background-size: 100%;
 
         img {
             width: 1.28rem;
@@ -297,13 +298,32 @@ p {
         }
 
         .order-count {
-            font-size: 0.4rem;
             color: @currency;
         }
     }
 
     .am-list {
         margin-top: .2rem;
+    }
+
+    .am-list-item {
+        height: 1rem;
+    }
+
+    .am-list-item img {
+        width: .36rem;
+        height: .36rem;
+    }
+
+    .am-list-item .am-list-line .am-list-content {
+        color: @dark-black;
+        font-size: .32rem;
+        line-height: .6rem;
+    }
+
+    .am-list-item .am-list-line .am-list-extra {
+        font-size: .32rem;
+        color: @currency;
     }
 }
 
