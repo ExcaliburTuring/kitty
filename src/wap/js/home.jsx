@@ -58,7 +58,7 @@ var Home = React.createClass({
                     <Slider />
                 </div>
                 <div className="daohang row">
-                    <div className="Athird">
+                    <div className="Afourth">
                         <div className="mylabel left">
                             <a href="/account/wdiscount">
                                 <i className="icon"><img src={d}/></i>
@@ -66,7 +66,15 @@ var Home = React.createClass({
                             </a>
                         </div>
                     </div>
-                    <div className="Athird">
+                    <div className="Afourth">
+                        <div className="mylabel right">
+                            <a href="/account/wdiscount">
+                                <i className="icon"><img src={icona}/></i>
+                                <p>路线</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div className="Afourth">
                         <div className="mylabel right">
                             <a href="/account/wdiscount">
                                 <i className="icon"><img src={e}/></i>
@@ -74,7 +82,7 @@ var Home = React.createClass({
                             </a>
                         </div>
                     </div>
-                    <div className="Athird">
+                    <div className="Afourth">
                         <div className="mylabel right">
                             <a href="javascript:">
                                 <i className="icon"><img src={f}/></i>
