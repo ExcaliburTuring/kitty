@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 import marked from 'marked';
 import Swiper from 'swiper';
 import { Drawer, ListView, Button, Grid, Toast } from 'antd-mobile';
-import { Image } from 'react-bootstrap';
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
@@ -86,30 +85,32 @@ var App = React.createClass({
         var imgtext = this.state.routes.imgtext;
        
         return (
-            <div className="travel-container ">
-                <div className="travel-main-container">
-                    <Slider route={routes} sliderImgs={imgtext.sliderImgs} 
-                            descriptions={imgtext.descriptions}/>
-                    <div className="travel-info-container">
-                        <h1>{routes.minPrice}</h1>
-                        <div className="detail row">
+            <div className="travel-container">
+                <Drawer open={this.state.open} onOpenChange={this.onOpenChange}
+                    sidebar={
+                        <Siderbar routes={routes} days={imgtext.days}/>
+                    }>
+                    <div className="travel-main-container">
+                        <Slider route={routes} sliderImgs={imgtext.sliderImgs} 
+                                descriptions={imgtext.descriptions}/>
+                        <div className="travel-info-container">
+                            <div className="row">
                             <div className="Asecond a1">旅游天数: {routes.days}</div>
                             <div className="Asecond a2">季节: {"夏天"}</div>
+                            </div>
+                            <div className="row">
                             <div className="Asecond a3">集合地点: {routes.distination}</div>
                             <div className="Asecond a4">人数上限: {"20人"}</div>
+                            </div>
                         </div>
+                        <div className="travel-dairy-container"
+                            dangerouslySetInnerHTML={{__html: marked(mdtext)}}>
+                        </div>
+                        <AdditionInfo groups={this.state.groups.groups} />
+                        <Button type="primary" className="days-list-toggle"
+                            onClick={this.onOpenChange}>目录</Button>
                     </div>
-                    <div className="travel-dairy-container"
-                        dangerouslySetInnerHTML={{__html: marked(mdtext)}}>
-                    </div>
-                    <Group groups={this.state.groups.groups} />
-                    <AdditionInfo />
-                </div>
-                <Siderbar routes={routes} days={imgtext.days}
-                    open={this.state.open} onOpenChange={this.onOpenChange}/>
-                <Button type="primary" className="days-list-toggle"
-                    style={this.state.open ? {'zIndex': 0}: null}
-                    onClick={this.onOpenChange}>目录</Button>
+                </Drawer>
             </div>
         );
     }
@@ -162,7 +163,7 @@ var Siderbar = React.createClass({
             rowHasChanged: (row1, row2) => row1 !== row2,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
         }).cloneWithRows(days);
-        var sidebar = (
+        return (
             <div className="sidebar-container">
                 <p>{`${routes.title}--行程概要`}</p>
                 <p>{`出发城市：${routes.departure}`}</p>
@@ -176,12 +177,6 @@ var Siderbar = React.createClass({
                     onEndReached={this.onEndReached}
                     onEndReachedThreshold={10}/>
             </div>
-        );
-        return (
-            <Drawer sidebar={sidebar} open={this.props.open} 
-                onOpenChange={this.props.onOpenChange}>
-                <div></div>
-            </Drawer>
         );
     }
 });
@@ -212,7 +207,7 @@ var Slider = React.createClass({
         var slideItemList = this.props.sliderImgs.map(function(img, index) {
             return (
                 <div className="swiper-slide swiper-no-swiping" key={index}>
-                    <Image src={img} responsive/>
+                    <img src={img} className="img-responsive"/>
                 </div>
             );
         })
@@ -223,11 +218,14 @@ var Slider = React.createClass({
                         {slideItemList}
                     </div>
                 </div>
-                <div className="bottom">【{route.name}】{route.title}</div>
+                <div className="travel-name">【{route.name}】{route.title}</div>
+                <div className="travel-price-container">
+                    ¥
+                    <span className="travel-price">{route.minPrice.replace("￥", "")}</span>
+                </div>
             </div>
         );
     }
-
 });
 
 var Group = React.createClass({
@@ -280,54 +278,65 @@ var AdditionInfo = React.createClass({
 
     render: function() {
         return (
-            <div className="addition-info-container row">
-                <div className="Afourth">
-                    <img className="bg" src={bg} />
-                    <div className="b1">
-                        <img className="icon" src={b1} />
-                        <div className="p">当地气候</div>
+            <div className="addition-info-container">
+                <div className="row">
+                    <div className="Afourth">
+                        <img className="bg" src={bg} />
+                        <div className="b1">
+                            <img className="icon" src={b1} />
+                            <div className="p">当地气候</div>
+                        </div>
+                    </div>
+                    <div className="Afourth">
+                        <img className="bg" src={bg} />
+                        <div className="b2">
+                            <img className="icon" src={b2} />
+                            <div className="p">物资准备</div>
+                        </div>
+                    </div>
+                    <div className="Afourth">
+                        <img className="bg" src={bg} />
+                        <div className="b1">
+                            <img className="icon" src={b3} />
+                            <div className="p">集合地点</div>
+                        </div>
+                    </div>
+                    <div className="Afourth">
+                        <img className="bg" src={bg} />
+                        <div className="b2">
+                            <img className="icon" src={b4} />
+                            <div className="p">费用详细</div>
+                        </div>
                     </div>
                 </div>
-                <div className="Afourth">
-                    <img className="bg" src={bg} />
-                    <div className="b2">
-                        <img className="icon" src={b2} />
-                        <div className="p">物资准备</div>
+                <div className="row">
+                    <div className="Afourth">
+                        <img className="bg" src={bg} />
+                        <div className="b2">
+                            <img className="icon" src={b5} />
+                            <div className="p">报名</div>
+                        </div>
                     </div>
-                </div>
-                <div className="Afourth">
-                    <img className="bg" src={bg} />
-                    <div className="b3">
-                        <img className="icon" src={b3} />
-                        <div className="p">集合地点</div>
+                    <div className="Afourth">
+                        <img className="bg" src={bg} />
+                        <div className="b1">
+                            <img className="icon" src={b5} />
+                            <div className="p">合同预览</div>
+                        </div>
                     </div>
-                </div>
-                <div className="Afourth">
-                    <img className="bg" src={bg} />
-                    <div className="b4">
-                        <img className="icon" src={b4} />
-                        <div className="p">费用详细</div>
+                    <div className="Afourth">
+                        <img className="bg" src={bg} />
+                        <div className="b2">
+                            <img className="icon" src={b6} />
+                            <div className="p">客服</div>
+                        </div>
                     </div>
-                </div>
-                <div className="Afourth">
-                    <img className="bg" src={bg} />
-                    <div className="b5">
-                        <img className="icon" src={b5} />
-                        <div className="p">合同预览</div>
-                    </div>
-                </div>
-                <div className="Afourth">
-                    <img className="bg" src={bg} />
-                    <div className="b6">
-                        <img className="icon" src={b6} />
-                        <div className="p">客服</div>
-                    </div>
-                </div>
-                <div className="Afourth">
-                    <img className="bg" src={bg} />
-                    <div className="b7">
-                        <img className="icon" src={b7} />
-                        <div className="p">退款&保证</div>
+                    <div className="Afourth">
+                        <img className="bg" src={bg} />
+                        <div className="b1">
+                            <img className="icon" src={b7} />
+                            <div className="p">退款&保证</div>
+                        </div>
                     </div>
                 </div>
             </div>
