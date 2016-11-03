@@ -12,9 +12,10 @@ import a from '../img/A.png';
 import b from '../img/B.png';
 import c from '../img/C.png';
 import WH from '../img/51.png';
-import d from '../img/D.png';
-import e from '../img/E.png';
+import d from '../img/D.svg';
+import e from '../img/E.svg';
 import f from '../img/F.png';
+import g from '../img/G.svg';
 
 import 'antd/lib/index.css';
 
@@ -118,16 +119,16 @@ var DaoHang = React.createClass({
         return (
             <div className="daohang row">
                 <div className="Afourth">
-                    <div className="mylabel left">
-                        <a href="javascript:" onClick={()=>{this.props.onOrdersClick(orderType.CURRENT)}}>
-                            <i className="icon"><img src={d}/></i>
+                    <div className="mylabel right">
+                        <a href="/account/wdiscount" onClick={()=>{this.props.onOrdersClick(orderType.CURRENT)}}>
+                            <i className="icon"><img src={e}/></i>
                             <p>行程</p>
                         </a>
                     </div>
                 </div>
                 <div className="Afourth">
-                    <div className="mylabel right">
-                        <a href="/account/wdiscount">
+                    <div className="mylabel left">
+                        <a href="javascript:">
                             <i className="icon"><img src={d}/></i>
                             <p>路线</p>
                         </a>
@@ -135,17 +136,17 @@ var DaoHang = React.createClass({
                 </div>
                 <div className="Afourth">
                     <div className="mylabel right">
-                        <a href="/account/wdiscount">
-                            <i className="icon"><img src={e}/></i>
-                            <p>红包</p>
+                        <a href="javascript:">
+                            <i className="icon"><img src={g}/></i>
+                            <p>活动</p>
                         </a>
                     </div>
                 </div>
                 <div className="Afourth">
                     <div className="mylabel right">
-                        <a href="javascript:">
+                        <a href="/account/wdiscount">
                             <i className="icon"><img src={f}/></i>
-                            <p>活动</p>
+                            <p>红包</p>
                         </a>
                     </div>
                 </div>
@@ -163,7 +164,7 @@ var Hot = React.createClass({
         }
         var route = routes[0];
         return (
-            <div className="special">
+            <div className="special row">
                 <div className="head-title">独家精品</div>
                 <a href={`${url.travel}/${route.routeid}`}>
                     <img className="head-img" src={route.headImg} />
