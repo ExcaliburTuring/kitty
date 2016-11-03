@@ -7,35 +7,39 @@ body {
 
 .sidebar-container {
     background-color: @white;
-    width: 6rem;
+    width: 5.5rem;
     height: 100%;
     overflow: scroll;
 
-    p {
-        margin: 0;
-        font-size: 0.36rem;
-    }
+    .sidebar-header {
+        background-color: @gray-bg;
+        padding: .4rem .3rem;
 
-    .am-list-view-scrollview {
-        height: 100%;
-    }
-
-    .day-item-container {
-        padding: 0.2rem;
-        margin: 0.1rem;
-        border-radius: 0.2rem;
-        border: 1px solid @gray;
-
-        .day-item p {
-            width: 4.6rem;
-            line-height: 0.4rem;
-            color: @gray;
-            font-size: 0.3rem;
-            text-overflow:ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
+        p {
+            font-size: .5rem;
         }
     }
+
+    .sidebar-days {
+
+        .sidebar-days-no {
+            margin-right: .1rem;
+            padding-right: .1rem;
+            border-right: 1px dashed @gray;
+            font-size: .26rem;
+            color: #444;
+        }
+
+        .am-list-item .am-list-line .am-list-content {
+            font-size: .32rem;
+            color: #666;
+        }
+    }
+
+    .sidebar-footer {
+        background-color: @gray-bg;
+        padding: .2rem .3rem;
+    } 
 }
 
 .days-list-toggle {
@@ -167,49 +171,11 @@ body {
     }
 }
 
-.group-container {
-    margin-top: 0.4rem;
-    padding: 0 4%;
-    border-top: 1px solid @gray-line;
-
-    h4 {
-        text-align:  center;
-        font-size: 0.48rem;
-    }
-
-    p {
-        font-size: 0.24rem;
-        margin: 0;
-    }
-
-    .group-item-container {
-        padding: 0.2rem 0.1rem;
-        border-radius: 0.2rem;
-        border: 1px solid @silver;
-        margin: 0.16rem;
-        text-align: center;
-    }
-
-    .am-grid .am-flexbox .am-flexbox-item.am-grid-item:active {
-        background: none;
-
-        .group-item-container {
-            border: 1px solid @currency;
-        }
-
-        p {
-            color: @currency;
-
-            span {
-                color: @currency;
-            }
-        }
-    }
-}
-
 .addition-info-container {
     border-top: 1px solid @gray-line;
     margin-top: 0.4rem;
+    position: relative;
+    z-index: 1;
 
     .p {
         font-size: 0.24rem;
@@ -252,4 +218,174 @@ body {
     .b2 {
         background-color: #FF9E80;
     }
+
+    #page_end {
+        height:0px; 
+        overflow:hidden;
+    }
 }
+
+.new-order-container {
+
+    .new-header {
+        padding: .2rem .4rem;
+        min-height: 1.4rem;
+        border-bottom: 1px solid @gray-line;
+
+        img.img-responsive {
+            width: 2.5rem;
+            position: absolute;
+            top: -0.7rem;
+            left: .5rem;
+        }
+
+        .new-title {
+            margin-left: 2.7rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
+    }
+
+    .new-body {
+        padding: .3rem .4rem;
+        margin-bottom: .2rem;
+        overflow: scroll;
+        height: 7.5rem;
+
+        .new-group-list {
+            margin-bottom: .3rem;
+
+            .group-container {
+                border: 1px solid @gray;
+                border-radius: .15rem;
+                margin-top: .1rem;
+
+                div {
+                    width: 100%;
+                    font-size: .28rem;
+                    line-height: .5rem;
+                    margin: 0;
+                    text-align: center;
+                }
+
+                .group-title {
+                    margin-right: .1rem;
+                    padding-right: .1rem;
+                    border-right: 1px dashed @gray;
+                }
+
+                .group-quota {
+                    color: @light-currency;
+                }
+            }
+
+            .group-container.selected {
+                border-color: @light-currency;
+                background-color: @light-currency;
+                color: white;
+
+                .group-title {
+                    border-right-color: white;
+                }
+
+                .group-quota {
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .new-footer {
+        border-top: 1px solid @gray-line;
+        min-height: .8rem;
+
+        p.pull-left {
+            padding: .4rem;
+
+            .new-price-label {
+                margin-left: .2rem;
+            }
+
+            .new-price {
+                margin-left: .15rem;
+                font-size: .5rem;
+                color: @currency;
+            }
+        }
+
+        button.pull-right {
+            width: 55%;
+            background-color: @currency;
+            padding: 0 .3rem;
+            color: white;
+            line-height: 1.2rem;
+            height: 1.2rem;
+            font-weight: normal;
+            border-radius: 0;
+        }
+    }
+}
+
+// 覆盖weui日历控件样式，
+.weui-picker-calendar {
+    height: auto;
+
+    .toolbar,
+    .toolbar .title {
+        font-size: .34rem;
+    }
+
+    .toolbar .toolbar-inner {
+        height: .8rem;
+
+        .picker-calendar-month-picker, 
+        .picker-calendar-year-picker {
+            line-height: .8rem;
+            max-width: 100%;
+        }
+
+        .picker-calendar-month-picker a.icon-only, 
+        .picker-calendar-year-picker a.icon-only {
+            height: .8rem;
+            line-height: .8rem;
+            font-size: .2rem;
+        }
+
+        i.icon.icon-next, 
+        i.icon.icon-prev {
+            width: .3rem;
+            height: .3rem;
+        }
+    }
+
+    .picker-modal-inner {
+        height: 4.2rem;
+    }
+
+    .picker-calendar-week-days {
+        height: .6rem;
+        line-height: .6rem;
+        font-size: .3rem;
+
+        .picker-calendar-week-day {
+            line-height: .6rem;
+        }
+    }
+
+    .picker-calendar-months {
+        height: 3.5rem;
+
+        .picker-calendar-day {
+            font-size: .3rem;
+
+            span {
+                width: .4rem;
+                height: .4rem;
+                line-height: .4rem;
+            }
+        }
+    }
+}
+

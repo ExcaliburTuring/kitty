@@ -2,11 +2,12 @@ import React from 'react';
 import Reflux from 'reflux';
 import marked from 'marked';
 import Swiper from 'swiper';
-import { Drawer, ListView, Button, Grid, Toast } from 'antd-mobile';
+import { Drawer, List, Button, Grid, Toast, Popup } from 'antd-mobile';
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
 
+import f1 from '../img/f1.png';
 import img from '../img/img.jpg';
 import bg from '../img/11.png';
 import b1 from '../img/b1.png';
@@ -88,7 +89,8 @@ var App = React.createClass({
             <div className="travel-container">
                 <Drawer open={this.state.open} onOpenChange={this.onOpenChange}
                     sidebar={
-                        <Siderbar routes={routes} days={imgtext.days}/>
+                        <Siderbar routes={routes} days={imgtext.days}
+                            onClick={this.onOpenChange}/>
                     }>
                     <div className="travel-main-container">
                         <Slider route={routes} sliderImgs={imgtext.sliderImgs} 
@@ -106,7 +108,7 @@ var App = React.createClass({
                         <div className="travel-dairy-container"
                             dangerouslySetInnerHTML={{__html: marked(mdtext)}}>
                         </div>
-                        <AdditionInfo groups={this.state.groups.groups} />
+                        <AdditionInfo route={routes} groups={this.state.groups.groups} />
                         <Button type="primary" className="days-list-toggle"
                             onClick={this.onOpenChange}>目录</Button>
                     </div>
@@ -118,64 +120,53 @@ var App = React.createClass({
 
 var Siderbar = React.createClass({
 
-    _ListViewRender: {
-        //'className': "days-list-sidebar",
-        // 'renderHeader': () => <span>header</span>,
-        // 'renderFooter': function() {
-        //     return (
-        //         <div>
-        //             {'加载完毕'}
-        //         </div>
-        //     );
-        // },
-        // 'renderSectionHeader': function(sectionData) {
-        //     return (
-        //         <div>Header</div>
-        //     );
-        // },
-        'renderRow':  function(rowData, sectionID, rowID) {
-            return (
-                <div key={rowID} className="day-item-container">
-                    <p>{rowData.title}</p>
-                    <div className="day-item">
-                        <p>{`行程：${rowData.mdtext}`}</p>
-                        <p>{`亮点：${rowData.spots}`}</p>
-                        <p>{`距离: ${rowData.distance}`}</p>
-                        <p>{`住宿：${rowData.hotel}`}</p>
-                        <p>{`含餐：${rowData.food}`}</p>
-                    </div>
-                </div>
-            );
-        }
+    _scroll: function(top) {
+        this.props.onClick();
+        var $drawer = $('.am-drawer-content');
+        $drawer.animate({
+            scrollTop: $drawer.scrollTop() + top
+        });
     },
 
-    onEndReached(event) {
-        console.log("on end Reached")
+    onClick: function() {
+        this._scroll($('.addition-info-container').offset().top);
+    },
+
+    onDayItemClick: function(index) {
+        var offset = $(`.D${index}`).offset();
+        if (offset) {
+            this._scroll(offset.top);
+        }
     },
 
     render: function() {
-        var days = this.props.days;
+        var days = this.props.days, self = this;
         var routes = this.props.routes;
         if (!days || days.length == 0) {
-            return (<div></div>);
+            return null;
         }
-        var dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-        }).cloneWithRows(days);
+        var dayList = days.map(function(day, index) {
+            return (
+                <List.Item key={index} thumb={f1} onClick={()=>{self.onDayItemClick(index)}}>
+                    <span className="sidebar-days-no">{index + 1}</span>
+                    {day.title}
+                </List.Item>
+            );
+        });
+        
         return (
             <div className="sidebar-container">
-                <p>{`${routes.title}--行程概要`}</p>
-                <p>{`出发城市：${routes.departure}`}</p>
-                <p>{`结束城市：${routes.distination}`}</p>
-                <ListView
-                    {...this._ListViewRender}
-                    dataSource={dataSource}
-                    scrollRenderAheadDistance={500}
-                    scrollEventThrottle={20}
-                    onScroll={() => { console.log('scroll'); }}
-                    onEndReached={this.onEndReached}
-                    onEndReachedThreshold={10}/>
+                <div className="sidebar-header">
+                    <p>行程概要</p>
+                </div>
+                <div className="sidebar-days">
+                    <List>
+                        {dayList}
+                    </List>
+                </div>
+                <div className="sidebar-footer">
+                    <Button onClick={this.onClick}>点我报名</Button>
+                </div>
             </div>
         );
     }
@@ -228,19 +219,10 @@ var Slider = React.createClass({
     }
 });
 
-var Group = React.createClass({
+var AdditionInfo = React.createClass({
 
-    _renderItem: function(group, index) {
-        return (
-            <div className="group-item-container">
-                <p>{group.startDate}出发</p>
-                <p>{group.price}</p>
-            </div>
-        );
-    },
-
-    onClick: function(el, index) {
-        var group = el;
+    onOrderBtnClick: function() {
+        var group = this.state.selected;
         if (group.status != groupStatus.OPEN) {
             Toast.fail('本团不可报名');
             return ;
@@ -259,22 +241,53 @@ var Group = React.createClass({
         });
     },
 
-    render: function() {
-        return (
-            <div className="group-container">
-                <h4>报名</h4>
-                <Grid
-                    data={this.props.groups}
-                    columnNum={3}
-                    hasLine={false}
-                    renderItem={this._renderItem}
-                    onClick={this.onClick}/>
+    onShowGroupBtnClick: function() {
+        var route = this.props.route, self = this;
+        var groupList = this.props.groups.map(function(group, index) {
+            return (
+                <Group group={group} key={group.groupid}
+                    selected={self.state.selected.groupid == group.groupid}/>
+            );
+        });
+        Popup.show(
+            <div className="new-order-container">
+                <div className="new-header">
+                    <img src={route.headImg} className="img-responsive img-thumbnail pull-left"/>
+                    <p className="new-title ellipsis">【{route.name}】{route.title}</p>
+                </div>
+                <div className="new-body">
+                    <p>选择出行团队</p>
+                    <div className="new-group-list row">
+                        {groupList}
+                    </div>
+                    <div className="new-group-calendar"></div>
+                    <input className="new-group-calendar-input" type="hidden" />
+                </div>
+                <div className="new-footer clearfix">
+                    <p className="pull-left">金额:
+                        <span className="new-price-label">¥</span>
+                        <span className="new-price">{self.state.selected.price.replace("￥", "")}</span>
+                    </p>
+                    <Button inline className="pull-right" onClick={this.onOrderBtnClick}>立即报名</Button>
+                </div>
             </div>
+            ,{ animationType: 'slide-up' }
         );
-    }
-});
+        $(".new-group-calendar").calendar({
+            container: ".new-group-calendar",
+            input: ".new-group-calendar-input"
+        });
+    },
 
-var AdditionInfo = React.createClass({
+    getInitialState: function() {
+        return {
+            'selected': {}
+        };
+    },
+
+    componentWillReceiveProps: function(newProps) {
+        this.setState({'selected': newProps.groups[0]})
+    },
 
     render: function() {
         return (
@@ -310,7 +323,7 @@ var AdditionInfo = React.createClass({
                     </div>
                 </div>
                 <div className="row">
-                    <div className="Afourth">
+                    <div className="Afourth" onClick={this.onShowGroupBtnClick}>
                         <img className="bg" src={bg} />
                         <div className="b2">
                             <img className="icon" src={b5} />
@@ -340,7 +353,28 @@ var AdditionInfo = React.createClass({
                     </div>
                 </div>
             </div>
-        )
+        );
+    }
+});
+
+var Group = React.createClass({
+
+    render: function() {
+        var group = this.props.group;
+        return (
+            <div className={`group-container Athird ${this.props.selected ? 'selected': ''}`}>
+                <div className="group-start-date">{group.startDate}</div>
+                <div>
+                {
+                    group.title
+                    ? <span className="group-title">{group.title}</span>
+                    : null
+                }
+                剩余：
+                    <span className="group-quota">{group.maxCount - group.actualCount}</span>
+                </div>
+            </div>
+        );
     }
 });
 
