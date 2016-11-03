@@ -38,7 +38,8 @@ var SelectTraveller = React.createClass({
         var travellerList = this.props.selectTravellers.map(function(id, index) {
             return (
                 <Traveller traveller={travellers[id]} key={index} 
-                    onTravellerEditBtnClick={self.props.onTravellerEditBtnClick}/>
+                    onTravellerEditBtnClick={self.props.onTravellerEditBtnClick}
+                    onTravellerDeleteBtnClick={self.props.onTravellerDeleteBtnClick}/>
             );
         });
         return (

@@ -1,82 +1,51 @@
-@import "~base.less";
+@import "~wbase.less";
 @import "./content.less";
 
 body {
-    margin: 0;
-    background-color: @white;
-}
-
-.row {
-    width: 100%;
-    margin: 0;
-    position: relative;
-    display: table;
-
-    .Aone {
-        float: left;
-        width: 100%;
-    }
-
-    .Asecond {
-        float: left;
-        width: 50%;
-    }
-
-    .Athird {
-        float: left;
-        width: 33.33333333%;
-    }
-
-    .Afourth {
-        float: left;
-        width: 25%;
-    }
-
-}
-
-.am-drawer  {
-    position: fixed;
-    z-index: 1;
+    background-color: white;
 }
 
 .sidebar-container {
     background-color: @white;
-    width: 6rem;
+    width: 5.5rem;
     height: 100%;
     overflow: scroll;
 
-    p {
-        margin: 0;
-        font-size: 0.36rem;
-    }
+    .sidebar-header {
+        background-color: @gray-bg;
+        padding: .4rem .3rem;
 
-    .am-list-view-scrollview {
-        height: 100%;
-    }
-
-    .day-item-container {
-        padding: 0.2rem;
-        margin: 0.1rem;
-        border-radius: 0.2rem;
-        border: 1px solid @gray;
-
-        .day-item p {
-            width: 4.6rem;
-            line-height: 0.4rem;
-            color: @gray;
-            font-size: 0.3rem;
-            text-overflow:ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
+        p {
+            font-size: .5rem;
         }
     }
+
+    .sidebar-days {
+
+        .sidebar-days-no {
+            margin-right: .1rem;
+            padding-right: .1rem;
+            border-right: 1px dashed @gray;
+            font-size: .26rem;
+            color: #444;
+        }
+
+        .am-list-item .am-list-line .am-list-content {
+            font-size: .32rem;
+            color: #666;
+        }
+    }
+
+    .sidebar-footer {
+        background-color: @gray-bg;
+        padding: .2rem .3rem;
+    } 
 }
 
 .days-list-toggle {
     position: fixed;
     left: 0;
     bottom: 10%;
-    z-index: 1;
     border-radius: 0;
     border-top-right-radius: 40%;
     border-bottom-right-radius: 40%;
@@ -98,21 +67,13 @@ body {
     background-color: rgba(195, 195, 195, 1)!important;
 }
 
-.travel-dairy-container {
-    padding: 0 4%;
-}
-
 .travel-main-container {
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    // right: 0;
-    // bottom: 0;
-    // overflow: scroll;
+   
 }
 
 .slider-container {
     position: relative;
+    min-height: 4.6rem;
 
     .swiper-container {
         z-index: 0;
@@ -138,103 +99,83 @@ body {
         }
     }
 
-    .bottom {
+    .travel-name {
         position: absolute;
-        bottom: 0.1rem;
-        padding: 0 4%;
+        top: .2rem;
         color: @white;
         text-shadow: 1px 1px 3px @black;
-        font-size: 0.48rem;
+        font-size: .48rem;
+    }
+
+    .travel-price-container {
+        position: absolute;
+        bottom: .2rem;
+        right: .4rem;
+        font-size: .4rem;
+        color: white;
+
+        .travel-price {
+            margin-left: .15rem;
+            font-size: .7rem;
+            color: @currency;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+        }
     }
 }
 
 .travel-info-container {
-    margin: 0.4rem 4% 0;
+    margin: 0 4%;
+    line-height: 0.48rem;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid @gray-line;
 
-    .detail {
-        line-height: 0.48rem;
-        padding: 0.2rem;
-        border-top: 1px solid @gray-line;
-        border-bottom: 1px solid @gray-line;
-
-        span{
-            font-size: 0.28rem;
-        }
-
-        .a1, .a2, .a3, .a4 {
-            font-size: 0.28rem;
-            padding-left: 0.36rem;
-            background-repeat: no-repeat;
-            background-size: 0.28rem 0.28rem;
-            background-position: left 0.1rem;
-        }
-
-        .a1 {
-            background-image: url(../img/a1.png);
-        }
-
-        .a2 {
-            background-image: url(../img/a2.png);
-        }
-
-        .a3 {
-            background-image: url(../img/a3.png);
-        }
-
-        .a4 {
-            background-image: url(../img/a4.png);
-        }
+    span{
+        font-size: 0.28rem;
     }
 
-    h1 {
-        text-align: right;
-        font-size: 0.36rem;
+    .a1, .a2, .a3, .a4 {
+        font-size: 0.28rem;
+        padding-left: 0.36rem;
+        background-repeat: no-repeat;
+        background-size: 0.28rem 0.28rem;
+        background-position: left 0.1rem;
+    }
+
+    .a1 {
+        background-image: url(../img/a1.png);
+    }
+
+    .a2 {
+        background-image: url(../img/a2.png);
+    }
+
+    .a3 {
+        background-image: url(../img/a3.png);
+    }
+
+    .a4 {
+        background-image: url(../img/a4.png);
     }
 }
 
-.group-container {
-    margin-top: 0.4rem;
+.travel-dairy-container {
     padding: 0 4%;
-    border-top: 1px solid @gray-line;
+    min-height: 6rem;
+    margin-bottom: .5rem;
 
-    h4 {
-        text-align:  center;
-        font-size: 0.48rem;
-    }
-
-    p {
-        font-size: 0.24rem;
-        margin: 0;
-    }
-
-    .group-item-container {
-        padding: 0.2rem 0.1rem;
-        border-radius: 0.2rem;
-        border: 1px solid @silver;
-        margin: 0.16rem;
-        text-align: center;
-    }
-
-    .am-grid .am-flexbox .am-flexbox-item.am-grid-item:active {
-        background: none;
-
-        .group-item-container {
-            border: 1px solid @currency;
-        }
-
-        p {
-            color: @currency;
-
-            span {
-                color: @currency;
-            }
-        }
+    /**
+     * 去掉开头的p标签
+     */
+    p:first-child {
+        display: none;
     }
 }
 
 .addition-info-container {
     border-top: 1px solid @gray-line;
     margin-top: 0.4rem;
+    position: relative;
+    z-index: 1;
 
     .p {
         font-size: 0.24rem;
@@ -249,7 +190,8 @@ body {
         position: relative;
     }
 
-    .b1, .b2, .b3, .b4, .b5, .b6, .b7 {
+    .b1, 
+    .b2 {
         width: 100%;
         height: 100%;
         top: 0;
@@ -277,23 +219,173 @@ body {
         background-color: #FF9E80;
     }
 
-    .b3 {
-        background-color: @yellow;
-    }
-
-    .b4 {
-        background-color: #FF9E80;
-    }
-
-    .b5 {
-        background-color: #FF9E80;
-    }
-
-    .b6 {
-        background-color: @yellow;
-    }
-
-    .b7 {
-        background-color: #FF9E80;
+    #page_end {
+        height:0px; 
+        overflow:hidden;
     }
 }
+
+.new-order-container {
+
+    .new-header {
+        padding: .2rem .4rem;
+        min-height: 1.4rem;
+        border-bottom: 1px solid @gray-line;
+
+        img.img-responsive {
+            width: 2.5rem;
+            position: absolute;
+            top: -0.7rem;
+            left: .5rem;
+        }
+
+        .new-title {
+            margin-left: 2.7rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
+    }
+
+    .new-body {
+        padding: .3rem .4rem;
+        margin-bottom: .2rem;
+        overflow: scroll;
+        height: 7.5rem;
+
+        .new-group-list {
+            margin-bottom: .3rem;
+
+            .group-container {
+                border: 1px solid @gray;
+                border-radius: .15rem;
+                margin-top: .1rem;
+
+                div {
+                    width: 100%;
+                    font-size: .28rem;
+                    line-height: .5rem;
+                    margin: 0;
+                    text-align: center;
+                }
+
+                .group-title {
+                    margin-right: .1rem;
+                    padding-right: .1rem;
+                    border-right: 1px dashed @gray;
+                }
+
+                .group-quota {
+                    color: @light-currency;
+                }
+            }
+
+            .group-container.selected {
+                border-color: @light-currency;
+                background-color: @light-currency;
+                color: white;
+
+                .group-title {
+                    border-right-color: white;
+                }
+
+                .group-quota {
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .new-footer {
+        border-top: 1px solid @gray-line;
+        min-height: .8rem;
+
+        p.pull-left {
+            padding: .4rem;
+
+            .new-price-label {
+                margin-left: .2rem;
+            }
+
+            .new-price {
+                margin-left: .15rem;
+                font-size: .5rem;
+                color: @currency;
+            }
+        }
+
+        button.pull-right {
+            width: 55%;
+            background-color: @currency;
+            padding: 0 .3rem;
+            color: white;
+            line-height: 1.2rem;
+            height: 1.2rem;
+            font-weight: normal;
+            border-radius: 0;
+        }
+    }
+}
+
+// 覆盖weui日历控件样式，
+.weui-picker-calendar {
+    height: auto;
+
+    .toolbar,
+    .toolbar .title {
+        font-size: .34rem;
+    }
+
+    .toolbar .toolbar-inner {
+        height: .8rem;
+
+        .picker-calendar-month-picker, 
+        .picker-calendar-year-picker {
+            line-height: .8rem;
+            max-width: 100%;
+        }
+
+        .picker-calendar-month-picker a.icon-only, 
+        .picker-calendar-year-picker a.icon-only {
+            height: .8rem;
+            line-height: .8rem;
+            font-size: .2rem;
+        }
+
+        i.icon.icon-next, 
+        i.icon.icon-prev {
+            width: .3rem;
+            height: .3rem;
+        }
+    }
+
+    .picker-modal-inner {
+        height: 4.2rem;
+    }
+
+    .picker-calendar-week-days {
+        height: .6rem;
+        line-height: .6rem;
+        font-size: .3rem;
+
+        .picker-calendar-week-day {
+            line-height: .6rem;
+        }
+    }
+
+    .picker-calendar-months {
+        height: 3.5rem;
+
+        .picker-calendar-day {
+            font-size: .3rem;
+
+            span {
+                width: .4rem;
+                height: .4rem;
+                line-height: .4rem;
+            }
+        }
+    }
+}
+

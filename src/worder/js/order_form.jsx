@@ -131,6 +131,25 @@ var  OrderForm = React.createClass({
     },
 
     /**
+     * 删除一个出行人
+     */
+    _deleteOneTraveller: function(traveller) {
+        var id = `${traveller.accountid}-${traveller.contactid}`;
+        var selectTravellers = [];
+        for (var index in this.state.selectTravellers) {
+            if (id != this.state.selectTravellers[index]) {
+                selectTravellers.push(this.state.selectTravellers[index]);
+            }
+        }
+        this.setState({'contact': null, 'selectTravellers': selectTravellers});
+        OrderDiscount.actions.load({
+            'routeid': this.props.orderInfoData.orderInfo.routeid, 
+            'groupid': this.props.orderInfoData.orderInfo.groupid,
+            'count': selectTravellers.length
+        });
+    },
+
+    /**
      * 查找优惠
      */
     _findPolicyDiscount: function(discountid, policies) {
@@ -305,6 +324,13 @@ var  OrderForm = React.createClass({
     },
 
     /**
+     * 删除出行人
+     */
+    onTravellerDeleteBtnClick: function(traveller) {
+        this._deleteOneTraveller(traveller);
+    },
+
+    /**
      * 出行人编辑成功
      */
     onTravellerEditSaveSuccessful: function() {
@@ -322,20 +348,8 @@ var  OrderForm = React.createClass({
      */
     onDeleteSuccessful: function() {
         var contact = this.state.contact;
-        var id = `${contact.accountid}-${contact.contactid}`;
-        var selectTravellers = [];
-        for (var index in this.state.selectTravellers) {
-            if (id != this.state.selectTravellers[index]) {
-                selectTravellers.push(id);
-            }
-        }
-        this.setState({'contact': null, 'selectTravellers': selectTravellers});
+        this._deleteOneTraveller(contact);
         AccountContacts.actions.load();
-        OrderDiscount.actions.load({
-            'routeid': this.props.orderInfoData.orderInfo.routeid, 
-            'groupid': this.props.orderInfoData.orderInfo.groupid,
-            'count': selectTravellers.length
-        });
     },
 
     /**
@@ -453,7 +467,8 @@ var  OrderForm = React.createClass({
                     selectTravellers={selectTravellers}
                     onNewContactBtnClick={this.onNewContactBtnClick}
                     onSelectTravellersChange={this.onSelectTravellersChange}
-                    onTravellerEditBtnClick={this.onTravellerEditBtnClick}/>
+                    onTravellerEditBtnClick={this.onTravellerEditBtnClick}
+                    onTravellerDeleteBtnClick={this.onTravellerDeleteBtnClick}/>
                 <div className="item-title">睡友选择</div>
                 <Roommate ref="roommate"
                     travellers={travellers} 

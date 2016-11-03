@@ -1,49 +1,6 @@
 @import "~wbase.less";
 
-* {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: @gray-bg;
-    font-family: "Microsoft YaHei";
-    font-size: .32rem;
-    margin: 0;
-}
-
-p {
-    margin: 0;
-}
-
-.pull-left {
-    float: left !important;
-}
-
-.pull-right {
-    float: right !important;
-}
-
-.clearfix:before,
-.clearfix:after {
-    display: table;
-    content: " ";
-}
-
-.clearfix:after {
-    clear: both;
-}
-
-.img-responsive {
-    display: block;
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    vertical-align: middle;
-}
-
 .order-form-container {
-
     margin-bottom: 1.3rem;
 }
 
@@ -120,6 +77,10 @@ p {
  */
 .travellers-container {
 
+    .am-wingblank.am-wingblank-lg {
+        margin-right: .1rem;
+    }
+
     .traveller-container {
         padding-top: .1rem;
         padding-bottom: .1rem;
@@ -128,7 +89,7 @@ p {
         color: @gray;
 
         .traveller-info {
-            width: 80%;
+            width: 79%;
             padding-right: .3rem;
 
             .traveller-addition-info {
@@ -142,7 +103,7 @@ p {
         }
 
         .traveller-edit-container {
-            width: 20%;
+            width: 21%;
             text-align: right;
 
             button { 
@@ -259,6 +220,18 @@ p {
     .discount-price {
         color: @light-currency;
         margin-right: .5rem;
+    }
+
+    .am-stepper {
+        height: .55rem;
+    }
+
+    .am-stepper-handler, 
+    .am-stepper-handler-up-inner, 
+    .am-stepper-handler-down-inner {
+        width: .5rem;
+        height: .5rem;
+        line-height: .5rem;
     }
  }
 

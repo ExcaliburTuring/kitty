@@ -36,6 +36,9 @@ import { gender }  from 'config';
                         <Button inline onClick={()=>{this.props.onTravellerEditBtnClick(traveller)}}>
                             <Icon type="edit"/>
                         </Button>
+                         <Button inline onClick={()=>{this.props.onTravellerDeleteBtnClick(traveller)}}>
+                            <Icon type="minus-circle-o" />
+                        </Button>
                     </div>
                 }
             </div>
