@@ -30,7 +30,7 @@ var proxyConfig =(function(){
         }, {});
     return tempProxyConfig;
 }());
-var target = 'http://192.168.1.104:8080';
+var target = 'http://127.0.0.1:8083';
 proxyConfig['/order*'] = {
     target: target,
     secure: false
