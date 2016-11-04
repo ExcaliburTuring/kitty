@@ -148,8 +148,8 @@ var Siderbar = React.createClass({
         }
         var dayList = days.map(function(day, index) {
             return (
-                <List.Item key={index} thumb={f1} onClick={()=>{self.onDayItemClick(index)}}>
-                    <span className="sidebar-days-no">{index + 1}</span>
+                <List.Item key={index} onClick={()=>{self.onDayItemClick(index)}}>
+                    <span className="sidebar-days-no">{index + 1} |</span>
                     {day.title}
                 </List.Item>
             );
@@ -162,11 +162,14 @@ var Siderbar = React.createClass({
                 </div>
                 <div className="sidebar-days">
                     <List>
+                    <List.Item key={0} onClick={()=>{self.onDayItemClick(-1)}} className="text-center">
+                        路线简介
+                    </List.Item>
                         {dayList}
                     </List>
                 </div>
                 <div className="sidebar-footer">
-                    <Button onClick={this.onClick}>点我报名</Button>
+                    <Button onClick={this.onClick}>报名&费用相关</Button>
                 </div>
             </div>
         );
