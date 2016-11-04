@@ -97,20 +97,20 @@ var App = React.createClass({
                                 descriptions={imgtext.descriptions}/>
                         <div className="travel-info-container">
                             <div className="row">
-                            <div className="Asecond a1">旅游天数: {routes.days}</div>
-                            <div className="Asecond a2">季节: {"夏天"}</div>
+                                <div className="Asecond a1">旅游天数: {routes.days}</div>
+                                <div className="Asecond a2">季节: {"夏天"}</div>
                             </div>
                             <div className="row">
-                            <div className="Asecond a3">集合地点: {routes.distination}</div>
-                            <div className="Asecond a4">人数上限: {"20人"}</div>
+                                <div className="Asecond a3">集合地点: {routes.distination}</div>
+                                <div className="Asecond a4">人数上限: {"20人"}</div>
                             </div>
                         </div>
                         <div className="travel-dairy-container"
                             dangerouslySetInnerHTML={{__html: marked(mdtext)}}>
                         </div>
-                        <AdditionInfo route={routes} groups={this.state.groups.groups} />
                         <Button type="primary" className="days-list-toggle"
                             onClick={this.onOpenChange}>目录</Button>
+                        <AdditionInfo route={routes} groups={this.state.groups.groups} />
                     </div>
                 </Drawer>
             </div>
@@ -122,9 +122,10 @@ var Siderbar = React.createClass({
 
     _scroll: function(top) {
         this.props.onClick();
-        var $drawer = $('.am-drawer-content');
-        $drawer.animate({
-            scrollTop: $drawer.scrollTop() + top
+        $('html body').animate({
+            'scrollTop': top
+        }, {
+            'speed': 300
         });
     },
 
@@ -133,7 +134,7 @@ var Siderbar = React.createClass({
     },
 
     onDayItemClick: function(index) {
-        var offset = $(`.D${index}`).offset();
+        var offset = $(`.D${index + 1}`).offset();
         if (offset) {
             this._scroll(offset.top);
         }

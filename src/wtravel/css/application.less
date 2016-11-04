@@ -67,8 +67,27 @@ body {
     background-color: rgba(195, 195, 195, 1)!important;
 }
 
+.travel-container {
+
+    .am-drawer {
+        position: static;
+    }
+
+    .am-drawer.am-drawer-left .am-drawer-sidebar {
+        position: fixed;
+        left: 0;
+    }
+
+    .am-drawer-overlay {
+        position: fixed;
+    }
+
+    .am-drawer-content {
+        position: static;
+    }
+}
+
 .travel-main-container {
-   
 }
 
 .slider-container {
@@ -175,7 +194,6 @@ body {
     border-top: 1px solid @gray-line;
     margin-top: 0.4rem;
     position: relative;
-    z-index: 1;
 
     .p {
         font-size: 0.24rem;
@@ -324,6 +342,7 @@ body {
             height: 1.2rem;
             font-weight: normal;
             border-radius: 0;
+            font-size: .4rem;
         }
     }
 }
