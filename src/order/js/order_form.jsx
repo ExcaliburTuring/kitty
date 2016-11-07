@@ -85,29 +85,25 @@ var OrderForm = React.createClass({
     /**
      * 创建订单
      */
-    _createOrder: function(async, success) {
+    _createOrder: function(success) {
         var travellers = this.state.selectTravellers;
         if (travellers.length == 0) {
             message.error('请选择出行人');
-            this.refs.pay.enableBtn();
-            return;
+            return false;
         } 
         if (!this.state.isAgreed) {
             message.error('请同意安全协议');
-            this.refs.pay.enableBtn();
-            return;
+            return false;
         }
         if (this.props.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
             message.error('请先完善个人信息。可先勾选自己，然后点击小铅笔按钮进行编辑。');
-            this.refs.pay.enableBtn();
-            return;
+            return false;
         }
 
         var discountData = this._getDiscount();
         if (priceUtil.getPrice(discountData.actualPrice) <= 0) {
             message.error(`出现负数价格太不科学了，请联系海逍遥${defaultValue.hotline}`);
-            this.refs.pay.enableBtn();
-            return;
+            return false;
         }
         var self = this;
         var selectTravellers = this.state.selectTravellers;
@@ -126,27 +122,28 @@ var OrderForm = React.createClass({
             'emergencyContact': emergency.name,
             'emergencyMobile': emergency.mobile
         };
+        var result = false;
         $.ajax({
             'url': url.orderOrder,
             'type': 'post',
-            'async': async,
+            'async': false,
             'data': JSON.stringify(request),
             'dataType': 'json',
             'contentType': 'application/json;charset=UTF-8',
             'success': function(data) {
                 if (data.status != 0) {
-                    self.refs.step2.enableBtn();
                     message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
                 } else {
                     message.success('订单创建成功，您可以使用支付宝进行支付');
+                    result = true;
                     success();
                 }
             },
             'error': function() {
-                self.refs.step2.enableBtn();
                 message.error(`订单创建失败，您可以联系${defaultValue.hotline}`);
             }
         });
+        return result;
     },
 
     /**
@@ -536,7 +533,7 @@ var OrderForm = React.createClass({
      * 保存订单
      */
     onCreateOrderSubmit: function() {
-        this._createOrder(true, function() {
+        this._createOrder(function() {
             setTimeout('location.reload(true);', 500);
         });
     },
@@ -545,7 +542,7 @@ var OrderForm = React.createClass({
      * 保存并支付订单
      */
     onOrderPaySubmit: function() {
-        this._createOrder(false, function() {});
+        return this._createOrder(function() {});
     },
 
      /**

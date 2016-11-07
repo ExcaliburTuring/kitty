@@ -45,7 +45,8 @@ var  OrderShow = React.createClass({
         });
         var roommateList = orderInfoData.orderTravellers.map(function(traveller, index) {
             return (
-                <List.Item extra={traveller.roommate}>
+                <List.Item extra={traveller.roommate ? traveller.roommate : '未设置'} 
+                    key={index}>
                     {traveller.name}
                 </List.Item>
             );
@@ -90,13 +91,13 @@ var  OrderShow = React.createClass({
                 <div className="item-title">紧急联系人</div>
                 <div className="emergency-container">
                     <div className="emergency-show">
-                        {
-                            emergencyList.length == 0
-                            ? null
-                            : <List>
-                                {emergencyList}
-                            </List>
-                        }
+                        <List>
+                            {
+                                emergencyList.length == 0
+                                ? <List.Item>未设置紧急联系人</List.Item>
+                                : emergencyList
+                            }
+                        </List>
                     </div>
                 </div>
                 <div className="item-title">优惠政策</div>

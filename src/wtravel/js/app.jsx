@@ -97,20 +97,20 @@ var App = React.createClass({
                                 descriptions={imgtext.descriptions}/>
                         <div className="travel-info-container">
                             <div className="row">
-                            <div className="Asecond a1">旅游天数: {routes.days}</div>
-                            <div className="Asecond a2">季节: {"夏天"}</div>
+                                <div className="Asecond a1">旅游天数: {routes.days}</div>
+                                <div className="Asecond a2">季节: {"夏天"}</div>
                             </div>
                             <div className="row">
-                            <div className="Asecond a3">集合地点: {routes.distination}</div>
-                            <div className="Asecond a4">人数上限: {"20人"}</div>
+                                <div className="Asecond a3">集合地点: {routes.distination}</div>
+                                <div className="Asecond a4">人数上限: {"20人"}</div>
                             </div>
                         </div>
                         <div className="travel-dairy-container"
                             dangerouslySetInnerHTML={{__html: marked(mdtext)}}>
                         </div>
-                        <AdditionInfo route={routes} groups={this.state.groups.groups} />
                         <Button type="primary" className="days-list-toggle"
                             onClick={this.onOpenChange}>目录</Button>
+                        <AdditionInfo route={routes} groups={this.state.groups.groups} />
                     </div>
                 </Drawer>
             </div>
@@ -122,9 +122,10 @@ var Siderbar = React.createClass({
 
     _scroll: function(top) {
         this.props.onClick();
-        var $drawer = $('.am-drawer-content');
-        $drawer.animate({
-            scrollTop: $drawer.scrollTop() + top
+        $('html body').animate({
+            'scrollTop': top
+        }, {
+            'speed': 500
         });
     },
 
@@ -133,7 +134,7 @@ var Siderbar = React.createClass({
     },
 
     onDayItemClick: function(index) {
-        var offset = $(`.D${index+1}`).offset();
+        var offset = $(`.D${index + 1}`).offset();
         if (offset) {
             this._scroll(offset.top);
         }
@@ -156,14 +157,12 @@ var Siderbar = React.createClass({
         
         return (
             <div className="sidebar-container">
-                <div className="sidebar-header">
-                    <p>行程概要</p>
-                </div>
+                <div className="sidebar-header">行程概要</div>
                 <div className="sidebar-days">
                     <List>
-                    <List.Item key={0} onClick={()=>{self.onDayItemClick(-1)}} className="text-center">
-                        路线简介
-                    </List.Item>
+                        <List.Item key={-1} onClick={()=>{self.onDayItemClick(-1)}}>
+                            路线简介
+                        </List.Item>
                         {dayList}
                     </List>
                 </div>
@@ -224,72 +223,15 @@ var Slider = React.createClass({
 
 var AdditionInfo = React.createClass({
 
-    onOrderBtnClick: function() {
-        var group = this.state.selected;
-        if (group.status != groupStatus.OPEN) {
-            Toast.fail('本团不可报名');
-            return ;
-        }
-
-        $.post(url.orderNew, {'routeid': group.routeid, 'groupid': group.groupid})
-        .done(function(data) {
-            if (data.status != 0) {
-                Toast.fail(defaultValue.newOrderMsg);
-            } else {
-                window.location.pathname = `${url.order}/${data.orderid}`;
-            }
-        })
-        .fail(function() {
-            Toast.fail(defaultValue.newOrderMsg);
-        });
-    },
-
     onShowGroupBtnClick: function() {
-        var route = this.props.route, self = this;
-        var groupList = this.props.groups.map(function(group, index) {
-            return (
-                <Group group={group} key={group.groupid}
-                    selected={self.state.selected.groupid == group.groupid}/>
-            );
-        });
         Popup.show(
-            <div className="new-order-container">
-                <div className="new-header">
-                    <img src={route.headImg} className="img-responsive img-thumbnail pull-left"/>
-                    <p className="new-title ellipsis">【{route.name}】{route.title}</p>
-                </div>
-                <div className="new-body">
-                    <p>选择出行团队</p>
-                    <div className="new-group-list row">
-                        {groupList}
-                    </div>
-                    <div className="new-group-calendar"></div>
-                    <input className="new-group-calendar-input" type="hidden" />
-                </div>
-                <div className="new-footer clearfix">
-                    <p className="pull-left">金额:
-                        <span className="new-price-label">¥</span>
-                        <span className="new-price">{self.state.selected.price.replace("￥", "")}</span>
-                    </p>
-                    <Button inline className="pull-right" onClick={this.onOrderBtnClick}>立即报名</Button>
-                </div>
-            </div>
+            <GroupPopup route={this.props.route} groups={this.props.groups}/>
             ,{ animationType: 'slide-up' }
         );
         $(".new-group-calendar").calendar({
             container: ".new-group-calendar",
             input: ".new-group-calendar-input"
         });
-    },
-
-    getInitialState: function() {
-        return {
-            'selected': {}
-        };
-    },
-
-    componentWillReceiveProps: function(newProps) {
-        this.setState({'selected': newProps.groups[0]})
     },
 
     render: function() {
@@ -360,12 +302,107 @@ var AdditionInfo = React.createClass({
     }
 });
 
+var GroupPopup = React.createClass({
+
+    onOrderBtnClick: function() {
+        var group = this.state.selected;
+        if (group.status != groupStatus.OPEN) {
+            Toast.fail('本团不可报名');
+            return ;
+        }
+
+        $.post(url.orderNew, {'routeid': group.routeid, 'groupid': group.groupid})
+        .done(function(data) {
+            if (data.status != 0) {
+                Toast.fail(defaultValue.newOrderMsg);
+            } else {
+                window.location.pathname = `${url.order}/${data.orderid}`;
+            }
+        })
+        .fail(function() {
+            Toast.fail(defaultValue.newOrderMsg);
+        });
+    },
+
+    onGroupClick: function (group) {
+        this.setState({'selected': group});
+    },
+
+    getInitialState: function() {
+        return {
+            'selected': this.props.groups[0]
+        };
+    },
+
+    componentWillReceiveProps: function(newProps) {
+        if (newProps.groups.length) {
+            this.setState({'selected': newProps.groups[0]});
+        }
+    },
+
+    render: function () {
+        var route = this.props.route, self = this, groups = this.props.groups;
+        var groupList = null;
+        if (groups.length == 0) {
+            groupList = (
+                <p>这条路线暂时没有成团，如果您感兴趣，可以联系我们，{defaultValue.hotline}</p>
+            );
+        } else {
+            groupList = this.props.groups.map(function(group, index) {
+                return (
+                    <Group group={group} key={group.groupid}
+                        selected={self.state.selected.groupid == group.groupid}
+                        open={group.status == groupStatus.OPEN}
+                        onGroupClick={self.onGroupClick}/>
+                );
+            });
+        }
+        return (
+            <div className="new-order-container">
+                <div className="new-header">
+                    <img src={route.headImg} className="img-responsive img-thumbnail pull-left"/>
+                    <p className="new-title ellipsis">【{route.name}】{route.title}</p>
+                </div>
+                <div className="new-body">
+                    <p>选择出行团队</p>
+                    <div className="new-group-list row">
+                        {groupList}
+                    </div>
+                    <div className="new-group-calendar"></div>
+                    <input className="new-group-calendar-input" type="hidden" />
+                </div>
+                <div className="new-footer clearfix">
+                    <p className="pull-left">金额:
+                        <span className="new-price-label">¥</span>
+                        <span className="new-price">
+                            {
+                                self.state.selected 
+                                ? self.state.selected.price.replace("￥", "")
+                                : '0'
+                            }
+                        </span>
+                    </p>
+                    <Button inline className="pull-right" disable={self.state.selected ? false : true}
+                        onClick={this.onOrderBtnClick}>立即报名</Button>
+                </div>
+            </div>
+        );
+    }
+});
+
 var Group = React.createClass({
+
+    onGroupClick: function () {
+        if (this.props.open) {
+            this.props.onGroupClick(this.props.group);
+        }
+    },
 
     render: function() {
         var group = this.props.group;
         return (
-            <div className={`group-container Athird ${this.props.selected ? 'selected': ''}`}>
+            <div className={`group-container Athird ${this.props.selected ? 'selected': ''} ${this.props.open ? '' : 'disable'}`}
+                onClick={this.onGroupClick}>
                 <div className="group-start-date">{group.startDate}</div>
                 <div>
                 {
@@ -373,8 +410,16 @@ var Group = React.createClass({
                     ? <span className="group-title">{group.title}</span>
                     : null
                 }
-                剩余：
-                    <span className="group-quota">{group.maxCount - group.actualCount}</span>
+                {
+                    this.props.open
+                    ? <span>
+                        剩余：
+                        <span className="group-quota">{group.maxCount - group.actualCount}</span>
+                    </span>
+                    : <span>
+                        {groupStatus.getDesc(group.status)}
+                    </span>
+                }
                 </div>
             </div>
         );
