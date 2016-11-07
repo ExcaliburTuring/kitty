@@ -11,7 +11,7 @@ import 'antd/lib/index.css';
 
 var Pay = React.createClass({
 
-    enableBtn: function() {
+    _enableBtn: function() {
         this.setState({
             'createBtnDisabled': false,
             'orderPayBtnDisabled': false
@@ -27,12 +27,20 @@ var Pay = React.createClass({
 
     _onCreateOrderSubmit: function() {
         this._disabledBtn();
-        this.props.onCreateOrderSubmit();
+        var result = this.props.onCreateOrderSubmit();
+        if (!result) {
+            this._enableBtn();
+        }
     },
 
     _onOrderPaySubmit: function(e) {
         this._disabledBtn();
-        this.props.onOrderPaySubmit();
+        var result = this.props.onOrderPaySubmit();
+        if (!result) {
+            e.preventDefault();
+            this._enableBtn();
+        }
+        return result;
     },
 
     getInitialState: function() {

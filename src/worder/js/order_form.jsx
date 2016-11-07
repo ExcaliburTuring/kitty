@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
+import { Toast } from 'antd-mobile';
 
 import { url, priceUtil, discountCodeStatus, defaultValue, accountStatus }  from 'config';
 import Rabbit from 'rabbit';
@@ -229,38 +230,51 @@ var  OrderForm = React.createClass({
     },
 
     /**
+     * 创建出出行人列表
+     */
+    _getSelectTravellers: function(roommates, isFollow) {
+        var travellers = this._createTravellers();
+        var selected = [], selectTravellers = this.state.selectTravellers;
+        for (var i = selectTravellers.length - 1; i >= 0; i--) {
+            var id = selectTravellers[i];
+            var traveller = travellers[id];
+            if (!isFollow && roommates.hasOwnProperty(id)) {
+                traveller['roommate'] = roommates[id];
+            } else {
+                traveller['roommate'] = null;
+            }
+            selected.push(traveller);
+        }
+        return selected;
+    },
+
+    /**
      * 创建订单
      */
-    _createOrder: function(async, success) {
+    _createOrder: function(success) {
         var travellers = this.state.selectTravellers;
         if (travellers.length == 0) {
             Toast.fail('请选择出行人', 1);
-            this.refs.footer.enableBtn();
-            return;
+            return false;
         } 
         if (!this.refs.agreement.getFieldsValue().agreement) {
             Toast.fail('请同意安全协议', 1);
-            this.refs.footer.enableBtn();
-            return;
+            return false;
         }
         if (this.props.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
             Toast.fail('请先完善个人信息。', 1);
-            this.refs.footer.enableBtn();
-            return;
+            return false;
         }
 
         var discountData = this._getDiscount();
         if (priceUtil.getPrice(discountData.actualPrice) <= 0) {
             Toast.fail(`出现负数价格太不科学了，请联系海逍遥${defaultValue.hotline}`, 1);
-            this.refs.footer.enableBtn();
             return;
         }
         var self = this;
-        var selectTravellers = this.state.selectTravellers;
         var roommates = this._getRoommates();
-        selectTravellers.forEach(function(selectTraveller) {
-            selectTraveller['roommate'] = roommates[`${selectTraveller.accountid}-${selectTraveller.contactid}`] || null;
-        });
+        var isFollow = roommates['isFollow'] || false;
+        var selectTravellers = this._getSelectTravellers(roommates, isFollow);
         var emergency = this._getEmergency(); 
         var request = {
             'orderid': this.props.orderInfoData.orderInfo.orderid,
@@ -271,28 +285,33 @@ var  OrderForm = React.createClass({
             'studentCount': discountData.studentCount,
             'actualPrice': discountData.actualPrice,
             'emergencyContact': emergency.name,
-            'emergencyMobile': emergency.mobile
+            'emergencyMobile': emergency.mobile,
+            'roommate': isFollow
         };
+        console.log('before create');
+        console.log(request);
+        var result = false;
         $.ajax({
             'url': url.orderOrder,
             'type': 'post',
-            'async': async,
+            'async': false,
             'data': JSON.stringify(request),
             'dataType': 'json',
             'contentType': 'application/json;charset=UTF-8',
             'success': function(data) {
                 if (data.status != 0) {
-                    self.refs.step2.enableBtn();
                     Toast.fail(`订单创建失败，您可以联系${defaultValue.hotline}`);
                 } else {
+                    result = true;
                     success();
                 }
             },
             'error': function() {
-                self.refs.step2.enableBtn();
-               Toast.fail(`订单创建失败，您可以联系${defaultValue.hotline}`);
+                Toast.fail(`订单创建失败，您可以联系${defaultValue.hotline}`);
             }
         });
+        console.log('after create');
+        return result;
     },
 
     // callback method
@@ -384,7 +403,7 @@ var  OrderForm = React.createClass({
      * 保存订单
      */
     onSaveOrderClick: function() {
-        this._createOrder(true, function() {
+        return this._createOrder(function() {
             setTimeout('location.reload(true);', 500);
         });
     },
@@ -393,7 +412,7 @@ var  OrderForm = React.createClass({
      * 支付订单
      */
     onPayOrderClick: function() {
-        this._createOrder(false, function() {});
+        return this._createOrder(function() {});
     },
 
     // component specs

@@ -42,6 +42,12 @@ var Roommate = React.createClass({
                     <List>
                         <CheckboxItem
                             checked={this.state.isFollow}
+                            {
+                                ...getFieldProps('isFollow', {
+                                    initialValue: this.state.isFollow,
+                                    valuePropName: 'checked',
+                                })
+                            }
                             onChange={this.onIsFollowChange}>
                             随机同性拼房
                         </CheckboxItem>

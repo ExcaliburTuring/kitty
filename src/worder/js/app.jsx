@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
+import { ActivityIndicator } from 'antd-mobile';
 
 import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url, orderStatus } from 'config';
@@ -33,7 +34,7 @@ var App = React.createClass({
         return {
             'basicInfo': {},
             'data': {
-                'status': 1,
+                'status': -1,
                 'orderInfo': {},
                 'travelRoute': {},
                 'travelGroup': {},
@@ -47,14 +48,14 @@ var App = React.createClass({
 
     render: function() {
         var accountInfo = this.state.basicInfo.accountInfo;
-        if (accountInfo == null) {
-            return (<Login/>);
-        }
         var data = this.state.data;
+        if (data.status < 0) {
+            return (<div></div>);
+        }
         if (data.status != 0) {
             return (
-                <div>
-                    <p>{`订单查询失败, 请联系客服： ${defaultValue.hotline}`}</p>
+                <div className="order-loading-container">
+                     <ActivityIndicator size="large" text="加载订单中..."/>
                 </div>
             );
         }
