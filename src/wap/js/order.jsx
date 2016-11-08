@@ -8,7 +8,6 @@ const TabPane = Tabs.TabPane;
 
 import { url, orderType, defaultValue, orderStatus, refundStatus, refundType, priceUtil } from 'config';
 import Rabbit from 'rabbit';
-import OrderOperationHelper from 'order_operation';
 import square from '../img/54.png';
 
 import 'antd/lib/index.css';
@@ -111,7 +110,13 @@ var OrderItem = React.createClass({
 
     onClick: function() {
         var orderInfo = this.props.briefOrder.orderInfo;
-        window.location.href = `/order/${orderInfo.orderid}`;
+        window.location.href = `${url.order}/${orderInfo.orderid}`;
+    },
+
+    onImgClick: function(e) {
+        e.stopPropagation();
+        var travelRoute = this.props.briefOrder.travelRoute;
+        window.location.href = `${url.travel}/${travelRoute.routeid}`;
     },
 
     render: function() {
@@ -129,7 +134,7 @@ var OrderItem = React.createClass({
                     <p className="pull-right travel-status">{orderStatus.getDesc(orderInfo.status)}</p>
                 </div>
                 <div className="order-item-body clearfix">
-                    <div className="travel-img pull-left" style={bg} href={`/travel/${travelRoute.routeid}`}>
+                    <div className="travel-img pull-left" style={bg} onClick={this.onImgClick}>
                         <img src={square}/>
                     </div>
                     <div className="travel-info pull-left">

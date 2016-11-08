@@ -1,7 +1,47 @@
-@import "~base.less";
+@import "~wbase.less";
 
-body {
-    font-size: 12px;
-    margin: 0;
-    background-color: @white;
+.order-loading-container {
+    width: 100%;
+    height: 100%;
+    padding-top: 40%;
+    padding-left: 30%;
+
+    .am-activity-indicator-tip {
+        font-size: .4rem;
+    }
+}
+
+.payresult-container {
+    padding-top: 25%;
+
+    .am-result {
+        background-color: inherit;
+
+        .am-result-message {
+            background-color: inherit;
+            padding: 0;
+        }
+
+        &:after {
+            border-bottom: none;
+        }
+    }
+
+    .payresult-message-container {
+        background-color: white;
+        padding: .3rem;
+        
+        p:first-child {
+            margin-bottom: .1rem;
+        }
+
+        .price.pull-right {
+            color: black;
+        }
+    }
+
+    .am-wingblank {
+        margin-left: .3rem;
+        margin-right: .3rem;
+    }
 }

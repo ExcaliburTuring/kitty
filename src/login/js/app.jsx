@@ -29,9 +29,9 @@ var App = React.createClass({
         if (accountInfo != null) { // 已经登陆了
             var redirect = this._getQuery('redirect');
             if (redirect) {
-                window.location.href = decodeURIComponent(redirect);
+                window.location.pathname = decodeURIComponent(redirect);
             } else {
-                window.location.href = '/';
+                window.location.pathname = '/';
             }
             return null;
         } else {
