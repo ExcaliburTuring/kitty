@@ -36,6 +36,7 @@ var mockConfig = [
     config('/wdiscount*', 'wdiscount.html'),
     config('/wcontact*', 'wcontact.html'),
     config('/worder*', 'worder.html'),
+    config('/wxpayresult', 'wxpayresult.html'),
     config('/login', 'login.html'),
     config('/notauth', 'notauth.html'),
     config('/notfound', 'notfound.html'),

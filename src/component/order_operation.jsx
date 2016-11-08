@@ -204,11 +204,11 @@ var OrderOperationHelper = {
     },
 
     onSameRouteBtnClick: function() {
-        window.location.href = `/travel/${this.props.routeid}`;
+        window.location.href = `${url.travel}/${this.props.routeid}`;
     },
 
     onOtherRouteBtnClick: function() {
-        window.location.href = `/routes`;
+        window.location.href = `${url.travels}`;
     },
 
     onReorderBtnClick: function() {
@@ -217,7 +217,7 @@ var OrderOperationHelper = {
             if (data.status != 0) {
                 message.error(defaultValue.newOrderMsg);
             } else {
-                window.location.pathname = `${url.order}/${data.orderid}`;
+                window.location.href = `${url.order}/${data.orderid}`;
             }
         })
         .fail(function() {

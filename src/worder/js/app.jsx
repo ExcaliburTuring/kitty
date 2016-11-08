@@ -50,12 +50,16 @@ var App = React.createClass({
         var accountInfo = this.state.basicInfo.accountInfo;
         var data = this.state.data;
         if (data.status < 0) {
-            return (<div></div>);
+            return (
+                <div className="order-loading-container">
+                     <ActivityIndicator size="large" text="加载订单中..."/>
+                </div>
+            );
         }
         if (data.status != 0) {
             return (
                 <div className="order-loading-container">
-                     <ActivityIndicator size="large" text="加载订单中..."/>
+                    <p>订单加载异常，请联系海逍遥：{defaultValue.hotline}</p>
                 </div>
             );
         }
