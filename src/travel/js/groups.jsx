@@ -80,7 +80,7 @@ var Groups = React.createClass({
             if (data.status != 0) {
                 message.error(defaultValue.newOrderMsg);
             } else {
-                window.location.pathname = `${url.order}/${data.orderid}`;
+                window.location.href = `${url.order}/${data.orderid}`;
             }
         })
         .fail(function() {

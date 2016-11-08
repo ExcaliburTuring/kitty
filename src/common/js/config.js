@@ -12,6 +12,7 @@ export var url = {
     'discountCode': '/account/discountcode',
 
     'travel': '/travel',
+    'travels': '/routes',
 	'route': '/travel/route',
 	'group': '/travel/group',
 

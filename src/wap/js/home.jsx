@@ -62,7 +62,7 @@ var Home = React.createClass({
         return (
             <div>
                 <Slider />
-                <DaoHang onOrdersClick={this.onOrdersClick} />
+                <DaoHang onOrdersClick={this.props.onOrdersClick} />
                 <Hot hot={this.state.hot} />
                 <div className="routes">
                     <div className="head-title">出发趁年轻</div>
@@ -120,7 +120,7 @@ var DaoHang = React.createClass({
             <div className="daohang row">
                 <div className="Afourth">
                     <div className="mylabel right">
-                        <a href="/account/wdiscount" onClick={()=>{this.props.onOrdersClick(orderType.CURRENT)}}>
+                        <a href="javascript:" onClick={()=>{this.props.onOrdersClick(orderType.CURRENT)}}>
                             <i className="icon"><img src={e}/></i>
                             <p>行程</p>
                         </a>

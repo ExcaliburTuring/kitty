@@ -228,10 +228,6 @@ var AdditionInfo = React.createClass({
             <GroupPopup route={this.props.route} groups={this.props.groups}/>
             ,{ animationType: 'slide-up' }
         );
-        $(".new-group-calendar").calendar({
-            container: ".new-group-calendar",
-            input: ".new-group-calendar-input"
-        });
     },
 
     render: function() {
@@ -306,7 +302,7 @@ var GroupPopup = React.createClass({
 
     onOrderBtnClick: function() {
         var group = this.state.selected;
-        if (group.status != groupStatus.OPEN) {
+        if (!group || group.status != groupStatus.OPEN) {
             Toast.fail('本团不可报名');
             return ;
         }
@@ -316,7 +312,7 @@ var GroupPopup = React.createClass({
             if (data.status != 0) {
                 Toast.fail(defaultValue.newOrderMsg);
             } else {
-                window.location.pathname = `${url.order}/${data.orderid}`;
+                window.location.href = `${url.order}/${data.orderid}`;
             }
         })
         .fail(function() {
@@ -326,11 +322,13 @@ var GroupPopup = React.createClass({
 
     onGroupClick: function (group) {
         this.setState({'selected': group});
+        $(".new-group-calendar").calendar('setValue', [group.startDate]); // 只能修改input的值，并不能直接修改ui
     },
 
     getInitialState: function() {
         return {
-            'selected': this.props.groups[0]
+            'selected': this.props.groups[0],
+            'time': null
         };
     },
 
@@ -338,6 +336,32 @@ var GroupPopup = React.createClass({
         if (newProps.groups.length) {
             this.setState({'selected': newProps.groups[0]});
         }
+    },
+
+    componentDidMount: function() {
+        var self = this;
+        $(".new-group-calendar").calendar({
+            container: ".new-group-calendar",
+            input: ".new-group-calendar-input",
+            onDayClick: function (p, dayContainer, year, month, day) {
+                if (day.length == 1) {
+                    day = '0' + day;
+                }
+                var time = `${year}-${+month + 1}-${day}`;
+                var group = null, groups = this.props.groups;
+                for (var i = 0, n = groups.length; i < n; i++) {
+                    if (time == groups[i].startDate) {
+                        group = groups[i];
+                        break;
+                    }
+                }
+                if (group) {
+                    self.setState({'time': time, 'selected': group});
+                } else {
+                    self.setState({'time': time});
+                }
+            }
+        });
     },
 
     render: function () {
@@ -349,10 +373,13 @@ var GroupPopup = React.createClass({
             );
         } else {
             groupList = this.props.groups.map(function(group, index) {
+                var time = self.state.time;
+                var visiable = time ? (group.startDate <= time && time <= group.endDate) : true;
                 return (
                     <Group group={group} key={group.groupid}
                         selected={self.state.selected.groupid == group.groupid}
                         open={group.status == groupStatus.OPEN}
+                        visiable={visiable}
                         onGroupClick={self.onGroupClick}/>
                 );
             });
@@ -364,7 +391,16 @@ var GroupPopup = React.createClass({
                     <p className="new-title ellipsis">【{route.name}】{route.title}</p>
                 </div>
                 <div className="new-body">
-                    <p>选择出行团队</p>
+                    <p>选择出行团队
+                        {
+                            this.state.time
+                            ? <Button inline size="small" className="new-showall"
+                                onClick={()=>{this.setState({'time': null})}}>
+                                显示全部
+                            </Button>
+                            : null
+                        }
+                    </p>
                     <div className="new-group-list row">
                         {groupList}
                     </div>
@@ -376,7 +412,7 @@ var GroupPopup = React.createClass({
                         <span className="new-price-label">¥</span>
                         <span className="new-price">
                             {
-                                self.state.selected 
+                                self.state.selected.price 
                                 ? self.state.selected.price.replace("￥", "")
                                 : '0'
                             }
@@ -401,7 +437,10 @@ var Group = React.createClass({
     render: function() {
         var group = this.props.group;
         return (
-            <div className={`group-container Athird ${this.props.selected ? 'selected': ''} ${this.props.open ? '' : 'disable'}`}
+            <div className={`group-container Athird 
+                ${this.props.selected ? 'selected': ''}
+                ${this.props.open ? '' : 'disable'} 
+                ${this.props.visiable ? '': 'invisiable'}`}
                 onClick={this.onGroupClick}>
                 <div className="group-start-date">{group.startDate}</div>
                 <div>

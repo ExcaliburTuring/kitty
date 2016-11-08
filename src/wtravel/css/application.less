@@ -100,8 +100,8 @@ body {
 
     .am-drawer-content {
         position: static;
-        overflow-y: scroll;
-        -webkit-overflow-scrolling: touch;
+        //overflow-y: scroll;
+        //-webkit-overflow-scrolling: touch;
     }
 }
 
@@ -311,7 +311,7 @@ body {
                 .group-title {
                     margin-right: .1rem;
                     padding-right: .1rem;
-                    border-right: 1px dashed @gray;
+                    border-right: 1px solid @gray;
                 }
 
                 .group-quota {
@@ -334,7 +334,19 @@ body {
             }
 
             .group-container.disable {
-                background-color: aliceblue;
+                background-color: @gray-bg;
+            }
+
+            .group-container.invisiable {
+                display: none;
+            }
+        }
+
+        .new-showall {
+            margin-left: .2rem;
+
+            span {
+                font-size: .25rem;
             }
         }
     }
@@ -344,7 +356,7 @@ body {
         min-height: .8rem;
 
         p.pull-left {
-            padding: .4rem;
+            padding: .4rem .4rem .3rem;
 
             .new-price-label {
                 margin-left: .2rem;

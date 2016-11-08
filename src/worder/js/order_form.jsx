@@ -288,8 +288,6 @@ var  OrderForm = React.createClass({
             'emergencyMobile': emergency.mobile,
             'roommate': isFollow
         };
-        console.log('before create');
-        console.log(request);
         var result = false;
         $.ajax({
             'url': url.orderOrder,
@@ -310,7 +308,6 @@ var  OrderForm = React.createClass({
                 Toast.fail(`订单创建失败，您可以联系${defaultValue.hotline}`);
             }
         });
-        console.log('after create');
         return result;
     },
 

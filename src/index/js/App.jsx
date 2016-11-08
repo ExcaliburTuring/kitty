@@ -148,7 +148,7 @@ var Route = React.createClass({
 
     onClick: function() {
         var routeid = this.props.route.routeid;
-        window.location.pathname= `${url.travel}/${routeid}`;
+        window.location.href= `${url.travel}/${routeid}`;
     },
 
     render: function() {
