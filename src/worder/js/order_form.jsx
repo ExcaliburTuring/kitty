@@ -195,13 +195,18 @@ var  OrderForm = React.createClass({
      * 获取优惠
      */
     _getDiscount: function() {
-        var studentDiscount = this.state.discountData.studentDiscount; 
+        var policyDiscount = this.state.policyDiscount;
+        var discountCode = this.state.discountCode;
+        var studentDiscount = this.state.discountData.studentDiscount;
+        var price = priceUtil.getOrderPrice(this.props.orderInfoData.travelGroup, this.state.selectTravellers);
+        var discountPrice = priceUtil.getOrderDiscountPrice(policyDiscount, discountCode, studentDiscount);
+        var actualPrice = priceUtil.getOrderActualPrice(price, discountPrice);
         return {
-            'actualPrice': this._getActualPrice(),
-            'policyDiscountid': this.state.policyDiscount.discountid,
-            'discountCode': this.state.discountCode.discountCode,
+            'actualPrice': actualPrice,
+            'policyDiscountid': policyDiscount.discountid,
+            'discountCode': discountCode.discountCode,
             'studentDiscountid': studentDiscount != null ? studentDiscount.discountid : null,
-            'studentCount': this.state.studentDiscount.count
+            'studentCount': studentDiscount.count
         };
     },
 
