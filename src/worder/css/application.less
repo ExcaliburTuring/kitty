@@ -13,31 +13,59 @@
 
 .order-form-container {
     margin-bottom: 1.3rem;
+
+    .item-title {
+        padding-left: .3rem;
+        font-size: .28rem;
+        color: black;
+    }
 }
 
-.item-title {
+/**
+ * 覆盖am-list的样式
+ */
+.am-list-item {
     padding-left: .3rem;
-    font-size: .28rem;
-    color: black;
+
+    .am-list-line {
+        min-height: .8rem;
+        padding-right: .3rem;
+
+        .am-list-content {
+            color: @dark-black;
+            font-size: .28rem;
+            line-height: .8rem;
+            padding: 0;
+            min-height: .8rem;
+        }
+
+        .am-list-extra {
+            font-size: .28rem;
+            line-height: .8rem;
+            padding: 0;
+            min-height: .8rem;
+        }
+    }
 }
 
-.am-list-item .am-list-line {
-    min-height: .8rem;
+/**
+ * switch 背景色
+ */
+.am-switch input[type="checkbox"]:checked + .checkbox {
+    background-color: @light-currency;
 }
 
-.am-list-item .am-list-line .am-list-content {
-    color: @dark-black;
-    font-size: .28rem;
-    line-height: .8rem;
-    padding: 0;
-    min-height: .8rem;
-}
+/**
+ * 修改antd-mobile button的一些样式
+ */
+ button.am-button.am-button-fix {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
 
-.am-list-item .am-list-line .am-list-extra {
-    font-size: .28rem;
-    line-height: .8rem;
-    padding: 0;
-    min-height: .8rem;
+    &:after {
+        border: none;
+    }
 }
 
 .travellers-container,
@@ -47,10 +75,7 @@
 .agreement-container,
 .order-status-container,
 .travellers-button {
-    border: 1px solid @gray-line;
-    margin: .2rem .1rem;
-    background: white;
-    border-radius: .1rem;
+    margin: .05rem 0 .3rem;
     overflow: hidden;
 }
 
@@ -59,7 +84,7 @@
  */
 .travel-info-container {
     position: relative;
-    margin-bottom: .2rem;
+    margin-bottom: .3rem;
     box-shadow: 0 0px 5px @light-gray;
     border-bottom: 2px dashed @currency;
     padding: .36rem .3rem;
@@ -88,20 +113,26 @@
  */
 .travellers-container {
 
-    .am-wingblank.am-wingblank-lg {
-        margin-right: .1rem;
+    .traveller-show {
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: .15rem;
+        padding-left: .3rem;
+        background-color: white;
+
+        & .traveller-container:last-child {
+            border-bottom: none;
+        }
     }
 
     .traveller-container {
-        padding-top: .1rem;
-        padding-bottom: .1rem;
-        border-bottom: 1px solid @gray-line;
+        padding: .1rem .3rem .1rem 0;
+        border-bottom: 1px solid #ddd;
         font-size: .28rem;
-        color: @gray;
 
         .traveller-info {
             width: 79%;
-            padding-right: .3rem;
+            padding-right: .2rem;
 
             .traveller-addition-info {
                 margin-top: .15rem;
@@ -109,7 +140,7 @@
         }
 
         &.readOnly .traveller-info {
-            width: 90%;
+            width: 100%;
             border-right: none;
         }
 
@@ -130,26 +161,22 @@
     }
 }
 
-.travellers-button {
-    box-shadow: 0 0px 3px rgba(195, 195, 195, 0.3);
+.traveller-selector-trigger, 
+.emergency-selector-trigger {
 
-    .traveller-selector-trigger, .emergency-selector-trigger {
+    button {
+        min-height: .9rem;
+        font-size: .34rem;
+        color: @dark-gray;
 
-        button {
-            border: none!important;
-            min-height: 1rem;
-            font-size: .34rem;
-            color: @dark-gray;
+        i {
+            font-size: .4rem;
+            vertical-align: -.03rem;
+            color: @light-currency;
+        }
 
-            i {
-                font-size: .5rem;
-                vertical-align: -.08rem;
-                color: @light-currency;
-            }
-
-            span {
-                margin-left: .1rem;
-            }
+        span {
+            margin-left: .1rem;
         }
     }
 }
@@ -158,6 +185,7 @@
  * 睡友选择
  */
 .roommate-container {
+
     .am-checkbox-inner {
         top: .25rem!important;
         border-color: @light-currency!important;
@@ -167,16 +195,26 @@
         }
     }
 
-    .roommate-selector .am-list-body{
-        border-top: none;
+    .am-list-thumb .anticon {
+        font-size: 36px;
+        margin-top: 10px;
+        color: @light-currency;
     }
 
     .am-list .am-list-item .am-input-label {
         font-size: .28rem;
+
+        input {
+            font-size: .28rem;
+        }
     }
 
     .am-list .am-list-item .am-input-control input {
         font-size: .28rem;
+
+        &::-webkit-input-placeholder {
+            font-size: .28rem;
+        }
     }
 }
 
@@ -185,8 +223,8 @@
  */
  .emergency-container {
 
-    .emergency-show .am-list-body {
-        border-top: none;
+    .emergency-show {
+        margin-bottom: .15rem;
     }
  }
 
@@ -194,7 +232,7 @@
  * 出行人选择器, 紧急联系人选择器
  */
 .travellers-selector-container,
- .emergency-selector-container {
+.emergency-selector-container {
 
     background: @gray-bg;
 
@@ -209,27 +247,21 @@
             font-size: .35rem;
         }
     }
- }
 
-/**
- * 修改antd-mobile button的一些样式
- */
- button.am-button.am-button-fix {
-    border: 1px solid #ddd;
-    border-radius: 0;
-
-    &:after {
-        border: none;
+    button {
+        font-size: .28rem;
+        line-height: .8rem;
+        height: .8rem;
     }
- }
+}
 
 /**
  * 优惠选择
  */
- .discount-container {
+.discount-container {
 
     .discount-price {
-        color: @light-currency;
+        color: @currency;
         margin-right: .5rem;
     }
 
@@ -244,7 +276,7 @@
         height: .5rem;
         line-height: .5rem;
     }
- }
+}
 
 /**
  * 优惠政策选择弹窗，优惠码选择弹窗
@@ -258,17 +290,28 @@
  */
 .agreement-container {
 
-    button {
-        font-size: .34rem;
-        min-height: .8rem;
+    .am-checkbox-agree {
+        padding-top: 0;
+        padding-bottom: 0;
+
+        .am-checkbox-agree-label {
+            font-size: .28rem;
+            color: @gray;
+            margin-left: .6rem;
+        }
+
+        .am-checkbox-inner {
+            top: .05rem;
+        }
     }
 
-    .am-checkbox-agree .am-checkbox-agree-label {
-        font-size: .28rem;
-    }
+    .agreement-link-container {
+        margin-left: .3rem;
 
-    .am-checkbox-agree .am-checkbox-inner {
-        top: .25rem;
+         a {
+            font-size: .28rem;
+            color: @light-currency;
+        }
     }
 }
 
@@ -277,7 +320,7 @@
  */
 .footer-container {
     background: white;
-    border-top: 1px solid @light-gray;
+    border-top: 1px solid #ddd;
     height: 1rem;
     position: fixed;
     bottom: 0;
@@ -285,10 +328,10 @@
     right: 0;
 
     p.pull-left {
-        margin-top: .2rem;
+        line-height: 1rem;
+        margin-left: .3rem;
 
         span.order-price {
-            font-size: .4rem;
             color: @currency;
             margin-left: .1rem;
         }
@@ -300,16 +343,25 @@
     }
 
     button {
-        background-color: @currency;
-        box-shadow: 0px .14rem .1rem -.1rem @gray;
-        margin: .1rem;
-        padding: 0 .3rem;
         color: white;
-        border-radius: .1rem;
+        border-radius: 0;
+        height: 100%;
         line-height: .8rem;
-        height: .8rem;
         font-size: .28rem;
         font-weight: normal;
+        padding: 0 .5rem;
+
+        &:after {
+            border: none;
+        }
+
+        &.pay-btn {
+            background-color: @currency;
+        }
+
+        &.save-btn {
+            background-color: @light-currency;
+        }
     }
 }
 
@@ -321,12 +373,6 @@
 }
 
 .am-action-sheet-button-list-item {
-    font-size: .28rem;
-    line-height: .8rem;
-    height: .8rem;
-}
-
-.travellers-selector-container button, .emergency-selector-container button {
     font-size: .28rem;
     line-height: .8rem;
     height: .8rem;

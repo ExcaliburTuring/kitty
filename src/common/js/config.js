@@ -301,6 +301,32 @@ export var priceUtil = {
         }
         var rawPrice = price / 1000;
         return `￥${rawPrice.toFixed(0)}`
-    }
+    },
 
+    /**
+     * 获取原始价格
+     */
+    getOrderPrice: function(travelGroup, selectTravellers) {
+        var count = selectTravellers.length; 
+        return this.getPriceStr(this.getPrice(travelGroup.price) * count);
+    },
+
+    /**
+     * 获取优惠价格
+     */
+    getOrderDiscountPrice: function(policyDiscount, discountCode, studentDiscount) {
+        return this.getPriceStr(
+                this.getPrice(policyDiscount.value) 
+                + this.getPrice(discountCode.value)
+                + this.getPrice(studentDiscount.value));
+    },
+
+    /**
+     * 获取实际价格
+     */
+    getOrderActualPrice: function(orderPrice, orderDiscountPrice) {
+        return this.getPriceStr(
+                    this.getPrice(orderPrice)
+                    - this.getPrice(orderDiscountPrice));
+    }
 }

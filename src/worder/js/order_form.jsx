@@ -69,10 +69,14 @@ var  OrderForm = React.createClass({
                     maxValueCode = discountCode;
                 }
             }
-            this.setState({
-                'accountDiscountCodeData': accountDiscountCodeData,
-                'discountCode': maxValueCode
-            });
+            if (maxValueCode == null) {
+                this.setState({'accountDiscountCodeData': accountDiscountCodeData});
+            } else {
+                this.setState({
+                    'accountDiscountCodeData': accountDiscountCodeData,
+                    'discountCode': maxValueCode
+                });
+            }
         } else {
             this.setState({'accountDiscountCodeData': accountDiscountCodeData});
         }
@@ -202,27 +206,6 @@ var  OrderForm = React.createClass({
     },
 
     /**
-     * 获取原始价格
-     */
-    _getPrice: function() {
-        var travelGroup = this.props.orderInfoData.travelGroup;
-        var count = this.state.selectTravellers.length; 
-        return priceUtil.getPrice(travelGroup.price) * count;
-    },
-
-    /**
-     * 获取优惠后的实际价格
-     */
-    _getActualPrice: function() {
-        return priceUtil.getPriceStr(
-                    this._getPrice()
-                    - priceUtil.getPrice(this.state.policyDiscount.value)
-                    - priceUtil.getPrice(this.state.discountCode.value)
-                    - priceUtil.getPrice(this.state.studentDiscount.value)
-                );
-    },
-
-    /**
      * 获取roommates
      */
     _getRoommates: function() {
@@ -273,7 +256,7 @@ var  OrderForm = React.createClass({
         }
         var self = this;
         var roommates = this._getRoommates();
-        var isFollow = roommates['isFollow'] || false;
+        var isFollow = roommates['isFollow'];
         var selectTravellers = this._getSelectTravellers(roommates, isFollow);
         var emergency = this._getEmergency(); 
         var request = {
@@ -474,6 +457,10 @@ var  OrderForm = React.createClass({
         var orderInfoData = this.props.orderInfoData;
         var travellers = this._createTravellers();
         var selectTravellers = this.state.selectTravellers;
+        var price = priceUtil.getOrderPrice(orderInfoData.travelGroup, selectTravellers);
+        var discountPrice = priceUtil.getOrderDiscountPrice(this.state.policyDiscount, 
+            this.state.discountCode, this.state.studentDiscount);
+        var actualPrice = priceUtil.getOrderActualPrice(price, discountPrice);
         return (
             <div className="order-form-container">
                 <GroupInfo travelRoute={orderInfoData.travelRoute}
@@ -504,10 +491,15 @@ var  OrderForm = React.createClass({
                     onPolicyDiscountChange={this.onPolicyDiscountChange}
                     onDiscountCodeChange={this.onDiscountCodeChange}
                     onStudentDiscountChange={this.onStudentDiscountChange}/>
-                <Agreement ref="agreement"/>
+                <Agreement ref="agreement"
+                    orderid={orderInfoData.orderInfo.orderid}
+                    travellers={travellers}
+                    selectTravellers={selectTravellers}
+                    price={price}
+                    actualPrice={actualPrice}/>
                 <Footer ref="footer"
                     orderid={orderInfoData.orderInfo.orderid}
-                    actualPrice={this._getActualPrice()}
+                    actualPrice={actualPrice}
                     onSaveOrderClick={this.onSaveOrderClick}
                     onPayOrderClick={this.onPayOrderClick}/>
             </div>

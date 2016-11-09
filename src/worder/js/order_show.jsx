@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-import { List, Button, Popup, Checkbox, Icon, WingBlank } from 'antd-mobile';
+import { List, Button, Popup, Checkbox, Icon } from 'antd-mobile';
 const CheckboxItem = Checkbox.CheckboxItem;
 
 import { priceUtil, orderStatus } from 'config';
@@ -56,7 +56,7 @@ var  OrderShow = React.createClass({
         var emergencyMobiles = this._split(orderInfoData.orderInfo.emergencyMobile);
         for (var i = 0, n = emergencyContacts.length; i < n; i++) {
             emergencyList.push(
-                <List.Item extra={emergencyMobiles[i]}>
+                <List.Item extra={emergencyMobiles[i]} key={i}>
                     {emergencyContacts[i]}
                 </List.Item>
             );
@@ -68,23 +68,19 @@ var  OrderShow = React.createClass({
                     travelGroup={orderInfoData.travelGroup}/>
                 <div className="item-title">出行人</div>
                 <div className="travellers-container">
-                    <WingBlank>
-                        <div className="traveller-show">
-                            {travellerList}
-                        </div>
-                    </WingBlank>
+                    <div className="traveller-show">
+                        {travellerList}
+                    </div>
                 </div>
                 <div className="item-title">睡友</div>
                 <div className="roommate-container">
                     <List>
-                        <CheckboxItem disable 
-                            checked={orderInfoData.orderInfo.roommate}>
-                            随机同性拼房
-                        </CheckboxItem>
                         {
-                            roommateList.length
-                            ? roommateList
-                            : <List.Item>未进行睡友设置，海逍遥为您随机同性拼房</List.Item>
+                            orderInfoData.orderInfo.roommate
+                            ? <CheckboxItem disable checked={true}>
+                                随机同性拼房
+                            </CheckboxItem>
+                            : roommateList
                         }
                     </List>
                 </div>
