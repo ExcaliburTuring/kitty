@@ -5,6 +5,8 @@ import React from 'react';
 import { Col, Glyphicon } from 'react-bootstrap';
 import marked from 'marked';
 import Swiper from 'swiper';
+import Map from './map';
+
 
 var Brief = React.createClass({
 
@@ -67,7 +69,10 @@ var Brief = React.createClass({
                         </div>
                     </div>
                     <hr />
-                    <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
+                    <div className="brief-info" dangerouslySetInnerHTML={{__html: mdtext}}></div>
+                </Col>
+                <Col sm={12} md={12}>
+                    <Map/>
                 </Col>
                 <Col sm={12} md={12}>
                     <hr />

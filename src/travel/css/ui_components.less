@@ -148,6 +148,7 @@
 .xingcheng,
 .notice,
 .expense {
+    min-height: 750px;
 
     p {
         margin: 20px 0;
@@ -156,7 +157,7 @@
 
     h2 {
       line-height: 45px;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 600;
       color: @dark-gray;
     }
@@ -168,6 +169,14 @@
 
 .brief {
     margin-bottom: 20px;
+
+    h2 {
+        padding-left: 15px;
+        background-image: url(../img/kuai.svg);
+        background-size: 5px 5px;
+        background-repeat: no-repeat;
+        background-position: left center;
+    }
 
     .liangdian {
         line-height: 60px;
@@ -189,9 +198,14 @@
         font-size: 18px;
     }
 
+    .brief-info {
+        padding-top: 20px;
+    }
+
     .track {
         font-size: 16px;
         width: 100%;
+        padding-bottom: 20px;
 
         span {
             background-color: @white;
@@ -287,7 +301,7 @@
 .xingcheng {
 
     h2 {
-        font-size: 1.6em!important;
+        font-size: 20px!important;
         padding-left: 60px;
         background-image: url(../img/h2.png);
         background-repeat: no-repeat;
