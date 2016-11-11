@@ -28,6 +28,7 @@ export var url = {
     'orderDiscount': '/order/discount',
     'orderDiscountCode': '/order/discountcode',
     'orderPayResult': '/order/payresult',
+    'orderHistory': '/order/history'
 };
 
 export var defaultValue = {
@@ -297,7 +298,7 @@ export var priceUtil = {
 
     getPriceStr: function(price) {
         if (price <= 0) {
-            return `￥0`
+            return '￥0'
         }
         var rawPrice = price / 1000;
         return `￥${rawPrice.toFixed(0)}`
@@ -316,9 +317,24 @@ export var priceUtil = {
      */
     getOrderDiscountPrice: function(policyDiscount, discountCode, studentDiscount) {
         return this.getPriceStr(
-                this.getPrice(policyDiscount.value) 
-                + this.getPrice(discountCode.value)
-                + this.getPrice(studentDiscount.value));
+                this.getPrice(policyDiscount ? policyDiscount.value : '￥0') 
+                + this.getPrice(discountCode ? discountCode.value : '￥0')
+                + this.getPrice(studentDiscount ? studentDiscount.value : '￥0'));
+    },
+
+    /**
+     * 根据订单信息获取优惠价格
+     */
+    getOrderDiscountPrice1: function(orderInfoData) {
+        var studentDiscount = '￥0';
+        if (orderInfoData.student) {
+            studentDiscount = this.getPrice(orderInfoData.student.value) * orderInfoData.orderInfo.studentCount;
+            studentDiscount = this.getPriceStr(studentDiscount);
+        }
+        return this.getOrderDiscountPrice(
+                orderInfoData.policy,
+                orderInfoData.code, 
+                {'value': studentDiscount});
     },
 
     /**

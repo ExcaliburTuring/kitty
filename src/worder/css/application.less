@@ -11,7 +11,8 @@
     }
 }
 
-.order-form-container {
+.order-form-container,
+.order-show-container {
     margin-bottom: 1.3rem;
 
     .item-title {
@@ -68,13 +69,20 @@
     }
 }
 
+.am-action-sheet-button-list-item {
+    font-size: .28rem;
+    line-height: .8rem;
+    height: .8rem;
+}
+
 .travellers-container,
 .roommate-container,
 .emergency-container,
 .discount-container,
 .agreement-container,
 .order-status-container,
-.travellers-button {
+.travellers-button,
+.order-info-container {
     margin: .05rem 0 .3rem;
     overflow: hidden;
 }
@@ -85,18 +93,25 @@
 .travel-info-container {
     position: relative;
     margin-bottom: .3rem;
-    box-shadow: 0 0px 5px @light-gray;
     border-bottom: 2px dashed @currency;
-    padding: .36rem .3rem;
+    padding: .3rem;
     background: white;
 
+    .travel-img {
+        width: 20%;
+        line-height: 0;
+        background-size: auto 100%;
+        margin-right: .05rem;
+    }
+
     .travel-title {
-        font-size: .34rem;
+        font-size: .36rem;
         color: @dark-black;
+        margin-bottom: .05rem;
     }
 
     .travel-detail {
-        font-size: .28rem;
+        font-size: .26rem;
 
         .travel-date,
         .travel-price {
@@ -327,6 +342,10 @@
     left: 0;
     right: 0;
 
+    .order-operation {
+        height: 100%;
+    }
+
     p.pull-left {
         line-height: 1rem;
         margin-left: .3rem;
@@ -355,25 +374,121 @@
             border: none;
         }
 
-        &.pay-btn {
+        &.first-btn {
             background-color: @currency;
         }
 
-        &.save-btn {
+        &.second-btn {
             background-color: @light-currency;
         }
     }
 }
 
 /**
- * 订单状态显示
+ * 订单信息显示
  */
-.order-status-container {
+.order-info-container {
+    padding-top: .1rem;
+    background-color: white;
+    margin: .2rem 0 0;
+    border-top: 1px solid #ddd;
+
+    .order-info {
+        color: @gray;
+        font-size: .28rem;
+    }
+
+    .order-history-container {
+
+        .order-history {
+            display: inline-block;
+
+            .steps {
+                position: relative;
+
+                div {
+                    display: inline-block;
+                }
+
+                .steps-left,
+                .steps-right {
+                    width: 50%;
+                    border-top-width: 1px;
+                    border-top-style: solid;
+                    box-shadow: 0 0 3px 0 @light-gray;
+                }
+
+                .steps-icon {
+                    position: absolute;
+                    background-color: white;
+                    top: .25rem;
+                    width: .2rem;
+                    height: .2rem;
+                    border: 2px solid @light-gray;
+                    box-shadow: 0 0 3px 0 @light-gray;
+                    border-radius: 50%; 
+                }
+            }
+
+            .history-desc {
+                font-size: .25rem;
+                text-align: center;
+            }
+        }
+
+        .order-history.history {
+
+            .steps-icon {
+                background-color: @light-currency;
+            }
+
+            .steps-left,
+            .steps-right {
+                border-top-color: @light-currency;
+            }
+
+            .history-desc {
+                color: @light-currency;
+            }
+        }
+
+        .order-history.next {
+
+            .steps-icon {
+                background-color: white;
+            }
+
+            .steps-left,
+            .steps-right {
+                border-top-color: @gray;
+            }
+
+            .history-desc {
+                color: @gray;
+            }
+        }
+
+        .order-history.change .steps-right {
+            border-top-color: @gray;
+        }
+
+        & .order-history:first-child .steps-left,
+        & .order-history:last-child .steps-right {
+            border-color: white;
+            box-shadow: none;
+        }
+    }
 
 }
 
-.am-action-sheet-button-list-item {
-    font-size: .28rem;
-    line-height: .8rem;
-    height: .8rem;
+.order-show-container {
+
+    .travel-info-container {
+        padding-bottom: .2rem;
+    }
+
+    .travellers-container .traveller-show,
+    .emergency-container .emergency-show {
+        margin-bottom: 0;
+    }
 }

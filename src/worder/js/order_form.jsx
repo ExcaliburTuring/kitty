@@ -197,7 +197,7 @@ var  OrderForm = React.createClass({
     _getDiscount: function() {
         var policyDiscount = this.state.policyDiscount;
         var discountCode = this.state.discountCode;
-        var studentDiscount = this.state.discountData.studentDiscount;
+        var studentDiscount = this.state.studentDiscount;
         var price = priceUtil.getOrderPrice(this.props.orderInfoData.travelGroup, this.state.selectTravellers);
         var discountPrice = priceUtil.getOrderDiscountPrice(policyDiscount, discountCode, studentDiscount);
         var actualPrice = priceUtil.getOrderActualPrice(price, discountPrice);
@@ -505,6 +505,7 @@ var  OrderForm = React.createClass({
                 <Footer ref="footer"
                     orderid={orderInfoData.orderInfo.orderid}
                     actualPrice={actualPrice}
+                    orderInfo={orderInfoData.orderInfo}
                     onSaveOrderClick={this.onSaveOrderClick}
                     onPayOrderClick={this.onPayOrderClick}/>
             </div>
