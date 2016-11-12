@@ -24,8 +24,8 @@ var GroupInfo = React.createClass({
                     onClick={this.onImgClick}>
                     <img className="img-responsive" src={square}/>
                 </div>
-                <div className="travel-title ellipsis">
-                    <p>【{travelRoute.name}】{travelRoute.title}</p>
+                <div className="travel-title">
+                    <p className="ellipsis">【{travelRoute.name}】{travelRoute.title}</p>
                 </div>
                 <div className="travel-detail clearfix">
                     <p className="pull-left">
