@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { List, Button, Popup, Checkbox, InputItem, WingBlank, Icon } from 'antd-mobile';
+import { List, Button, Popup, Checkbox, InputItem, Icon } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const CheckboxItem = Checkbox.CheckboxItem;
 
@@ -37,27 +37,19 @@ var SelectEmergency = React.createClass({
             }
         }
         return (
-            <div>
-                <div className="emergency-container">
-                    <WingBlank>
-                        <div className="emergency-show">
-                            {
-                                emergencyList.length == 0
-                                ? null
-                                : <List>
-                                    {emergencyList}
-                                </List>
-                            }
-                        </div>
-                    </WingBlank>
-                </div>
-                <div className="travellers-button">
-                    <WingBlank>
-                        <div className="emergency-selector-trigger">
-                            <Button className="am-button-fix" 
-                                onClick={this.onEmergencySelectorClick}><Icon type="plus-circle-o"/>选择紧急联系人</Button>
-                        </div>
-                    </WingBlank>
+            <div className="emergency-container">
+                {
+                    emergencyList.length
+                    ? <div className="emergency-show">
+                        <List>
+                            {emergencyList}
+                        </List>
+                    </div>
+                    : null
+                }
+                <div className="emergency-selector-trigger">
+                    <Button className="am-button-fix" 
+                        onClick={this.onEmergencySelectorClick}><Icon type="plus-circle-o"/>选择紧急联系人</Button>
                 </div>
             </div>
         );

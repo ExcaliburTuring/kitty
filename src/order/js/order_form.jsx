@@ -71,10 +71,14 @@ var OrderForm = React.createClass({
                     maxValueCode = discountCode;
                 }
             }
-            this.setState({
-                'accountDiscountCodeData': accountDiscountCodeData,
-                'discountCode': maxValueCode
-            });
+            if (maxValueCode == null) {
+                this.setState({'accountDiscountCodeData': accountDiscountCodeData});
+            } else {
+                this.setState({
+                    'accountDiscountCodeData': accountDiscountCodeData,
+                    'discountCode': maxValueCode
+                });
+            }
         } else {
             this.setState({'accountDiscountCodeData': accountDiscountCodeData});
         }

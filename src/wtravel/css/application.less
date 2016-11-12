@@ -268,12 +268,20 @@ body {
         min-height: 1.4rem;
         border-bottom: 1px solid @gray-line;
 
-        img.img-responsive {
+        div.pull-left {
             width: 2.5rem;
             position: absolute;
-            top: -0.7rem;
+            top: -0.9rem;
             left: .5rem;
+
+            div {
+                background-size: auto 100%;
+            }
         }
+
+        // img.img-responsive {
+            
+        // }
 
         .new-title {
             margin-left: 2.7rem;
@@ -363,8 +371,7 @@ body {
             }
 
             .new-price {
-                margin-left: .15rem;
-                font-size: .5rem;
+                margin-left: .1rem;
                 color: @currency;
             }
         }

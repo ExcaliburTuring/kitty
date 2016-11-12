@@ -146,7 +146,7 @@ var OrderOperationHelper = {
         var self = this;
         Modal.confirm({
             title: '取消订单',
-            content: `您是否确认要取消这个订单?如果您对我们的路线有疑问或建议或想修改订单，欢迎直接致电我们客服:${defaultValue.hotline}`,
+            content: `如果您对路线有疑问或建议或想修改订单，欢迎直接致电海逍遥:${defaultValue.hotline}`,
             onOk: function() {
                 self._doCancelOrder();
             },
