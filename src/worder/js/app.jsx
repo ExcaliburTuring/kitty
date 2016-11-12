@@ -8,7 +8,6 @@ import { ActivityIndicator } from 'antd-mobile';
 import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url, orderStatus } from 'config';
 import Rabbit from 'rabbit';
-import Login from 'login';
 import OrderForm from './order_form';
 import OrderShow from './order_show';
 

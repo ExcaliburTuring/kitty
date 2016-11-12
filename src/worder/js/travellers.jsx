@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { List, Button, Popup, Checkbox, Icon, WingBlank } from 'antd-mobile';
+import { List, Button, Popup, Checkbox, Icon } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const CheckboxItem = Checkbox.CheckboxItem;
 
@@ -43,22 +43,20 @@ var SelectTraveller = React.createClass({
             );
         });
         return (
-            <div>
-                <div className="travellers-container">
-                    <WingBlank>
-                        <div className="traveller-show">
-                            {travellerList}
-                        </div>
-                    </WingBlank>
-                </div>
-                <div className="travellers-button">
-                    <WingBlank>
-                        <div className="traveller-selector-trigger">
-                            <Button className="am-button-fix" 
-                                onClick={this.onTraverllerSelectorClick}><Icon type="plus-circle-o" />选择出行人</Button>
-                        </div>
-                    </WingBlank>
-                </div>
+            <div className="travellers-container">
+                {
+                    travellerList.length
+                    ? <div className="traveller-show">
+                        {travellerList}
+                    </div>
+                    : null
+                }
+                <div className="traveller-selector-trigger">
+                    <Button className="am-button-fix" 
+                        onClick={this.onTraverllerSelectorClick}>
+                        <Icon type="plus-circle-o" />选择出行人
+                    </Button>
+                </div> 
             </div>
         );
     }
@@ -118,40 +116,5 @@ var TravellerSelector = React.createClass({
     }
 });
 TravellerSelector = createForm()(TravellerSelector);
-
-// var Traveller = React.createClass({
-
-//     render: function () {
-//         var traveller = this.props.traveller;
-//         var isAccount = traveller.contactid == 0;
-//         var isMale = traveller.gender == gender.MALE;
-//         return (
-//             <div className="traveller-container clearfix">
-//                 <div className="traveller-avatar pull-left">
-//                     <i className={`fa ${isMale ? 'fa-male' : 'fa-female'}`} aria-hidden="true"></i>
-//                 </div>
-//                 <div className="traveller-info pull-left">
-//                     <div className="clearfix">
-//                         <p className="pull-left">姓名：{traveller.name}</p>
-//                         <p className="pull-right">{traveller.mobile}</p>
-//                     </div>
-//                     <div className="traveller-addition-info">
-//                         <p>证件：{traveller.id}</p>
-//                         {
-//                             /**
-//                              <p>邮箱：{traveller.email}</p>
-//                              */
-//                         }
-//                     </div>
-//                 </div>
-//                 <div className="traveller-edit-container pull-left">
-//                     <Button inline onClick={()=>{this.props.onTravellerEditBtnClick(traveller)}}>
-//                         <Icon type="edit"/>
-//                     </Button>
-//                 </div>
-//             </div>
-//         );
-//     }
-// });
 
 module.exports = SelectTraveller;

@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { List, Button, InputItem, ActionSheet, Stepper, WingBlank } from 'antd-mobile';
+import { List, ActionSheet, Stepper } from 'antd-mobile';
 import { createForm } from 'rc-form';
 
 import { priceUtil, discountCodeStatus }  from 'config';
@@ -82,10 +82,8 @@ var Discount = React.createClass({
         var policyDiscount = this.props.policyDiscount;
         var discountCode = this.props.discountCode;
         var studentDiscount = this.props.studentDiscount;
-        var discountPrice = priceUtil.getPriceStr(
-            priceUtil.getPrice(this.props.policyDiscount.value)
-            + priceUtil.getPrice(this.props.discountCode.value)
-            + priceUtil.getPrice(this.props.studentDiscount.value))
+        var discountPrice = priceUtil.getOrderDiscountPrice(this.props.policyDiscount, 
+            this.props.discountCode, this.props.studentDiscount);
         return (
             <div className="discount-container">
                 <List>

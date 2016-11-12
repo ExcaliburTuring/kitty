@@ -132,7 +132,7 @@ var ContactList = React.createClass({
         return {
             'accountid': accountInfo.accountid,
             'contactid': 0,
-            'name': accountInfo.name || accountInfo.nickname,
+            'name': accountInfo.name,
             'id': accountInfo.id,
             'idType': accountInfo.idType,
             'gender': accountInfo.gender,
@@ -163,7 +163,7 @@ var ContactList = React.createClass({
                 {contactList}
                 <div className="contact-addbtn-container">
                     <Button onClick={()=>{this.props.onEditBtnClick({})}}>
-                        添加新出行人
+                        <Icon type="plus-circle-o" />添加新出行人
                     </Button>
                 </div>
             </div>
@@ -185,6 +185,11 @@ var Contact = React.createClass({
         return (
             <div className="contact-container">
                 <div className="contact-body">
+                    {
+                        isAccount
+                        ? <img className="avatar-img img-responsive img-thumbnail pull-left" src={avatarUrl}/>
+                        : null
+                    }
                     <p>
                         {contact.name}
                         <span className="pull-right">{contact.mobile}</span>

@@ -17,6 +17,7 @@ import b4 from '../img/b4.png';
 import b5 from '../img/b5.png';
 import b6 from '../img/b6.png';
 import b7 from '../img/b7.png';
+import square from '../img/54.png';
 
 var RouteFlux = Rabbit.create(url.route);
 var GroupsFlux = Rabbit.create(url.group);
@@ -300,11 +301,24 @@ var AdditionInfo = React.createClass({
 
 var GroupPopup = React.createClass({
 
+    _findSelectableGroup: function(groups) {
+        for (var i = 0, n = groups.length; i < n; i++) {
+            if (groups[i].status == groupStatus.OPEN) {
+                return groups[i];
+            }
+        }
+        return {};
+    },
+
     onOrderBtnClick: function() {
         var group = this.state.selected;
-        if (!group || group.status != groupStatus.OPEN) {
+        if (!group) {
+            Toast.fail("还未选择团");
+            return;
+        }
+        if (group.status != groupStatus.OPEN) {
             Toast.fail('本团不可报名');
-            return ;
+            return;
         }
 
         $.post(url.orderNew, {'routeid': group.routeid, 'groupid': group.groupid})
@@ -327,14 +341,14 @@ var GroupPopup = React.createClass({
 
     getInitialState: function() {
         return {
-            'selected': this.props.groups[0],
+            'selected': this._findSelectableGroup(this.props.groups),
             'time': null
         };
     },
 
     componentWillReceiveProps: function(newProps) {
         if (newProps.groups.length) {
-            this.setState({'selected': newProps.groups[0]});
+            this.setState({'selected': this._findSelectableGroup(this.props.groups)});
         }
     },
 
@@ -348,7 +362,7 @@ var GroupPopup = React.createClass({
                     day = '0' + day;
                 }
                 var time = `${year}-${+month + 1}-${day}`;
-                var group = null, groups = this.props.groups;
+                var group = null, groups = self.props.groups;
                 for (var i = 0, n = groups.length; i < n; i++) {
                     if (time == groups[i].startDate) {
                         group = groups[i];
@@ -387,7 +401,11 @@ var GroupPopup = React.createClass({
         return (
             <div className="new-order-container">
                 <div className="new-header">
-                    <img src={route.headImg} className="img-responsive img-thumbnail pull-left"/>
+                    <div className="img-thumbnail pull-left">
+                        <div style={{backgroundImage: `url(${route.headImg})`}}>
+                            <img className="img-responsive" src={square}/>
+                        </div>
+                    </div>
                     <p className="new-title ellipsis">【{route.name}】{route.title}</p>
                 </div>
                 <div className="new-body">
@@ -418,8 +436,7 @@ var GroupPopup = React.createClass({
                             }
                         </span>
                     </p>
-                    <Button inline className="pull-right" disable={self.state.selected ? false : true}
-                        onClick={this.onOrderBtnClick}>立即报名</Button>
+                    <Button inline className="pull-right" onClick={this.onOrderBtnClick}>立即报名</Button>
                 </div>
             </div>
         );
@@ -437,10 +454,7 @@ var Group = React.createClass({
     render: function() {
         var group = this.props.group;
         return (
-            <div className={`group-container Athird 
-                ${this.props.selected ? 'selected': ''}
-                ${this.props.open ? '' : 'disable'} 
-                ${this.props.visiable ? '': 'invisiable'}`}
+            <div className={`group-container Athird ${this.props.selected ? 'selected': ''} ${this.props.open ? '' : 'disable'} ${this.props.visiable ? '': 'invisiable'}`}
                 onClick={this.onGroupClick}>
                 <div className="group-start-date">{group.startDate}</div>
                 <div>
@@ -466,3 +480,5 @@ var Group = React.createClass({
 });
 
 module.exports = App;
+
+ //<img src={route.headImg} className="img-responsive img-thumbnail pull-left"/>

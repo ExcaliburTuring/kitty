@@ -2,42 +2,37 @@
  * @author xiezhenzong 
  */
 import React from 'react';
+import Reflux from 'reflux';
+import { List, Switch, Button } from 'antd-mobile';
 
-import { List, Button, Popup, Checkbox, Icon, WingBlank } from 'antd-mobile';
-const CheckboxItem = Checkbox.CheckboxItem;
-
-import { priceUtil, orderStatus } from 'config';
-
+import { priceUtil, orderStatus, url, refundStatus, refundType } from 'config';
+import Rabbit from 'rabbit';
 import GroupInfo from './group';
 import Traveller from './traveller';
-import Roommate from './roommate';
-import SelectEmergency from './emergency';
-import Discount from './discount';
-import Agreement from './agreement';
 import Footer from './footer';
 
-var  OrderShow = React.createClass({
+var OrderHistoryFlux = Rabbit.create(url.orderHistory);
+
+var OrderShow = React.createClass({
+
+    mixins: [Reflux.connect(OrderHistoryFlux.store, 'data')],
 
     _split: function(value) {
         return value == null ? [] : value.split(';');
     },
 
-    _getTotalDiscount: function(orderInfoData) {
-        var totalDiscount = 0;
-        if (orderInfoData.policy != null) {
-            totalDiscount += priceUtil.getPrice(orderInfoData.policy.value);
+    getInitialState: function() {
+        OrderHistoryFlux.actions.load({'orderid': this.props.orderInfoData.orderInfo.orderid});
+        return {
+            'data': {
+                'history': []
+            }
         }
-        if (orderInfoData.code != null) {
-            totalDiscount += priceUtil.getPrice(orderInfoData.code.value);
-        }
-        if (orderInfoData.student != null) {
-            totalDiscount += priceUtil.getPrice(orderInfoData.student.value) * orderInfoData.orderInfo.studentCount;
-        }
-        return totalDiscount;
     },
 
     render: function () {
         var orderInfoData = this.props.orderInfoData;
+        var orderInfo = orderInfoData.orderInfo;
         var travellerList = orderInfoData.orderTravellers.map(function(traveller, index) {
             return (
                 <Traveller traveller={traveller} key={index} readOnly/>
@@ -52,39 +47,41 @@ var  OrderShow = React.createClass({
             );
         });
         var emergencyList = [];
-        var emergencyContacts = this._split(orderInfoData.orderInfo.emergencyContact);
-        var emergencyMobiles = this._split(orderInfoData.orderInfo.emergencyMobile);
+        var emergencyContacts = this._split(orderInfo.emergencyContact);
+        var emergencyMobiles = this._split(orderInfo.emergencyMobile);
         for (var i = 0, n = emergencyContacts.length; i < n; i++) {
             emergencyList.push(
-                <List.Item extra={emergencyMobiles[i]}>
+                <List.Item extra={emergencyMobiles[i]} key={i}>
                     {emergencyContacts[i]}
                 </List.Item>
             );
         }
-        var totalDiscount = this._getTotalDiscount(orderInfoData);
         return (
-            <div className="order-form-container">
+            <div className="order-show-container">
                 <GroupInfo travelRoute={orderInfoData.travelRoute}
-                    travelGroup={orderInfoData.travelGroup}/>
+                    travelGroup={orderInfoData.travelGroup}
+                    orderInfo={orderInfo}
+                    history={this.state.data.history}/>
                 <div className="item-title">出行人</div>
                 <div className="travellers-container">
-                    <WingBlank>
-                        <div className="traveller-show">
+                    {
+                        travellerList.length
+                        ? <div className="traveller-show">
                             {travellerList}
                         </div>
-                    </WingBlank>
+                        : <List><List.Item>未选择出行人</List.Item></List>
+                    }
                 </div>
                 <div className="item-title">睡友</div>
                 <div className="roommate-container">
                     <List>
-                        <CheckboxItem disable 
-                            checked={orderInfoData.orderInfo.roommate}>
-                            随机同性拼房
-                        </CheckboxItem>
                         {
-                            roommateList.length
-                            ? roommateList
-                            : <List.Item>未进行睡友设置，海逍遥为您随机同性拼房</List.Item>
+                            orderInfo.roommate == null || orderInfo.roommate
+                            ? <List.Item
+                                extra={<Switch checked={true} disabled/>}>
+                                随机同性拼房
+                            </List.Item> 
+                            : roommateList
                         }
                     </List>
                 </div>
@@ -129,23 +126,44 @@ var  OrderShow = React.createClass({
                             </List.Item>
                             : null
                         }
-                        {
-                            totalDiscount
-                            ? <List.Item extra={priceUtil.getPriceStr(totalDiscount)}>
-                                总共优惠
-                            </List.Item>
-                            : null
-                        }
+                        <List.Item extra={priceUtil.getOrderDiscountPrice1(orderInfoData)}>
+                            总共优惠
+                        </List.Item>
                     </List>
                 </div>
-                <div className="order-refund-container">
-                </div>
-                <div className="order-operation-container">
-                </div>
+                <OrderRefund orderInfo={orderInfo} orderRefound={orderInfoData.orderRefound}/>
+                <Footer orderid={orderInfo.orderid} actualPrice={orderInfo.actualPrice}
+                    orderInfo={orderInfo}/>
             </div>
         );
     }
 
+});
+
+var OrderRefund = React.createClass({
+
+    render: function() {
+        var status = this.props.orderInfo.status;
+        var orderRefound = this.props.orderRefound;
+        if (orderRefound == null 
+            || (status != orderStatus.REFUNDING && status != orderStatus.REFUNDED)) {
+            return null;
+        } 
+        return (
+            <div>
+                <div className="item-title">退款</div>
+                <div className="order-refund-container">
+                    <List>
+                        <List.Item extra={refundStatus.getDesc(orderRefound.status)}>当前状态</List.Item>
+                        <List.Item extra={refundType.getDesc(orderRefound.type)}>退款策略</List.Item>
+                        <List.Item extra={this.props.orderInfo.actualPrice}>实际支付</List.Item>
+                        <List.Item extra={orderRefound.refund}>退款金额</List.Item>
+                        <List.Item extra={orderRefound.desc}>退款原因</List.Item>
+                    </List>
+                </div>
+            </div>
+        );
+    }
 });
 
 module.exports = OrderShow;

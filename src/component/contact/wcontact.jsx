@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Button, Toast, List, InputItem, DatePicker, Switch, ActionSheet } from 'antd-mobile';
+import { Button, Toast, List, InputItem, DatePicker, Switch, ActionSheet, Icon } from 'antd-mobile';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import { createForm } from 'rc-form';
@@ -59,16 +59,61 @@ var WContact = React.createClass({
             message: '请选择证件类型',
             maskClosable: true
         }, function(buttonIndex) {
-            if (buttonIndex == BUTTONS.length - 1) {
+             var contact = self.state.contact;
+            var oldIdType = contact.idType;
+            if (buttonIndex == BUTTONS.length - 1 || oldIdType == buttonIndex) {
                 return;
             }
-            var contact = self.state.contact;
-            contact.idType = buttonIndex;
+            contact.idType = buttonIndex; // 下标位置刚刚等于idType的取值
+            contact.id = '';
             self.setState({ 'contact': contact });
+            if (oldIdType != idType.IDENTIFICATION && contact.idType == idType.IDENTIFICATION) {
+                $('.gender-birthday-container').removeClass().addClass('gender-birthday-container animated flipOutX')
+                .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                    $(this).css({'display': 'none'}).removeClass('animated flipOutX');
+                });
+            } else if (oldIdType == idType.IDENTIFICATION && contact.idType != idType.IDENTIFICATION) {
+                var $genderBithdayContainer = $('.gender-birthday-container');
+                if ($genderBithdayContainer.css('display') == 'none') {
+                    $genderBithdayContainer.removeClass().css({'display': 'block'})
+                    .addClass('gender-birthday-container animated flipInX')
+                    .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                        $genderBithdayContainer.removeClass('animated flipInX');
+                    });
+                }
+            }
         });
     },
 
+    onIdChange: function(id) {
+        var contact = this.state.contact;
+        contact.id = id;
+        this.setState({'contact': contact});
+        var ret = validator.id(id);
+        var $genderBithdayContainer = $('.gender-birthday-container');
+        var display = $genderBithdayContainer.css('display');
+        if (ret['info']) {
+            if (display == 'none') {
+                $genderBithdayContainer.removeClass().css({'display': 'block'})
+                .addClass('gender-birthday-container animated flipInX')
+                .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                    $genderBithdayContainer.removeClass('animated flipInX');
+                });
+            }
+        } else {
+            if (display != 'none') {
+                $genderBithdayContainer.removeClass().addClass('gender-birthday-container animated flipOutX')
+                .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                    $(this).css({'display': 'none'}).removeClass('animated flipOutX');
+                });
+            }
+        }
+    },
+
     showGenderSheet: function() {
+        if (this.state.contact.idType == idType.IDENTIFICATION) {
+            return;
+        }
         var self = this;
         var BUTTONS = ['男', '女', '未知', '取消'];
         ActionSheet.showActionSheetWithOptions({
@@ -85,6 +130,15 @@ var WContact = React.createClass({
                                 : buttonIndex == 1 ? gender.FEMALE : gender.UNKNOW;
             self.setState({ 'contact': contact });
         });
+    },
+
+    onBirthdayChange: function(date) {
+        var contact = this.state.contact;
+        if (contact.idType == idType.IDENTIFICATION) {
+            return;
+        }
+        contact.birthday = date;
+        this.setState({'contact': contact});
     },
 
     onSaveBtnClick: function() {
@@ -104,7 +158,7 @@ var WContact = React.createClass({
         var id = getFieldProps('id').value;
         var idTypeValue = contact.idType || idType.IDENTIFICATION;
         var gender = contact.gender;
-        var birthday = getFieldProps('birthday').value.format('YYYY-MM-DD');
+        var birthday = contact.birthday.format('YYYY-MM-DD');
 
         if (idTypeValue == idType.IDENTIFICATION) {
             var ret = validator.id(id);
@@ -188,6 +242,13 @@ var WContact = React.createClass({
         $('.contact-area-picker input').cityPicker({
             title: "请选择地区"
         });
+        var contact = this.state.contact;
+        if (contact.idType == idType.IDENTIFICATION) {
+            var ret = validator.id(contact.id);
+            if (!ret['info']) {
+                $('.gender-birthday-container').css({'display': 'none'});
+            }
+        }
     },
 
     render: function() {
@@ -208,38 +269,32 @@ var WContact = React.createClass({
                                     }]
                                 })
                             }>姓名</InputItem>
-                        <List.Item arrow="horizontal" onClick={this.showIdTypeSheet}
-                            extra={
-                                idType.getDesc(contact.idType)
-                            }>证件类型</List.Item>
                         <InputItem clear
                             placeholder="请输入证件号"
-                            {
-                                ...getFieldProps('id', {
-                                    initialValue: contact.id,
-                                    rules: [{
-                                        'required': true,
-                                        'range': {'min': 1, 'max': 20}
-                                    }]
-                                })
-                            }>证件</InputItem>
-                        <List.Item arrow="horizontal" onClick={this.showGenderSheet}
-                            extra={
-                                gender.getDesc(contact.gender)
-                            }>性别</List.Item>
-                        <DatePicker
-                            mode="date"
-                            title="选择日期"
-                            extra="可选,小于结束日期"
-                            minDate={minDate}
-                            maxDate={maxDate}
-                            {
-                                ...getFieldProps('birthday', {
-                                    initialValue: contact.birthday
-                                })
-                            }>
-                            <List.Item arrow="horizontal">日期</List.Item>
-                        </DatePicker>
+                            value={contact.id}
+                            onChange={this.onIdChange}>
+                            <div onClick={this.showIdTypeSheet} 
+                                className={`idtype-selector ${contact.idType == idType.H_PASSER ? 'h-passer' : ''}`}>
+                                {idType.getDesc(contact.idType)}
+                                <Icon type="right" className="idtype-icon"/>
+                            </div>
+                        </InputItem>
+                        <div className="gender-birthday-container">
+                            <List.Item arrow="horizontal" onClick={this.showGenderSheet}
+                                extra={
+                                    gender.getDesc(contact.gender)
+                                }>性别</List.Item>
+                            <DatePicker
+                                mode="date"
+                                title="选择生日"
+                                extra="选择生日"
+                                minDate={minDate}
+                                maxDate={maxDate}
+                                value={contact.birthday}
+                                onChange={this.onBirthdayChange}>
+                                <List.Item arrow="horizontal" >日期</List.Item>
+                            </DatePicker>
+                        </div>
                     </List>
                     <List>
                         <InputItem clear type="phone"
@@ -297,7 +352,7 @@ var WContact = React.createClass({
                     }
                 </div>
                 <div className="contact-btn-container">
-                    <Button onClick={this.onSaveBtnClick}>保存</Button>
+                    <Button className="save-btn" onClick={this.onSaveBtnClick}>保存</Button>
                     <Button onClick={this.props.onCancleBtnClick}>返回</Button>
                     {
                         this.state.isNew || this.state.isAccount

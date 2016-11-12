@@ -124,9 +124,6 @@ var OrderItem = React.createClass({
         var orderInfo = briefOrder.orderInfo;
         var travelRoute = briefOrder.travelRoute;
         var travelGroup = briefOrder.travelGroup;
-        var bg = {
-            backgroundImage: `url(${travelRoute.headImg})`
-        };
         return (
             <div className="order-item-container" onClick={this.onClick}>
                 <div className="order-item-title clearfix">
@@ -134,7 +131,8 @@ var OrderItem = React.createClass({
                     <p className="pull-right travel-status">{orderStatus.getDesc(orderInfo.status)}</p>
                 </div>
                 <div className="order-item-body clearfix">
-                    <div className="travel-img pull-left" style={bg} onClick={this.onImgClick}>
+                    <div className="travel-img pull-left" style={{backgroundImage: `url(${travelRoute.headImg})`}} 
+                        onClick={this.onImgClick}>
                         <img src={square}/>
                     </div>
                     <div className="travel-info pull-left">
