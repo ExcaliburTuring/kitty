@@ -24,7 +24,7 @@ var Contact = React.createClass({
             <div className="contact-item-container">
                 <div className="">
                     <div className="contact-title">
-                        <span className="contact-name ellipsis">{this.props.contact.name}</span>
+                        <span className="contact-name ellipsis">{this.props.contact.name || this.props.contact.nickname}</span>
                         <span className="contact-relationship">{this.props.contact.relationship}</span>
                         {
                             readOnly 
@@ -54,7 +54,7 @@ var Contact = React.createClass({
                     needCard
                         ? <div className={`contact-card ${this.props.totop ? "totop": ""}`}>
                             <div className="card-title">
-                                <span className="contact-name ellipsis">{this.props.contact.name}</span>
+                                <span className="contact-name ellipsis">{this.props.contact.name || this.props.contact.nickname}</span>
                                 <span className="contact-relationship">{this.props.contact.relationship}</span>
                                 <div className="edit-wrap">
                                     <Icon type="edit" onClick={()=>{this.props.onEditBtnClick(this.props.contact);}}/>

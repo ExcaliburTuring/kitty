@@ -242,7 +242,8 @@ var OrderForm = React.createClass({
         return {
             'accountid': accountInfo.accountid,
             'contactid': 0,
-            'name': accountInfo.name || accountInfo.nickname,
+            'name': accountInfo.name,
+            'nickname': accountInfo.nickname,
             'id': accountInfo.id,
             'idType': accountInfo.idType,
             'gender': accountInfo.gender,
@@ -302,6 +303,14 @@ var OrderForm = React.createClass({
             'groupid': this.props.orderInfoData.orderInfo.groupid,
             'count': selectTravellers.length
         });
+    },
+
+    /**
+     * 完善个人信息
+     */
+    onNewAccountEditLinkClick: function() {
+        this.setState({'contact': this._createAccountTraveller(), 'title': '完善个人信息'});
+        this.refs.newModal.toggleVisiable();
     },
 
     /**
@@ -673,7 +682,11 @@ var OrderForm = React.createClass({
                             {
                                 this.props.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO
                                 ? <Alert message="新用户提醒信息" type="info" closable
-                                    description="您还是新用户，强烈建议您完善个人信息，方便以后下单。"/>
+                                    description={
+                                        <div>您还是新用户，强烈建议您
+                                            <a onClick={this.onNewAccountEditLinkClick}>完善个人信息</a>，方便以后下单。
+                                        </div>
+                                    }/>
                                 : null
                             }
                             <Travellers 

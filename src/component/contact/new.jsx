@@ -49,7 +49,7 @@ export var NewModal = React.createClass({
                 || this.refs.birthdaySelector.isChange()
                 || this.refs.emailContainer.isChange()
                 || this.refs.mobileContainer.isChange()
-                || this.refs.emergencyContainer.isChange();
+                || (this.refs.emergencyContainer && this.refs.emergencyContainer.isChange());
     },
 
     _revert: function() {
@@ -59,7 +59,9 @@ export var NewModal = React.createClass({
         this.refs.birthdaySelector.revert();
         this.refs.emailContainer.revert();
         this.refs.mobileContainer.revert();
-        this.refs.emergencyContainer.revert();
+        if (this.refs.emergencyContainer) {
+            this.refs.emergencyContainer.revert();
+        }
     },
 
     // callback method
@@ -103,7 +105,7 @@ export var NewModal = React.createClass({
             || this.refs.birthdaySelector.validate() != 'success'
             || this.refs.emailContainer.validate() != 'success'
             || this.refs.mobileContainer.validate() != 'success'
-            || this.refs.emergencyContainer.validate() != 'success') {
+            || (this.refs.emergencyContainer && this.refs.emergencyContainer.validate() != 'success')) {
             return;
         }
 
@@ -136,7 +138,7 @@ export var NewModal = React.createClass({
         if (this.refs.mobileContainer.isChange()) {
             contact['mobile'] = this.refs.mobileContainer.getValue();
         }
-        if (this.refs.emergencyContainer.isChange()) {
+        if (this.refs.emergencyContainer && this.refs.emergencyContainer.isChange()) {
             contact['emergency'] = this.refs.emergencyContainer.getValue();
         }
         var self = this;
@@ -160,7 +162,9 @@ export var NewModal = React.createClass({
                 self.refs.birthdaySelector.cleanValidate();
                 self.refs.emailContainer.cleanValidate();
                 self.refs.mobileContainer.cleanValidate();
-                self.refs.emergencyContainer.cleanValidate();
+                if (self.refs.emergencyContainer) {
+                    self.refs.emergencyContainer.cleanValidate();
+                }
                 self.props.onHandleOk(self.props.isAccount);
             }
         }).fail(function() {
@@ -282,11 +286,15 @@ export var NewModal = React.createClass({
                         defaultValue={contact.email}
                         onChange={this.onChange}
                         readOnly={false}/>
-                    <Emergency 
-                        ref="emergencyContainer"
-                        defaultValue={contact.emergency}
-                        onChange={this.onChange}
-                        readOnly={false}/>
+                    {
+                        this.props.isAccount
+                        ? null
+                        : <Emergency 
+                            ref="emergencyContainer"
+                            defaultValue={contact.emergency}
+                            onChange={this.onChange}
+                            readOnly={false}/>
+                    }
                 </Form>
             </Modal>
         );
