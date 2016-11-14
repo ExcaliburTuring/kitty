@@ -113,7 +113,6 @@ var  OrderForm = React.createClass({
             'contactid': 0,
             'status': accountInfo.status,
             'name': accountInfo.name,
-            'nickname': accountInfo.nickname,
             'id': accountInfo.id,
             'idType': accountInfo.idType,
             'gender': accountInfo.gender,
