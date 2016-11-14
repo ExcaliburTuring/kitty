@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import marked from 'marked';
 import Swiper from 'swiper';
-import { Drawer, List, Button, Grid, Toast, Popup } from 'antd-mobile';
+import { Drawer, List, Button, Grid, Toast, Popup, Icon } from 'antd-mobile';
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
@@ -150,7 +150,7 @@ var Siderbar = React.createClass({
         var dayList = days.map(function(day, index) {
             return (
                 <List.Item key={index} onClick={()=>{self.onDayItemClick(index)}}>
-                    <span className="sidebar-days-no">{index + 1} |</span>
+                    <span className="sidebar-days-no">{index + 1}</span>
                     {day.title}
                 </List.Item>
             );
@@ -161,7 +161,8 @@ var Siderbar = React.createClass({
                 <div className="sidebar-header">行程概要</div>
                 <div className="sidebar-days">
                     <List>
-                        <List.Item key={-1} onClick={()=>{self.onDayItemClick(-1)}}>
+                        <List.Item key={-1} thumb={<Icon type="home" />}
+                            onClick={()=>{self.onDayItemClick(-1)}}>
                             路线简介
                         </List.Item>
                         {dayList}
@@ -480,5 +481,3 @@ var Group = React.createClass({
 });
 
 module.exports = App;
-
- //<img src={route.headImg} className="img-responsive img-thumbnail pull-left"/>

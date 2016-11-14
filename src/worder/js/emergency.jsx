@@ -15,12 +15,18 @@ var SelectEmergency = React.createClass({
             Popup.hide();
             self.props.onEmergencyChange(emergency);
         };
+        var onNewEmergencyBtnClick = function() {
+            Popup.hide();
+            self.props.onNewEmergencyBtnClick();
+        };
         Popup.show(
-            <EmergencySelector 
+            <EmergencySelector
                 travellers={this.props.travellers}
                 selectTravellers={this.props.selectTravellers}
                 emergency={this.props.emergency}
-                onEmergencyChange={onEmergencyChange}/>, 
+                newEmergency={this.props.newEmergency}
+                onEmergencyChange={onEmergencyChange}
+                onNewEmergencyBtnClick={onNewEmergencyBtnClick}/>, 
             { animationType: 'slide-up' }
         );
     },
@@ -28,13 +34,11 @@ var SelectEmergency = React.createClass({
     render: function() {
         var emergencyList = [], emergencies = this.props.emergency;
         for(var mobile in emergencies) {
-            if (mobile != 'size') {
-                emergencyList.push(
-                    <List.Item key={mobile}
-                        extra={mobile}>{emergencies[mobile].name}
-                    </List.Item>
-                );
-            }
+            emergencyList.push(
+                <List.Item key={mobile}
+                    extra={mobile}>{emergencies[mobile].name}
+                </List.Item>
+            );
         }
         return (
             <div className="emergency-container">
@@ -59,9 +63,7 @@ var SelectEmergency = React.createClass({
 var EmergencySelector = React.createClass({
 
     onEmergencyChange: function() {
-        var fieldsValue = this.props.form.getFieldsValue();
-        var emergency = {}, size = 0;
-
+        var fieldsValue = this.props.form.getFieldsValue(), newEmergency = this.props.newEmergency, emergency = {};
         for(var index in this.props.travellers) {
             var traveller = this.props.travellers[index];
             if (fieldsValue.hasOwnProperty(traveller.mobile) && fieldsValue[traveller.mobile]) {
@@ -69,10 +71,16 @@ var EmergencySelector = React.createClass({
                     'name': traveller.name, 
                     'mobile': traveller.mobile
                 };
-                size ++;
             }
         }
-        emergency['size'] = size;
+        for(var mobile in newEmergency) {
+            if (newEmergency.hasOwnProperty(mobile)) {
+                emergency[mobile] = { // 手机作为key，避免同一个手机
+                    'name': newEmergency[mobile].name, 
+                    'mobile': mobile
+                };
+            }
+        }
         this.props.onEmergencyChange(emergency);
     },
 
@@ -81,6 +89,7 @@ var EmergencySelector = React.createClass({
         var travellers = this.props.travellers;
         var selectTravellers = this.props.selectTravellers;
         var emergency = this.props.emergency;
+        var newEmergency = this.props.newEmergency;
         var checkBoxItemList = [];
         for(var id in travellers) {
             var traveller = travellers[id], isSelect = false;
@@ -90,7 +99,7 @@ var EmergencySelector = React.createClass({
                     break;
                 }
             }
-            if (isSelect) {
+            if (isSelect || !traveller.emergency) {
                 continue;
             }
             checkBoxItemList.push(
@@ -105,10 +114,31 @@ var EmergencySelector = React.createClass({
                 </CheckboxItem>
             );
         }
+        var index = 0;
+        for(var mobile in newEmergency) { // 新建的紧急联系人
+            if (newEmergency.hasOwnProperty(mobile)) {
+                checkBoxItemList.push(
+                    <CheckboxItem key={`new-emergency-${index++}`}
+                        {
+                            ...getFieldProps(mobile, {
+                                initialValue: emergency.hasOwnProperty(mobile),
+                                valuePropName: 'checked',
+                            })
+                        }>
+                        {newEmergency[mobile].name}
+                    </CheckboxItem>
+                );
+            }
+        }
         return (
             <div className="emergency-selector-container">
                 <List renderHeader={() => '选择紧急联系人'}>
                     {checkBoxItemList}
+                    <List.Item arrow="horizontal"
+                        thumb="https://zos.alipayobjects.com/rmsportal/zotStpFiYpNtZNl.png"
+                        onClick={this.props.onNewEmergencyBtnClick}>
+                        新建紧急联系人
+                    </List.Item>
                 </List>
                 <Button className="am-button-fix" 
                     onClick={this.onEmergencyChange}>确定</Button>

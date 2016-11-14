@@ -71,7 +71,7 @@ var DiscountCodeItem = React.createClass({
                         <ul className="discountcode-rule">
                             <li>{`状态：${discountCodeStatus.getDesc(discountCode.status)}`}</li>
                             <li>只限当前帐号下单使用</li>
-                            <li>{`${discountCode.startTime}  -  ${discountCode.endTime}`}</li>
+                            <li>{`${discountCode.startTime}  ~  ${discountCode.endTime}`}</li>
                         </ul>
                     </div>
                     {
