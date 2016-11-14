@@ -17,8 +17,6 @@ import Agreement from './agreement';
 import Pay from './pay';
 import GroupBrief from './group';
 
-import 'antd/lib/index.css';
-
 var AccountContacts = Rabbit.create(url.contacts);
 var OrderDiscount = Rabbit.create(url.orderDiscount);
 var DiscountCode = Rabbit.create(url.discountCode);
