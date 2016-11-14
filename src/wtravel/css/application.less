@@ -295,7 +295,7 @@ body {
         padding: .3rem .4rem;
         margin-bottom: .2rem;
         overflow: scroll;
-        height: 7.5rem;
+        height: 3.5rem;
 
         .new-group-list {
             margin-bottom: .3rem;
@@ -343,18 +343,6 @@ body {
             .group-container.disable {
                 background-color: @gray-bg;
             }
-
-            .group-container.invisiable {
-                display: none;
-            }
-        }
-
-        .new-showall {
-            margin-left: .2rem;
-
-            span {
-                font-size: .25rem;
-            }
         }
     }
 
@@ -388,65 +376,3 @@ body {
         }
     }
 }
-
-// 覆盖weui日历控件样式，
-.weui-picker-calendar {
-    height: auto;
-
-    .toolbar,
-    .toolbar .title {
-        font-size: .34rem;
-    }
-
-    .toolbar .toolbar-inner {
-        height: .8rem;
-
-        .picker-calendar-month-picker, 
-        .picker-calendar-year-picker {
-            line-height: .8rem;
-            max-width: 100%;
-        }
-
-        .picker-calendar-month-picker a.icon-only, 
-        .picker-calendar-year-picker a.icon-only {
-            height: .8rem;
-            line-height: .8rem;
-            font-size: .2rem;
-        }
-
-        i.icon.icon-next, 
-        i.icon.icon-prev {
-            width: .3rem;
-            height: .3rem;
-        }
-    }
-
-    .picker-modal-inner {
-        height: 4.2rem;
-    }
-
-    .picker-calendar-week-days {
-        height: .6rem;
-        line-height: .6rem;
-        font-size: .3rem;
-
-        .picker-calendar-week-day {
-            line-height: .6rem;
-        }
-    }
-
-    .picker-calendar-months {
-        height: 3.5rem;
-
-        .picker-calendar-day {
-            font-size: .3rem;
-
-            span {
-                width: .4rem;
-                height: .4rem;
-                line-height: .4rem;
-            }
-        }
-    }
-}
-
