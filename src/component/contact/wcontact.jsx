@@ -9,7 +9,7 @@ import 'moment/locale/zh-cn';
 import { createForm } from 'rc-form';
 
 import Rabbit from 'rabbit';
-import { url, gender, idType } from 'config';
+import { url, gender, idType, accountStatus } from 'config';
 import validator from 'validator';
 
 import './wcontact.less';
@@ -26,6 +26,7 @@ var WContact = React.createClass({
         return {
             'accountid': contact.accountid,
             'contactid': contact.contactid,
+            'status': contact.status,
             'name': contact.name,
             'id': contact.id,
             'idType': contact.idType || idType.IDENTIFICATION,
@@ -264,6 +265,15 @@ var WContact = React.createClass({
         return (
             <div className="contact-edit-dialog">
                 <div className="contact-form">
+                    {
+                        this.state.isAccount
+                        ? <List className="new-account-tip">
+                            <List.Item thumb={<Icon type="exclamation-circle-o"/>}>
+                                请完善个人信息
+                            </List.Item>
+                        </List>
+                        : null
+                    }
                     <List>
                         <InputItem clear
                             placeholder="请输入姓名"

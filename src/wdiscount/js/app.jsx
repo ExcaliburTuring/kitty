@@ -39,6 +39,13 @@ var App = React.createClass({
                 <DiscountCodeItem key={`${index}`} discountCode={discountCode}/>
             ); 
         });
+        if (discountCodeList.length == 0) {
+            return (
+                <div className="no-result">
+                    <p>暂无任何优惠券</p>
+                </div>
+            );
+        }
         return (
             <div>
                 <WhiteSpace size="lg"/>

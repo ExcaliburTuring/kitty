@@ -111,7 +111,9 @@ var  OrderForm = React.createClass({
         return {
             'accountid': accountInfo.accountid,
             'contactid': 0,
+            'status': accountInfo.status,
             'name': accountInfo.name,
+            'nickname': accountInfo.nickname,
             'id': accountInfo.id,
             'idType': accountInfo.idType,
             'gender': accountInfo.gender,
@@ -487,6 +489,13 @@ var  OrderForm = React.createClass({
     },
 
     render: function () {
+        if (this.props.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) { // 完善个人信息
+            return (
+                <WContact contact={this._createAccountTraveller()}
+                    onSaveSuccessful={this.props.onAccountInfoChange}
+                    onCancleBtnClick={()=>{history.back()}}/>
+            );
+        }
         if (this.state.contact) { // 出行人编辑
             return (
                 <WContact contact={this.state.contact}
@@ -511,7 +520,8 @@ var  OrderForm = React.createClass({
                 <GroupInfo travelRoute={orderInfoData.travelRoute}
                     travelGroup={orderInfoData.travelGroup}/>
                 <div className="item-title">出行人</div>
-                <SelectTraveller travellers={travellers}
+                <SelectTraveller accountInfo={this.props.accountInfo}
+                    travellers={travellers}
                     selectTravellers={selectTravellers}
                     onNewContactBtnClick={this.onNewContactBtnClick}
                     onSelectTravellersChange={this.onSelectTravellersChange}

@@ -74,7 +74,7 @@ var EmergencySelector = React.createClass({
             }
         }
         for(var mobile in newEmergency) {
-            if (newEmergency.hasOwnProperty(mobile)) {
+            if (newEmergency.hasOwnProperty(mobile) && fieldsValue[mobile]) {
                 emergency[mobile] = { // 手机作为key，避免同一个手机
                     'name': newEmergency[mobile].name, 
                     'mobile': mobile

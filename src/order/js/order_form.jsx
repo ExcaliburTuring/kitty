@@ -324,7 +324,6 @@ var OrderForm = React.createClass({
 
     onRoommateChange: function(e, selectTraveller) {
         var value = e.target.value;
-        console.log(value);
         var roommates = this.state.roommates;
         roommates[`${selectTraveller.accountid}-${selectTraveller.contactid}`] = value;
         this.setState({"roommates": roommates});
