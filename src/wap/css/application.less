@@ -93,6 +93,10 @@
         text-align: center;
     }
 
+    .head-img{
+        width: 100%;
+    }
+
     .second-title{
         color: @light-gray;
         text-align: center;
@@ -101,6 +105,7 @@
         font-size: 0.24rem;
     }
 
+<<<<<<< HEAD
     .head-img{
         width: 100%;
         border-radius: 0.16rem;
@@ -115,6 +120,8 @@
         margin: 0.3rem 0 0.2rem;
     }
 
+=======
+>>>>>>> buterfleoge/master
     .light-spot{
         height: 0.48rem;
         font-size: 0.28rem;
@@ -132,21 +139,6 @@
         }
     }
 
-    .price  {
-        margin-top: 0.14rem;
-        text-align: center;
-        font-size: 0.24rem;
-        color: @light-gray;
-        font-weight: 300;
-
-        strong{
-            color: red;
-            font-size: 0.36rem;
-            font-weight: 300;
-        }
-
-    }
-
     hr {
         height:1px;
         margin: 0.6rem 0 0;
@@ -161,7 +153,7 @@
 
         span {
             font-size: 0.28rem;
-            color: red;
+            color: @currency;
             background-color: @white;
             border-left: 1px solid @silver;
             border-right: 1px solid @silver;
@@ -179,6 +171,33 @@
         left: 0.64rem;
     }
 
+    .head-img{
+        border-radius: 0.16rem;
+    }
+
+    .route-intro{
+        font-size: 0.3rem;
+        color: #007DCA;
+        letter-spacing: 0.1rem;
+        text-align: center;
+        margin: 0.3rem 0 0.2rem;
+    }
+
+    .price  {
+        margin-top: 0.14rem;
+        text-align: center;
+        font-size: 0.24rem;
+        color: @light-gray;
+        font-weight: 300;
+
+        strong{
+            color: @currency;
+            font-size: 0.36rem;
+            font-weight: 300;
+        }
+
+    }
+
     &:active {
         background-color: @gray-bg;
     }
@@ -191,8 +210,54 @@
         left: 0.4rem;
     }
 
+    .head-img {
+        box-shadow: 0 .01rem .05rem #a5a5a5;
+    }
+
+    .route-intro{
+        font-size: 0.3rem;
+        color: @white;
+        background-color: @light-currency;
+        padding: 0 .1rem;
+        margin: .2rem .2rem;
+        border-radius: .1rem;
+        display: inline-block;
+    }
+
+    .route-title{
+        font-size: 0.3rem;
+        color: @dark-gray;
+        display: inline-block;
+    }
+
     .route-container {
+        border: 1px solid @silver;
+        border-radius: 0.16rem;
         margin-bottom: 0.4rem;
+        overflow: hidden;
+        position: relative;
+
+        .price  {
+            position: absolute;
+            bottom: 1.3rem;
+            right: .5rem;
+            border: 1px solid @light-currency;
+            border-radius: .1rem;
+            overflow: hidden;
+            font-size: 0.24rem;
+            text-align: center;
+
+            .up {
+                color: @white;
+                background-color: @light-currency;
+                padding: 0 .1rem;
+            }
+
+            .down {
+                color: @light-currency;
+                background-color: @white;
+            }
+        }
 
         &:active {
             background-color: @gray-bg;

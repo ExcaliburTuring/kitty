@@ -580,7 +580,7 @@ var NewEmergency = React.createClass({
             return;
         }
         var name = getFieldProps('name').value;
-        var mobile = getFieldProps('mobile').value.replace(' ', '').replace(' ', '');
+        var mobile = getFieldProps('mobile').value.replace(/ /g, '');
         this.props.onNewEmergencySaveBtnClick({'name': name, 'mobile': mobile});
     },
 
@@ -608,7 +608,7 @@ var NewEmergency = React.createClass({
                                     'required': true,
                                     'pattern': validator._mobileRe,
                                     'transform': function(value) {
-                                        return value ? value.replace(' ', '').replace(' ', '') : value;
+                                        return value ? value.replace(/ /g, '') : value;
                                     }
                                 }],
                             })

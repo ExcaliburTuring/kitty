@@ -192,7 +192,7 @@ var WContact = React.createClass({
             'idType': idTypeValue,
             'gender': gender,
             'birthday': birthday,
-            'mobile': getFieldProps('mobile').value.replace(' ', '').replace(' ', ''),
+            'mobile': getFieldProps('mobile').value.replace(/ /g, ''),
             'area': $('.contact-area-picker input').val(),
             'address': getFieldProps('address').value,
             'email': getFieldProps('email').value
@@ -323,10 +323,9 @@ var WContact = React.createClass({
                                         'required': true,
                                         'pattern': validator._mobileRe,
                                         'transform': function(value) {
-                                            return value ? value.replace(' ', '').replace(' ', '') : value;
+                                            return value ? value.replace(/ /g, '') : value;
                                         }
-                                    }],
-                                    
+                                    }]
                                 })
                             }>手机</InputItem>
                         <InputItem clear
