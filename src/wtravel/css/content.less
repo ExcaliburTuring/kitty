@@ -2,6 +2,9 @@ h1 {
     font-size: 0.41rem;
     font-family: "Microsoft YaHei";
     font-weight: normal;
+    line-height: .5rem;
+    margin-top: .32rem;
+    margin-bottom: .32rem;
     color: #555;
 }
 
@@ -10,6 +13,9 @@ h2 {
     overflow: hidden;
     font-family: "Microsoft YaHei";
     font-weight: normal;
+    line-height: .5rem;
+    margin-top: .32rem;
+    margin-bottom: .32rem;
     color: #555;
 
     span {
@@ -59,7 +65,9 @@ h3 {
     font-family: "Microsoft YaHei";
     font-weight: normal;
     color: #555;
-    line-height: 0.6rem;
+    line-height: .4rem;
+    margin-top: .32rem;
+    margin-bottom: .32rem;
 
     span {
         font-size: 0.36rem;
@@ -102,11 +110,17 @@ h3 {
 }
 
 p {
-    display: table-row;
+    display: block;
     font-family: Simsun;
     font-size: 0.36rem;
     line-height: 0.47rem;
+    margin-bottom: .2rem;
     color: #555;
+}
+
+p a {
+    color: @light-gray;
+    text-decoration: underline;
 }
 
 p span {
@@ -123,7 +137,7 @@ p {
         display: block;
         margin: 0.2rem 0;
         width: 100%;
-        min-height: 2.4rem;
+        min-height: 4rem;
     }
 }
 
