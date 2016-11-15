@@ -44,20 +44,40 @@ var App = React.createClass({
     // callback method
 
     onTabBarItemPress: function(selected) {
+        if (this.state.selectedTab.length > 1) { // 如果之前pushState过，就pop一下
+            history.go(-1);
+        } 
         this.setState({
-            'selectedTab': selected
+            'selectedTab': [selected]
         });
     },
 
     onAccountEditClick: function() {
-        this.setState({'contact': this._createAccountContact()});
+        history.pushState(null, null, document.URL);
+        var selectedTab = this.state.selectedTab;
+        selectedTab.push('useless'); // 随便加一个，在编辑的时候，如果按返回键，下面的事件监听正好能工作
+        this.setState({
+            'contact': this._createAccountContact(),
+            'selectedTab': selectedTab
+        });
     },
 
     onOrdersClick: function(orderType) {
+        history.pushState(null, null, document.URL);
+        var selectedTab = this.state.selectedTab;
+        selectedTab.push('order');
         this.setState({
-            'selectedTab': 'order',
+            'selectedTab': selectedTab,
             'orderType': orderType
         });
+    },
+
+    onPopState: function(e) {
+        var selectedTab = this.state.selectedTab;
+        if (selectedTab.length > 1) {
+            selectedTab.pop();
+            this.setState({'contact': null, 'selectedTab': selectedTab});
+        }
     },
 
     getInitialState: function() {
@@ -69,20 +89,26 @@ var App = React.createClass({
                     'avatarUrl': ''
                 }
             },
-            'selectedTab': 'home',
+            'selectedTab': ['home'],
             'orderType': orderType.CURRENT,
-            'contact': null
+            'contact': null,
+            'historyLength': history.length
         };
+    },
+
+    componentDidMount: function() {
+        window.onpopstate = this.onPopState; 
     },
 
     render: function() {
         if (this.state.contact) {
             return (
                 <WContact contact={this.state.contact}
-                    onSaveSuccessful={()=>{this.setState({'contact': null})}}
-                    onCancleBtnClick={()=>{this.setState({'contact': null})}}/>
+                    onSaveSuccessful={()=>{this.setState({'contact': null, 'selectedTab': ['mine']})}}
+                    onCancleBtnClick={()=>{this.setState({'contact': null, 'selectedTab': ['mine']})}}/>
             );
         }
+        var selectedTab = this.state.selectedTab[this.state.selectedTab.length - 1];
         return (
             <TabBar 
                 unselectedTintColor="#949494" tintColor="#FF5310" barTintColor="white">
@@ -90,7 +116,7 @@ var App = React.createClass({
                     title="主页" key="home"
                     icon={{ uri: home1 }}
                     selectedIcon={{ uri: home2 }}
-                    selected={this.state.selectedTab === 'home'}
+                    selected={selectedTab === 'home'}
                     onPress={() => {this.onTabBarItemPress('home')}}>
                     <Home onOrdersClick={this.onOrdersClick}/>
                 </TabBar.Item>
@@ -98,7 +124,7 @@ var App = React.createClass({
                     title="行程" key="order"
                     icon={{ uri: compass1 }}
                     selectedIcon={{ uri: compass2 }}
-                    selected={this.state.selectedTab === 'order'}
+                    selected={selectedTab === 'order'}
                     onPress={() => {this.onTabBarItemPress('order')}}>
                     <Order orderType={this.state.orderType}/>
                 </TabBar.Item>
@@ -106,7 +132,7 @@ var App = React.createClass({
                     title="我的" key="mine"
                     icon={{ uri: user1 }}
                     selectedIcon={{ uri: user2 }}
-                    selected={this.state.selectedTab === 'mine'}
+                    selected={selectedTab === 'mine'}
                     onPress={() => {this.onTabBarItemPress('mine')}}>
                     <Mine basicInfo={this.state.basicInfo}
                         onOrdersClick={this.onOrdersClick}

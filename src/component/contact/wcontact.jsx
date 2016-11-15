@@ -266,7 +266,7 @@ var WContact = React.createClass({
             <div className="contact-edit-dialog">
                 <div className="contact-form">
                     {
-                        this.state.isAccount
+                        this.state.isAccount && contact.status == accountStatus.WAIT_COMPLETE_INFO
                         ? <List className="new-account-tip">
                             <List.Item thumb={<Icon type="exclamation-circle-o"/>}>
                                 请完善个人信息
