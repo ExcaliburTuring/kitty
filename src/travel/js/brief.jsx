@@ -24,12 +24,12 @@ var Brief = React.createClass({
         var brief = this.props.brief;
         var days = this.props.days;
         var mdtext =  marked(brief.mdtext);
-
+        var length = brief.spotlights.length;
         var spotlights = brief.spotlights.map(function(spotlight, index) {
             return (
                 <Col sm={6} md={6} key={`travel-brief-${index}`}>
                     <div className="liangdian" key={`${index}`}>
-                        亮点 <span className="light-title">{`${Math.floor((index+1)/2)+1+index%2*Math.floor((brief.spotlights.length-1)/2)}`}</span>： 
+                        亮点 <span className="light-title">{`${ index % 2 ? Math.floor((length + index) / 2) + 1 : index / 2 + 1}`}</span>： 
                         <span className="spot-light"> {spotlight}</span>
                     </div>
                 </Col>
