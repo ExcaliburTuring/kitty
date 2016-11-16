@@ -17,8 +17,6 @@ import Agreement from './agreement';
 import Pay from './pay';
 import GroupBrief from './group';
 
-import 'antd/lib/index.css';
-
 var AccountContacts = Rabbit.create(url.contacts);
 var OrderDiscount = Rabbit.create(url.orderDiscount);
 var DiscountCode = Rabbit.create(url.discountCode);
@@ -244,7 +242,8 @@ var OrderForm = React.createClass({
         return {
             'accountid': accountInfo.accountid,
             'contactid': 0,
-            'name': accountInfo.name || accountInfo.nickname,
+            'name': accountInfo.name,
+            'nickname': accountInfo.nickname,
             'id': accountInfo.id,
             'idType': accountInfo.idType,
             'gender': accountInfo.gender,
@@ -307,6 +306,14 @@ var OrderForm = React.createClass({
     },
 
     /**
+     * 完善个人信息
+     */
+    onNewAccountEditLinkClick: function() {
+        this.setState({'contact': this._createAccountTraveller(), 'title': '完善个人信息'});
+        this.refs.newModal.toggleVisiable();
+    },
+
+    /**
      * 编辑联系人
      */
     onEditBtnClick: function(contact) {
@@ -324,7 +331,6 @@ var OrderForm = React.createClass({
 
     onRoommateChange: function(e, selectTraveller) {
         var value = e.target.value;
-        console.log(value);
         var roommates = this.state.roommates;
         roommates[`${selectTraveller.accountid}-${selectTraveller.contactid}`] = value;
         this.setState({"roommates": roommates});
@@ -676,7 +682,11 @@ var OrderForm = React.createClass({
                             {
                                 this.props.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO
                                 ? <Alert message="新用户提醒信息" type="info" closable
-                                    description="您还是新用户，强烈建议您完善个人信息，方便以后下单。"/>
+                                    description={
+                                        <div>您还是新用户，强烈建议您
+                                            <a onClick={this.onNewAccountEditLinkClick}>完善个人信息</a>，方便以后下单。
+                                        </div>
+                                    }/>
                                 : null
                             }
                             <Travellers 

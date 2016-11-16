@@ -28,7 +28,9 @@ export var url = {
     'orderDiscount': '/order/discount',
     'orderDiscountCode': '/order/discountcode',
     'orderPayResult': '/order/payresult',
-    'orderHistory': '/order/history'
+    'orderHistory': '/order/history',
+
+    'wxShareConfig': '/account/wxshareconfig'
 };
 
 export var defaultValue = {

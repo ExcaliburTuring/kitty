@@ -33,7 +33,7 @@ var Travellers = React.createClass({
                 <Name 
                     key={`travellers-name-list-${i}`} 
                     traveller={traveller}
-                    name={traveller.name == null ? '您自己' : traveller.name} 
+                    name={traveller.name ? traveller.name : traveller.nickname} 
                     onChange={self.props.onNameChange}
                     checked={checked}/>
             );
@@ -62,7 +62,9 @@ var Travellers = React.createClass({
         return this.props.selectTravellers.map(function(selectTraveller, index) {
             return (
                 <div className="order-roommate-item" key={`order-roommate-${index}`}>
-                    <span className="order-roommate-label ellipsis">{`${selectTraveller.name}:`}</span>
+                    <span className="order-roommate-label ellipsis">
+                        {`${selectTraveller.name ? selectTraveller.name : selectTraveller.nickname}:`}
+                    </span>
                     <Input className="order-roommate-input" placeholder="请输入" 
                         onChange={(e)=>{self.props.onRoommateChange(e, selectTraveller)}}/>
                 </div>
@@ -80,7 +82,7 @@ var Travellers = React.createClass({
                     <Name 
                         key={`travellers-name-list-${i}`} 
                         traveller={traveller}
-                        name={traveller.name == null ? '您自己' : traveller.name} 
+                        name={traveller.name ? traveller.name : traveller.nickname} 
                         onChange={self.props.onEmergencyNameChange}
                         checked={emergencyContacts.hasOwnProperty(traveller.mobile)}/>
                 );

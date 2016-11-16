@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import marked from 'marked';
 import Swiper from 'swiper';
-import { Drawer, List, Button, Grid, Toast, Popup } from 'antd-mobile';
+import { Drawer, List, Button, Grid, Toast, Popup, Icon } from 'antd-mobile';
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
@@ -19,15 +19,87 @@ import b6 from '../img/b6.png';
 import b7 from '../img/b7.png';
 import square from '../img/54.png';
 
+function hxyError(e, tag) {
+    alert(`失败，请直接联系海逍遥: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
+}
+
+function isError(errMsg) {
+    return errMsg.split(':')[1] != 'ok';
+}
+
 var RouteFlux = Rabbit.create(url.route);
 var GroupsFlux = Rabbit.create(url.group);
 
 var App = React.createClass({
 
     mixins: [
-        Reflux.connect(RouteFlux.store, 'routes'),
+        Reflux.listenTo(RouteFlux.store, 'onRoutesLoaded'),
         Reflux.connect(GroupsFlux.store, 'groups'),
     ],
+
+    /**
+     * routes信息加载后，处理微信分享
+     */
+    onRoutesLoaded: function(routes) {
+        this.setState({'routes': routes});
+        if (routes.status == 0) {
+            var route = routes.routes[0];
+            var title = `【${route.name}】${route.title}`
+            var link = `http://www.hxytravel.com${url.travel}/${route.routeid}`;
+            var imgUrl = route.headImg;
+            var desc = route.desc;
+            $.get(url.wxShareConfig, {'routeid': route.routeid, 'routeUrl': location.href.split('#')[0]})
+            .done(function(data) {
+                if (data.status != 0 ){
+                    return;
+                }
+                wx.config({
+                    'debug': false,
+                    'appId': data.appid,
+                    'timestamp': data.timestamp, 
+                    'nonceStr': data.nonceStr, 
+                    'signature': data.signature,
+                    'jsApiList': ['onMenuShareTimeline', 'onMenuShareAppMessage']
+                });
+
+                wx.ready(function(){
+                    wx.checkJsApi({
+                        'jsApiList': ['onMenuShareTimeline', 'onMenuShareAppMessage'], 
+                        'success': function(res) {
+                            if (isError(res.errMsg)) {
+                                hxyError(res, "check res error");
+                                return;
+                            }
+
+                            if (res.checkResult.onMenuShareTimeline) {
+                                wx.onMenuShareTimeline({
+                                    title: title,
+                                    link: link,
+                                    imgUrl: imgUrl
+                                });
+                            }
+                            
+                            if (res.checkResult.onMenuShareAppMessage) {
+                                wx.onMenuShareAppMessage({
+                                    title: title,
+                                    desc: desc,
+                                    link: link,
+                                    imgUrl: imgUrl
+                                });
+                            }
+                        },
+                        'fail': function(e, tag) {
+                            hxyError(e, "check failed");
+                        }
+                    });
+                });
+        
+                wx.error(function(res){
+                    hxyError(res, "global error");
+                });
+            });
+        }
+    },
 
     onOpenChange: function() {
         this.setState({'open': !this.state.open});
@@ -150,7 +222,7 @@ var Siderbar = React.createClass({
         var dayList = days.map(function(day, index) {
             return (
                 <List.Item key={index} onClick={()=>{self.onDayItemClick(index)}}>
-                    <span className="sidebar-days-no">{index + 1} |</span>
+                    <span className="sidebar-days-no">{index + 1}</span>
                     {day.title}
                 </List.Item>
             );
@@ -161,7 +233,8 @@ var Siderbar = React.createClass({
                 <div className="sidebar-header">行程概要</div>
                 <div className="sidebar-days">
                     <List>
-                        <List.Item key={-1} onClick={()=>{self.onDayItemClick(-1)}}>
+                        <List.Item key={-1} thumb={<Icon type="home" />}
+                            onClick={()=>{self.onDayItemClick(-1)}}>
                             路线简介
                         </List.Item>
                         {dayList}
@@ -336,13 +409,11 @@ var GroupPopup = React.createClass({
 
     onGroupClick: function (group) {
         this.setState({'selected': group});
-        $(".new-group-calendar").calendar('setValue', [group.startDate]); // 只能修改input的值，并不能直接修改ui
     },
 
     getInitialState: function() {
         return {
-            'selected': this._findSelectableGroup(this.props.groups),
-            'time': null
+            'selected': this._findSelectableGroup(this.props.groups)
         };
     },
 
@@ -350,32 +421,6 @@ var GroupPopup = React.createClass({
         if (newProps.groups.length) {
             this.setState({'selected': this._findSelectableGroup(this.props.groups)});
         }
-    },
-
-    componentDidMount: function() {
-        var self = this;
-        $(".new-group-calendar").calendar({
-            container: ".new-group-calendar",
-            input: ".new-group-calendar-input",
-            onDayClick: function (p, dayContainer, year, month, day) {
-                if (day.length == 1) {
-                    day = '0' + day;
-                }
-                var time = `${year}-${+month + 1}-${day}`;
-                var group = null, groups = self.props.groups;
-                for (var i = 0, n = groups.length; i < n; i++) {
-                    if (time == groups[i].startDate) {
-                        group = groups[i];
-                        break;
-                    }
-                }
-                if (group) {
-                    self.setState({'time': time, 'selected': group});
-                } else {
-                    self.setState({'time': time});
-                }
-            }
-        });
     },
 
     render: function () {
@@ -387,13 +432,10 @@ var GroupPopup = React.createClass({
             );
         } else {
             groupList = this.props.groups.map(function(group, index) {
-                var time = self.state.time;
-                var visiable = time ? (group.startDate <= time && time <= group.endDate) : true;
                 return (
                     <Group group={group} key={group.groupid}
                         selected={self.state.selected.groupid == group.groupid}
                         open={group.status == groupStatus.OPEN}
-                        visiable={visiable}
                         onGroupClick={self.onGroupClick}/>
                 );
             });
@@ -409,21 +451,10 @@ var GroupPopup = React.createClass({
                     <p className="new-title ellipsis">【{route.name}】{route.title}</p>
                 </div>
                 <div className="new-body">
-                    <p>选择出行团队
-                        {
-                            this.state.time
-                            ? <Button inline size="small" className="new-showall"
-                                onClick={()=>{this.setState({'time': null})}}>
-                                显示全部
-                            </Button>
-                            : null
-                        }
-                    </p>
+                    <p>选择出行团队</p>
                     <div className="new-group-list row">
                         {groupList}
                     </div>
-                    <div className="new-group-calendar"></div>
-                    <input className="new-group-calendar-input" type="hidden" />
                 </div>
                 <div className="new-footer clearfix">
                     <p className="pull-left">金额:
@@ -454,7 +485,7 @@ var Group = React.createClass({
     render: function() {
         var group = this.props.group;
         return (
-            <div className={`group-container Athird ${this.props.selected ? 'selected': ''} ${this.props.open ? '' : 'disable'} ${this.props.visiable ? '': 'invisiable'}`}
+            <div className={`group-container Athird ${this.props.selected ? 'selected': ''} ${this.props.open ? '' : 'disable'}`}
                 onClick={this.onGroupClick}>
                 <div className="group-start-date">{group.startDate}</div>
                 <div>
@@ -480,5 +511,3 @@ var Group = React.createClass({
 });
 
 module.exports = App;
-
- //<img src={route.headImg} className="img-responsive img-thumbnail pull-left"/>

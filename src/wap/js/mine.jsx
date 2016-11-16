@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { List } from 'antd-mobile';
+import { List, Modal } from 'antd-mobile';
 
 import { url, orderType, defaultValue } from 'config';
 import Rabbit from 'rabbit';
@@ -37,6 +37,8 @@ var Mine = React.createClass({
         window.location.href = '/account/wcontact';
     },
 
+
+
     // component specs
 
     getInitialState: function() {
@@ -56,7 +58,8 @@ var Mine = React.createClass({
             },
             'contacts': {
                 'contacts': []
-            }
+            },
+            'hotline': false
         };
     },
 
@@ -67,7 +70,7 @@ var Mine = React.createClass({
             <div className="mine-container">
                 <div className="mine-header">
                     <img href="#" alt="32x32" src={accountInfo.avatarUrl} className="img-responsive img-circle" />
-                    <p>{accountInfo.name ? accountInfo.name : accountInfo.nickname}</p>
+                    <p>{accountInfo.nickname}</p>
                 </div>
                 <div className="mine-order row">
                     <List>
@@ -98,9 +101,18 @@ var Mine = React.createClass({
                     </List.Item>
                 </List>
                 <List>
-                    <List.Item thumb={t5}>
+                    <List.Item thumb={t5} onClick={()=>{this.setState({'hotline': true})}}>
                         联系客服
                     </List.Item>
+                    <Modal
+                        title="客服电话"
+                        closable
+                        maskClosable
+                        transparent
+                        onClose={()=>{this.setState({'hotline': false})}}
+                        visible={this.state.hotline}>
+                        联系海逍遥请拨打：{defaultValue.hotline}
+                    </Modal>
                 </List>
             </div>
         );

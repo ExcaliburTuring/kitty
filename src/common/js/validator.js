@@ -48,6 +48,8 @@ function isEmpty(test) {
 
 const validator = {
 
+    '_mobileRe': _mobileRe,
+
     hasText: function(text, msg) {
         return isEmpty(text) ? _error(msg): _success();
     },

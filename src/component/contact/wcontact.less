@@ -9,8 +9,13 @@
             margin-bottom: .2rem;
         }
 
-        .am-list .am-list-item.am-input-item {
+        .am-list .am-list-item.am-input-item, {
             height: .8rem;
+            padding: 0 .3rem;
+        }
+
+        .am-list .am-list-item.am-list-item-middle .am-list-line {
+            padding-right: .3rem;
         }
 
         .am-list-item {
@@ -35,6 +40,10 @@
             color: black;
         }
 
+        .new-account-tip .anticon.anticon-exclamation-circle-o {
+            color: @currency;
+        }
+
         .idtype-selector {
             text-align: right;
 
@@ -55,13 +64,11 @@
     }
 
     .contact-btn-container {
+        margin: 0 .3rem;
         
         button {
             margin-bottom: .2rem;
             border: 1px solid #ddd;
-            border-left: none;
-            border-right: none;
-            border-radius: 0;
             font-size: .28rem;
             line-height: .8rem;
             height: .8rem;
@@ -70,10 +77,6 @@
         button.save-btn {
             background-color: @currency;
             color: white;
-        }
-
-        .am-button-warning:after {
-            border: none;
         }
     }
 }

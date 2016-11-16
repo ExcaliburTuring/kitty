@@ -10,7 +10,9 @@ var Map = React.createClass({
         var map = new BMap.Map(this.refs.allmap,{minZoom:1,maxZoom:15});    // 创建Map实例
         map.centerAndZoom(new BMap.Point(127.256949,44.572221), 8);  // 初始化地图,设置中心点坐标和地图级别
         map.setCurrentCity("吉林");          // 设置地图显示的城市 此项是必须设置的
-        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
+        map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
+        //map.enableScrollWheelZoom();     //开启鼠标滚轮缩放
         var myStyleJson=[
             {
                       "featureType": "land",
@@ -200,9 +202,12 @@ var Map = React.createClass({
             addMarker(points[i], i);
         }
 
-        var polyline = new BMap.Polyline(points,{strokeColor:"orange", strokeWeight:6, strokeOpacity:0.9});
+        var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});
+        driving.search(points[0], points[7], {waypoints: [points[1], points[2], points[3], points[4], points[5], points[6]]});
 
-        map.addOverlay(polyline);
+//        var polyline = new BMap.Polyline(points,{strokeColor:"orange", strokeWeight:6, strokeOpacity:0.9});
+
+//        map.addOverlay(polyline);
     },
 
     render: function() {

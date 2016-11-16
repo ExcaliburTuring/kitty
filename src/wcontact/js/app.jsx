@@ -56,7 +56,7 @@ var App = React.createClass({
                 Toast.fail(defaultValue.deleteContactsMsg, 1);
             } else {
                 AccountContacts.actions.load();
-                setTimeout('Toast.success("删除成功", 1);', 300);
+                Toast.success("删除成功", 1);
             }
         }).fail(function() {
             Toast.fail(defaultValue.deleteContactsMsg, 1);
@@ -158,9 +158,11 @@ var ContactList = React.createClass({
         })
         return (
             <div>
-                <Contact contact={accountContact} key={'account-contact'}
-                    onEditBtnClick={this.props.onEditBtnClick}/>
-                {contactList}
+                <div className="contact-list-container">
+                    <Contact contact={accountContact} key={'account-contact'}
+                        onEditBtnClick={this.props.onEditBtnClick}/>
+                    {contactList}
+                </div>
                 <div className="contact-addbtn-container">
                     <Button onClick={()=>{this.props.onEditBtnClick({})}}>
                         <Icon type="plus-circle-o" />添加新出行人

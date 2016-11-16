@@ -79,7 +79,7 @@ var Routes =React.createClass({
                         {route.desc}
                     </div>
                     <div className="price">
-                        {route.minPrice} - {route.maxPrice}
+                        {route.minPrice} ~ {route.maxPrice}
                     </div>
                 </Col>
             </div>

@@ -4,13 +4,16 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Grid, Row, Col } from 'react-bootstrap';
+import { Progress } from 'antd';
+const ProgressLine = Progress.Line;
 
 import AccountBasicInfo from 'account_basicinfo';
 import { defaultValue, url, orderStatus } from 'config';
 import Rabbit from 'rabbit';
-import Login from 'login';
 import OrderForm from './order_form';
 import OrderShow from './order_show';
+
+import 'antd/lib/index.css';
 
 var OrderInfo = Rabbit.create(url.orderOrder);
 
@@ -30,7 +33,7 @@ var App = React.createClass({
         return {
             'basicInfo': {},
             'data': {
-                'status': 1,
+                'status': -1,
                 'orderInfo': {},
                 'travelRoute': {},
                 'travelGroup': {},
@@ -44,14 +47,11 @@ var App = React.createClass({
 
     render: function() {
         var accountInfo = this.state.basicInfo.accountInfo;
-        if (accountInfo == null) {
-            return (<Login/>);
-        }
         var data = this.state.data;
-        if (data.status != 0) {
+        if (accountInfo == null || data.status != 0) {
             return (
                 <div>
-                    <p>{`订单查询失败, 请联系客服： ${defaultValue.hotline}`}</p>
+                    <ProgressLine percent={50}/>
                 </div>
             );
         }
