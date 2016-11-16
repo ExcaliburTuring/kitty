@@ -3,11 +3,13 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Toast } from 'antd-mobile';
+import { Toast, List, InputItem, Button } from 'antd-mobile';
+import { createForm } from 'rc-form';
 
 import { url, priceUtil, discountCodeStatus, defaultValue, accountStatus }  from 'config';
 import Rabbit from 'rabbit';
 import WContact from 'wcontact';
+import validator from 'validator';
 
 import GroupInfo from './group';
 import SelectTraveller from './travellers';
@@ -109,6 +111,7 @@ var  OrderForm = React.createClass({
         return {
             'accountid': accountInfo.accountid,
             'contactid': 0,
+            'status': accountInfo.status,
             'name': accountInfo.name,
             'id': accountInfo.id,
             'idType': accountInfo.idType,
@@ -172,7 +175,7 @@ var  OrderForm = React.createClass({
     _getEmergency: function() {
         var name = '', mobile = '',emergencies = this.state.emergency;
         for (var key in emergencies) {
-            if (key != 'size' && emergencies.hasOwnProperty(key)) {
+            if (emergencies.hasOwnProperty(key)) {
                 var emergency = emergencies[key];
                 name = name + emergency.name + ';';
                 mobile = mobile + emergency.mobile + ';';
@@ -364,6 +367,38 @@ var  OrderForm = React.createClass({
     },
 
     /**
+     * 新建紧急联系人
+     */
+    onNewEmergencyBtnClick: function() {
+        this.setState({'newEmergencyContainer': true});
+    },
+
+    /**
+     * 成功添加紧急联系人
+     */
+    onNewEmergencySaveBtnClick: function(newEmergency) {
+        var emergency = this.state.emergency, tmp = this.state.newEmergency;
+        if (!emergency.hasOwnProperty(newEmergency.mobile)) {
+            emergency[newEmergency.mobile] = newEmergency;
+            if (!tmp.hasOwnProperty(newEmergency.mobile)) { // 新添加的紧急联系人和之前的手机号一样，就不加进去
+                tmp[newEmergency.mobile] = newEmergency;
+            }
+            this.setState({
+                'emergency': emergency, 
+                'newEmergencyContainer': false,
+                'newEmergency': tmp
+            });
+        }
+    },
+
+    /**
+     * 取消添加紧急联系人
+     */
+    onNewEmergencyCancelBtnClick: function() {
+        this.setState({'newEmergencyContainer': false});
+    },
+
+    /**
      * 优惠政策修改
      */
     onPolicyDiscountChange: function(policyDiscount) {
@@ -426,9 +461,7 @@ var  OrderForm = React.createClass({
 
             // 临时变量
             'selectTravellers': [`${this.props.accountInfo.accountid}-0`], // 选中出行人的id
-            'emergency': {
-                'size': 0
-            },
+            'emergency': {},
             'policyDiscount': {
                 'discountid': -1,
                 'desc': '',
@@ -446,19 +479,34 @@ var  OrderForm = React.createClass({
             'isAgreed': false,
 
             // 出行人编辑使用
-            'contact': null
+            'contact': null,
+
+            // 新建联系人使用
+            'newEmergencyContainer': false,
+            'newEmergency': {}
         };
     },
 
     render: function () {
-         if (this.state.contact) { // 出行人编辑
+        if (this.props.accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) { // 完善个人信息
+            return (
+                <WContact contact={this._createAccountTraveller()}
+                    onSaveSuccessful={this.props.onAccountInfoChange}
+                    onCancleBtnClick={()=>{history.back()}}/>
+            );
+        }
+        if (this.state.contact) { // 出行人编辑
             return (
                 <WContact contact={this.state.contact}
                     onSaveSuccessful={this.onTravellerEditSaveSuccessful}
                     onDeleteSuccessful={this.onDeleteSuccessful}
                     onCancleBtnClick={()=>{this.setState({'contact': null})}}/>
             );
-        } 
+        }
+        if (this.state.newEmergencyContainer) {
+            return (<NewEmergency onNewEmergencySaveBtnClick={this.onNewEmergencySaveBtnClick}
+                        onNewEmergencyCancelBtnClick={this.onNewEmergencyCancelBtnClick}/>);
+        }
         var orderInfoData = this.props.orderInfoData;
         var travellers = this._createTravellers();
         var selectTravellers = this.state.selectTravellers;
@@ -471,7 +519,8 @@ var  OrderForm = React.createClass({
                 <GroupInfo travelRoute={orderInfoData.travelRoute}
                     travelGroup={orderInfoData.travelGroup}/>
                 <div className="item-title">出行人</div>
-                <SelectTraveller travellers={travellers}
+                <SelectTraveller accountInfo={this.props.accountInfo}
+                    travellers={travellers}
                     selectTravellers={selectTravellers}
                     onNewContactBtnClick={this.onNewContactBtnClick}
                     onSelectTravellersChange={this.onSelectTravellersChange}
@@ -485,7 +534,9 @@ var  OrderForm = React.createClass({
                 <SelectEmergency travellers={travellers}
                     selectTravellers={selectTravellers}
                     emergency={this.state.emergency}
-                    onEmergencyChange={this.onEmergencyChange}/>
+                    newEmergency={this.state.newEmergency}
+                    onEmergencyChange={this.onEmergencyChange}
+                    onNewEmergencyBtnClick={this.onNewEmergencyBtnClick}/>
                 <div className="item-title">优惠政策</div>
                 <Discount count={selectTravellers.length}
                     discountData={this.state.discountData}
@@ -513,5 +564,66 @@ var  OrderForm = React.createClass({
     }
 
 });
+
+var NewEmergency = React.createClass({
+
+    onNewEmergencySaveBtnClick: function() {
+        const { getFieldProps, validateFields } = this.props.form;
+        var ret = true;
+        validateFields(function(error, value) {
+            if (error) {
+                Toast.fail('信息未完全正确', 1);
+                ret = false;
+            }
+        });
+        if (!ret) {
+            return;
+        }
+        var name = getFieldProps('name').value;
+        var mobile = getFieldProps('mobile').value.replace(/ /g, '');
+        this.props.onNewEmergencySaveBtnClick({'name': name, 'mobile': mobile});
+    },
+
+    render: function() {
+        const { getFieldProps } = this.props.form;
+        return (
+            <div className="new-emergency-container">
+                <List>
+                    <InputItem
+                        autoFocus clear
+                        {
+                            ...getFieldProps('name', {
+                                rules: [{
+                                    'required': true
+                                }]
+                            })
+                        }
+                        placeholder="请输入姓名"
+                      >姓名</InputItem>
+                    <InputItem
+                        clear type="phone"
+                        {
+                            ...getFieldProps('mobile', {
+                                rules: [{
+                                    'required': true,
+                                    'pattern': validator._mobileRe,
+                                    'transform': function(value) {
+                                        return value ? value.replace(/ /g, '') : value;
+                                    }
+                                }],
+                            })
+                        }
+                        placeholder="电话作为紧急联系人的标识"
+                      >电话</InputItem>
+                </List>
+                <div className="new-emergency-btn">
+                    <Button className="save-btn" onClick={this.onNewEmergencySaveBtnClick}>保存</Button>
+                    <Button onClick={this.props.onNewEmergencyCancelBtnClick}>取消</Button>
+                </div>
+            </div>
+        );
+    }
+});
+NewEmergency =  createForm()(NewEmergency);
 
 module.exports = OrderForm;

@@ -12,8 +12,6 @@ import OrderTip from 'order_tip';
 import OrderOperationHelper from 'order_operation';
 import GroupBrief from './group';
 
-import 'antd/lib/index.css';
-
 const _travellerTableColumn = [{
     'title': '姓名',
     'dataIndex': 'name'

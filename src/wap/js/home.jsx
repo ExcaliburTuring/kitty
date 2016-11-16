@@ -115,6 +115,14 @@ var Slider = React.createClass({
 
 var DaoHang = React.createClass({
 
+    onTravelsClick: function() {
+        $('html, body').animate({
+            'scrollTop':  $('.routes').offset().top
+        }, {
+            'speed': 800
+        });
+    },
+
     render: function() {
         return (
             <div className="daohang row">
@@ -128,7 +136,7 @@ var DaoHang = React.createClass({
                 </div>
                 <div className="Afourth">
                     <div className="mylabel left">
-                        <a href="javascript:">
+                        <a href="javascript:" onClick={this.onTravelsClick}>
                             <i className="icon"><img src={d}/></i>
                             <p>路线</p>
                         </a>
@@ -205,7 +213,7 @@ var Route = React.createClass({
                 <p className="route-intro">{route.name}</p>
                 <p className="route-title">{route.title}</p>
             </div>
-        )
+        );
     }
 })
 

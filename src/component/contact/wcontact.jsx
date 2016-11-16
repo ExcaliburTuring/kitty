@@ -9,7 +9,7 @@ import 'moment/locale/zh-cn';
 import { createForm } from 'rc-form';
 
 import Rabbit from 'rabbit';
-import { url, gender, idType } from 'config';
+import { url, gender, idType, accountStatus } from 'config';
 import validator from 'validator';
 
 import './wcontact.less';
@@ -26,6 +26,7 @@ var WContact = React.createClass({
         return {
             'accountid': contact.accountid,
             'contactid': contact.contactid,
+            'status': contact.status,
             'name': contact.name,
             'id': contact.id,
             'idType': contact.idType || idType.IDENTIFICATION,
@@ -88,11 +89,17 @@ var WContact = React.createClass({
     onIdChange: function(id) {
         var contact = this.state.contact;
         contact.id = id;
-        this.setState({'contact': contact});
+        if (contact.idType != idType.IDENTIFICATION) {
+            this.setState({'contact': contact});
+            return;
+        }
         var ret = validator.id(id);
         var $genderBithdayContainer = $('.gender-birthday-container');
         var display = $genderBithdayContainer.css('display');
         if (ret['info']) {
+            contact.birthday = moment(ret['info']['birth'], 'YYYY-MM-DD');
+            contact.idType = ret['info']['sex'];
+            this.setState({'contact': contact});
             if (display == 'none') {
                 $genderBithdayContainer.removeClass().css({'display': 'block'})
                 .addClass('gender-birthday-container animated flipInX')
@@ -101,6 +108,7 @@ var WContact = React.createClass({
                 });
             }
         } else {
+            this.setState({'contact': contact});
             if (display != 'none') {
                 $genderBithdayContainer.removeClass().addClass('gender-birthday-container animated flipOutX')
                 .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
@@ -155,7 +163,7 @@ var WContact = React.createClass({
         }
 
         var contact = this.state.contact;
-        var id = getFieldProps('id').value;
+        var id = contact.id;
         var idTypeValue = contact.idType || idType.IDENTIFICATION;
         var gender = contact.gender;
         var birthday = contact.birthday.format('YYYY-MM-DD');
@@ -167,12 +175,12 @@ var WContact = React.createClass({
                     Toast.fail('生日与身份证信息不符', 1);
                     return;
                 }
-                if ( ret['info']['sex'] != gender) {
+                if (ret['info']['sex'] != gender) {
                     Toast.fail('性别与身份证信息不符', 1);
                     return;
                 }
             } else {
-                Toast.fail('id输入有误', 1);
+                Toast.fail('证件号输入有误', 1);
                 return;
             }
         }
@@ -184,7 +192,7 @@ var WContact = React.createClass({
             'idType': idTypeValue,
             'gender': gender,
             'birthday': birthday,
-            'mobile': getFieldProps('mobile').value.replace(' ', '').replace(' ', ''),
+            'mobile': getFieldProps('mobile').value.replace(/ /g, ''),
             'area': $('.contact-area-picker input').val(),
             'address': getFieldProps('address').value,
             'email': getFieldProps('email').value
@@ -257,6 +265,15 @@ var WContact = React.createClass({
         return (
             <div className="contact-edit-dialog">
                 <div className="contact-form">
+                    {
+                        this.state.isAccount && contact.status == accountStatus.WAIT_COMPLETE_INFO
+                        ? <List className="new-account-tip">
+                            <List.Item thumb={<Icon type="exclamation-circle-o"/>}>
+                                请完善个人信息
+                            </List.Item>
+                        </List>
+                        : null
+                    }
                     <List>
                         <InputItem clear
                             placeholder="请输入姓名"
@@ -304,8 +321,11 @@ var WContact = React.createClass({
                                     initialValue: contact.mobile,
                                     rules: [{
                                         'required': true,
-                                        'pattern': validator._mobileRe
-                                    }],
+                                        'pattern': validator._mobileRe,
+                                        'transform': function(value) {
+                                            return value ? value.replace(/ /g, '') : value;
+                                        }
+                                    }]
                                 })
                             }>手机</InputItem>
                         <InputItem clear
