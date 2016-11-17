@@ -28,10 +28,7 @@ var App = React.createClass({
 
     getInitialState: function() {
         var routeid = window.location.pathname.split('/')[2];
-        RouteFlux.actions.load({
-            'routeids': routeid, 
-            'isImgtextRequired': true
-        });
+        RouteFlux.actions.load({'routeids': routeid});
         GroupsFlux.actions.load({'routeid': routeid});
         return {
             'routes': {
@@ -44,24 +41,20 @@ var App = React.createClass({
                     'minPrice': '¥0',
                     'maxPrice': '¥0'
                 }],
-                'imgtext': {
+                'more': {
                     'sliderImgs': [],
-                    'descriptions': [],
-                    'introduction': {
-                        'mdtext': '',
-                        'spotlights':[]
-                    },
-                    'days': [],
-                    'notice': {
-                        'local': '',
-                        'prepare': '',
-                        'traffic': ''
-                    },
-                    'expense': {
-                        'include': '',
-                        'exclude': '',
-                        'cancel': ''
-                    }
+                    'desc': [],
+                    'local': '',
+                    'prepare': '',
+                    'traffic': '',
+                    'expenseInclude': '',
+                    'expenseExclude': '',
+                    'refund': ''
+                },
+                'days': [],
+                'pcInfo': {
+                    'introduction': '',
+                    'spotlights':[]
                 }
             },
             'groups': {
@@ -73,18 +66,18 @@ var App = React.createClass({
 
     render: function() {
         var routes = this.state.routes;
-        var imgtext = routes.imgtext;
+        var more = routes.more;
         var groups = this.state.groups;
         return (
             <div>
                 <Navbar name="routes" />
                 <div className="content container">
-                    <Face route={routes.routes[0]} sliderImgs={imgtext.sliderImgs} descriptions={imgtext.descriptions}/>
+                    <Face route={routes.routes[0]} sliderImgs={more.sliderImgs} descriptions={more.desc}/>
                     <div className="body-nav"><BodyNav container={this}/></div>
-                    <Brief days={imgtext.days} brief={imgtext.introduction}/>
-                    <Days days={imgtext.days}/>
-                    <Notice notice={imgtext.notice}/>
-                    <Expense expense={imgtext.expense}/>
+                    <Brief days={routes.days} pcInfo={routes.pcInfo}/>
+                    <Days days={routes.days}/>
+                    <Notice local={more.local} prepare={more.prepare} traffic={more.traffic}/>
+                    <Expense include={more.expenseInclude} exclude={more.expenseExclude} refund={more.refund}/>
                     <Groups groups={groups.groups}/>
                 </div>
                 <Footer />

@@ -8,10 +8,9 @@ import marked from 'marked';
 var Expense = React.createClass({
 
     render: function() {
-        var expense = this.props.expense;
-        var include = marked(expense.include);
-        var exclude = marked(expense.exclude);
-        var cancel = marked(expense.cancel);
+        var include = marked(this.props.include);
+        var exclude = marked(this.props.exclude);
+        var refund = marked(this.props.refund);
         return (
             <div className="expense container">
                 <Col sm={6} md={6}>
@@ -26,7 +25,7 @@ var Expense = React.createClass({
                 </Col>
                 <Col sm={6} md={6}>
                     <h2><i className="fa fa-exclamation-circle"/> 退款&保证</h2>
-                    <div dangerouslySetInnerHTML={{__html: cancel}}></div>
+                    <div dangerouslySetInnerHTML={{__html: refund}}></div>
                 </Col>
             </div>
         );

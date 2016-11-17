@@ -107,10 +107,7 @@ var App = React.createClass({
 
     getInitialState() {
         var routeid = window.location.pathname.split('/')[2];
-        RouteFlux.actions.load({
-            'routeids': routeid, 
-            'isImgtextRequired': true
-        });
+        RouteFlux.actions.load({'routeids': routeid});
         GroupsFlux.actions.load({'routeid': routeid});
         return {
             'routes': {
@@ -123,24 +120,18 @@ var App = React.createClass({
                     'minPrice': '¥0',
                     'maxPrice': '¥0'
                 }],
-                'imgtext': {
+                'more': {
                     'sliderImgs': [],
-                    'descriptions': [],
-                    'introduction': {
-                        'mdtext': '',
-                        'spotlights':[]
-                    },
-                    'days': [],
-                    'notice': {
-                        'local': '',
-                        'prepare': '',
-                        'traffic': ''
-                    },
-                    'expense': {
-                        'include': '',
-                        'exclude': '',
-                        'cancel': ''
-                    }
+                    'desc': [],
+                    'local': '',
+                    'prepare': '',
+                    'traffic': '',
+                    'expenseInclude': '',
+                    'expenseExclude': '',
+                    'refund': ''
+                },
+                'wapInfo': {
+                    'directory': []
                 },
                 'mdtext': ''
             },
@@ -156,18 +147,18 @@ var App = React.createClass({
     render: function() {
         var routes = this.state.routes.routes[0];
         var mdtext = this.state.routes.mdtext || '';
-        var imgtext = this.state.routes.imgtext;
+        var more = this.state.routes.more;
        
         return (
             <div className="travel-container">
                 <Drawer open={this.state.open} onOpenChange={this.onOpenChange}
                     sidebar={
-                        <Siderbar routes={routes} days={imgtext.days}
+                        <Siderbar routes={routes} directory={this.state.routes.wapInfo.directory}
                             onClick={this.onOpenChange}/>
-                    }>
+                        }>
                     <div className="travel-main-container">
-                        <Slider route={routes} sliderImgs={imgtext.sliderImgs} 
-                                descriptions={imgtext.descriptions}/>
+                        <Slider route={routes} sliderImgs={more.sliderImgs} 
+                                descriptions={more.desc}/>
                         <div className="travel-info-container">
                             <div className="row">
                                 <div className="Asecond a1">旅游天数: {routes.days}</div>
@@ -214,16 +205,16 @@ var Siderbar = React.createClass({
     },
 
     render: function() {
-        var days = this.props.days, self = this;
+        var directory = this.props.directory, self = this;
         var routes = this.props.routes;
-        if (!days || days.length == 0) {
+        if (!directory || directory.length == 0) {
             return null;
         }
-        var dayList = days.map(function(day, index) {
+        var directoryList = directory.map(function(item, index) {
             return (
                 <List.Item key={index} onClick={()=>{self.onDayItemClick(index)}}>
                     <span className="sidebar-days-no">{index + 1}</span>
-                    {day.title}
+                    {item}
                 </List.Item>
             );
         });
@@ -237,7 +228,7 @@ var Siderbar = React.createClass({
                             onClick={()=>{self.onDayItemClick(-1)}}>
                             路线简介
                         </List.Item>
-                        {dayList}
+                        {directoryList}
                     </List>
                 </div>
                 <div className="sidebar-footer">

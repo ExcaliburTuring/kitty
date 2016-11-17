@@ -8,10 +8,9 @@ import marked from 'marked';
 var Notice = React.createClass({
 
     render: function() {
-        var notice = this.props.notice;
-        var local =  marked(notice.local);
-        var traffic = marked(notice.traffic);
-        var prepare = marked(notice.prepare);
+        var local =  marked(this.props.local);
+        var traffic = marked(this.props.traffic);
+        var prepare = marked(this.props.prepare);
         return (
              <div className="notice container">
                 <Col sm={6} md={6}>
