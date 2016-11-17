@@ -21,9 +21,9 @@ var Brief = React.createClass({
     },
 
     render: function() {
-        var days = this.props.days, pcInfo = this.props.pcIfno;
+        var days = this.props.days, pcInfo = this.props.pcInfo;
         var introduction =  marked(pcInfo.introduction);
-        var length = this.props.spotlights.length;
+        var length = pcInfo.spotlights.length;
         var spotlights = pcInfo.spotlights.map(function(spotlight, index) {
             return (
                 <Col sm={6} md={6} key={`travel-brief-${index}`}>
