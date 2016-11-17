@@ -7,6 +7,7 @@ import Marker from '../img/location.svg';
 var Map = React.createClass({
 
     componentDidMount: function(){
+        console.log(this.props);
         var map = new BMap.Map(this.refs.allmap, {minZoom: 1, maxZoom: 15});
         map.centerAndZoom(createPoint(this.props.center), this.props.zoom);
         map.setCurrentCity('吉林');
@@ -25,7 +26,7 @@ var Map = React.createClass({
         	return createInfoWindo(info);
         });
         for (var i = 0; i < 8; i ++) {
-            addMarker(points[i], label[i], infoWindow[i]);
+            addMarker(map, points[i], label[i], infoWindow[i]);
         }
         var driving = new BMap.DrivingRoute(map, {renderOptions: {map: map, autoViewport: true}});
         driving.search(points[0], points[points.length - 1], {waypoints: points.slice(1, points.length -1)});
@@ -52,7 +53,7 @@ function createInfoWindo(info) {
 	return new BMap.InfoWindow(info, infoWindowOpt);
 }
 
-function addMarker(point, label, infoWindow){
+function addMarker(map, point, label, infoWindow){
     var myIcon = new BMap.Icon(Marker, new BMap.Size(50, 50), {
         offset: new BMap.Size(0, 0),
         imageOffset: new BMap.Size(0, -1)
