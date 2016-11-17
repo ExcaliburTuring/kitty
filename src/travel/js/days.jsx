@@ -44,7 +44,7 @@ var Day1 = React.createClass({
 
     render: function() {
         var day = this.props.day;
-        var mdtext = marked(day.mdtext);
+        var detail = marked(day.detail);
         return (
             <div className="day1">
                 <Col sm={12} md={12}>
@@ -55,7 +55,7 @@ var Day1 = React.createClass({
                 </Col>
                 <Col sm={6} md={6}>
                     <i className="fa fa-bookmark fa-5x"/>
-                    <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
+                    <div dangerouslySetInnerHTML={{__html: detail}}></div>
                 </Col>
             </div>
         );
@@ -74,9 +74,8 @@ var Day = React.createClass({
 
     render: function() {
         var day = this.props.day;
-        var mdtext = marked(day.mdtext);
+        var detail = marked(day.detail);
         var distance = day.distance ? this.createAddInfo('fa-tachometer', day.distance) : null;
-        var latitude = day.latitude ? this.createAddInfo('fa-flag', day.latitude) : null;
         var hotel = day.hotel ? this.createAddInfo('fa-hotel', day.hotel) : null;
         var food = day.food ? this.createAddInfo('fa-cutlery', day.food) : null;
         var star = day.star ? this.createAddInfo('fa-star', day.star) : null; 
@@ -87,7 +86,7 @@ var Day = React.createClass({
                 </Col>
                 <Col sm={6} md={6}>
                     <Image responsive src={day.imgs[0]}/>
-                    <div dangerouslySetInnerHTML={{__html: mdtext}}></div>
+                    <div dangerouslySetInnerHTML={{__html: detail}}></div>
                 </Col>
                 <Col sm={6} md={6}>
                     <Image responsive src={day.imgs[1]}/>
@@ -95,7 +94,6 @@ var Day = React.createClass({
                         {star}
                         {food}
                         {distance}
-                        {latitude}
                         {hotel}
                     </div>
                 </Col>

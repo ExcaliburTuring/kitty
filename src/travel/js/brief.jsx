@@ -21,11 +21,10 @@ var Brief = React.createClass({
     },
 
     render: function() {
-        var brief = this.props.brief;
-        var days = this.props.days;
-        var mdtext =  marked(brief.mdtext);
-        var length = brief.spotlights.length;
-        var spotlights = brief.spotlights.map(function(spotlight, index) {
+        var days = this.props.days, pcInfo = this.props.pcIfno;
+        var introduction =  marked(pcInfo.introduction);
+        var length = this.props.spotlights.length;
+        var spotlights = pcInfo.spotlights.map(function(spotlight, index) {
             return (
                 <Col sm={6} md={6} key={`travel-brief-${index}`}>
                     <div className="liangdian" key={`${index}`}>
@@ -37,7 +36,7 @@ var Brief = React.createClass({
         });
 
         var track = days.map(function(day, index) {
-            var spots = day.spots.map(function(spot, index) {
+            var scenery = day.scenery.map(function(spot, index) {
                 return (
                     <p key={`${index}`}>{spot}</p>
                 );
@@ -45,7 +44,7 @@ var Brief = React.createClass({
             return (
                 <div className="oneday swiper-slide" key={`${index}`}>
                     <div className="daycount"><i className="dian"/> DAY<strong>{`${index+1}`}</strong></div>
-                    {spots}
+                    {scenery}
                 </div>
             );
         });
@@ -69,11 +68,15 @@ var Brief = React.createClass({
                         </div>
                     </div>
                     <hr />
-                    <div className="brief-info" dangerouslySetInnerHTML={{__html: mdtext}}></div>
+                    <div className="brief-info" dangerouslySetInnerHTML={{__html: introduction}}></div>
                 </Col>
-                <Col sm={12} md={12}>
-                    <Map/>
-                </Col>
+                {
+                    pcInfo.center
+                    ? <Col sm={12} md={12}>
+                        <Map center={pcInfo.center} zoom={pcInfo.zoom} cities={pcInfo.cities} points={pcInfo.points}/>
+                    </Col>
+                    : null
+                }
                 <Col sm={12} md={12}>
                     <hr />
                     {spotlights}
