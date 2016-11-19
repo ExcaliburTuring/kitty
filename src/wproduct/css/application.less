@@ -1,0 +1,460 @@
+@import "~wbase.less";
+
+body {
+    background-color: white;
+}
+
+.bottom-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 1rem;
+    border-top: 1px solid @gray-line;
+    background-color: @gray-bg;
+
+    .Athird {
+        height: 1rem;
+        padding: .2rem 0;
+        text-align: center;
+        position: relative;
+        line-height: .3rem;
+
+        img {
+            width: .4rem;
+            height: .4rem;
+        }
+
+        p {
+            font-size: .18rem;
+            color: #999;
+        }
+
+        .right-border {
+            position: absolute;
+            height: .6rem;
+            width: 0;
+            border: 1px solid #999;
+            right: 0;
+            top: .2rem;
+        }
+
+    }
+
+    .apply {
+        margin-left: 5%;
+        margin-top: .07rem;
+        width: 90%;
+        line-height: .86rem;
+        text-align: center;
+        border-radius: .1rem;
+        background-color: @light-currency;
+        color: @white;
+        font-size: .28rem;
+    }
+
+}
+
+.slider-container {
+    position: relative;
+    min-height: 4rem;
+    line-height: 0;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+    .swiper-container {
+        position:absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+
+        .swiper-slide {
+            background-size: auto 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .swiper-pagination {
+            height: .6rem;
+            width: 100%;
+            line-height: .1rem;
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+            opacity: 1;
+
+            .swiper-pagination-bullet {
+                margin-right: .2rem;
+                width: .2rem;
+                height: .2rem;
+            }
+
+            .swiper-pagination-bullet-active {
+                background-color: @currency;
+            }
+        }
+    }
+}
+
+.travel-info-container {
+    border-bottom: 1px solid @gray-line;
+    background-color: @gray-bg;
+    position: relative;
+
+/*    .travel-enter {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 20%;
+        height: 100%;
+        padding: 15% 0;
+        background-color: @light-currency;
+        box-shadow: .08rem 0 .15rem -.1rem black inset;
+        color: @white;
+        text-align: center;
+
+        img {
+            margin-top: .3rem;
+            width: 60%;
+        }
+    }*/
+
+    .travel-enter {
+        margin: .2rem 0;
+        padding: .2rem 2%;
+        background: @light-currency;
+        color: white;
+        width: 100%;
+        display: table;
+
+        .text {
+            width: 20%;
+            margin-left: 30%;
+            float: left;
+        }
+
+        img {
+            width: 1rem;
+            margin-left: 5%;
+            float: left;
+        }
+    }
+
+    .travel-title {
+        width: 100%;
+        padding: .4rem 2% .2rem;
+        background-color: @white;
+        font-size: .34rem;
+        color: black;
+
+        .travel-name {
+            border-radius: .1rem;
+            background-color: @light-currency;
+            padding: .02rem .2rem;
+            margin-right: .1rem;
+            color: @white;
+            font-size: .32rem;
+        }
+    }
+
+    .travel-price-container {
+        width: 100%;
+        padding: .2rem 2%;
+        background-color: @white;
+        font-size: .28rem;
+        color: #ff5610;
+
+        .travel-price {
+            font-size: .48rem;
+        }
+    }
+
+    .travel-discount-container {
+        width: 100%;
+        background-color: #fff2e4;
+        border-top: 1px solid @gray-line;
+        border-bottom: 1px solid @gray-line;
+        position: relative;
+        
+        p {
+            margin: 0;
+            padding: .1rem 2%;
+            font-size: .28rem;
+            line-height: .5rem;
+        }
+
+        .youhui, .lijian {
+            margin-right: .2rem;
+            padding: .03rem .08rem;
+            border-radius: .05rem;
+            vertical-align: .02rem;
+            font-size: .24rem;
+        }
+
+        .youhui {
+            color: @white;
+            background-color: @currency;
+        }
+
+        .lijian {
+            color: @currency;
+            background-color: @white;
+        }
+
+        img {
+            position: absolute;
+            right: 2%;
+            bottom: .2rem;
+            width: .2rem;
+            height: .2rem;
+        }
+
+    }
+
+    .travel-departure-container {
+        width: 100%;
+        padding: .2rem 2%;
+        padding-left: .64rem;
+        background-color: @white;
+        background-image: url(../img/location.svg);
+        background-size: .42rem;
+        background-repeat: no-repeat;
+        background-position: 2%;
+        font-size: .32rem;
+
+        .travel-departure {
+        }
+    }
+}
+
+.info-container {
+    .am-tabs-bar .am-tabs-tab {
+        height: 1rem;
+        font-size: .36rem;
+        line-height: 1rem;
+    }
+
+    .am-tabs-bar .am-tabs-tab-active {
+        color: @light-currency;
+        height: 1rem;
+        font-size: .36rem;
+        line-height: 1rem;
+    }
+
+    .am-tabs-ink-bar {
+        height: .05rem;
+        background-color: @light-currency;
+    }
+
+    .info-item-container {
+        padding: .1rem 0 1rem .4rem;
+
+        h2 {
+            padding-left: .2rem;
+            margin-top: .2rem;
+            font-size: .36rem;
+            font-weight: normal;
+            line-height: .6rem;
+            color: black;
+            background-image: url(../img/kuai.svg);
+            background-size: .1rem .1rem;
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
+
+        p {
+            font-size: .34rem;
+            color: @dark-gray;
+            line-height: .56rem;
+            padding-left: .2rem;
+        }
+    }
+
+    .day-info-container {
+        padding: .2rem .2rem 1rem .3rem;
+
+        .dayfirst, .daylast, .days {
+            border-left: 1px solid @light-currency;
+
+            h2 {
+                border-bottom: 1px solid @light-currency;
+                background: none;
+                margin: 0 0 .1rem;
+                padding-left: .3rem;
+                position: relative;
+                font-size: .36rem;
+                font-weight: normal;
+                line-height: 1rem;
+                color: black;
+
+                .daycount {
+                    position: absolute;
+                    left: -.2rem;
+                    top: .3rem;
+                    width: .4rem;
+                    height: .4rem;
+                    border-radius: 50%;
+                    background-color: @light-currency;
+                    color: @white;
+                    line-height: .4rem;
+                    text-align: center;
+                }
+            }
+
+            p {
+                font-size: .3rem;
+                color: @dark-gray;
+                line-height: .56rem;
+                padding-left: .4rem;
+            }
+
+            h4 {
+                font-size: .3rem;
+                font-weight: normal;
+                color: @dark-gray;
+                line-height: 1rem;
+                padding-left: .8rem;
+                background-repeat: no-repeat;
+                background-size: 0.3rem 0.3rem;
+                background-position: .4rem 0.36rem;
+            }
+
+            .c1 {
+                background-image: url(../img/c1.svg);
+            }
+
+            .c2 {
+                background-image: url(../img/c2.svg);
+            }
+
+            .c3 {
+                background-image: url(../img/c3.svg);
+            }
+
+            .c4 {
+                background-image: url(../img/c4.svg);
+            }
+        }
+    }
+}
+
+.new-order-container {
+
+    .new-header {
+        padding: .2rem .4rem;
+        min-height: 1.4rem;
+        border-bottom: 1px solid @gray-line;
+
+        div.pull-left {
+            width: 2.5rem;
+            position: absolute;
+            top: -0.9rem;
+
+            div {
+                background-size: auto 100%;
+            }
+        }
+
+        // img.img-responsive {
+            
+        // }
+
+        .new-title {
+            margin-left: 2.7rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
+    }
+
+    .new-body {
+        padding: .3rem .4rem;
+        margin-bottom: .2rem;
+        overflow: scroll;
+        height: 3.5rem;
+
+        .new-group-list {
+            margin-bottom: .3rem;
+
+            .group-container {
+                border: 1px solid @gray;
+                border-radius: .15rem;
+                margin: .1rem;
+                width: 30%;
+                color: #666;
+
+                div {
+                    width: 100%;
+                    font-size: .28rem;
+                    line-height: .5rem;
+                    margin: 0;
+                    text-align: center;
+                }
+
+                .group-title {
+                    margin-right: .1rem;
+                    padding-right: .1rem;
+                    border-right: 1px solid @gray;
+                }
+
+                .group-quota {
+                    color: @light-currency;
+                }
+            }
+
+            .group-container.selected {
+                border-color: @light-currency;
+                background-color: @light-currency;
+                color: white;
+
+                .group-title {
+                    border-right-color: white;
+                }
+
+                .group-quota {
+                    color: white;
+                }
+            }
+
+            .group-container.disable {
+                background-color: @gray-bg;
+            }
+        }
+    }
+
+    .new-footer {
+        border-top: 1px solid @gray-line;
+        min-height: .8rem;
+
+        p.pull-left {
+            padding: .4rem .4rem .3rem;
+
+            .new-price-label {
+                margin-left: .2rem;
+            }
+
+            .new-price {
+                margin-left: .1rem;
+                color: @currency;
+            }
+        }
+
+        button.pull-right {
+            width: 55%;
+            background-color: @currency;
+            padding: 0 .3rem;
+            color: white;
+            line-height: 1.2rem;
+            height: 1.2rem;
+            font-weight: normal;
+            border-radius: 0;
+            font-size: .4rem;
+        }
+    }
+}

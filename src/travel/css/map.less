@@ -10,6 +10,17 @@
     margin-top: -50px;
 }
 
+.BMap_Marker {
+    div {
+        overflow: visible!important;
+    }
+
+    div img[src="http://api0.map.bdimg.com/images/dest_markers.png"],
+    div img[src="http://api0.map.bdimg.com/images/way-points.png"] {
+        display: none!important;
+    }
+}
+
 label {
     max-width: none;
     font-size: 16px!important;
@@ -21,4 +32,9 @@ label {
 
 .anchorBL {
     display: none;
+}
+
+path {
+    stroke: orange;
+    stroke-opacity: 0.9;
 }
