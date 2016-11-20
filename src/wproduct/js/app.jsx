@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import marked from 'marked';
 import Swiper from 'swiper';
+import { Popup,Button } from 'antd-mobile';
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
@@ -179,10 +180,8 @@ var App = React.createClass({
                             </p>
                         </div>
                         <div className="travel-enter">
-                            <div className="text">
-                                <p>点此开启</p>
-                                <p>{routes.name}</p>
-                            </div>
+                            <p>点此开启</p>
+                            <p>{routes.name}</p>
                             <img src={righta}/>
                         </div>
                     </div>

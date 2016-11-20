@@ -3,7 +3,6 @@ node_modules/*
 static/
 npm-debug.log
 kitty.cmd
-assets/
+asset/
 package.json
 server.js
-.DS_Store
