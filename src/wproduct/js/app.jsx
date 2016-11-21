@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import marked from 'marked';
 import Swiper from 'swiper';
-import { Popup,Button } from 'antd-mobile';
+import { Popup, Button } from 'antd-mobile';
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
