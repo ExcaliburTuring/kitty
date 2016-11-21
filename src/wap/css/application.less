@@ -202,52 +202,57 @@
         left: 0.4rem;
     }
 
-    .head-img {
-        box-shadow: 0 .01rem .05rem #a5a5a5;
-    }
-
-    .route-intro{
-        font-size: 0.3rem;
-        color: @white;
-        background-color: @light-currency;
-        padding: 0 .1rem;
-        margin: .2rem .2rem;
-        border-radius: .1rem;
-        display: inline-block;
-    }
-
-    .route-title{
-        font-size: 0.3rem;
-        color: @dark-gray;
-        display: inline-block;
-    }
-
     .route-container {
         border: 1px solid @silver;
         border-radius: 0.16rem;
         margin-bottom: 0.4rem;
         overflow: hidden;
-        position: relative;
 
-        .price  {
-            position: absolute;
-            bottom: 1.3rem;
-            right: .5rem;
-            border: 1px solid @light-currency;
-            border-radius: .1rem;
-            overflow: hidden;
-            font-size: 0.24rem;
-            text-align: center;
+        .img-container {
+            position: relative;
 
-            .up {
+            .head-img {
+                box-shadow: 0 .01rem .05rem #a5a5a5;
+            }
+
+            .price  {
+                position: absolute;
+                bottom: .5rem;
+                right: .5rem;
+                border: 1px solid @light-currency;
+                border-radius: .1rem;
+                overflow: hidden;
+                font-size: 0.24rem;
+                text-align: center;
+
+                .up {
+                    color: @white;
+                    background-color: @light-currency;
+                    padding: 0 .1rem;
+                }
+
+                .down {
+                    color: @light-currency;
+                    background-color: @white;
+                }
+            }
+        }
+
+        p {
+            padding: .2rem .2rem;
+
+            .route-intro{
+                font-size: 0.3rem;
                 color: @white;
                 background-color: @light-currency;
                 padding: 0 .1rem;
+                margin-right: .2rem;
+                border-radius: .1rem;
             }
 
-            .down {
-                color: @light-currency;
-                background-color: @white;
+            .route-title{
+                font-size: 0.3rem;
+                color: @dark-gray;
             }
         }
 
