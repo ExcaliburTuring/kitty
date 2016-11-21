@@ -293,7 +293,6 @@ body {
             }
 
             h4 {
-                font-size: .35rem;
                 font-weight: normal;
                 color: @dark-gray;
                 line-height: .7rem;
@@ -301,6 +300,15 @@ body {
                 background-repeat: no-repeat;
                 background-size: 0.3rem 0.3rem;
                 background-position: .25rem 0.2rem;
+
+                span {
+                    font-size: .3rem;
+                }
+
+                span.day-icons-label {
+                    font-size: .36rem;
+                    margin-right: .1rem;
+                }
             }
 
             h4:first-child {
@@ -324,7 +332,7 @@ body {
             }
         }
 
-        .days.daylast {
+        .days.last-day {
             padding-bottom: .1rem;
             border-bottom: 1px solid @light-currency;
         }
@@ -347,10 +355,6 @@ body {
                 background-size: auto 100%;
             }
         }
-
-        // img.img-responsive {
-            
-        // }
 
         .new-title {
             margin-left: 2.7rem;
