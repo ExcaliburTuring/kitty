@@ -11,11 +11,11 @@ var Days = React.createClass({
         var days = this.props.days;
         var firstDay, lastDay, daysList;
         if (days.length != 0) {
-            firstDay = (<Day1 day={days[0]}/>) ;
-            lastDay = (<Day1 day={days[days.length - 1]}/>);
+            firstDay = (<Day1 day={days[0]} dayno={days[0].dayno}/>) ;
+            lastDay = (<Day1 day={days[days.length - 1]} dayno={days[days.length - 1].dayno}/>);
             daysList = days.slice(1, days.length -1).map(function(day, index) {
                 return (
-                    <Day day={day} key={`day-${index}`}/>
+                    <Day day={day} dayno={day.dayno} key={`day-${index}`}/>
                 );
             });
         }
@@ -44,11 +44,12 @@ var Day1 = React.createClass({
 
     render: function() {
         var day = this.props.day;
+        var dayno = this.props.dayno;
         var detail = marked(day.detail);
         return (
             <div className="day1">
                 <Col sm={12} md={12}>
-                    <h2>{day.title}</h2>
+                    <h2>Day{dayno} {day.title}</h2>
                 </Col>
                 <Col sm={6} md={6}>
                     <Image responsive src={day.imgs[0]}/>
@@ -74,6 +75,7 @@ var Day = React.createClass({
 
     render: function() {
         var day = this.props.day;
+        var dayno = this.props.dayno;
         var detail = marked(day.detail);
         var distance = day.distance ? this.createAddInfo('fa-tachometer', day.distance) : null;
         var hotel = day.hotel ? this.createAddInfo('fa-hotel', day.hotel) : null;
@@ -82,7 +84,7 @@ var Day = React.createClass({
         return (
             <div className="days">
                 <Col sm={12} md={12}>
-                    <h2>{day.title}</h2>
+                    <h2>Day{dayno} {day.title}</h2>
                 </Col>
                 <Col sm={6} md={6}>
                     <Image responsive src={day.imgs[0]}/>
