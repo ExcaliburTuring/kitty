@@ -203,15 +203,19 @@ var Route = React.createClass({
         var route = this.props.route;
         return (
             <div className="route-container">
-                <div className="price">
-                    <div className="up">{route.minPrice}起</div>
-                    <div className="down">{route.days}天</div>
+                <div className="img-container">
+                    <div className="price">
+                        <div className="up">{route.minPrice}起</div>
+                        <div className="down">{route.days}天</div>
+                    </div>
+                    <a href={`${url.travel}/${route.routeid}`}>
+                        <img className="head-img" src={route.headImg} />
+                    </a>
                 </div>
-                <a href={`${url.travel}/${route.routeid}`}>
-                    <img className="head-img" src={route.headImg} />
-                </a>
-                <p className="route-intro">{route.name}</p>
-                <p className="route-title">{route.title}</p>
+                <p>
+                    <span className="route-intro">{route.name}</span>
+                    <span className="route-title">{route.title}</span>
+                </p>
             </div>
         );
     }
