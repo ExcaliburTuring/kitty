@@ -74,7 +74,7 @@ var Dayfirst = React.createClass({
         var dayno = this.props.dayno;
         var detail = marked(day.detail);
         return (
-            <div className="dayfirst">
+            <div className="days dayfirst">
                 <h2><div className="daycount">{dayno}</div>Day{dayno} {day.title}</h2>
                 <div dangerouslySetInnerHTML={{__html: detail}}></div>
             </div>
@@ -89,7 +89,7 @@ var Daylast = React.createClass({
         var dayno = this.props.dayno;
         var detail = marked(day.detail);
         return (
-            <div className="daylast">
+            <div className="days daylast">
                 <h2><div className="daycount">{dayno}</div>Day{dayno} {day.title}</h2>
                 <div dangerouslySetInnerHTML={{__html: detail}}></div>
             </div>

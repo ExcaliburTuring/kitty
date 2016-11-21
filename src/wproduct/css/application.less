@@ -209,6 +209,8 @@ body {
 }
 
 .info-container {
+    margin-bottom: .5rem;
+
     .am-tabs-bar .am-tabs-tab {
         height: 1rem;
         font-size: .36rem;
@@ -254,7 +256,7 @@ body {
     .day-info-container {
         padding: .2rem .2rem 1rem .3rem;
 
-        .dayfirst, .daylast, .days {
+        .days {
             border-left: 1px solid @light-currency;
 
             h2 {
@@ -283,21 +285,26 @@ body {
             }
 
             p {
+                text-indent: 2em; 
                 font-size: .3rem;
                 color: @dark-gray;
-                line-height: .56rem;
-                padding-left: .4rem;
+                line-height: .52rem;
+                padding-left: .2rem;
             }
 
             h4 {
-                font-size: .3rem;
+                font-size: .35rem;
                 font-weight: normal;
                 color: @dark-gray;
-                line-height: 1rem;
+                line-height: .7rem;
                 padding-left: .8rem;
                 background-repeat: no-repeat;
                 background-size: 0.3rem 0.3rem;
-                background-position: .4rem 0.36rem;
+                background-position: .25rem 0.2rem;
+            }
+
+            h4:first-child {
+                margin-top: .15rem;
             }
 
             .c1 {
@@ -315,6 +322,11 @@ body {
             .c4 {
                 background-image: url(../img/c4.svg);
             }
+        }
+
+        .days.daylast {
+            padding-bottom: .1rem;
+            border-bottom: 1px solid @light-currency;
         }
     }
 }
