@@ -209,7 +209,7 @@ var OrderOperation = React.createClass({
                     <Button bsStyle="link" onClick={this.onRefundOrderBtnClick}>
                         退款
                     </Button>
-                    <Button bsStyle="link" onClick={this.onDownloadContractBtnClick}>
+                    <Button bsStyle="link" onClick={this.onDownloadTravelContractBtnClick}>
                         合同
                     </Button>
                     <Button bsStyle="link" onClick={this.onOtherRouteBtnClick}>

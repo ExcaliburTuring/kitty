@@ -6,7 +6,7 @@ import { Button, Modal, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const alert = Modal.alert;
 
-import { url, gender, priceUtil, discountCodeStatus, orderStatus, defaultValue }  from 'config';
+import { url, gender, priceUtil, discountCodeStatus, orderStatus, defaultValue, refundType }  from 'config';
 
 var Footer = React.createClass({
 
@@ -25,6 +25,43 @@ var Footer = React.createClass({
             }
         }).fail(function() {
             Toast.fail(defaultValue.cancelOrderMsg, 1);
+        });
+    },
+
+    _doRefundOrder: function() {
+        var self = this;
+        $.ajax({
+            url: url.orderRefund,
+            type: 'post',
+            data: {'orderid': this.props.orderid, 'desc': '通过手机端申请退款'}
+        }).done(function(data) {
+            if (data.status != 0) {
+                var errMsg = data.errors[0].message;
+                alert('订单退款失败', (
+                        <div>
+                            <p>由于：<span className="order-refund-failed">{errMsg}</span> 
+                                的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+                                {defaultValue.hotline}
+                            </p>
+                        </div>
+                    ), [{text: '确定', onPress: ()=>{}}]
+                );
+            } else {
+                alert('订单退款失败', 
+                    '您已经成功申请订单退款！如可自动退款，将按原路返回到您的账户中。如无法自动退款，海逍遥工作人员将很快与您取得联系，请您耐心等候！', 
+                    [{text: '确定', onPress: ()=>{setTimeout('location.reload(true);', 300);}}]
+                );
+            }
+        }).fail(function() {
+            alert('订单退款失败', (
+                <div>
+                    <p>由于：<span className="order-refund-failed">系统处理失败</span> 
+                        的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+                        {defaultValue.hotline}
+                    </p>
+                </div>
+                ), [{text: '确定', onPress: ()=>{}}]
+            );
         });
     },
 
@@ -79,7 +116,47 @@ var Footer = React.createClass({
     },
 
     onRefundOrderBtnClick: function() {
+        var self = this, refundTypeInfo = null;
+        $.ajax({
+            'url': url.orderRefundType + `?orderid=${this.props.orderid}`,
+            'type': 'GET',
+            'async': false,
+            'success': function(data) {
+                if (data.status != 0) {
+                    Toast.fail(`获取退款策略失败，您可以联系${defaultValue.hotline}`, 1);
+                } else {
+                    refundTypeInfo = data;
+                }
+            },
+            'error': function() {
+                Toast.fail(`获取退款策略失败，您可以联系${defaultValue.hotline}`, 1);
+            }
+        });
 
+        if (refundTypeInfo == null) {
+            return;
+        }
+        alert(
+            '订单退款',
+            (
+                <div>
+                    <p>{refundType.getDesc(refundTypeInfo.type)}</p>
+                    <p>实际支付：<span className="refund-price-text">{refundTypeInfo.actualPrice}</span></p>
+                    <p>退款金额：<span className="refund-price-text">{refundTypeInfo.refundPrice}</span></p>
+                    <p>扣减金额：<span className="refund-price-text">{refundTypeInfo.deductPrice}</span></p>
+                    <p>欢迎直接致电海逍遥:{defaultValue.hotline}</p>
+                </div>
+            ),
+            [{
+                text: '再考虑下',
+                onPress: () => {}
+            }, { 
+                text: '确定取消',
+                onPress: function() {
+                    self._doRefundOrder();
+                }
+            }]
+        );
     },
 
     onOtherRouteBtnClick: function() {
@@ -87,7 +164,7 @@ var Footer = React.createClass({
     },
 
     onDownloadContractBtnClick: function() {
-
+        window.open(`/order/contract?orderid=${this.props.orderid}`);
     },
 
     onReorderBtnClick: function() {
@@ -172,11 +249,11 @@ var Footer = React.createClass({
         } else if (status == orderStatus.PAID) {
             operationGroup = (
                 <div className="order-operation clearfix">
-                    <Button className="first-btn pull-right" inline onClick={this.onRefundOrderBtnClick}>
-                        订单退款
+                    <Button className="first-btn pull-right" inline onClick={this.onDownloadContractBtnClick}>
+                        查看合同
                     </Button>
-                    <Button className="second-btn pull-right" inline onClick={this.onDownloadContractBtnClick}>
-                        下载合同
+                    <Button className="second-btn pull-right" inline onClick={this.onRefundOrderBtnClick}>
+                        订单退款
                     </Button>
                 </div>
             );

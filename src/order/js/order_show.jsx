@@ -307,7 +307,7 @@ var OrderOperation = React.createClass({
                     <Button type="primary" onClick={this.onOtherRouteBtnClick}>
                         其它路线
                     </Button>
-                    <Button type="primary" onClick={this.onDownloadContractBtnClick}>
+                    <Button type="primary" onClick={this.onDownloadTravelContractBtnClick}>
                         下载合同
                     </Button>
                 </div>
