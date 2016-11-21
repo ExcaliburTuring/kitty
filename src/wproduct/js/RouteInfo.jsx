@@ -46,52 +46,16 @@ var RouteInfo = React.createClass({
 var XingCheng = React.createClass({
 
     render: function() {
-        var days = this.props.days;
-        var firstDay, lastDay, daysList;
-        if (days.length != 0) {
-            firstDay = (<Dayfirst day={days[0]} dayno={days[0].dayno}/>) ;
-            lastDay = (<Daylast day={days[days.length - 1]} dayno={days[days.length - 1].dayno}/>);
-            daysList = days.slice(1, days.length -1).map(function(day, index) {
-                return (
-                    <Day day={day} dayno={day.dayno} key={`day-${index}`}/>
-                );
-            });
-        }
+        var days = this.props.days, lastDayIndex = this.props.days.length - 1;
+        var daysList = days.map(function(day, index) {
+            return (
+                <Day day={day} dayno={day.dayno} key={`day-${index}`} 
+                    isFirstDay={index == 0} isLastDay={index == lastDayIndex}/>
+            );
+        });
         return (
             <div className="day-info-container" onClick={this.onClick}>
-                {firstDay}
                 {daysList}
-                {lastDay}
-            </div>
-        );
-    }
-});
-
-var Dayfirst = React.createClass({
-
-    render: function() {
-        var day = this.props.day;
-        var dayno = this.props.dayno;
-        var detail = marked(day.detail);
-        return (
-            <div className="days dayfirst">
-                <h2><div className="daycount">{dayno}</div>Day{dayno} {day.title}</h2>
-                <div dangerouslySetInnerHTML={{__html: detail}}></div>
-            </div>
-        );
-    }
-});
-
-var Daylast = React.createClass({
-
-    render: function() {
-        var day = this.props.day;
-        var dayno = this.props.dayno;
-        var detail = marked(day.detail);
-        return (
-            <div className="days daylast">
-                <h2><div className="daycount">{dayno}</div>Day{dayno} {day.title}</h2>
-                <div dangerouslySetInnerHTML={{__html: detail}}></div>
             </div>
         );
     }
@@ -99,9 +63,9 @@ var Daylast = React.createClass({
 
 var Day = React.createClass({
 
-    createAddInfo: function(fa, text) {
+    createAddInfo: function(fa, label, text) {
         return (
-            <h4 className={fa}>{text}</h4>
+            <h4 className={fa}><span className="day-icons-label">{`${label}:`}</span><span>{text}</span></h4>
         );
     },
 
@@ -109,12 +73,12 @@ var Day = React.createClass({
         var day = this.props.day;
         var dayno = this.props.dayno;
         var detail = marked(day.detail);
-        var star = day.star ? this.createAddInfo('c1', day.star) : null; 
-        var food = day.food ? this.createAddInfo('c2', day.food) : null;
-        var distance = day.distance ? this.createAddInfo('c3', day.distance) : null;
-        var hotel = day.hotel ? this.createAddInfo('c4', day.hotel) : null;
+        var star = day.star ? this.createAddInfo('c1', '亮点', day.star) : null; 
+        var food = day.food ? this.createAddInfo('c2', '含餐', day.food) : null;
+        var distance = day.distance ? this.createAddInfo('c3', '车程', day.distance) : null;
+        var hotel = day.hotel ? this.createAddInfo('c4', '住宿', day.hotel) : null;
         return (
-            <div className="days">
+            <div className={`days ${this.props.isFirstDay ? 'first-day': null} ${this.props.isLastDay ? 'last-day' : ''}`}>
                 <h2><div className="daycount">{dayno}</div>Day{dayno} {day.title}</h2>
                 <div dangerouslySetInnerHTML={{__html: detail}}></div>
                 <div className="icons">
