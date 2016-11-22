@@ -230,31 +230,41 @@ body {
     }
 
     .info-item-container {
-        padding: .1rem 0 1rem .4rem;
+        padding: 0 .25rem .4rem;
 
         h2 {
-            padding-left: .2rem;
-            margin-top: .2rem;
             font-size: .36rem;
+            padding-left: .2rem;
             font-weight: normal;
-            line-height: .6rem;
-            color: black;
+            margin-top: .2rem;
+            line-height: .8rem;
+            color: @light-currency;
+            border-bottom: 1px solid @light-currency;
+        }
+
+        h3 {
+            margin-top: .2rem;
+            padding-left: .2rem;
+            font-size: .32rem;
+            font-weight: normal;
+            line-height: .5rem;
+            color: @dark-gray;
             background-image: url(../img/kuai.svg);
-            background-size: .1rem .1rem;
+            background-size: .08rem .08rem;
             background-repeat: no-repeat;
             background-position: left center;
         }
 
         p {
-            font-size: .34rem;
-            color: @dark-gray;
+            font-size: .28rem;
+            color: @gray;
             line-height: .56rem;
             padding-left: .2rem;
         }
     }
 
     .day-info-container {
-        padding: .2rem .2rem 1rem .3rem;
+        padding: 0 .2rem 1rem .3rem;
 
         .days {
             border-left: 1px solid @light-currency;
@@ -290,6 +300,11 @@ body {
                 color: @dark-gray;
                 line-height: .52rem;
                 padding-left: .2rem;
+
+                strong {
+                    color: @light-currency;
+                    font-weight: normal;
+                }
             }
 
             h4 {
@@ -418,10 +433,12 @@ body {
 
     .new-footer {
         border-top: 1px solid @gray-line;
-        min-height: .8rem;
+        height: 1rem;
 
         p.pull-left {
-            padding: .4rem .4rem .3rem;
+            width: 40%;
+            text-align: center;
+            line-height: 1rem;
 
             .new-price-label {
                 margin-left: .2rem;
@@ -434,15 +451,16 @@ body {
         }
 
         button.pull-right {
-            width: 55%;
+            margin-right: 2.5%;
+            margin-top: .07rem;
+            width: 45%;
+            height: .86rem;
+            border-radius: .1rem;
             background-color: @currency;
-            padding: 0 .3rem;
             color: white;
-            line-height: 1.2rem;
-            height: 1.2rem;
+            line-height: .86rem;
+            font-size: .28rem;
             font-weight: normal;
-            border-radius: 0;
-            font-size: .4rem;
         }
     }
 }
