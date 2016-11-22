@@ -314,7 +314,7 @@ var GroupPopup = React.createClass({
         var groupList = null;
         if (groups.length == 0) {
             groupList = (
-                <p>这条路线暂时没有成团，如果您感兴趣，可以联系我们，{defaultValue.hotline}</p>
+                <p>{route.season}成团，如果您感兴趣，可以联系海逍遥：{defaultValue.hotline}</p>
             );
         } else {
             groupList = this.props.groups.map(function(group, index) {

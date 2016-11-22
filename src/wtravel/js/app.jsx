@@ -98,6 +98,10 @@ var App = React.createClass({
         this.setState({'open': !this.state.open});
     },
 
+    onBaoMingClick: function() {
+        window.location.href = `/wproduct/${this.state.routes.routes[0].routeid}`
+    },
+
     getInitialState() {
         var routeid = window.location.pathname.split('/')[2];
         RouteFlux.actions.load({'routeids': routeid});
@@ -153,8 +157,14 @@ var App = React.createClass({
                         <div className="travel-dairy-container"
                             dangerouslySetInnerHTML={{__html: marked(mdtext)}}>
                         </div>
-                        <Button type="primary" className="days-list-toggle"
-                            onClick={this.onOpenChange}>目录|报名</Button>
+                        <div className="days-list-toggle">
+                            <Button inline onClick={this.onOpenChange} className="mulu">
+                                <Icon type="book" />目录
+                            </Button>
+                            <Button inline onClick={this.onBaoMingClick} className="baoming">
+                                <Icon type="team" />报名
+                            </Button>
+                        </div>
                     </div>
                 </Drawer>
             </div>

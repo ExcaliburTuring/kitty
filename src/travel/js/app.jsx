@@ -39,7 +39,8 @@ var App = React.createClass({
                     'title': '',
                     'route': '',
                     'minPrice': '¥0',
-                    'maxPrice': '¥0'
+                    'maxPrice': '¥0',
+                    'season': '1月到2月'
                 }],
                 'more': {
                     'sliderImgs': [],
@@ -78,7 +79,7 @@ var App = React.createClass({
                     <Days days={routes.days}/>
                     <Notice local={more.local} prepare={more.prepare} traffic={more.traffic}/>
                     <Expense include={more.expenseInclude} exclude={more.expenseExclude} refund={more.refund}/>
-                    <Groups groups={groups.groups}/>
+                    <Groups route={routes.routes[0]} groups={groups.groups}/>
                 </div>
                 <Footer />
             </div>
