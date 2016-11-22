@@ -28,7 +28,7 @@ var Agreement = React.createClass({
         var count = `count=${this.props.selectTravellers.length}`;
         var price = `price=${this.props.price}`;
         var actualPrice = `actualPrice=${this.props.actualPrice}`;
-        return `/order/contract/travel_contract.pdf?${orderid}&${travellers}&${count}&${price}&${actualPrice}`;
+        return `/order/contract/preview?${orderid}&${travellers}&${count}&${price}&${actualPrice}`;
     },
 
     onAgreementLinkClick: function() {

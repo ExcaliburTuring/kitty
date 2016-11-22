@@ -340,14 +340,14 @@ var WContact = React.createClass({
                                 })
                             }>邮箱</InputItem>
                         <InputItem clear className="contact-area-picker"
-                            placeholder="请选择地区"
+                            placeholder="请选择省市"
                             {
                                 ...getFieldProps('area', {
                                     initialValue: contact.area,
                                 })
-                            }>地址</InputItem>
+                            }>省市</InputItem>
                         <InputItem clear
-                            placeholder="街道门牌，无需重复地区信息"
+                            placeholder="街道门牌，无需重复地区省市"
                             {
                                 ...getFieldProps('address', {
                                     initialValue: contact.address,
