@@ -102,6 +102,10 @@ var App = React.createClass({
         window.location.href = `/wproduct/${this.state.routes.routes[0].routeid}`
     },
 
+    onHomeClick: function() {
+        window.location.href = `/`;
+    },
+
     getInitialState() {
         var routeid = window.location.pathname.split('/')[2];
         RouteFlux.actions.load({'routeids': routeid});
@@ -115,7 +119,9 @@ var App = React.createClass({
                     'title': '',
                     'route': '',
                     'minPrice': '¥0',
-                    'maxPrice': '¥0'
+                    'maxPrice': '¥0',
+                    'departure': '',
+                    'distination': ''
                 }],
                 'more': {
                     'sliderImgs': [],
@@ -128,7 +134,8 @@ var App = React.createClass({
                     'refund': ''
                 },
                 'wapInfo': {
-                    'directory': []
+                    'directory': [],
+                    'mapImg': null
                 },
                 'mdtext': ''
             },
@@ -151,18 +158,32 @@ var App = React.createClass({
                 <Drawer open={this.state.open} onOpenChange={this.onOpenChange}
                     sidebar={
                         <Siderbar routes={routes} directory={this.state.routes.wapInfo.directory}
-                            onClick={this.onOpenChange}/>
+                            onClick={this.onOpenChange} onBaoMingClick={this.onBaoMingClick}/>
                         }>
                     <div className="travel-main-container">
+                        <div className="travel-title-container">
+                            <h2>{`${routes.name} | ${routes.title}`}</h2>
+                            <p>{routes.season}
+                                <span className="travel-route">{`${routes.departure} ~ ${routes.distination}`}</span>
+                            </p>
+                            {
+                                this.state.routes.wapInfo.mapImg
+                                ? <p><img src={this.state.routes.wapInfo.mapImg} /></p>
+                                : null
+                            }
+                        </div>
                         <div className="travel-dairy-container"
                             dangerouslySetInnerHTML={{__html: marked(mdtext)}}>
                         </div>
                         <div className="days-list-toggle">
-                            <Button inline onClick={this.onOpenChange} className="mulu">
-                                <Icon type="book" />目录
+                            <Button inline onClick={this.onHomeClick} className="home">
+                                <Icon type="home" />主页
                             </Button>
                             <Button inline onClick={this.onBaoMingClick} className="baoming">
                                 <Icon type="team" />报名
+                            </Button>
+                            <Button inline onClick={this.onOpenChange} className="mulu">
+                                <Icon type="book" />目录
                             </Button>
                         </div>
                     </div>
@@ -181,10 +202,6 @@ var Siderbar = React.createClass({
         }, {
             'speed': 500
         });
-    },
-
-    onClick: function() {
-        this._scroll($('.addition-info-container').offset().top);
     },
 
     onDayItemClick: function(index) {
@@ -222,7 +239,7 @@ var Siderbar = React.createClass({
                     </List>
                 </div>
                 <div className="sidebar-footer">
-                    <Button onClick={this.onClick}>报名&费用相关</Button>
+                    <Button onClick={this.props.onBaoMingClick}>报名&费用相关</Button>
                 </div>
             </div>
         );
