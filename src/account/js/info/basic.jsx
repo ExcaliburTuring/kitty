@@ -15,6 +15,7 @@ import Gender from 'gender';
 import Birthday from 'birthday';
 import Email from 'email';
 import Mobile from 'mobile';
+import Area from 'area';
 import Address from 'address';
 
 var BasicInfo = React.createClass({
@@ -26,6 +27,7 @@ var BasicInfo = React.createClass({
                 || this.refs.birthdaySelector.isChange()
                 || this.refs.emailContainer.isChange()
                 || this.refs.mobileContainer.isChange()
+                || this.refs.areaContainer.isChange()
                 || this.refs.addressContainer.isChange();
     },
 
@@ -40,6 +42,7 @@ var BasicInfo = React.createClass({
         this.refs.birthdaySelector.revert();
         this.refs.emailContainer.revert();
         this.refs.mobileContainer.revert();
+        this.refs.areaContainer.revert();
         this.refs.addressContainer.revert();
     },
 
@@ -88,6 +91,7 @@ var BasicInfo = React.createClass({
             || this.refs.birthdaySelector.validate() != 'success'
             || this.refs.emailContainer.validate() != 'success'
             || this.refs.mobileContainer.validate() != 'success'
+            || this.refs.areaContainer.validate() != 'success'
             || this.refs.addressContainer.validate() != 'success') {
             return;
         }
@@ -111,6 +115,9 @@ var BasicInfo = React.createClass({
         if (this.refs.mobileContainer.isChange()) {
             basicInfo['mobile'] = this.refs.mobileContainer.getValue();
         }
+        if (this.refs.areaContainer.isChange()) {
+            basicInfo['area'] = this.refs.areaContainer.getValue();
+        }
         if (this.refs.addressContainer.isChange()) {
             basicInfo['address'] = this.refs.addressContainer.getValue();
         }
@@ -128,6 +135,7 @@ var BasicInfo = React.createClass({
             self.refs.birthdaySelector.cleanValidate();
             self.refs.emailContainer.cleanValidate();
             self.refs.mobileContainer.cleanValidate();
+            self.refs.areaContainer.cleanValidate();
             self.refs.addressContainer.cleanValidate();
             message.success('更新成功');
         }).fail(function() {
@@ -192,6 +200,11 @@ var BasicInfo = React.createClass({
                             <Mobile 
                                 ref="mobileContainer"
                                 defaultValue={accountInfo.mobile}
+                                onChange={this.onChange}
+                                readOnly={readOnly}/>
+                            <Area 
+                                ref="areaContainer"
+                                defaultValue={accountInfo.area}
                                 onChange={this.onChange}
                                 readOnly={readOnly}/>
                             <Address 

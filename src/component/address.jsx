@@ -22,7 +22,7 @@ var Address = React.createClass({
         return (
             <FormItem
                 className="form-item-container"
-                label="地址：" 
+                label="街道：" 
                 required={this.props.required}
                 validateStatus={this.state.validationState}
                 help={this.state.msg}
@@ -35,7 +35,7 @@ var Address = React.createClass({
                     : <Input
                         value={this.state.value}
                         defaultValue={this.props.defaultValue}
-                        placeholder="请输入您的地址"
+                        placeholder="街道门牌，无需重复地区信息"
                         onChange={this._onChange}/>
                 }
             </FormItem>

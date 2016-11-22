@@ -226,7 +226,7 @@ var OrderOperationHelper = {
     },
 
     onDownloadTravelContractBtnClick: function() {
-        console.log('download contract')
+        window.open(`/order/contract?orderid=${this.props.orderid}`);
     }
 };
 
