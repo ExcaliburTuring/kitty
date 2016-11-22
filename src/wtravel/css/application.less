@@ -64,18 +64,37 @@ body {
     position: fixed;
     left: 0;
     bottom: 10%;
-    border-radius: 0;
-    border-top-right-radius: .5rem;
-    border-bottom-right-radius: .5rem;
-    border:  none;
-    box-shadow: 0.14rem 0.14rem 0.2rem -0.06rem rgba(195, 195, 195, 0.3), 0.14rem -0.14rem 0.2rem -0.06rem rgba(195, 195, 195, 0.3);
-    width: 3rem;
-    height: 1rem;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-left: 0;
+    border-radius: 0 .6rem  .6rem 0;
+    box-shadow: 4px 5px 10px rgba(0, 0, 0, .15);
+    width: 4.2rem;
+    height: 1.2rem;
     line-height: 1rem;
     opacity: 0.95;
     background-color: @white;
     font-size: 0.36rem;
     color: @dark-gray;
+    padding-right: .4rem;
+
+    button {
+        height: 100%;
+        float: right;
+    }
+
+    button:after {
+        border: none;
+    }
+
+    button.mulu {
+        padding-left: 0;
+        padding-right: 0;
+
+        .anticon {
+            padding-left: .3rem;
+            border-left: 1px solid @gray;
+        }
+    }
 }
 
 .am-button-primary:after {
@@ -263,6 +282,7 @@ body {
         overflow:hidden;
     }
 }
+
 .new-order-container {
 
     .new-header {
