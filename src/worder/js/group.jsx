@@ -10,7 +10,7 @@ var GroupInfo = React.createClass({
 
     onImgClick: function(e) {
         e.stopPropagation();
-        var travelRoute = this.props.briefOrder.travelRoute;
+        var travelRoute = this.props.travelRoute;
         window.location.href = `${url.travel}/${travelRoute.routeid}`;
     },
 
@@ -20,24 +20,25 @@ var GroupInfo = React.createClass({
         var selectTraveller = this.props.selectTraveller;
         return (
             <div className="travel-info-container">
-                <div className="travel-img pull-left" style={{backgroundImage: `url(${travelRoute.headImg})`}} 
-                    onClick={this.onImgClick}>
-                    <img className="img-responsive" src={square}/>
-                </div>
-                <div className="travel-title">
-                    <p className="ellipsis">【{travelRoute.name}】{travelRoute.title}</p>
-                </div>
-                <div className="travel-detail clearfix">
-                    <p className="pull-left">
-                        <span className="travel-date">{travelGroup.startDate}</span>
-                        至
-                        <span className="travel-date">{travelGroup.endDate}</span>
-                    </p>
-                    <p className="pull-right">
-                        ¥<span className="travel-price">
-                            {travelGroup.price.replace("￥", "")}
-                        </span>元
-                    </p>
+                <div onClick={this.onImgClick}>
+                    <div className="travel-img pull-left" style={{backgroundImage: `url(${travelRoute.headImg})`}} >
+                        <img className="img-responsive" src={square}/>
+                    </div>
+                    <div className="travel-title">
+                        <p className="two-line fixed">{`${travelRoute.name}|${travelRoute.title}`}</p>
+                    </div>
+                    <div className="travel-detail clearfix">
+                        <p className="pull-left">
+                            <span className="travel-date">{travelGroup.startDate}</span>
+                            至
+                            <span className="travel-date">{travelGroup.endDate}</span>
+                        </p>
+                        <p className="pull-right">
+                            ¥<span className="travel-price">
+                                {travelGroup.price.replace("￥", "")}
+                            </span>元
+                        </p>
+                    </div>
                 </div>
                 {
                     this.props.history
@@ -66,13 +67,14 @@ var OrderHistory = React.createClass({
         var history = this.props.history;
         var self = this, style= {'width': `${100 / history.length}%`};
         var orderHistoryList = history.map(function(item, index) {
-            var change = index < (history.length - 1) && item.state != history[index + 1].state;
+            var i = index + 1;
+            var change = index < (history.length - 1) && item.state != history[i].state;
             return (
                 <div className={`order-history ${self.stateStyle[item.state]} ${change ? 'change': ''}`} 
                     style={style} key={index}>
                     <div className="steps">
                         <div className="steps-left"></div>
-                        <div className="steps-icon"></div>
+                        <div className="steps-icon">{i}</div>
                         <div className="steps-right"></div>
                     </div>
                     <div className="history-desc">

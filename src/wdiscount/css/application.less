@@ -9,7 +9,7 @@
 }
 
 .discountcode-container {
-    border: 1px solid @currency;
+    .border(@currency);
     margin-bottom: .2rem;
     border-radius: .05rem;
     box-shadow: 0 0 3px 0 @currency;
@@ -67,14 +67,14 @@
 .discountcode-rule-container {
     border-left: 1px dashed @currency;
     padding-left: .3rem;
-    font-size: .24rem;
+    font-size: @smaller-font-size;
 
     .discountcode {
-        font-size: .28rem;
+        font-size: @small-font-size;
         font-weight: bolder;
 
         .discountcode-text {
-            font-size: .24rem;
+            font-size: @smaller-font-size;
             font-weight: normal;
         }
     }
