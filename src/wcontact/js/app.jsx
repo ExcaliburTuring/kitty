@@ -189,14 +189,14 @@ var Contact = React.createClass({
                 <div className="contact-body">
                     {
                         isAccount
-                        ? <img className="avatar-img img-responsive img-thumbnail pull-left" src={avatarUrl}/>
+                        ? <img className="img-responsive img-thumbnail pull-left" src={avatarUrl}/>
                         : null
                     }
-                    <p>
+                    <p className="fixed">
                         {contact.name}
                         <span className="pull-right">{contact.mobile}</span>
                     </p>
-                    <p className="contact-id">{contact.id}</p>
+                    <p className="contact-id fixed">{contact.id}</p>
                 </div>
                 <div className="contact-edit-container clearfix">
                     <div className="pull-left">

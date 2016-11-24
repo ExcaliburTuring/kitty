@@ -6,6 +6,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var pxtorem = require('postcss-pxtorem');
 
 var debug = process.env.NODE_ENV !== 'production';
 var config = require('./config');
@@ -112,10 +113,10 @@ var loaders = [{
     if (debug) {
         loaders.push({
             test: /\.css$/,
-            loader: 'style-loader!css-loader'
+            loader: 'style-loader!css-loader!postcss-loader'
         }, {
             test: /\.less$/,
-            loader: 'style-loader!css-loader!less-loader'
+            loader: 'style-loader!css-loader!postcss-loader!less-loader'
         });
     } else {
         loaders.push({
@@ -148,7 +149,15 @@ var config = {
     plugins: plugins,
     module: {
         loaders: loaders
-    }
+    },
+    postcss: function () {
+        return [pxtorem({
+            rootValue: 100,
+            propWhiteList: [],
+            selectorBlackList: [/^\.am-sticky-/],
+            selectorWhiteList: [/^\.am-/],
+        })];
+    },
 };
 if (debug) {
     config['devtool'] = 'eval-source-map';

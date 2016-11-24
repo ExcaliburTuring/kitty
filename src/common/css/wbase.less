@@ -1,6 +1,79 @@
-//这是wap端的配置文件
-
 @import "./ui_setup/colors.less";
+
+/**
+ * 变量定义
+ */
+
+@smallest-font-size: .2rem;
+@smaller-font-size: .24rem;
+@small-font-size: .28rem; 
+@middle-font-size: .32rem;
+@large-font-size: .36rem;
+@larger-font-size: .38rem;
+
+/**
+ * mixins定义
+ */
+
+.squal(@side) {
+    width: @side;
+    height: @side;
+}
+
+.border-top(@color) {
+    border-top: 1px solid @color;
+}
+
+.border-right(@color) {
+    border-right: 1px solid @color;
+}
+
+.border-bottom(@color) {
+    border-bottom: 1px solid @color;
+}
+
+.border-left(@color) {
+    border-left: 1px solid @color;
+}
+
+.border(@color) {
+    border: 1px solid @color;
+}
+
+.text-center() {
+    text-align: center;
+}
+
+.text-left() {
+    text-align: left;
+}
+
+.text-right() {
+    text-align: right;
+}
+
+/**
+ * 样式定义
+ */
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: @gray-bg;
+    font-family: "Microsoft YaHei";
+    font-size: @middle-font-size;
+    margin: 0;
+}
+
+h2,
+p {
+    width: 100%;
+    height: 1px;
+    display: table;
+}
 
 .row {
     width: 100%;
@@ -30,28 +103,20 @@
 
 }
 
-* {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: @gray-bg;
-    font-family: "Microsoft YaHei";
-    font-size: .32rem;
-    margin: 0;
-}
-
-p {
-    margin: 0;
-}
-
 .pull-left {
     float: left !important;
 }
 
 .pull-right {
     float: right !important;
+}
+
+p.fixed,
+p.pull-left,
+p.pull-right {
+    width: auto;
+    height: auto;
+    display: block;
 }
 
 .clearfix:before,
@@ -90,10 +155,28 @@ p {
     transition: all .2s ease-in-out
 }
 
+.ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.two-line {
+    .ellipsis;
+    display: table;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+
+@media only screen and (min-width:480px) {
+    display: -webkit-box;
+}
+
 .no-result {
     padding-left: 0;
     padding-right: 0;
-    margin: 20px auto 0 auto;
+    margin: .2rem auto 0 auto;
     border: 1px solid #e5e9ef;
     background-color: #fff;
     height: 5rem;
@@ -102,7 +185,122 @@ p {
     padding: 0;
 
     p {
-        font-size: .38rem;
+        font-size: @large-font-size;
         color: #777;
     }
+}
+
+/**
+ * 覆盖antd-mobile的样式
+ */
+ 
+.am-list .am-list-header {
+    text-align: center;
+    font-size: @small-font-size;
+}
+
+.am-list-item {
+    height: 1rem;
+}
+
+// .am-list-item img {
+//     width: .36rem;
+//     height: .36rem;
+// }
+
+.am-list-item .am-list-line .am-list-content {
+    color: @dark-black;
+    font-size: @small-font-size;
+}
+
+.am-list-item .am-list-line .am-list-extra {
+    font-size: @small-font-size;
+}
+
+.am-list-item .am-input-label {
+    font-size: @small-font-size;
+
+    input {
+        font-size: @small-font-size;
+    }
+}
+
+.am-list-item .am-input-control input {
+    font-size: @small-font-size;
+
+    &::-webkit-input-placeholder {
+        font-size: @small-font-size;
+    }
+}
+
+.am-list-item.am-checkbox-item .am-list-thumb .am-checkbox-inner {
+    top: .3rem;
+}
+
+.am-tab-bar-bar.am-tab-bar-bottom {
+    height: 1.2rem;
+    padding: 0 0.1rem;
+
+    .am-tab-bar-tab-image {
+        .squal(0.5rem);
+    }
+
+    .am-tab-bar-tab-title {
+        font-size: @small-font-size;
+    }
+}
+
+.am-tabs.am-tabs-top {
+
+    .am-tabs-content {
+        margin-top: .1rem;
+    }
+
+    .am-tabs-tabpane-inactive {
+       height: 0;
+    }
+
+    /**
+     * am的tabs的顶不能一直保留在最顶端，修改一下样式
+     */
+    &.am-tabs-fixed-top .am-tabs-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+}
+
+button.am-button {
+    &:after {
+        border: none;
+    }
+}
+
+.am-button-touchFeedback {
+    background-color: rgba(195, 195, 195, 1)!important;
+}
+
+/**
+ * 修改antd-mobile button的一些样式
+ */
+ button.am-button.am-button-fix {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+}
+
+/**
+ * switch 背景色
+ */
+.am-switch input[type="checkbox"]:checked + .checkbox {
+    background-color: @light-currency;
+}
+
+/**
+ * 列表弹出框
+ */
+.am-action-sheet-button-list-item {
+    color: #333;
 }
