@@ -13,9 +13,9 @@
         display: inline-table;
         width: 100%;
         padding: .15rem .6rem;
-        border-bottom: 3px solid @gray-bg;
+        .border-bottom(@gray-bg);
 
-        .avatar-img {
+        .img-responsive {
             width: 1.2rem;
             line-height: 0;
             margin-right: .2rem;
@@ -31,13 +31,12 @@
         padding: .15rem .6rem;
 
         p {
-            font-size: .3rem;
             color: black;
         }
 
         label {
             font-weight: normal;
-            font-size: .24rem;
+            font-size: @smaller-font-size;
             color: black;
 
             .am-checkbox {
@@ -61,11 +60,7 @@
         }
 
         button {
-            font-size: .24rem;
-
-            &:after {
-                border: none;
-            }
+            font-size: @smaller-font-size;
         }
     }
 }
@@ -77,18 +72,10 @@
     right: 0;
 
     button {
-        font-size: .34rem;
+        font-size: @larger-font-size;
         height: 1rem;
         background-color: @currency;
         border-radius: 0;
         color: white;
-
-        &:after {
-            border: none;
-        }
     }
-}
-
-.am-button-primary.am-button-touchFeedback {
-    background-color: rgba(0,0,0,0.5);
 }

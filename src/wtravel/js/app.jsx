@@ -162,10 +162,18 @@ var App = React.createClass({
                         }>
                     <div className="travel-main-container">
                         <div className="travel-title-container">
-                            <h2>{`${routes.name} | ${routes.title}`}</h2>
-                            <p>{routes.season}
-                                <span className="travel-route">{`${routes.departure} ~ ${routes.distination}`}</span>
-                            </p>
+                            {
+                                routes.name
+                                ? <h2 className="ellipsis">{`${routes.name} | ${routes.title}`}</h2>
+                                : null
+                            }
+                            {
+                                routes.season
+                                ? <p>{routes.season}
+                                    <span className="travel-route">{`${routes.departure} ~ ${routes.distination}`}</span>
+                                </p>
+                                : null
+                            }
                             {
                                 this.state.routes.wapInfo.mapImg
                                 ? <p><img src={this.state.routes.wapInfo.mapImg} /></p>

@@ -3,8 +3,9 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { Tabs, WhiteSpace, WingBlank, Button } from 'antd-mobile';
+import { Tabs, WhiteSpace, WingBlank, Button, Toast, Modal } from 'antd-mobile';
 const TabPane = Tabs.TabPane;
+const alert = Modal.alert;
 
 import { url, orderType, defaultValue, orderStatus, refundStatus, refundType, priceUtil } from 'config';
 import Rabbit from 'rabbit';
@@ -113,12 +114,6 @@ var OrderItem = React.createClass({
         window.location.href = `${url.order}/${orderInfo.orderid}`;
     },
 
-    onImgClick: function(e) {
-        e.stopPropagation();
-        var travelRoute = this.props.briefOrder.travelRoute;
-        window.location.href = `${url.travel}/${travelRoute.routeid}`;
-    },
-
     render: function() {
         var briefOrder = this.props.briefOrder;
         var orderInfo = briefOrder.orderInfo;
@@ -131,12 +126,11 @@ var OrderItem = React.createClass({
                     <p className="pull-right travel-status">{orderStatus.getDesc(orderInfo.status)}</p>
                 </div>
                 <div className="order-item-body clearfix">
-                    <div className="travel-img pull-left" style={{backgroundImage: `url(${travelRoute.headImg})`}} 
-                        onClick={this.onImgClick}>
-                        <img src={square}/>
+                    <div className="travel-img pull-left" style={{backgroundImage: `url(${travelRoute.headImg})`}} >
+                        <img src={square} className="img-responsive"/>
                     </div>
                     <div className="travel-info pull-left">
-                        <p className="travel-name ellipsis">【{travelRoute.name}】{travelRoute.title}</p>
+                        <p className="travel-name ellipsis fixed">{`${travelRoute.name}|${travelRoute.title}`}</p>
                         <TravellerList names={briefOrder.travellerNames} keyPrefix={orderInfo.orderid}/>
                         <p className="travel-time">日期：{travelGroup.startDate} ~ {travelGroup.endDate}</p>
                     </div>
@@ -148,7 +142,6 @@ var OrderItem = React.createClass({
             </div>
         );
     }
-
 });
 
 var TravellerList = React.createClass({
@@ -184,11 +177,6 @@ var OrderPrice = React.createClass({
         return (
             <div className="order-price pull-left">
                 <span className="order-label">价格:</span>
-                {
-                    orderInfo.price == orderInfo.actualPrice
-                    ? null
-                    : <span className="price">{orderInfo.price}</span>
-                }
                 <span className="actual-price">{orderInfo.actualPrice}</span>
             </div>
         );
@@ -196,12 +184,6 @@ var OrderPrice = React.createClass({
 });
 
 var OrderOperation = React.createClass({
-
-    btnText: {
-        1: '支付',
-        2: '取消订单',
-        3: '退款'
-    },
 
     _doCancelOrder: function(orderInfo) {
         var self = this;
@@ -213,6 +195,7 @@ var OrderOperation = React.createClass({
             if (data.status != 0) {
                 Toast.error(defaultValue.cancelOrderMsg);
             } else {
+                Toast.success('取消订单成功');
                 setTimeout('location.reload(true);', 300);
             }
         }).fail(function() {
@@ -221,34 +204,73 @@ var OrderOperation = React.createClass({
     },
 
     _doRefundOrder: function(orderInfo) {
-
+        var self = this;
+        $.ajax({
+            url: url.orderRefund,
+            type: 'post',
+            data: {'orderid': orderInfo.orderid, 'desc': '通过手机端申请退款'}
+        }).done(function(data) {
+            if (data.status != 0) {
+                var errMsg = data.errors[0].message;
+                alert('订单退款失败', (
+                        <div>
+                            <p>由于：<span className="order-refund-failed">{errMsg}</span> 
+                                的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+                                {defaultValue.hotline}
+                            </p>
+                        </div>
+                    ), [{text: '确定', onPress: ()=>{}}]
+                );
+            } else {
+                alert('订单退款失败', 
+                    '您已经成功申请订单退款！如可自动退款，将按原路返回到您的账户中。如无法自动退款，海逍遥工作人员将很快与您取得联系，请您耐心等候！', 
+                    [{text: '确定', onPress: ()=>{setTimeout('location.reload(true);', 300);}}]
+                );
+            }
+        }).fail(function() {
+            alert('订单退款失败', (
+                <div>
+                    <p>由于：<span className="order-refund-failed">系统处理失败</span> 
+                        的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+                        {defaultValue.hotline}
+                    </p>
+                </div>
+                ), [{text: '确定', onPress: ()=>{}}]
+            );
+        });
     },
 
     onClick: function(e) {
-        e.stopPropagation();
         var orderInfo = this.props.orderInfo;
         var status = orderInfo.status;
-        if (status == orderStatus.WAITING) {
-            // XieZhenzong: 微信支付
-        } else if (status == orderStatus.PAYING){
+        if (status == orderStatus.PAYING){
+            e.stopPropagation();
             this._doCancelOrder(orderInfo);
         } else if (status == orderStatus.PAID) {
+            e.stopPropagation();
             this._doRefundOrder(orderInfo);
         }
     },
 
     render: function() {
-        var status = this.props.orderInfo.status
-        if (status != orderStatus.WAITING
-                && status != orderStatus.PAYING
-                && status != orderStatus.PAID) {
-            return null;
-        }
+        var status = this.props.orderInfo.status;
+        var text = status == orderStatus.PAYING ? '取消' 
+                    : status == orderStatus.PAID ? '退款' : '查看'; 
         return (
             <div className="oder-operation pull-right">
-                <Button inline onClick={this.onClick} size="small">
-                    {this.btnText[status]}
-                </Button>
+                {
+                    status == orderStatus.WAITING
+                    ? <form className="pull-right" inline onSubmit={(e)=>{e.stopPropagation()}} action="/order/pay" method="GET">
+                        <input type="hidden" name="orderid" value={this.props.orderInfo.orderid}></input>
+                        <input type="hidden" name="payType" value="1"></input>
+                        <Button className="first-btn" inline htmlType="submit" size="small">
+                            支付
+                        </Button>
+                    </form>
+                    : <Button inline onClick={this.onClick} size="small">
+                        {text}
+                    </Button>
+                }
             </div>
         );
     }

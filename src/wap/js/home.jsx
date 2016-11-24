@@ -67,10 +67,6 @@ var Home = React.createClass({
                 <div className="routes">
                     <div className="head-title">出发趁年轻</div>
                     {routeList}
-                    <hr/>
-                    <div className="more">
-                        <span>查看更多</span>
-                    </div>
                 </div>
             </div>
         );
@@ -170,22 +166,26 @@ var Hot = React.createClass({
         if (!routes.length) {
             return (<div className="special"></div>);
         }
-        var route = routes[0];
+        var routeList = routes.map(function(route, index) {
+            return (
+                <div className="route-container" key={index}>
+                    <a href={`${url.travel}/${route.routeid}`}>
+                        <img className="img-responsive" src={route.headImg} />
+                    </a>
+                    <p className="route-name">{route.name}</p>
+                    <p className="route-title">{route.title}</p>
+                    <p className="route-price">{`${route.minPrice}/人起`}</p>
+                    <hr/>
+                    <div className="more">
+                        <span onClick={()=>{window.location.href=`${url.travel}/${route.routeid}`}}>查看详情</span>
+                    </div>
+                </div>
+            );
+        });
         return (
             <div className="special row">
                 <div className="head-title">独家精品</div>
-                <a href={`${url.travel}/${route.routeid}`}>
-                    <img className="head-img" src={route.headImg} />
-                </a>
-                <p className="route-intro">{route.name}</p>
-                <p className="price">{route.title}</p>
-                <p className="price">
-                    <strong>{route.minPrice}</strong>/人 起
-                </p>
-                <hr/>
-                <div className="more">
-                    <span onClick={()=>{window.location.href=`${url.travel}/${route.routeid}`}}>查看详情</span>
-                </div>
+                {routeList}
             </div>
         );
     }
@@ -205,15 +205,15 @@ var Route = React.createClass({
             <div className="route-container">
                 <div className="img-container">
                     <div className="price">
-                        <div className="up">{route.minPrice}起</div>
+                        <div className="up">{route.minPrice}/人起</div>
                         <div className="down">{route.days}天</div>
                     </div>
                     <a href={`${url.travel}/${route.routeid}`}>
-                        <img className="head-img" src={route.headImg} />
+                        <img className="img-responsive" src={route.headImg} />
                     </a>
                 </div>
                 <p>
-                    <span className="route-intro">{route.name}</span>
+                    <span className="route-name">{route.name}</span>
                     <span className="route-title">{route.title}</span>
                 </p>
             </div>

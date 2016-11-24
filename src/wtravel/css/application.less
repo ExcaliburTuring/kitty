@@ -90,6 +90,11 @@ body {
     h2 {
         font-size: .55rem;
         color: black;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+        line-height: inherit;
     }
 
     .travel-route {
@@ -133,6 +138,7 @@ body {
         float: right;
         padding: 0 .2rem;
         font-size: .36rem;
+        color: #555;
 
         .anticon {
             color: @light-currency;
@@ -156,8 +162,4 @@ body {
     button.home {
         padding-right: 0;
     }
-}
-
-.am-button-touchFeedback {
-    background-color: rgba(195, 195, 195, 1)!important;
 }
