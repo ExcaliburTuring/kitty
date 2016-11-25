@@ -1,0 +1,99 @@
+@import "~wbase.less";
+
+body {
+    background-color: white;
+}
+
+.activities {
+    background-color: @gray-bg;
+    padding-bottom: 1rem;
+
+    .activity-list {
+        padding-top: .5rem;
+
+        a {
+            text-decoration: none;
+        }
+
+        .activity-container {
+            background-color: white;
+            position: relative;
+            height: 3rem;
+            width: 100%;
+            margin-bottom: .6rem;
+            padding: .8rem 0 0 3%;
+
+            .title {
+                width: 50%;
+                line-height: .6rem;
+                font-size: .36rem;
+                color: black;
+            }
+
+            .desc {
+                width: 50%;
+                line-height: .6rem;
+                font-size: .24rem;
+                color: @gray;
+            }
+
+            .activity-img {
+                position: absolute;
+                right: 2%;
+                top: -.3rem;
+                height: 3rem;
+                width: 45%;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+    }
+
+}
+
+.activity {
+    img {
+        width: 100%;
+    }
+
+    .title {
+        font-size: .56rem;
+        line-height: 1.2rem;
+        text-align: center;
+        color: @light-currency;
+    }
+
+    .second-title {
+        display: table;
+        margin: .2rem 0;
+        padding: .1rem .3rem;
+        background-color: @light-currency;
+        font-size: .36rem;
+        line-height: .6rem;
+        text-align: center;
+        color: white;
+    }
+
+    .content {
+        text-indent: 3em;
+        font-size: .28rem;
+        line-height: .6rem;
+    }
+
+    .button-container {
+        margin-top: 1rem;
+        text-align: center;
+
+        .button {
+            color: white;
+            padding: .2rem .3rem;
+            line-height: 1rem;
+            background-color: @light-currency;
+        }
+    }
+}

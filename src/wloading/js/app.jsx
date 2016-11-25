@@ -137,8 +137,8 @@ var App = React.createClass({
                         开启你的旅程
                     </div>
                     <div className="btn-container">
-                        <div className="left">点击查看</div>
-                        <div className="right">前往报名</div>
+                        <div className="look">点击查看</div>
+                        <div className="apply">前往报名</div>
                     </div>
                 </div>
             </div>
