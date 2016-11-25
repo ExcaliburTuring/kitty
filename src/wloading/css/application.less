@@ -29,7 +29,7 @@ body {
         height: 100%;
         left: 0;
         top: 0;
-        padding: 45% 0;
+        padding: 35% 0;
         background-color: rgba(255, 255, 255, 0.4);
         z-index: 1;
 
@@ -45,9 +45,10 @@ body {
             display: table;
             width: 100%;
 
-            .left, .right {
+            .look, .apply {
                 float: left;
-                width: 30%;
+                width: 60%;
+                margin-left: 20%;
                 border-radius: .4rem;
                 border: 0.03rem solid #fdac23;
                 font-size: .34rem;
@@ -55,14 +56,13 @@ body {
                 line-height: .8rem;
             }
 
-            .left {
-                margin-left: 15%;
+            .look {
+                margin-bottom: .4rem;
                 color: white;
                 background-color: @light-currency;
             }
 
-            .right {
-                margin-left: 10%;
+            .apply {
                 color: @light-currency;
                 background-color: white;
             }
