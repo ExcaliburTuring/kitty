@@ -84,6 +84,9 @@ var Contacts = React.createClass({
                 <div className="contact-group emergency">
                     <Row>
                         {contactsList}
+                        <Col md={2}>
+                            <NewBtn onNewBtnClick={this.onNewBtnClick}/>
+                        </Col>
                     </Row>
                 </div>
                 <Title title="紧急联系人" className="info-title" />
@@ -91,9 +94,6 @@ var Contacts = React.createClass({
                 <div className="contact-group emergency">
                     <Row>
                         {ermergencyList}
-                        <Col md={2}>
-                            <NewBtn onNewBtnClick={this.onNewBtnClick}/>
-                        </Col>
                     </Row>
                 </div>
                 <NewModal ref="newModal" title={this.state.title} isAccount={false}

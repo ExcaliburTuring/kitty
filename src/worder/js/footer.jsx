@@ -6,7 +6,7 @@ import { Button, Modal, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const alert = Modal.alert;
 
-import { url, gender, priceUtil, discountCodeStatus, orderStatus, defaultValue, refundType }  from 'config';
+import { url, gender, priceUtil, orderStatus, defaultValue, refundType }  from 'config';
 
 var Footer = React.createClass({
 

@@ -105,7 +105,7 @@ var OrderShow = React.createClass({
                                 <Discount 
                                     orderInfo={orderInfo} 
                                     policy={orderInfoData.policy}
-                                    code={orderInfoData.code}
+                                    coupon={orderInfoData.coupon}
                                     student={orderInfoData.student}/>
                             </div>
                             <div className="step3-section">
@@ -143,16 +143,16 @@ var Discount = React.createClass({
             tableData.push({
                 'key': 'order-step3-discount-1',
                 'discountName': '优惠政策',
-                'discountDesc': this.props.policy.desc,
+                'discountDesc': this.props.policy.name,
                 'discountPrice': this.props.policy.value
             });
         }
-        if (this.props.code != null) {
+        if (this.props.coupon != null) {
             tableData.push( {
                 'key': 'order-step3-discount-2',
-                'discountName': '优惠码优惠',
-                'discountDesc': '优惠码： ' + this.props.code.discountCode,
-                'discountPrice': this.props.code.value
+                'discountName': '优惠券',
+                'discountDesc': '优惠券： ' + this.props.coupon.name,
+                'discountPrice': this.props.coupon.value
             });
         }
         if (this.props.orderInfo.studentCount > 0) {
@@ -160,7 +160,7 @@ var Discount = React.createClass({
                 'key': 'order-step3-discount-3',
                 'discountName': '学生优惠',
                 'discountDesc': `共有${this.props.orderInfo.studentCount}名学生`,
-                'discountPrice': priceUtil.getPriceStr(priceUtil.getPrice(this.props.student.value) * this.props.orderInfo.studentCount)
+                'discountPrice': this.props.student.value
             });
         }
         tableData.push({
@@ -173,17 +173,8 @@ var Discount = React.createClass({
     },
 
     getFooter: function() {
-        var totalDiscount = 0;
-        if (this.props.policy != null) {
-            totalDiscount += priceUtil.getPrice(this.props.policy.value);
-        }
-        if (this.props.code != null) {
-            totalDiscount += priceUtil.getPrice(this.props.code.value);
-        }
-        if (this.props.student != null) {
-            totalDiscount += priceUtil.getPrice(this.props.student.value) * this.props.orderInfo.studentCount;
-        }
-        return `实际共优惠了：${priceUtil.getPriceStr(totalDiscount)}`;
+        var totalDiscount = priceUtil.getOrderDiscountPrice(this.props.policy, this.props.coupon, this.props.student);
+        return `实际共优惠了：${totalDiscount}`;
     },
 
     render: function() {

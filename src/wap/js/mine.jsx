@@ -4,6 +4,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { List, Modal } from 'antd-mobile';
+var alert = Modal.alert;
 
 import { url, orderType, defaultValue } from 'config';
 import Rabbit from 'rabbit';
@@ -16,34 +17,38 @@ import t4 from '../img/t4.png';
 import t5 from '../img/t5.png';
 
 var OrderBrief = Rabbit.create(url.orderBrief);
-var DiscountCode = Rabbit.create(url.discountCode);
+var Coupons = Rabbit.create(url.coupons);
 var AccountContacts = Rabbit.create(url.contacts);
 
 var Mine = React.createClass({
 
     mixins: [
         Reflux.connect(OrderBrief.store, 'data'),
-        Reflux.connect(DiscountCode.store, 'discountCode'),
+        Reflux.connect(Coupons.store, 'coupons'),
         Reflux.connect(AccountContacts.store, 'contacts')
     ],
 
     // callback method
 
-    onDiscountCodesClick: function() {
-        window.location.href = '/account/wdiscount';
+    onCouponsClick: function() {
+        window.location.href = '/account/wcoupon';
     },
 
     onContactsClick: function() {
         window.location.href = '/account/wcontact';
     },
 
-
+    onHotlineClick: function() {
+        alert('客服', `联系海逍遥请拨打：${defaultValue.hotline}`, [
+            { text: '确定', onPress: () => {}},
+        ]);
+    },
 
     // component specs
 
     getInitialState: function() {
         OrderBrief.actions.load();
-        DiscountCode.actions.load();
+        Coupons.actions.load({'usebale': true, 'onlyCount': true});
         AccountContacts.actions.load();
         return {
             'data': {
@@ -53,8 +58,9 @@ var Mine = React.createClass({
                 'historyOrderCount': 0,
                 'allOrderCount': 0
             },
-            'discountCode': {
-                'discountCodes': []
+            'coupons': {
+                'coupons': [],
+                'count': 0
             },
             'contacts': {
                 'contacts': []
@@ -92,8 +98,8 @@ var Mine = React.createClass({
                     <List.Item arrow="horizontal" thumb={t2} onClick={this.props.onAccountEditClick}>
                         个人信息
                     </List.Item>
-                    <List.Item arrow="horizontal" thumb={t3} onClick={this.onDiscountCodesClick}
-                        extra={this.state.discountCode.discountCodes.length}>
+                    <List.Item arrow="horizontal" thumb={t3} onClick={this.onCouponsClick}
+                        extra={this.state.coupons.count}>
                         优惠券
                     </List.Item>
                     <List.Item arrow="horizontal" thumb={t4} onClick={this.onContactsClick}>
@@ -101,18 +107,9 @@ var Mine = React.createClass({
                     </List.Item>
                 </List>
                 <List>
-                    <List.Item thumb={t5} onClick={()=>{this.setState({'hotline': true})}}>
+                    <List.Item thumb={t5} onClick={this.onHotlineClick}>
                         联系客服
                     </List.Item>
-                    <Modal
-                        title="客服电话"
-                        closable
-                        maskClosable
-                        transparent
-                        onClose={()=>{this.setState({'hotline': false})}}
-                        visible={this.state.hotline}>
-                        联系海逍遥请拨打：{defaultValue.hotline}
-                    </Modal>
                 </List>
             </div>
         );

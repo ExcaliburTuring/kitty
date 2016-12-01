@@ -9,38 +9,52 @@ var FormItem = Form.Item;
 var SelectOption = Select.Option;
 
 import Title from 'title';
-import DiscountCodeTable from 'discount_code';
+import CouponTable from 'coupon';
 
 import 'antd/lib/index.css';
 
 var Discount = React.createClass({
 
-    _onDiscountCodeInput: function(e) {
-        if (e.charCode == 13) { // 只处理enter键
-            this.props.onDiscountCodeInput(e);
-        }
-    },
-
     render: function() {
-        var discountData = this.props.discountData;
-        var selectOptionList = null, studentDiscount = null, studentDiscountTip = null;
+        var discountData = this.props.discountData, coupons = this.props.coupons;
+        var policySelectOptions = null, couponSelectOptions = null , studentDiscount = null, studentDiscountTip = null;
         if (discountData.policy.length == 0) {
-            selectOptionList = (<SelectOption value={-1}>无任何可选优惠策略</SelectOption>);
+            policySelectOptions = (<SelectOption value={-1}>无可选优惠策略</SelectOption>);
         } else {
-            selectOptionList = discountData.policy.map(function(policyItem, index) {
+            policySelectOptions = discountData.policy.map(function(policyItem, index) {
                 return (
                     <SelectOption
                         key={`order-discount-${index}`}
                         value={policyItem.discountid}>
-                        {policyItem.desc}
+                        {policyItem.name}
                     </SelectOption>
                 );
             });
-            selectOptionList.unshift(
+            policySelectOptions.unshift(
                 <SelectOption
                     key={`order-discount--1`}
                     value={-1}>
-                    不使用优惠
+                    不使用优惠策略
+                </SelectOption>
+            );
+        }
+        if (coupons.coupons.length == 0) {
+            couponSelectOptions = (<SelectOption value={-1}>无可选优惠券</SelectOption>);
+        } else {
+            couponSelectOptions = coupons.coupons.map(function(coupon, index) {
+                return (
+                    <SelectOption
+                        key={`order-coupon-${index}`}
+                        value={coupon.couponid}>
+                        {coupon.name}
+                    </SelectOption>
+                );
+            });
+            couponSelectOptions.unshift(
+                <SelectOption
+                    key={`order-coupon--1`}
+                    value={-1}>
+                    不使用优惠券
                 </SelectOption>
             );
         }
@@ -74,27 +88,23 @@ var Discount = React.createClass({
                                     value={this.props.policyDiscount.discountid}
                                     disabled={discountData.policy.length == 0} 
                                     onChange={this.props.onPolicyDiscountChange}>
-                                    {selectOptionList}
+                                    {policySelectOptions}
                                 </Select>
                             </FormItem>
                             <FormItem
-                                className="discountcode-input-container"
+                                className="coupon-input-container"
                                 label="优惠码:"
                                 labelCol={{ span: 5 }}
-                                wrapperCol={{ span: 16 }}
-                                validateStatus={this.props.discountCode.validateStatus}
-                                help={this.props.discountCode.msg}>
-                                <Input
-                                    value={this.props.discountCode.discountCode}
-                                    placeholder="请输入优惠码"
-                                    onChange={this.props.onDiscountCodeChange} 
-                                    onKeyPress={this._onDiscountCodeInput} 
-                                    onBlur={this.props.onDiscountCodeInput}/>
-                                <DiscountCodeTable placement="top" needAddBtn
-                                    discountCode={this.props.accountDiscountCodeData}
-                                    onAddBtnClick={this.props.onDiscoutCodeTableAddBtnClick} >
-                                    <Icon type="info-circle-o" className="discountcode-tip"/>
-                                </DiscountCodeTable>
+                                wrapperCol={{ span: 14 }}
+                                validateStatus={this.props.coupon.validateStatus}
+                                help={this.props.coupon.msg}>
+                                <Select
+                                    size="large"
+                                    value={this.props.coupon.couponid}
+                                    disabled={coupons.coupons.length == 0} 
+                                    onChange={this.props.onCouponChange}>
+                                    {couponSelectOptions}
+                                </Select>
                             </FormItem>
                             <FormItem
                                 label="学生证优惠:"
@@ -107,7 +117,7 @@ var Discount = React.createClass({
                     </Col>
                     <Col sm={4} md={4}>
                         <p className="desc-price">-{this.props.policyDiscount.value}</p>
-                        <p className="desc-price">-{this.props.discountCode.value}</p>
+                        <p className="desc-price">-{this.props.coupon.value}</p>
                         <p className="desc-price">-{this.props.studentDiscount.value}</p>
                     </Col>
                     <Col sm={12} md={12}>

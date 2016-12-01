@@ -9,7 +9,9 @@ export var url = {
     'accountInfo': '/account/info',
 	'basicinfo': '/account/basicinfo',
 	'contacts': '/account/contacts',
-    'discountCode': '/account/discountcode',
+    'coupons': '/account/coupons',
+    'discountCodeValidate': '/account/discountcode/validate',
+    'wxShareConfig': '/account/wxshareconfig',
 
     'travel': '/travel',
     'travels': '/routes',
@@ -26,11 +28,11 @@ export var url = {
     'orderRefund': '/order/refund',
     'orderBrief': '/order/brief',
     'orderDiscount': '/order/discount',
-    'orderDiscountCode': '/order/discountcode',
     'orderPayResult': '/order/payresult',
     'orderHistory': '/order/history',
 
-    'wxShareConfig': '/account/wxshareconfig'
+    'activityList': '/activity/list',
+    'activity': '/activity'
 };
 
 export var defaultValue = {
@@ -194,34 +196,26 @@ export var groupStatus = {
 
 }
 
-export var discountCodeStatus = {
+export var couponStatus = {
 
     CREATED: 0,
 
     TIMEOUT: 1,
 
-    VERIFIED: 2,
-
-    OCCUPIED: 3,
-
-    USED: 4,
+    USED: 2,
 
     getDesc: function(status) {
         if(status == this.CREATED){
             return "可用";
         } else if(status == this.TIMEOUT){
             return "已过期";
-        } else if(status == this.VERIFIED) {
-            return "验证通过";
-        } else if(status == this.OCCUPIED) {
-            return "占用中";
         } else if (status == this.USED) {
             return "已使用"
         }
     },
 
     isUsable: function(status) {
-        return status == this.CREATED || status == this.VERIFIED;
+        return status == this.CREATED;
     }
 }
 
@@ -317,10 +311,10 @@ export var priceUtil = {
     /**
      * 获取优惠价格
      */
-    getOrderDiscountPrice: function(policyDiscount, discountCode, studentDiscount) {
+    getOrderDiscountPrice: function(policyDiscount, coupon, studentDiscount) {
         return this.getPriceStr(
                 this.getPrice(policyDiscount ? policyDiscount.value : '￥0') 
-                + this.getPrice(discountCode ? discountCode.value : '￥0')
+                + this.getPrice(coupon ? coupon.value : '￥0')
                 + this.getPrice(studentDiscount ? studentDiscount.value : '￥0'));
     },
 
@@ -335,7 +329,7 @@ export var priceUtil = {
         }
         return this.getOrderDiscountPrice(
                 orderInfoData.policy,
-                orderInfoData.code, 
+                orderInfoData.coupon, 
                 {'value': studentDiscount});
     },
 

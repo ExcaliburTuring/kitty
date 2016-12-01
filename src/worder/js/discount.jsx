@@ -3,70 +3,56 @@
  */
 import React from 'react';
 import Reflux from 'reflux';
-import { List, ActionSheet, Stepper } from 'antd-mobile';
+import { List, Popup, ActionSheet, Stepper, Button } from 'antd-mobile';
 import { createForm } from 'rc-form';
 
-import { priceUtil, discountCodeStatus }  from 'config';
+import { priceUtil, couponStatus }  from 'config';
 
 var Discount = React.createClass({
 
     onPolicyDiscountClick: function() {
         var self = this, policies = this.props.discountData.policy;
-        var BUTTONS = ['不使用优惠政策'];
-        for (var i = 0, n = policies.length; i < n; i++) {
-            BUTTONS.push(policies[i].desc);
-        }
-        BUTTONS.push('取消');
-        ActionSheet.showActionSheetWithOptions({
-            options: BUTTONS,
-            cancelButtonIndex: BUTTONS.length - 1,
-            message: '请选择优惠政策',
-            maskClosable: true
-        }, function(buttonIndex) {
-            if (buttonIndex == BUTTONS.length - 1) {
-                return;
-            }
-            if (buttonIndex == 0) {
+        var onPolicySelect = function(policy) {
+            Popup.hide();
+            if (policy) {
+                self.props.onPolicyDiscountChange(policy);
+            } else {
                 self.props.onPolicyDiscountChange({
                     'discountid': -1,
-                    'desc': '',
+                    'name': '',
                     'value':'￥0'
                 });
-            } else {
-                var policy = policies[buttonIndex - 1]; // 上面BUTTONS的第0位是不使用优惠政策
-                self.props.onPolicyDiscountChange(policy);
             }
-        });
+        }
+        Popup.show(
+            <PolicySelector 
+                policies={policies}
+                onPolicySelect={onPolicySelect}
+                onPolicySelectCancel={Popup.hide}/>, 
+            { animationType: 'slide-up' }
+        );
     },
 
     onDicountCodeClick :function() {
-        var self = this, discountCodes = this.props.accountDiscountCodeData.discountCodes;
-        var BUTTONS = ['不使用优惠码'];
-        for (var i = 0, n = discountCodes.length; i < n; i++) {
-            if (discountCodeStatus.isUsable(discountCodes[i].status)) {
-                BUTTONS.push(discountCodes[i].discountCode);
-            }
-        }
-        BUTTONS.push('取消');
-        ActionSheet.showActionSheetWithOptions({
-            options: BUTTONS,
-            cancelButtonIndex: BUTTONS.length - 1,
-            message: '请选择优惠码',
-            maskClosable: true
-        }, function(buttonIndex) {
-            if (buttonIndex == BUTTONS.length - 1) {
-                return;
-            }
-            if (buttonIndex == 0) {
-                self.props.onDiscountCodeChange({
-                    'discountCode': '',
+        var self = this, coupons = this.props.coupons.coupons;
+        var onCouponSelect = function(coupon) {
+            Popup.hide();
+            if (coupon) {
+                self.props.onCouponChange(coupon);
+            } else {
+                self.props.onCouponChange({
+                    'couponid': '',
                     'value': '￥0',
                 });
-            } else {
-                var discountCode = discountCodes[buttonIndex - 1]; // 上面BUTTONS的第0位是不使用优惠码
-                self.props.onDiscountCodeChange(discountCode);
             }
-        });
+        }
+        Popup.show(
+            <CouponSelector 
+                coupons={coupons}
+                onCouponSelect={onCouponSelect}
+                onCouponSelectCancel={Popup.hide}/>, 
+            { animationType: 'slide-up' }
+        );
     },
 
     onStudentDiscountChange: function(count) {
@@ -80,10 +66,8 @@ var Discount = React.createClass({
     render: function() {
         const { getFieldProps } = this.props.form;
         var policyDiscount = this.props.policyDiscount;
-        var discountCode = this.props.discountCode;
+        var coupon = this.props.coupon;
         var studentDiscount = this.props.studentDiscount;
-        var discountPrice = priceUtil.getOrderDiscountPrice(this.props.policyDiscount, 
-            this.props.discountCode, this.props.studentDiscount);
         return (
             <div className="discount-container">
                 <List>
@@ -93,16 +77,15 @@ var Discount = React.createClass({
                         onClick={this.onPolicyDiscountClick}>
                         {
                             policyDiscount.discountid != -1 
-                                ? policyDiscount.desc : '不使用优惠政策'
+                                ? policyDiscount.name : '不使用优惠政策'
                         }
                     </List.Item>
                     <List.Item
-                        extra={discountCode.value}
+                        extra={coupon.value}
                         arrow="horizontal"
                         onClick={this.onDicountCodeClick}>
                         {
-                            discountCode.discountCode != ''
-                                ? '优惠码' : '不使用优惠码'
+                            coupon.couponid ? coupon.name : '不使用优惠码'
                         }
                     </List.Item>
                     <List.Item
@@ -115,7 +98,7 @@ var Discount = React.createClass({
                     </List.Item>
                     <List.Item
                         extra={
-                            <p className="discount-price">{discountPrice}</p>
+                            <p className="discount-price">{this.props.discountPrice}</p>
                         }>
                         总共优惠
                     </List.Item>
@@ -125,5 +108,79 @@ var Discount = React.createClass({
     }
 });
 Discount = createForm()(Discount);
+
+var PolicySelector = React.createClass({
+
+    render: function() {
+        var self = this;
+        var policyList = this.props.policies.map(function(policy, index) {
+            return (
+                <List.Item key={index}
+                    extra={policy.value}
+                    onClick={()=>{self.props.onPolicySelect(policy)}}>
+                    {policy.name}
+                </List.Item>
+            );
+        });
+        policyList.push(
+            <List.Item key={-1}
+                extra="¥0"
+                onClick={()=>{self.props.onPolicySelect(null)}}>
+                不使用优惠政策
+            </List.Item>
+        )
+        return (
+            <div className="policy-selector-container">
+                <List renderHeader={() => '选择优惠政策'}>
+                    {policyList}
+                </List>
+                <Button className="am-button-fix" 
+                    onClick={this.props.onPolicySelectCancel}>取消</Button>
+            </div>
+        );
+    }
+});
+
+var CouponSelector = React.createClass({
+
+    onDiscountCodeValidateClick: function() {
+        window.location.href = "/account/wcoupon";
+    },
+
+    render: function() {
+        var self = this;
+        var couponList= this.props.coupons.map(function(coupon, index) {
+            return (
+                <List.Item key={index}
+                    extra={coupon.value}
+                    onClick={()=>{self.props.onCouponSelect(coupon)}}>
+                    {coupon.name}
+                </List.Item>
+            );
+        });
+        couponList.push(
+            <List.Item key={-1}
+                extra="¥0"
+                onClick={()=>{self.props.onCouponSelect(null)}}>
+                不使用优惠券
+            </List.Item>
+        )
+        return (
+            <div className="coupon-selector-container">
+                <List renderHeader={() => '选择优惠券'}>
+                    {couponList}
+                    <List.Item arrow="horizontal"
+                        thumb="https://zos.alipayobjects.com/rmsportal/zotStpFiYpNtZNl.png"
+                        onClick={this.onDiscountCodeValidateClick}>
+                        前往兑换优惠券
+                    </List.Item>
+                </List>
+                <Button className="am-button-fix" 
+                    onClick={this.props.onCouponSelectCancel}>取消</Button>
+            </div>
+        );
+    }
+});
+
 
 module.exports = Discount;
