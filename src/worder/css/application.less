@@ -153,10 +153,12 @@
  }
 
 /**
- * 出行人选择器, 紧急联系人选择器
+ * 出行人选择器, 紧急联系人选择器，优惠政策选择器，优惠券选择器
  */
 .travellers-selector-container,
-.emergency-selector-container {
+.emergency-selector-container,
+.policy-selector-container,
+.coupon-selector-container {
     background: @gray-bg;
 
     /**
@@ -180,22 +182,6 @@
     .discount-price {
         color: @currency;
         margin-right: .5rem;
-    }
-
-    .am-stepper {
-        height: .45rem;
-    }
-
-    .am-stepper-handler, 
-    .am-stepper-handler-up-inner, 
-    .am-stepper-handler-down-inner {
-        width: .4rem;
-        height: .4rem;
-        line-height: .4rem;
-    }
-
-    .am-stepper-input-wrap {
-        line-height: .4rem;
     }
 }
 

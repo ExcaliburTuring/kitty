@@ -21,19 +21,16 @@ import 'antd/lib/index.css';
 
 var HotRoute = Rabbit.create(url.wapIndexHot);
 var RouteList = Rabbit.create(url.route); 
-var DiscountCode = Rabbit.create(url.discountCode);
 var Home = React.createClass({
 
     mixins: [
         Reflux.connect(HotRoute.store, 'hot'),
-        Reflux.connect(RouteList.store, 'data'),
-        Reflux.connect(DiscountCode.store, 'discountCode')
+        Reflux.connect(RouteList.store, 'data')
     ],
 
     getInitialState: function() {
         HotRoute.actions.load();
         RouteList.actions.load();
-        DiscountCode.actions.load();
         return {
             'hot': {
                 'routes': []
@@ -41,23 +38,20 @@ var Home = React.createClass({
             'data': {
                 'routes': []
             },
-            'discountCode': {
-                'discountCodes': []
-            },
         };
     },
 
     render: function() {
         var self = this;
         var routeList = this.state.data.routes.map(function(route) {
-            if (self.state.hot.routes.length
-                    && self.state.hot.routes[0].routeid == route.routeid) {
-                return null;
-            } else {
-                return (
-                    <Route route={route} key={route.routeid}/>
-                );
+            for (var i in self.state.hot.routes) {
+                if (self.state.hot.routes[i].routeid == route.routeid) {
+                    return;
+                }
             }
+            return (
+                <Route route={route} key={route.routeid}/>
+            );
         });
         return (
             <div>
@@ -148,9 +142,9 @@ var DaoHang = React.createClass({
                 </div>
                 <div className="Afourth">
                     <div className="mylabel right">
-                        <a href="/account/wdiscount">
+                        <a href="/account/wcoupon">
                             <i className="icon"><img src={f}/></i>
-                            <p>红包</p>
+                            <p>优惠券</p>
                         </a>
                     </div>
                 </div>

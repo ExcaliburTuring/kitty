@@ -1,0 +1,111 @@
+@import "~wbase.less";
+
+.no-result {
+    margin-top: 0;
+}
+
+.discountcode-validate-container {
+    width: 100%;
+    padding: .2rem;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .border-bottom(@gray-line);
+
+    input {
+        width: 70%;
+        height: .6rem;
+        line-height: .6rem;
+        background: @gray-bg;
+        -webkit-appearance: none;
+        border-radius: .3rem;
+        .border(gray);
+        padding-left: .3rem;
+        letter-spacing: .02rem;
+    }
+
+    button {
+        height: .5rem;
+        margin-left: .3rem;
+        background: @light-currency;
+        color: white;
+    }
+}
+
+.coupon-container {
+    border: 1px solid @currency;
+    margin-bottom: .2rem;
+    border-radius: .05rem;
+    box-shadow: 0 0 3px 0 @currency;
+    background-color: white;
+    background-image: url(./wave.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-origin: border-box;
+
+    .coupon-header {
+        height: 10px;
+    }
+
+    .coupon-body {
+        margin: .3rem 0 .3rem .2rem;
+
+        .coupon-price-container {
+            color: @currency;
+            padding: .2rem .2rem .2rem 0;
+            font-size: .4rem;
+            text-align: center;
+            font-weight: bolder;
+
+            p {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            .coupon-price {
+                margin-left: .2rem;
+                font-size: .7rem;
+            }
+        }
+    }
+
+    .coupon-rule-container {
+        .border-left(@currency);
+        padding-left: .3rem;
+        font-size: @smaller-font-size;
+
+        .coupon-rule {
+            padding-left: .35rem;
+            margin-top: .1rem;
+            margin-bottom: .1rem;
+
+            li {
+                margin-bottom: .1rem;
+            }
+        }
+    }
+
+    &.coupon-unusable {
+        color: @light-gray;
+        border-color: @light-gray;
+        box-shadow: 0 0 3px 0 @light-gray;
+        background-image: url(./gray-wave.svg);
+
+        .coupon-price-container {
+            color: @light-gray;
+        }
+
+        .coupon-body {
+            background-image: url(./overdue.svg);
+            background-repeat: no-repeat;
+            background-size: 1.2rem 1.2rem;
+            background-position: 95% top;
+            background-origin: border-box;
+        }
+
+        .coupon-rule-container {
+            border-left-color: @light-gray;
+        }
+    }
+}

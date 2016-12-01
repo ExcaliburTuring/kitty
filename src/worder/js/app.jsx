@@ -38,7 +38,7 @@ var App = React.createClass({
                 'travelRoute': {},
                 'travelGroup': {},
                 'orderTravellers': [],
-                'code': {},
+                'coupon': {},
                 'student': {},
                 'orderRefound': {}
             }

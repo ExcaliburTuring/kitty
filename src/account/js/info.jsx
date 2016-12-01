@@ -6,10 +6,7 @@ import Reflux from 'reflux';
 import { Grid } from 'react-bootstrap';
 import { Alert } from 'antd';
 
-import AccountBasicInfo from 'account_basicinfo';
 import { accountStatus } from 'config';
-import Login from 'login';
-import Title from 'title';
 import BasicInfo from './info/basic';
 import Contacts from './info/contacts';
 
@@ -17,21 +14,14 @@ import 'antd/lib/index.css';
 
 var Info = React.createClass({
 
-    mixins: [Reflux.connect(AccountBasicInfo.store, 'basicInfo')],
-
     getInitialState: function() {
-        AccountBasicInfo.actions.get();
         return {
             'basicInfo': {}
         }
     },
 
     render: function() {
-        var accountInfo = this.state.basicInfo.accountInfo;
-        if (accountInfo == null) {
-            return (<Login/>);
-        }
-
+        var accountInfo = this.props.accountInfo;
         var newAccountTip = null;
         if (accountInfo.status == accountStatus.WAIT_COMPLETE_INFO) {
             newAccountTip = (

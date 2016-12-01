@@ -2,7 +2,8 @@ import React from 'react';
 import Reflux from 'reflux';
 import marked from 'marked';
 import Swiper from 'swiper';
-import { Popup, Button } from 'antd-mobile';
+import { Popup, Button, Modal } from 'antd-mobile';
+var alert = Modal.alert;
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
@@ -42,7 +43,7 @@ var App = React.createClass({
         this.setState({'routes': routes});
         if (routes.status == 0) {
             var route = routes.routes[0];
-            var title = `【${route.name}】${route.title}`
+            var title = `${route.name}|${route.title}`
             var link = `http://www.hxytravel.com${url.travel}/${route.routeid}`;
             var imgUrl = route.headImg;
             var desc = route.desc;
@@ -99,6 +100,24 @@ var App = React.createClass({
         }
     },
 
+    onShowGroupBtnClick: function() {
+        Popup.show(
+            <GroupPopup route={this.state.routes.routes[0]} groups={this.state.groups.groups}/>
+            ,{ animationType: 'slide-up' }
+        );
+    },
+
+    onTravelEnter: function() {
+        var routeid = this.state.routes.routes[0].routeid;
+        window.location.href = `${url.travel}/${routeid}`;
+    },
+
+    onHotlineClick: function() {
+        alert('客服', `联系海逍遥请拨打：${defaultValue.hotline}`, [
+            { text: '确定', onPress: () => {}},
+        ]);
+    },
+
     getInitialState() {
         var routeid = window.location.pathname.split('/')[2];
         RouteFlux.actions.load({'routeids': routeid});
@@ -139,13 +158,6 @@ var App = React.createClass({
         };
     },
 
-    onShowGroupBtnClick: function() {
-        Popup.show(
-            <GroupPopup route={this.state.routes.routes[0]} groups={this.state.groups.groups}/>
-            ,{ animationType: 'slide-up' }
-        );
-    },
-
     render: function() {
         var routes = this.state.routes.routes[0];
         var more = this.state.routes.more;
@@ -179,7 +191,7 @@ var App = React.createClass({
                                 集合地：<span className="travel-departure">{routes.departure}</span>
                             </p>
                         </div>
-                        <div className="travel-enter">
+                        <div className="travel-enter" onClick={this.onTravelEnter}>
                             <p>点此开启</p>
                             <p>{routes.name}</p>
                             <img src={righta}/>
@@ -200,7 +212,7 @@ var App = React.createClass({
                                 <img src={b2}/>
                                 <p>在线客服</p>
                             </div>
-                            <div className="Athird">
+                            <div className="Athird" onClick={this.onHotlineClick}>
                                 <img src={b3}/>
                                 <p>电话咨询</p>
                             </div>
@@ -334,7 +346,7 @@ var GroupPopup = React.createClass({
                             <img className="img-responsive" src={square}/>
                         </div>
                     </div>
-                    <p className="new-title ellipsis">【{route.name}】{route.title}</p>
+                    <p className="new-title twoline">{`${route.name}|${route.title}`}</p>
                 </div>
                 <div className="new-body">
                     <p>选择出行团队</p>

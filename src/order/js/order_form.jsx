@@ -7,7 +7,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { Modal, Input, Alert, message } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
-import { url, priceUtil, discountCodeStatus, accountStatus, defaultValue } from 'config';
+import { url, priceUtil, couponStatus, accountStatus, defaultValue } from 'config';
 import validator from 'validator';
 import Rabbit from 'rabbit';
 import { NewModal } from 'new';
@@ -19,14 +19,14 @@ import GroupBrief from './group';
 
 var AccountContacts = Rabbit.create(url.contacts);
 var OrderDiscount = Rabbit.create(url.orderDiscount);
-var DiscountCode = Rabbit.create(url.discountCode);
+var Coupons = Rabbit.create(url.coupons);
 
 var OrderForm = React.createClass({
 
     mixins: [
         Reflux.connect(AccountContacts.store, 'contactsData'),
         Reflux.listenTo(OrderDiscount.store, 'onPolicyDiscountLoaded'),
-        Reflux.listenTo(DiscountCode.store, 'onAccountDiscountCodeLoaded')
+        Reflux.listenTo(Coupons.store, 'onCouponLoaded')
     ],
 
     // reflux callback
@@ -54,31 +54,32 @@ var OrderForm = React.createClass({
     /**
      * 账户优惠码列表加载完成
      */
-    onAccountDiscountCodeLoaded: function(accountDiscountCodeData) {
-        if (accountDiscountCodeData.status == 0 
-            && accountDiscountCodeData.discountCodes.length > 0) {
-            var maxValueCode = null, maxValue = -1;
-            for (var index in accountDiscountCodeData.discountCodes) {
-                var discountCode = accountDiscountCodeData.discountCodes[index];
-                if (!discountCodeStatus.isUsable(discountCode.status)) {
-                    continue;
-                }
-                var price = priceUtil.getPrice(discountCode.value);
-                if (maxValue < price) {
-                    maxValue = price;
-                    maxValueCode = discountCode;
+    onCouponLoaded: function(coupons) {
+        if (coupons.status == 0 && coupons.coupons.length > 0) {
+            var maxValueCoupon = null, maxValue = -1, result = [], now = new Date().getTime();
+            for (var index in coupons.coupons) {
+                var coupon = coupons.coupons[index];
+                if (couponStatus.isUsable(coupon.status) 
+                    && Date.parse(coupon.startTime) <= now 
+                    && now <= Date.parse(coupon.endTime)) {
+                    result.push(coupon);
+                    var price = priceUtil.getPrice(coupon.value);
+                    if (maxValue < price) {
+                        maxValue = price;
+                        maxValueCoupon = coupon;
+                    }
                 }
             }
-            if (maxValueCode == null) {
-                this.setState({'accountDiscountCodeData': accountDiscountCodeData});
+            if (maxValueCoupon == null) {
+                this.setState({'coupons': result});
             } else {
                 this.setState({
-                    'accountDiscountCodeData': accountDiscountCodeData,
-                    'discountCode': maxValueCode
+                    'coupons': result,
+                    'coupon': maxValueCoupon
                 });
             }
         } else {
-            this.setState({'accountDiscountCodeData': accountDiscountCodeData});
+            this.setState({'coupons': coupons});
         }
     },
 
@@ -117,12 +118,13 @@ var OrderForm = React.createClass({
             'orderid': this.props.orderInfoData.orderInfo.orderid,
             'travellers': selectTravellers,
             'policyDiscountid': discountData.policyDiscountid,
-            'discountCode': discountData.discountCode,
+            'couponid': discountData.couponid,
             'studentDiscountid': discountData.studentDiscountid,
             'studentCount': discountData.studentCount,
             'actualPrice': discountData.actualPrice,
             'emergencyContact': emergency.name,
-            'emergencyMobile': emergency.mobile
+            'emergencyMobile': emergency.mobile,
+            'roommate': false // xiezhenzong: 这里还需要完善
         };
         var result = false;
         $.ajax({
@@ -177,35 +179,19 @@ var OrderForm = React.createClass({
      * 获取优惠
      */
     _getDiscount: function() {
-        var studentDiscount = this.state.discountData.studentDiscount; 
+        var policyDiscount = this.state.policyDiscount;
+        var coupon = this.state.coupon;
+        var studentDiscount = this.state.studentDiscount;
+        var price = priceUtil.getOrderPrice(this.props.orderInfoData.travelGroup, this.state.selectTravellers);
+        var discountPrice = priceUtil.getOrderDiscountPrice(policyDiscount, coupon, studentDiscount);
+        var actualPrice = priceUtil.getOrderActualPrice(price, discountPrice);
         return {
-            'actualPrice': this._getActualPrice(),
-            'policyDiscountid': this.state.policyDiscount.discountid,
-            'discountCode': this.state.discountCode.discountCode,
-            'studentDiscountid': studentDiscount != null ? studentDiscount.discountid : null,
-            'studentCount': this.state.studentDiscount.count
+            'actualPrice': actualPrice,
+            'policyDiscountid': policyDiscount.discountid,
+            'couponid': coupon.couponid,
+            'studentDiscountid': this.state.discountData.studentDiscount.discountid,
+            'studentCount': studentDiscount.count
         };
-    },
-
-    /**
-     * 获取原始价格
-     */
-    _getPrice: function() {
-        var travelGroup = this.props.orderInfoData.travelGroup;
-        var count = this.state.selectTravellers.length; 
-        return priceUtil.getPrice(travelGroup.price) * count;
-    },
-
-    /**
-     * 获取优惠后的实际价格
-     */
-    _getActualPrice: function() {
-        return priceUtil.getPriceStr(
-                    this._getPrice()
-                    - priceUtil.getPrice(this.state.policyDiscount.value)
-                    - priceUtil.getPrice(this.state.discountCode.value)
-                    - priceUtil.getPrice(this.state.studentDiscount.value)
-                );
     },
 
     /**
@@ -421,8 +407,8 @@ var OrderForm = React.createClass({
     onPolicyDiscountChange: function(eventKey) {
         if (eventKey !== this.state.policyDiscount.discountid) { // 和当前的不一样
             var policy = null;
-            if (eventKey === -1) {
-                policy = {value: '￥0'};
+            if (eventKey === -1 || this.state.discountData.policy.length == 0) {
+                policy = {'value': '￥0'};
             } else {
                 policy = this._findPolicyDiscount(eventKey, this.state.discountData.policy);
             }
@@ -436,83 +422,27 @@ var OrderForm = React.createClass({
     },
 
     /**
-     * 优惠码表格里的使用按钮被点击
-     */
-    onDiscoutCodeTableAddBtnClick: function(code) {
-        this.setState({
-            'discountCode': {
-                'discountCode': code.discountCode,
-                'value': code.value
-            }
-        });
-    },
-
-    /**
      * 优惠码输入框正在输入
      */
-    onDiscountCodeChange: function(e) {
-        var discountCode = e.target.value;
-        if (discountCode == this.state.discountCode.code) {
-            return;
-        }
-        this.setState({
-            'discountCode': {
-                'discountCode': discountCode,
-                'value': '￥0' // 输入的时候，设置为0
+    onCouponChange: function(eventKey) {
+        if (eventKey !== this.state.coupon.couponid) {
+            var coupon = {'value': '¥0', 'name': ''};
+            if (eventKey !== -1 || this.state.coupons.count != 0) {
+                for(var index in this.state.coupons.coupons) {
+                    var c = this.state.coupons.coupons[index];
+                    if (eventKey === c.couponid) {
+                        coupon = c;
+                    }
+                }
             }
-        });
-    },
-
-     /**
-     * 优惠码输入事件
-     */
-    onDiscountCodeInput: function(e) {
-        var discountCode = e.target.value;
-        if (discountCode == '') {
-            return;
-        }
-        var self = this;
-        $.get(url.orderDiscountCode, {'code': discountCode})
-        .done(function(data) {
-            if (data.status == 0 ){
-                self.setState({
-                    'discountCode': {
-                        'discountCode': discountCode,
-                        'value': data.value,
-                        'validateStatus': 'success',
-                        'msg': '此优惠码可以使用'
-                    }
-                });
-            } else if (data.status == 1100) {
-                self.setState({
-                    'discountCode': {
-                        'discountCode': '',
-                        'value': '￥0',
-                        'validateStatus': 'error',
-                        'msg': data.errors[0].message
-                    }
-                });
-            } else {
-                self.setState({
-                    'discountCode': {
-                        'discountCode': '',
-                        'value': '￥0',
-                        'validateStatus': 'error',
-                        'msg': `优惠码校验失败，请联系${defaultValue.hotline}`
-                    }
-                });
-            }
-        })
-        .fail(function() {
-            self.setState({
-                'discountCode': {
-                    'discountCode': '',
-                    'value': '￥0',
-                    'validateStatus': 'error',
-                    'msg': `优惠码校验失败，请联系${defaultValue.hotline}`
+            this.setState({
+                'coupon': {
+                    'couponid': eventKey,
+                    'name': coupon.name,
+                    'value': coupon.value
                 }
             });
-        });
+        }
     },
 
     /**
@@ -605,7 +535,7 @@ var OrderForm = React.createClass({
             'groupid': this.props.orderInfoData.orderInfo.groupid,
             'count': 0
         });
-        DiscountCode.actions.load();
+        Coupons.actions.load({'usable': true});
         return {
             // 请求得到
             'contactsData': {
@@ -616,8 +546,8 @@ var OrderForm = React.createClass({
                 'policy': [],
                 'studentDiscount': {}
             },
-            'accountDiscountCodeData': {
-                'discountCodes': []
+            'coupons': {
+                'coupons': []
             },
 
             // 临时变量
@@ -630,11 +560,10 @@ var OrderForm = React.createClass({
                 'discountid': -1,
                 'value':'￥0'
             },
-            'discountCode': {
-                'discountCode': '',
+            'coupon': {
+                'couponid': -1,
                 'value': '￥0',
-                'validateStatus': null,
-                'msg': ''
+                'name': ''
             },
             'studentDiscount': {
                 'count': 0,
@@ -672,8 +601,10 @@ var OrderForm = React.createClass({
         //     selectTravellers.push(this._createAccountTraveller());
         // }
         var count = selectTravellers.length;
-        var price = priceUtil.getPriceStr(this._getPrice());
-        var actualPrice = this._getActualPrice();
+        var price = priceUtil.getOrderPrice(orderInfoData.travelGroup, {length: count});
+        var discountPrice = priceUtil.getOrderDiscountPrice(this.state.policyDiscount, 
+            this.state.coupon, this.state.studentDiscount);
+        var actualPrice = priceUtil.getOrderActualPrice(price, discountPrice);
         return (
             <Grid>
                 <Row>
@@ -703,17 +634,15 @@ var OrderForm = React.createClass({
                                 onNewEmergencyBtnClick={this.onNewEmergencyBtnClick}/>
                             <Discount
                                 discountData={this.state.discountData}
-                                accountDiscountCodeData={this.state.accountDiscountCodeData}
+                                coupons={this.state.coupons}
                                 policyDiscount={this.state.policyDiscount}
-                                discountCode={this.state.discountCode}
+                                coupon={this.state.coupon}
                                 studentDiscount={this.state.studentDiscount}
                                 count={count}
                                 price={price} 
                                 actualPrice={actualPrice}
                                 onPolicyDiscountChange={this.onPolicyDiscountChange}
-                                onDiscountCodeChange={this.onDiscountCodeChange}
-                                onDiscountCodeInput={this.onDiscountCodeInput}
-                                onDiscoutCodeTableAddBtnClick={this.onDiscoutCodeTableAddBtnClick}
+                                onCouponChange={this.onCouponChange}
                                 onStudentDiscountChange={this.onStudentDiscountChange}/>
                             <Agreement orderid={orderInfo.orderid} isAgreed={this.state.isAgreed}
                                 onAgreementCheck={this.onAgreementCheck} selectTravellers={selectTravellers}

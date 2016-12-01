@@ -121,10 +121,10 @@ var loaders = [{
     } else {
         loaders.push({
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+            loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
         }, {
             test: /\.less$/,
-            loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+            loader: ExtractTextPlugin.extract('style-loader', 'css-loader!!postcss-loader!less-loader')
         });
     }
 }());

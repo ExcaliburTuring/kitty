@@ -103,7 +103,7 @@ var OrderShow = React.createClass({
                         {
                             orderInfoData.policy
                             ? <List.Item extra={orderInfoData.policy.value}>
-                                {orderInfoData.policy.desc}
+                                {orderInfoData.policy.name}
                             </List.Item>
                             : null
                         }
@@ -115,14 +115,14 @@ var OrderShow = React.createClass({
                                         * orderInfoData.orderInfo.studentCount
                                 )
                             }>
-                                {orderInfoData.student.desc}
+                                {orderInfoData.student.name}
                             </List.Item>
                             : null
                         }
                         {
-                            orderInfoData.code
-                            ? <List.Item extra={orderInfoData.code.value}>
-                                优惠码
+                            orderInfoData.coupon
+                            ? <List.Item extra={orderInfoData.coupon.value}>
+                                {orderInfoData.coupon.name}
                             </List.Item>
                             : null
                         }
