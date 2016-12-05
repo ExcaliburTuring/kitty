@@ -27,7 +27,8 @@ var App = React.createClass({
         $.get(url.discountCodeValidate, {'code': discountCode})
         .done(function(data) {
             if (data.status == 0 ){
-                Toast.success('此优惠码兑换成成功', 1);
+                self.refs.discountCodeInput.value = '';
+                Toast.success('优惠码兑换成成功', 1);
                 Coupons.actions.load();
             } else if (data.status == 1100) {
                 Toast.fail(data.errors[0].message, 1);

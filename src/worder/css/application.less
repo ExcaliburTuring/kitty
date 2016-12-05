@@ -38,7 +38,7 @@
  */
 .travel-info-container {
     position: relative;
-    margin-bottom: .3rem;
+    margin-bottom: .2rem;
     border-bottom: 2px dashed @currency;
     padding: .3rem;
     background: white;
@@ -97,6 +97,10 @@
             .traveller-addition-info {
                 margin-top: .15rem;
             }
+
+            a {
+                color: #666;
+            }
         }
 
         &.readOnly .traveller-info {
@@ -128,6 +132,7 @@
         i {
             font-size: @large-font-size;
             color: @light-currency;
+            vertical-align: middle;
         }
 
         span {
@@ -301,6 +306,7 @@
                     .border(@light-gray);
                     .text-center;
                     font-size: @smallest-font-size;
+                    line-height: .3rem;
                     position: absolute;
                     top: .25rem;
                     box-shadow: 0 0 3px 0 @light-gray;

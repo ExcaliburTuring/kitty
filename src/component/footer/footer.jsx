@@ -3,8 +3,8 @@
  */
 import React from 'react';
 
-import hxyImg from './haixiaoyao.png';
-import xyjImg from './xiaoyaojun.png'; 
+import hxyImg from 'haixiaoyao.png';
+import xyjImg from 'xiaoyaojun.png'; 
 import hxyTravel from './hxytravel.png'; 
 import { Col,Image } from 'react-bootstrap';
 

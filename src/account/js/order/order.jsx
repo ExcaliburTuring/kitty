@@ -25,7 +25,7 @@ var OrderItem = React.createClass({
             || orderInfo.status == orderStatus.PAYING || orderInfo.status == orderStatus.PAID];
         return (
             <div className={`order-brief-container ${className}`}>
-                <Title className="order-brief-title" title={`订单号：${orderInfo.orderid}`}
+                <Title className="order-brief-title" title={`订单编号：${orderInfo.orderNo}`}
                     href={`/order/${orderInfo.orderid}`}>
                     <p className="order-status-tip">
                         订单状态:

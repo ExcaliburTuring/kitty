@@ -2,11 +2,12 @@ import React from 'react';
 import Reflux from 'reflux';
 import marked from 'marked';
 import Swiper from 'swiper';
-import { Popup, Button, Modal } from 'antd-mobile';
+import { Popup, Button, Modal, Toast } from 'antd-mobile';
 var alert = Modal.alert;
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
+import xyjImg from 'xiaoyaojun.png'; 
 
 import RouteInfo from './RouteInfo';
 
@@ -43,7 +44,7 @@ var App = React.createClass({
         this.setState({'routes': routes});
         if (routes.status == 0) {
             var route = routes.routes[0];
-            var title = `${route.name}|${route.title}`
+            var title = `【${route.name}】${route.title}`
             var link = `http://www.hxytravel.com${url.travel}/${route.routeid}`;
             var imgUrl = route.headImg;
             var desc = route.desc;
@@ -153,8 +154,8 @@ var App = React.createClass({
                 'status': 1,
                 'groups': []
             },
-            'open': false,
-            'toggleHidden': false
+            'onlineChatModalVisible': false,
+            'shareTipShow': ''
         };
     },
 
@@ -181,7 +182,7 @@ var App = React.createClass({
                                     <span className="youhui">优惠</span>
                                     优惠：2016年优惠新政策
                                 </p>
-                                <p>
+                                <p onClick={()=>{window.location.href="/activity/1"}}>
                                     <span className="lijian">立减</span>
                                     完善个人资料立减20元
                                 </p>
@@ -202,25 +203,39 @@ var App = React.createClass({
                 <div className="bottom-container">
                     <div className="row">
                         <div className="Asecond">
-                            <div className="Athird">
+                            <div className="Athird" onClick={()=>{this.setState({'shareTipShow': 'show'})}}>
                                 <div className="right-border" />
                                 <img src={b1}/>
                                 <p>分享</p>
                             </div>
-                            <div className="Athird">
+                            <div className="Athird" onClick={()=>{this.setState({'onlineChatModalVisible': true})}}>
                                 <div className="right-border" />
                                 <img src={b2}/>
                                 <p>在线客服</p>
                             </div>
-                            <div className="Athird" onClick={this.onHotlineClick}>
+                            <Modal
+                                onClose={()=>{this.setState({'onlineChatModalVisible': false})}}
+                                transparent
+                                visible={this.state.onlineChatModalVisible}>
+                                <div className="modal-demo-content">
+                                    <div className="online-chat-image">
+                                        <img src={xyjImg}></img>
+                                    </div>
+                                    <div className="online-chat-tip">长按上方二维码</div>
+                                </div>
+                            </Modal>
+                            <div className="Athird">
                                 <img src={b3}/>
-                                <p>电话咨询</p>
+                                <a href={`tel:${defaultValue.hotline}`}>电话咨询</a>
                             </div>
                         </div>
                         <div className="Asecond">
                             <div className="apply" onClick={this.onShowGroupBtnClick}>我要报名</div>
                         </div>
                     </div>
+                </div>
+                <div className={`share-tip-container ${this.state.shareTipShow}`}>
+                    <Button inline onClick={()=>{this.setState({'shareTipShow': ''})}}>我知道了</Button>
                 </div>
             </div>
         );
@@ -346,7 +361,7 @@ var GroupPopup = React.createClass({
                             <img className="img-responsive" src={square}/>
                         </div>
                     </div>
-                    <p className="new-title twoline">{`${route.name}|${route.title}`}</p>
+                    <p className="new-title two-line fixed">{`【${route.name}】${route.title}`}</p>
                 </div>
                 <div className="new-body">
                     <p>选择出行团队</p>

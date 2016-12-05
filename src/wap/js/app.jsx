@@ -5,13 +5,13 @@ import { TabBar } from 'antd-mobile';
 import { orderType } from 'config';
 import AccountBasicInfo from 'account_basicinfo';
 import WContact from 'wcontact';
+import home1 from 'home1.svg';
+import home2 from 'home2.svg';
 
 import Home from './home';
 import Mine from './mine';
 import Order from './order';
 
-import home1 from '../img/home1.svg';
-import home2 from '../img/home2.svg';
 import user1 from '../img/user1.svg';
 import user2 from '../img/user2.svg';
 import compass1 from '../img/compass1.svg';

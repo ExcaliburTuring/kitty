@@ -122,7 +122,7 @@ var OrderItem = React.createClass({
         return (
             <div className="order-item-container" onClick={this.onClick}>
                 <div className="order-item-title clearfix">
-                    <p className="pull-left">订单号：{orderInfo.orderid}</p>
+                    <p className="pull-left">订单编号：{orderInfo.orderNo}</p>
                     <p className="pull-right travel-status">{orderStatus.getDesc(orderInfo.status)}</p>
                 </div>
                 <div className="order-item-body clearfix">
@@ -130,7 +130,7 @@ var OrderItem = React.createClass({
                         <img src={square} className="img-responsive"/>
                     </div>
                     <div className="travel-info pull-left">
-                        <p className="travel-name ellipsis fixed">{`${travelRoute.name}|${travelRoute.title}`}</p>
+                        <p className="travel-name ellipsis fixed">{`【${travelRoute.name}】${travelRoute.title}`}</p>
                         <TravellerList names={briefOrder.travellerNames} keyPrefix={orderInfo.orderid}/>
                         <p className="travel-time">日期：{travelGroup.startDate} ~ {travelGroup.endDate}</p>
                     </div>

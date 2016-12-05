@@ -11,7 +11,6 @@ import { url, gender, priceUtil, orderStatus, defaultValue, refundType }  from '
 var Footer = React.createClass({
 
     _doCancelOrder: function() {
-        var self = this;
         $.ajax({
             url: url.orderOrder,
             type: 'post',
@@ -29,7 +28,6 @@ var Footer = React.createClass({
     },
 
     _doRefundOrder: function() {
-        var self = this;
         $.ajax({
             url: url.orderRefund,
             type: 'post',
@@ -234,14 +232,14 @@ var Footer = React.createClass({
         } else if (status == orderStatus.PAYING) {
             operationGroup = (
                 <div className="order-operation clearfix">
-                    <form inline onSubmit={()=>{}} action="/order/pay" method="GET">
-                        <input type="hidden" name="orderid" value={orderid}></input>
+                    <form className="pull-right" inline onSubmit={()=>{}} action="/order/pay" method="GET">
+                        <input type="hidden" name="orderid" value={this.props.orderid}></input>
                         <input type="hidden" name="payType" value="1"></input>
-                        <Button inline htmlType="submit">
+                        <Button className="first-btn" inline htmlType="submit">
                             继续支付
                         </Button>
                     </form>
-                    <Button inline onClick={this.onCancelOrderBtnClick}>
+                    <Button className="second-btn pull-right" inline onClick={this.onCancelOrderBtnClick}>
                         取消订单
                     </Button>
                 </div>
