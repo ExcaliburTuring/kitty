@@ -197,6 +197,17 @@ p.pull-right {
     padding: .25rem .3rem;
 }
 
+/**
+ * 用after的border-bottom在订单页会莫名其妙的看不到
+ */
+.am-list .am-list-body {
+    border-bottom: 1px solid #ddd;
+
+    &:after {
+        border-bottom: none;
+    }
+}
+
 .am-list-item {
     height: 1rem;
 }
@@ -279,9 +290,7 @@ p.pull-right {
 }
 
 button.am-button {
-    &:after {
-        border: none;
-    }
+    border: none;
 }
 
 .am-button-touchFeedback {

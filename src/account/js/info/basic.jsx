@@ -159,10 +159,9 @@ var BasicInfo = React.createClass({
         return (
             <div className="basic-container info-section">
                 <Title title="基本信息" className="info-title">
-                    <button className="edit-btn" onClick={() => {this.setState({'readOnly': false})}}>
-                        <Icon type="edit"/>
-                        <span> 编辑</span>
-                    </button>
+                    <Button className="edit-btn" onClick={() => {this.setState({'readOnly': false})}}>
+                        <Icon type="edit"/>编辑
+                    </Button>
                 </Title>
                 <Row className="basic-info-container">
                     <Col xs={12} md={6}>
@@ -221,14 +220,14 @@ var BasicInfo = React.createClass({
                         readOnly
                         ? null
                         : <div>
-                            <button className="confirm-btn pull-left" onClick={this.onSubmitBtnClick}>
+                            <Button className="confirm-btn pull-left" onClick={this.onSubmitBtnClick}>
                                 <Icon type="check"/>
                                 <span> 确定</span>
-                            </button>
-                            <button className="cancel-btn pull-right" onClick={this.onCancelBtnClick}>
+                            </Button>
+                            <Button className="cancel-btn pull-right" onClick={this.onCancelBtnClick}>
                                 <Icon type="cross"/>
                                 <span> {this.state.isChange ? '撤销' : '取消'}</span>
-                            </button>
+                            </Button>
                         </div>
                     }
                     </Col>
