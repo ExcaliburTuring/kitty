@@ -169,9 +169,7 @@ var OrderPrice = React.createClass({
 
     render: function() {
         var orderInfo = this.props.orderInfo;
-        if (orderInfo.status == orderStatus.REFUNDING 
-            || orderInfo.status == orderStatus.REFUNDED
-            || orderInfo.actualPrice == '￥0') {
+        if (orderInfo.actualPrice == '￥0') {
             return null;
         }
         return (
@@ -186,7 +184,6 @@ var OrderPrice = React.createClass({
 var OrderOperation = React.createClass({
 
     _doCancelOrder: function(orderInfo) {
-        var self = this;
         $.ajax({
             url: url.orderOrder,
             type: 'post',
@@ -204,7 +201,6 @@ var OrderOperation = React.createClass({
     },
 
     _doRefundOrder: function(orderInfo) {
-        var self = this;
         $.ajax({
             url: url.orderRefund,
             type: 'post',
@@ -245,10 +241,62 @@ var OrderOperation = React.createClass({
         var status = orderInfo.status;
         if (status == orderStatus.PAYING){
             e.stopPropagation();
-            this._doCancelOrder(orderInfo);
+            var self = this;
+            alert('取消订单？', `如果您对路线有疑问或建议或想修改订单，欢迎直接致电海逍遥:${defaultValue.hotline}`, [
+                {
+                    text: '再考虑下',
+                    onPress: () => {}
+                },
+                { 
+                    text: '确定取消',
+                    onPress: function() {
+                        self._doCancelOrder(orderInfo);
+                    }
+                },
+            ]);
         } else if (status == orderStatus.PAID) {
             e.stopPropagation();
-            this._doRefundOrder(orderInfo);
+            var self = this, refundTypeInfo = null;
+            $.ajax({
+                'url': url.orderRefundType + `?orderid=${orderInfo.orderid}`,
+                'type': 'GET',
+                'async': false,
+                'success': function(data) {
+                    if (data.status != 0) {
+                        Toast.fail(`获取退款策略失败，您可以联系${defaultValue.hotline}`, 1);
+                    } else {
+                        refundTypeInfo = data;
+                    }
+                },
+                'error': function() {
+                    Toast.fail(`获取退款策略失败，您可以联系${defaultValue.hotline}`, 1);
+                }
+            });
+
+            if (refundTypeInfo == null) {
+                return;
+            }
+            alert(
+                '订单退款',
+                (
+                    <div>
+                        <p>{refundType.getDesc(refundTypeInfo.type)}</p>
+                        <p>实际支付：<span className="refund-price-text">{refundTypeInfo.actualPrice}</span></p>
+                        <p>退款金额：<span className="refund-price-text">{refundTypeInfo.refundPrice}</span></p>
+                        <p>扣减金额：<span className="refund-price-text">{refundTypeInfo.deductPrice}</span></p>
+                        <p>欢迎直接致电海逍遥:{defaultValue.hotline}</p>
+                    </div>
+                ),
+                [{
+                    text: '再考虑下',
+                    onPress: () => {}
+                }, { 
+                    text: '确定退款',
+                    onPress: function() {
+                        self._doRefundOrder(orderInfo);
+                    }
+                }]
+            );
         }
     },
 

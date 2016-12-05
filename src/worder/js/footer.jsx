@@ -149,7 +149,7 @@ var Footer = React.createClass({
                 text: '再考虑下',
                 onPress: () => {}
             }, { 
-                text: '确定取消',
+                text: '确定退款',
                 onPress: function() {
                     self._doRefundOrder();
                 }
