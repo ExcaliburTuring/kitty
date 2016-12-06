@@ -6,6 +6,7 @@ import { Drawer, List, Button, Grid, Toast, Popup, Icon } from 'antd-mobile';
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
+import WFooter from 'wfooter';
 
 import f1 from '../img/f1.png';
 import img from '../img/img.jpg';
@@ -37,11 +38,11 @@ var App = React.createClass({
         this.setState({'routes': routes});
         if (routes.status == 0) {
             var route = routes.routes[0];
-            var title = `${route.name}|${route.title}`
+            var title = `【${route.name}】${route.title}`
             var link = `http://www.hxytravel.com${url.travel}/${route.routeid}`;
             var imgUrl = route.headImg;
             var desc = route.desc;
-            $.get(url.wxShareConfig, {'routeid': route.routeid, 'routeUrl': location.href.split('#')[0]})
+            $.get(url.wxShareConfig, {'url': location.href.split('#')[0]})
             .done(function(data) {
                 if (data.status != 0 ){
                     return;
@@ -164,7 +165,7 @@ var App = React.createClass({
                         <div className="travel-title-container">
                             {
                                 routes.name
-                                ? <h2 className="two-line">{`${routes.name} | ${routes.title}`}</h2>
+                                ? <h2 className="two-line">{`【${routes.name}】${routes.title}`}</h2>
                                 : null
                             }
                             {
@@ -183,6 +184,7 @@ var App = React.createClass({
                         <div className="travel-dairy-container"
                             dangerouslySetInnerHTML={{__html: marked(mdtext)}}>
                         </div>
+                        <WFooter />
                         <div className="days-list-toggle">
                             <Button inline onClick={this.onHomeClick} className="home">
                                 <Icon type="home" />主页

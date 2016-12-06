@@ -73,7 +73,7 @@ var Contacts = React.createClass({
         if (ermergencyList.length == 0) {
             ermergencyList = (
                 <div>
-                    <p>通过下方加号添加常用出行人并同时设置为紧急联系人来添加</p>
+                    <p>通过上方加号添加常用出行人并同时设置为紧急联系人来添加</p>
                 </div>
             );
         }

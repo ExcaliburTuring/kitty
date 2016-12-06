@@ -146,7 +146,7 @@ var Travellers = React.createClass({
                 </div>
                 <div className="order-roommate-show">
                     {roommateList}
-                    如果不输入睡友姓名，海逍遥将会自动为您选择同性拼房<br/><br/>
+                    如果不输入睡友姓名，海逍遥将会为您选择同性拼房<br/><br/>
                 </div>
                 <div className="order-emergency-contianer">
                     <span >紧急联系人:</span>

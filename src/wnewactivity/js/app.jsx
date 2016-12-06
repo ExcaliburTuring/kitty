@@ -55,7 +55,6 @@ var App = React.createClass({
         var self = this;
         this.setState({'contact': null});
         alert('更新成功', '新人优惠券已经升级成功了', [
-            { text: '查看', onPress: () => window.location.href = '/account/wcoupon' },
             { text: '继续', onPress: () => window.location.href = self.state.origin },
         ]);
     },

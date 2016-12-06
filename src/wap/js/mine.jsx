@@ -15,6 +15,7 @@ import t2 from '../img/t2.png';
 import t3 from '../img/t3.png';
 import t4 from '../img/t4.png';
 import t5 from '../img/t5.png';
+import f from '../img/F.png';
 
 var OrderBrief = Rabbit.create(url.orderBrief);
 var Coupons = Rabbit.create(url.coupons);
@@ -98,7 +99,7 @@ var Mine = React.createClass({
                     <List.Item arrow="horizontal" thumb={t2} onClick={this.props.onAccountEditClick}>
                         个人信息
                     </List.Item>
-                    <List.Item arrow="horizontal" thumb={t3} onClick={this.onCouponsClick}
+                    <List.Item arrow="horizontal" thumb={f} onClick={this.onCouponsClick}
                         extra={this.state.coupons.count}>
                         优惠券
                     </List.Item>
@@ -107,7 +108,12 @@ var Mine = React.createClass({
                     </List.Item>
                 </List>
                 <List>
-                    <List.Item thumb={t5} onClick={this.onHotlineClick}>
+                    <List.Item thumb={t5}
+                        extra={
+                            <a href={`tel:${defaultValue.hotline}`}>
+                                {defaultValue.hotline}
+                            </a>
+                        }>
                         联系客服
                     </List.Item>
                 </List>

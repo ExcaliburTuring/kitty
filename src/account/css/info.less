@@ -54,9 +54,7 @@
                 line-height: 32px;
             }
         }
-
 	}
-
 }
 
 .basic-container {
@@ -80,24 +78,38 @@
         }
     }
 
-    .edit-btn{
+    .edit-btn {
         font-size: 14px;
         border: 2px solid @currency;
         border-radius: 20px;
+
+        &.ant-btn-clicked:before {
+            border-color: @currency;
+            border-width: 4px;
+        }
     }
 
     .confirm-btn{
         border: 2px solid @currency;
         border-radius: 5px;
         color: @currency;
+
+        &.ant-btn-clicked:before {
+            border-color: @currency;
+            border-width: 4px;
+        }
     }
 
     .cancel-btn{
         border: 2px solid @gray;
         border-radius: 5px;
         color: @gray;
-    }
 
+        &.ant-btn-clicked:before {
+            border-color: @gray;
+            border-width: 4px;
+        }
+    }
 }
 
 .contacts-container {
