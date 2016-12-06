@@ -27,7 +27,8 @@ var App = React.createClass({
         $.get(url.discountCodeValidate, {'code': discountCode})
         .done(function(data) {
             if (data.status == 0 ){
-                Toast.success('此优惠码兑换成成功', 1);
+                self.refs.discountCodeInput.value = '';
+                Toast.success('优惠码兑换成成功', 1);
                 Coupons.actions.load();
             } else if (data.status == 1100) {
                 Toast.fail(data.errors[0].message, 1);
@@ -61,9 +62,9 @@ var App = React.createClass({
         for(var index in this.state.coupons.coupons) {
             var coupon = this.state.coupons.coupons[index];
             if (couponStatus.isUsable(coupon.status)) {
-                usableCouponList.push(<CouponItem key={`${index}`} coupon={coupon} usable={true}/>);
+                usableCouponList.push(<CouponItem key={`${index}`} coupon={coupon}/>);
             } else {
-                unusableCouponList.push(<CouponItem key={`${index}`} coupon={coupon} usable={false}/>)
+                unusableCouponList.push(<CouponItem key={`${index}`} coupon={coupon}/>)
             }
         }
         if (usableCouponList.length == 0) {
@@ -112,11 +113,15 @@ var App = React.createClass({
 
 var CouponItem = React.createClass({
 
+    unusableClass: {
+        1: 'timeout',
+        2: 'used'
+    },
+
     render: function() {
         var coupon = this.props.coupon;
-        var usable = this.props.usable;
         return (
-            <div className={`coupon-container ${usable ? '' : 'coupon-unusable'}`}>
+            <div className={`coupon-container ${this.unusableClass[coupon.status]}`}>
                 <div className="coupon-body clearfix">
                     <div className="pull-left coupon-price-container">
                         <p>¥

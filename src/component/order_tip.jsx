@@ -42,11 +42,17 @@ var OrderTip = React.createClass({
                 </p>
             );
         } else if (status == orderStatus.PAID && this.state.dayLeft) {
-            return (
-                <p className="order-tip">离出发还有：
-                    <span className="order-countdown">{this.state.dayLeft}</span>天
-                </p>
-            );
+            if (dayLeft < 0) {
+                return (
+                    <p className="order-tip">已经出发</p>
+                );
+            } else {
+                return (
+                    <p className="order-tip">离出发还有：
+                        <span className="order-countdown">{this.state.dayLeft}</span>天
+                    </p>
+                );
+            }
         } else if (status == orderStatus.TIMEOUT) {
             return (
                 <p className="order-tip">订单

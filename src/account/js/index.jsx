@@ -44,6 +44,7 @@ var Index = React.createClass({
         .done(function(data) {
             if (data.status == 0 ){
                 message.success('此优惠码兑换成成功');
+                self.refs.discountCodeInput.value = '';
                 Coupons.actions.load();
             } else if (data.status == 1100) {
                 message.error(data.errors[0].message);

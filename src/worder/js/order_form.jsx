@@ -39,11 +39,19 @@ var  OrderForm = React.createClass({
      */
     onPolicyDiscountLoaded: function(discount) {
         if (discount != null) {
-            var policy = this._findPolicyDiscount(discount.defaultDiscountid, discount.policy);
-            if (policy != null) {
+            var maxValuePolicy = null, maxValue = -1;
+            for (var index in discount.policy) {
+                var policy = discount.policy[index];
+                var price = priceUtil.getPrice(policy.value);
+                if (maxValue < price) {
+                    maxValue = price;
+                    maxValuePolicy = policy;
+                }
+            }
+            if (maxValuePolicy != null) {
                 this.setState({
                     'discountData': discount,
-                    'policyDiscount': policy
+                    'policyDiscount': maxValuePolicy
                 });
             } else {
                 this.setState({
@@ -73,10 +81,10 @@ var  OrderForm = React.createClass({
                 }
             }
             if (maxValueCoupon == null) {
-                this.setState({'coupons': result});
+                this.setState({'coupons': {'coupons': result}});
             } else {
                 this.setState({
-                    'coupons': result,
+                    'coupons': {'coupons': result},
                     'coupon': maxValueCoupon
                 });
             }
@@ -156,18 +164,6 @@ var  OrderForm = React.createClass({
             'groupid': this.props.orderInfoData.orderInfo.groupid,
             'count': selectTravellers.length
         });
-    },
-
-    /**
-     * 查找优惠
-     */
-    _findPolicyDiscount: function(discountid, policies) {
-        for (var i = policies.length - 1; i >= 0; i--) {
-            if (policies[i].discountid == discountid) {
-                return policies[i];
-            }
-        }
-        return null;
     },
 
     /**
@@ -443,7 +439,7 @@ var  OrderForm = React.createClass({
         OrderDiscount.actions.load({
             'routeid': this.props.orderInfoData.orderInfo.routeid, 
             'groupid': this.props.orderInfoData.orderInfo.groupid,
-            'count': 0
+            'count': 1 // 初识会默认选中用户
         });
         Coupons.actions.load({'usable': true});
         return {
@@ -452,7 +448,6 @@ var  OrderForm = React.createClass({
                 'contacts': []
             },
             'discountData': {
-                'defaultDiscountid': 0,
                 'policy': [],
                 'studentDiscount': {}
             },

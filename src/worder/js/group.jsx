@@ -25,7 +25,7 @@ var GroupInfo = React.createClass({
                         <img className="img-responsive" src={square}/>
                     </div>
                     <div className="travel-title">
-                        <p className="two-line fixed">{`${travelRoute.name}|${travelRoute.title}`}</p>
+                        <p className="two-line fixed">{`【${travelRoute.name}】${travelRoute.title}`}</p>
                     </div>
                     <div className="travel-detail clearfix">
                         <p className="pull-left">
@@ -44,7 +44,7 @@ var GroupInfo = React.createClass({
                     this.props.history
                     ? <div className="order-info-container">
                         <div className="order-info clearfix">
-                            <div className="pull-left">订单编号: {this.props.orderInfo.orderid}</div>
+                            <div className="pull-left">订单编号: {this.props.orderInfo.orderNo}</div>
                             <div className="pull-right">报名时间：{this.props.orderInfo.createTime ? this.props.orderInfo.createTime : this.props.orderInfo.addTime}</div>
                         </div>
                         <OrderHistory history={this.props.history} />

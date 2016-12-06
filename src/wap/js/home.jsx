@@ -134,7 +134,7 @@ var DaoHang = React.createClass({
                 </div>
                 <div className="Afourth">
                     <div className="mylabel right">
-                        <a href="javascript:">
+                        <a href="/activities">
                             <i className="icon"><img src={g}/></i>
                             <p>活动</p>
                         </a>

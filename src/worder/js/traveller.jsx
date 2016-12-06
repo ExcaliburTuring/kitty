@@ -18,7 +18,9 @@ import { gender }  from 'config';
                 <div className="traveller-info pull-left">
                     <div className="clearfix">
                         <p className="pull-left">姓名：{traveller.name}</p>
-                        <p className="pull-right">{traveller.mobile}</p>
+                        <p className="pull-right">
+                            <a href={`tel:${traveller.mobile}`}>{traveller.mobile}</a>
+                        </p>
                     </div>
                     <div className="traveller-addition-info">
                         <p>证件：{traveller.id}</p>
