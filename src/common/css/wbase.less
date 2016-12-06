@@ -69,6 +69,7 @@ body {
 }
 
 h2,
+h4,
 p {
     width: 100%;
     height: 1px;
@@ -217,7 +218,11 @@ p.pull-right {
 //     height: .36rem;
 // }
 
-.am-list-item .am-list-line .am-list-content {
+.am-list .am-list-item .am-input-label,
+.am-list .am-list-item .am-input-control input,
+.am-list-item .am-list-line .am-list-content,
+.am-list-item .am-list-line .am-list-extra,
+.am-list .am-list-item .am-input-control input::-webkit-input-placeholder {
     color: @dark-black;
     font-size: @small-font-size;
 }

@@ -1,13 +1,12 @@
 import React from 'react';
 import Reflux from 'reflux';
-import marked from 'marked';
 import Swiper from 'swiper';
 import { Popup, Button, Modal, Toast } from 'antd-mobile';
 var alert = Modal.alert;
 
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
-import xyjImg from 'xiaoyaojun.png'; 
+import hxyImg from 'haixiaoyao.png'; 
 
 import RouteInfo from './RouteInfo';
 
@@ -18,6 +17,7 @@ import square from '../img/54.png';
 import long from '../img/54.png';
 import righta from '../img/righta.svg';
 import right from '../img/right.svg';
+import point from '../img/point-to.svg';
 
 function hxyError(e, tag) {
     alert(`失败，请直接联系海逍遥: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
@@ -48,7 +48,7 @@ var App = React.createClass({
             var link = `http://www.hxytravel.com${url.travel}/${route.routeid}`;
             var imgUrl = route.headImg;
             var desc = route.desc;
-            $.get(url.wxShareConfig, {'routeid': route.routeid, 'routeUrl': location.href.split('#')[0]})
+            $.get(url.wxShareConfig, {'url': location.href.split('#')[0]})
             .done(function(data) {
                 if (data.status != 0 ){
                     return;
@@ -113,10 +113,13 @@ var App = React.createClass({
         window.location.href = `${url.travel}/${routeid}`;
     },
 
-    onHotlineClick: function() {
-        alert('客服', `联系海逍遥请拨打：${defaultValue.hotline}`, [
-            { text: '确定', onPress: () => {}},
-        ]);
+    onOnlineChatClick: function() {
+
+        $('html, body').animate({
+            'scrollTop':  $('.online-chat-container').offset().top
+        }, {
+            'speed': 800
+        });
     },
 
     getInitialState() {
@@ -199,7 +202,7 @@ var App = React.createClass({
                         </div>
                     </div>
                 </div>
-                <RouteInfo days={days} more={more} />
+                <RouteInfo ref="routeInfo" days={days} more={more} />
                 <div className="bottom-container">
                     <div className="row">
                         <div className="Asecond">
@@ -208,22 +211,11 @@ var App = React.createClass({
                                 <img src={b1}/>
                                 <p>分享</p>
                             </div>
-                            <div className="Athird" onClick={()=>{this.setState({'onlineChatModalVisible': true})}}>
+                            <div className="Athird" onClick={this.onOnlineChatClick}>
                                 <div className="right-border" />
                                 <img src={b2}/>
-                                <p>在线客服</p>
+                                <a href="javascript:;">在线客服</a>
                             </div>
-                            <Modal
-                                onClose={()=>{this.setState({'onlineChatModalVisible': false})}}
-                                transparent
-                                visible={this.state.onlineChatModalVisible}>
-                                <div className="modal-demo-content">
-                                    <div className="online-chat-image">
-                                        <img src={xyjImg}></img>
-                                    </div>
-                                    <div className="online-chat-tip">长按上方二维码</div>
-                                </div>
-                            </Modal>
                             <div className="Athird">
                                 <img src={b3}/>
                                 <a href={`tel:${defaultValue.hotline}`}>电话咨询</a>
@@ -235,6 +227,7 @@ var App = React.createClass({
                     </div>
                 </div>
                 <div className={`share-tip-container ${this.state.shareTipShow}`}>
+                    <img src={point} />
                     <Button inline onClick={()=>{this.setState({'shareTipShow': ''})}}>我知道了</Button>
                 </div>
             </div>

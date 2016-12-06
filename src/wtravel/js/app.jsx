@@ -42,7 +42,7 @@ var App = React.createClass({
             var link = `http://www.hxytravel.com${url.travel}/${route.routeid}`;
             var imgUrl = route.headImg;
             var desc = route.desc;
-            $.get(url.wxShareConfig, {'routeid': route.routeid, 'routeUrl': location.href.split('#')[0]})
+            $.get(url.wxShareConfig, {'url': location.href.split('#')[0]})
             .done(function(data) {
                 if (data.status != 0 ){
                     return;

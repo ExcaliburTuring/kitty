@@ -87,7 +87,8 @@
         }
     }
 
-    &.coupon-unusable {
+    &.timeout,
+    &.used {
         color: @light-gray;
         border-color: @light-gray;
         box-shadow: 0 0 3px 0 @light-gray;
@@ -98,7 +99,6 @@
         }
 
         .coupon-body {
-            background-image: url(./overdue.svg);
             background-repeat: no-repeat;
             background-size: 1.2rem 1.2rem;
             background-position: 97% top;
@@ -108,5 +108,13 @@
         .coupon-rule-container {
             border-left-color: @light-gray;
         }
+    }
+
+    &.timeout .coupon-body {
+        background-image: url(./overdue.svg);
+    }
+
+    &.used .coupon-body {
+        background-image: url(./used.svg);
     }
 }

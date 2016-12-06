@@ -7,7 +7,12 @@ import marked from 'marked';
 import { Tabs } from 'antd-mobile';
 const TabPane = Tabs.TabPane;
 
+import { defaultValue } from 'config';
+import hxyImg from 'hxy_finger.png';
+
 import 'antd/lib/index.css';
+
+var onlineChat = marked(`### 长按二维码图片，选择识别图中二维码\n### 如无法识别，请搜索海逍遥旅行公众号\n### 也可直接拨打海逍遥客服电话：<a href='tel:${defaultValue.hotline}'>${defaultValue.hotline}</a>\n ![](${hxyImg})`);
 
 var RouteInfo = React.createClass({
 
@@ -38,6 +43,10 @@ var RouteInfo = React.createClass({
                          <XuZhi className="order-list" local={more.local} prepare={more.prepare} traffic={more.traffic}/>
                     </TabPane>
                 </Tabs>
+                <div className="online-chat-container">
+                    <h2>联系我们</h2>
+                    <div className="online-chat" dangerouslySetInnerHTML={{__html: onlineChat}}></div>
+                </div>
             </div>
         );
     }
@@ -78,7 +87,7 @@ var Day = React.createClass({
         var distance = day.distance ? this.createAddInfo('c3', '车程', day.distance) : null;
         var hotel = day.hotel ? this.createAddInfo('c4', '住宿', day.hotel) : null;
         return (
-            <div className={`days ${this.props.isFirstDay ? 'first-day': null} ${this.props.isLastDay ? 'last-day' : ''}`}>
+            <div className={`days ${this.props.isFirstDay ? 'first-day': ''} ${this.props.isLastDay ? 'last-day' : ''}`}>
                 <h2><div className="daycount">{dayno}</div>Day{dayno} {day.title}</h2>
                 <div dangerouslySetInnerHTML={{__html: detail}}></div>
                 <div className="icons">

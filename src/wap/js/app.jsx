@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import { TabBar } from 'antd-mobile';
 
-import { orderType } from 'config';
+import { orderType, url } from 'config';
 import AccountBasicInfo from 'account_basicinfo';
 import WContact from 'wcontact';
 import home1 from 'home1.svg';
@@ -16,6 +16,14 @@ import user1 from '../img/user1.svg';
 import user2 from '../img/user2.svg';
 import compass1 from '../img/compass1.svg';
 import compass2 from '../img/compass2.svg';
+
+function hxyError(e, tag) {
+    alert(`失败，请直接联系海逍遥: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
+}
+
+function isError(errMsg) {
+    return errMsg.split(':')[1] != 'ok';
+}
 
 var App = React.createClass({
 
@@ -39,6 +47,63 @@ var App = React.createClass({
             'area': accountInfo.area,
             'address': accountInfo.address
         };
+    },
+
+    _wxshare: function() {
+        var title = '海逍遥旅行';
+        var link = 'http://www.hxytravel.com/';
+        var imgUrl = 'http://www.hxytravel.com/img/QR.jpg';
+        var desc = '海逍遥旅行，一种旅行方式，多种旅行体验！'
+        $.get(url.wxShareConfig, {'url': location.href.split('#')[0]})
+        .done(function(data) {
+            if (data.status != 0 ){
+                return;
+            }
+            wx.config({
+                'debug': false,
+                'appId': data.appid,
+                'timestamp': data.timestamp, 
+                'nonceStr': data.nonceStr, 
+                'signature': data.signature,
+                'jsApiList': ['onMenuShareTimeline', 'onMenuShareAppMessage']
+            });
+
+            wx.ready(function(){
+                wx.checkJsApi({
+                    'jsApiList': ['onMenuShareTimeline', 'onMenuShareAppMessage'], 
+                    'success': function(res) {
+                        if (isError(res.errMsg)) {
+                            hxyError(res, "check res error");
+                            return;
+                        }
+
+                        if (res.checkResult.onMenuShareTimeline) {
+                            wx.onMenuShareTimeline({
+                                title: title,
+                                link: link,
+                                imgUrl: imgUrl
+                            });
+                        }
+                        
+                        if (res.checkResult.onMenuShareAppMessage) {
+                            wx.onMenuShareAppMessage({
+                                title: title,
+                                desc: desc,
+                                link: link,
+                                imgUrl: imgUrl
+                            });
+                        }
+                    },
+                    'fail': function(e, tag) {
+                        hxyError(e, "check failed");
+                    }
+                });
+            });
+    
+            wx.error(function(res){
+                hxyError(res, "global error");
+            });
+        });
     },
 
     // callback method
@@ -88,6 +153,7 @@ var App = React.createClass({
     },
 
     componentDidMount: function() {
+        this._wxshare();
         var self = this;
         window.onpopstate = function(e) {
             var selectedTab = self.state.selectedTab;
