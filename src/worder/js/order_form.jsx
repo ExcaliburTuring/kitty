@@ -6,7 +6,7 @@ import Reflux from 'reflux';
 import { Toast, List, InputItem, Button } from 'antd-mobile';
 import { createForm } from 'rc-form';
 
-import { url, priceUtil, discountCodeStatus, defaultValue, accountStatus }  from 'config';
+import { url, priceUtil, couponStatus, defaultValue, accountStatus }  from 'config';
 import Rabbit from 'rabbit';
 import WContact from 'wcontact';
 import validator from 'validator';
@@ -21,14 +21,14 @@ import Footer from './footer';
 
 var AccountContacts = Rabbit.create(url.contacts);
 var OrderDiscount = Rabbit.create(url.orderDiscount);
-var DiscountCode = Rabbit.create(url.discountCode);
+var Coupons = Rabbit.create(url.coupons);
 
 var  OrderForm = React.createClass({
 
     mixins: [
         Reflux.connect(AccountContacts.store, 'contactsData'),
         Reflux.listenTo(OrderDiscount.store, 'onPolicyDiscountLoaded'),
-        Reflux.listenTo(DiscountCode.store, 'onAccountDiscountCodeLoaded')
+        Reflux.listenTo(Coupons.store, 'onCouponsLoaded')
     ],
 
      // reflux callback
@@ -56,31 +56,32 @@ var  OrderForm = React.createClass({
     /**
      * 账户优惠码列表加载完成
      */
-    onAccountDiscountCodeLoaded: function(accountDiscountCodeData) {
-        if (accountDiscountCodeData.status == 0 
-            && accountDiscountCodeData.discountCodes.length > 0) {
-            var maxValueCode = null, maxValue = -1;
-            for (var index in accountDiscountCodeData.discountCodes) {
-                var discountCode = accountDiscountCodeData.discountCodes[index];
-                if (!discountCodeStatus.isUsable(discountCode.status)) {
-                    continue;
-                }
-                var price = priceUtil.getPrice(discountCode.value);
-                if (maxValue < price) {
-                    maxValue = price;
-                    maxValueCode = discountCode;
+    onCouponsLoaded: function(coupons) {
+        if (coupons.status == 0 && coupons.coupons.length > 0) {
+            var maxValueCoupon = null, maxValue = -1, result = [], now = new Date().getTime();
+            for (var index in coupons.coupons) {
+                var coupon = coupons.coupons[index];
+                if (couponStatus.isUsable(coupon.status) 
+                    && Date.parse(coupon.startTime) <= now 
+                    && now <= Date.parse(coupon.endTime)) {
+                    result.push(coupon);
+                    var price = priceUtil.getPrice(coupon.value);
+                    if (maxValue < price) {
+                        maxValue = price;
+                        maxValueCoupon = coupon;
+                    }
                 }
             }
-            if (maxValueCode == null) {
-                this.setState({'accountDiscountCodeData': accountDiscountCodeData});
+            if (maxValueCoupon == null) {
+                this.setState({'coupons': result});
             } else {
                 this.setState({
-                    'accountDiscountCodeData': accountDiscountCodeData,
-                    'discountCode': maxValueCode
+                    'coupons': result,
+                    'coupon': maxValueCoupon
                 });
             }
         } else {
-            this.setState({'accountDiscountCodeData': accountDiscountCodeData});
+            this.setState({'coupons': coupons});
         }
     },
 
@@ -199,16 +200,16 @@ var  OrderForm = React.createClass({
      */
     _getDiscount: function() {
         var policyDiscount = this.state.policyDiscount;
-        var discountCode = this.state.discountCode;
+        var coupon = this.state.coupon;
         var studentDiscount = this.state.studentDiscount;
         var price = priceUtil.getOrderPrice(this.props.orderInfoData.travelGroup, this.state.selectTravellers);
-        var discountPrice = priceUtil.getOrderDiscountPrice(policyDiscount, discountCode, studentDiscount);
+        var discountPrice = priceUtil.getOrderDiscountPrice(policyDiscount, coupon, studentDiscount);
         var actualPrice = priceUtil.getOrderActualPrice(price, discountPrice);
         return {
             'actualPrice': actualPrice,
             'policyDiscountid': policyDiscount.discountid,
-            'discountCode': discountCode.discountCode,
-            'studentDiscountid': studentDiscount != null ? studentDiscount.discountid : null,
+            'couponid': coupon.couponid,
+            'studentDiscountid': this.state.discountData.studentDiscount.discountid,
             'studentCount': studentDiscount.count
         };
     },
@@ -266,12 +267,12 @@ var  OrderForm = React.createClass({
         var roommates = this._getRoommates();
         var isFollow = roommates['isFollow'];
         var selectTravellers = this._getSelectTravellers(roommates, isFollow);
-        var emergency = this._getEmergency(); 
+        var emergency = this._getEmergency();
         var request = {
             'orderid': this.props.orderInfoData.orderInfo.orderid,
             'travellers': selectTravellers,
             'policyDiscountid': discountData.policyDiscountid,
-            'discountCode': discountData.discountCode,
+            'couponid': discountData.couponid,
             'studentDiscountid': discountData.studentDiscountid,
             'studentCount': discountData.studentCount,
             'actualPrice': discountData.actualPrice,
@@ -406,10 +407,10 @@ var  OrderForm = React.createClass({
     },
 
     /**
-     * 优惠码修改
+     * 优惠券修改
      */
-    onDiscountCodeChange: function(discountCode) {
-        this.setState({'discountCode': discountCode});
+    onCouponChange: function(coupon) {
+        this.setState({'coupon': coupon});
     },
 
     /**
@@ -444,7 +445,7 @@ var  OrderForm = React.createClass({
             'groupid': this.props.orderInfoData.orderInfo.groupid,
             'count': 0
         });
-        DiscountCode.actions.load();
+        Coupons.actions.load({'usable': true});
         return {
             // 请求得到
             'contactsData': {
@@ -455,8 +456,8 @@ var  OrderForm = React.createClass({
                 'policy': [],
                 'studentDiscount': {}
             },
-            'accountDiscountCodeData': {
-                'discountCodes': []
+            'coupons': {
+                'coupons': []
             },
 
             // 临时变量
@@ -464,11 +465,11 @@ var  OrderForm = React.createClass({
             'emergency': {},
             'policyDiscount': {
                 'discountid': -1,
-                'desc': '',
+                'name': '',
                 'value':'￥0'
             },
-            'discountCode': {
-                'discountCode': '',
+            'coupon': {
+                'couponid': '',
                 'value': '￥0',
                 'msg': ''
             },
@@ -512,7 +513,7 @@ var  OrderForm = React.createClass({
         var selectTravellers = this.state.selectTravellers;
         var price = priceUtil.getOrderPrice(orderInfoData.travelGroup, selectTravellers);
         var discountPrice = priceUtil.getOrderDiscountPrice(this.state.policyDiscount, 
-            this.state.discountCode, this.state.studentDiscount);
+            this.state.coupon, this.state.studentDiscount);
         var actualPrice = priceUtil.getOrderActualPrice(price, discountPrice);
         return (
             <div className="order-form-container">
@@ -540,12 +541,13 @@ var  OrderForm = React.createClass({
                 <div className="item-title">优惠政策</div>
                 <Discount count={selectTravellers.length}
                     discountData={this.state.discountData}
-                    accountDiscountCodeData={this.state.accountDiscountCodeData}
+                    coupons={this.state.coupons}
                     policyDiscount={this.state.policyDiscount}
-                    discountCode={this.state.discountCode}
+                    coupon={this.state.coupon}
                     studentDiscount={this.state.studentDiscount}
+                    discountPrice={discountPrice}
                     onPolicyDiscountChange={this.onPolicyDiscountChange}
-                    onDiscountCodeChange={this.onDiscountCodeChange}
+                    onCouponChange={this.onCouponChange}
                     onStudentDiscountChange={this.onStudentDiscountChange}/>
                 <Agreement ref="agreement"
                     orderid={orderInfoData.orderInfo.orderid}

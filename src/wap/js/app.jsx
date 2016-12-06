@@ -72,14 +72,6 @@ var App = React.createClass({
         });
     },
 
-    onPopState: function(e) {
-        var selectedTab = this.state.selectedTab;
-        if (selectedTab.length > 1) {
-            selectedTab.pop();
-            this.setState({'contact': null, 'selectedTab': selectedTab});
-        }
-    },
-
     getInitialState: function() {
         AccountBasicInfo.actions.load();
         return {
@@ -91,13 +83,19 @@ var App = React.createClass({
             },
             'selectedTab': ['home'],
             'orderType': orderType.CURRENT,
-            'contact': null,
-            'historyLength': history.length
+            'contact': null
         };
     },
 
     componentDidMount: function() {
-        window.onpopstate = this.onPopState; 
+        var self = this;
+        window.onpopstate = function(e) {
+            var selectedTab = self.state.selectedTab;
+            if (selectedTab.length > 1) {
+                selectedTab.pop();
+                self.setState({'contact': null, 'selectedTab': selectedTab});
+            }
+        }; 
     },
 
     render: function() {

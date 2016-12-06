@@ -51,7 +51,7 @@ var OrderItem = React.createClass({
                             <div className="order-info">
                                 <TravellerList names={briefOrder.travellerNames} keyPrefix={orderInfo.orderid}/>
                                 <OrderPrice orderInfo={orderInfo} travelGroup={travelGroup}
-                                    policy={briefOrder.policy} code={briefOrder.code} student={briefOrder.student}/>
+                                    policy={briefOrder.policy} coupon={briefOrder.coupon} student={briefOrder.student}/>
                                 <Refund status={orderInfo.status} orderRefound={briefOrder.orderRefound}/>
                             </div>
                         </Col>
@@ -97,7 +97,7 @@ var OrderPrice = React.createClass({
 
     render: function() {
         var policy = this.props.policy;
-        var code = this.props.code;
+        var coupon = this.props.coupon;
         var student = this.props.student;
         var priceTip = (
             <div>
@@ -106,7 +106,7 @@ var OrderPrice = React.createClass({
                 {this.props.orderInfo.count}
             </div>
         );
-        if (policy == null && code == null && student == null) {
+        if (policy == null && coupon == null && student == null) {
             return (
                 <div className="order-price">
                     <span className="order-label">价格</span>
@@ -116,31 +116,20 @@ var OrderPrice = React.createClass({
                 </div>
             );
         }
-        var totalDiscount = 0;
-        if (policy != null) {
-            totalDiscount += priceUtil.getPrice(policy.value);
-        }
-        if (code != null) {
-            totalDiscount += priceUtil.getPrice(code.value);
-        }
-        if (this.props.student != null) {
-            totalDiscount += priceUtil.getPrice(student.value) * this.props.orderInfo.studentCount;
-        }
         var discountTip = (
             <div>
-                {policy != null ? <p>{policy.desc}:减{policy.value}</p> : null }
-                {code != null ? <p>优惠码{code.discountCode}:减{code.value}</p> : null }
+                {policy != null ? <p>{policy.name}:减{policy.value}</p> : null }
+                {coupon != null ? <p>优惠券:{coupon.name}:减{coupon.value}</p> : null }
                 {student != null ? <p>学生优惠每人减{student.value},共{this.props.orderInfo.studentCount}人</p> : null }
             </div>
         );
-
         return (
             <div className="order-price">
                 <span className="order-label">价格</span>
                 <Tooltip placement="top" title={discountTip}>
                     <span className="price-before">{this.props.orderInfo.price}</span>
                 </Tooltip>
-                <span className="price">  {this.props.orderInfo.actualPrice}</span>
+                <span className="price">{this.props.orderInfo.actualPrice}</span>
             </div>
         );
     }

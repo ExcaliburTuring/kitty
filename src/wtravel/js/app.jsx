@@ -37,7 +37,7 @@ var App = React.createClass({
         this.setState({'routes': routes});
         if (routes.status == 0) {
             var route = routes.routes[0];
-            var title = `【${route.name}】${route.title}`
+            var title = `${route.name}|${route.title}`
             var link = `http://www.hxytravel.com${url.travel}/${route.routeid}`;
             var imgUrl = route.headImg;
             var desc = route.desc;
@@ -164,7 +164,7 @@ var App = React.createClass({
                         <div className="travel-title-container">
                             {
                                 routes.name
-                                ? <h2 className="ellipsis">{`${routes.name} | ${routes.title}`}</h2>
+                                ? <h2 className="two-line">{`${routes.name} | ${routes.title}`}</h2>
                                 : null
                             }
                             {

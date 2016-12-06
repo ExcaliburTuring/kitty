@@ -6,5 +6,7 @@ import App from './js/app';
 require('./css/application.less');
 
 ReactDOM.render(
-    <App/>
+    <div>
+        <App/>
+    </div>
 , document.getElementById('app'));
