@@ -8,7 +8,7 @@ import { Menu, Dropdown, Icon } from 'antd';
 
 import AccountBasicInfo from 'account_basicinfo';
 import { url } from 'config';
-import logo from "./logo.png"
+import logo from "logo.svg"
 
 import 'antd/lib/index.css';
 require('./navbar.less');

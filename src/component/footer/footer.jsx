@@ -5,7 +5,7 @@ import React from 'react';
 
 import hxyImg from 'haixiaoyao.png';
 import xyjImg from 'xiaoyaojun.png'; 
-import hxyTravel from './hxytravel.png'; 
+import logo from 'logo.svg'; 
 import { Col,Image } from 'react-bootstrap';
 
 require('./footer.less');
@@ -29,7 +29,7 @@ var Info = React.createClass({
                     <div className="row">
                         <Col sm={3} md={3}>
                             <div className="footer-content">
-                                <Image responsive src={hxyTravel} />
+                                <Image responsive src={logo} />
                             </div>
                         </Col>
                         <Col sm={6} md={6}>
