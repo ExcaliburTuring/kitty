@@ -1,4 +1,5 @@
 @import "~wbase.less";
+@import "~animate.min.css";
 
 body {
     background-color: white;
@@ -14,16 +15,43 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     display: none;
 
-    button {
-        position: absolute;
-        top: 5rem;
-        left: 4rem;
-        border-radius: 0;
-        background-color: transparent;
-        border: 3px dashed @currency;
-        box-shadow: 0 0 2px 0 @light-currency;
+    .share-tip {
         color: white;
-        line-height: .6rem;
+        position: absolute;
+        top: 3.8rem;
+        left: 1rem;
+        width: 5rem;
+
+        h3,
+        p {
+            font-weight: normal;
+            font-size: @larger-font-size;
+            margin: .1rem 0;
+        }
+
+        h3 {
+            display: flex;
+            align-items: flex-end;
+
+            img.img-responsive {
+                width: 1.5rem;
+            }
+        }
+
+        p.share-tip-timeline {
+            text-indent: 1.5em;
+        }
+    }
+
+    img.img-responsive {
+        width: .8rem;
+        display: inline-block;
+    }
+
+    img.img-responsive.point {
+        width: 3.5rem;
+        float: right;
+        margin-top: .8rem;
     }
 }
 

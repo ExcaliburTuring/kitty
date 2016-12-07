@@ -9,6 +9,8 @@ const CheckboxItem = Checkbox.CheckboxItem;
 
 import { url, gender, priceUtil }  from 'config';
 import Rabbit from 'rabbit';
+import addImg from 'add.svg';
+
 import Traveller from './traveller';
 
 var SelectTraveller = React.createClass({
@@ -104,7 +106,7 @@ var TravellerSelector = React.createClass({
                 <List renderHeader={() => '选择出行人'}>
                     {checkBoxItemList}
                     <List.Item arrow="horizontal"
-                        thumb="https://zos.alipayobjects.com/rmsportal/zotStpFiYpNtZNl.png"
+                        thumb={addImg}
                         onClick={this.props.onNewContactBtnClick}>
                         新建出行人
                     </List.Item>
