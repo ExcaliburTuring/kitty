@@ -120,6 +120,9 @@ var CouponItem = React.createClass({
 
     render: function() {
         var coupon = this.props.coupon;
+        var desc = coupon.desc.map(function(d, index) {
+            return (<li key={index}>{d}</li>);
+        });
         return (
             <div className={`coupon-container ${this.unusableClass[coupon.status]}`}>
                 <div className="coupon-body clearfix">
@@ -129,9 +132,10 @@ var CouponItem = React.createClass({
                         </p>
                     </div>
                     <div className="pull-left coupon-rule-container">
+                        <p className="coupon-name">{coupon.name}</p>
                         <ul className="coupon-rule">
-                            <li>{`状态：${couponStatus.getDesc(coupon.status)}`}</li>
                             <li>只限当前帐号下单使用</li>
+                            {desc}
                             <li>{`${coupon.startTime}  ~  ${coupon.endTime}`}</li>
                         </ul>
                     </div>

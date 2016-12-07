@@ -40,7 +40,6 @@ var App = React.createClass({
 
     render: function() {
         var data = this.state.data;
-        data.status = -1;
         if (data.status < 0 || data.orderStatus == 2) {
             return (
                 <div className="weui-loadmore">
@@ -100,7 +99,7 @@ var App = React.createClass({
                             <a href="/" className="weui-footer__link">海逍遥旅行社</a>
                         </p>
                         <p className="weui-footer__text">Copyright &copy;
-                            2008-2016 www.hxytravel.com</p>
+                            2008-2016 <a href="https://www.hxytravel.com/">hxytravel.com</a></p>
                     </div>
                 </div>
             </div>

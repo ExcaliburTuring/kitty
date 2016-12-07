@@ -7,6 +7,8 @@ import { List, Button, Popup, Checkbox, InputItem, Icon } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const CheckboxItem = Checkbox.CheckboxItem;
 
+import addImg from 'add.svg';
+
 var SelectEmergency = React.createClass({
 
     onEmergencySelectorClick: function() {
@@ -135,8 +137,7 @@ var EmergencySelector = React.createClass({
                 <List renderHeader={() => '选择紧急联系人'}>
                     {checkBoxItemList}
                     <List.Item arrow="horizontal"
-                        thumb="https://zos.alipayobjects.com/rmsportal/zotStpFiYpNtZNl.png"
-                        onClick={this.props.onNewEmergencyBtnClick}>
+                        thumb={addImg}>
                         新建紧急联系人
                     </List.Item>
                 </List>

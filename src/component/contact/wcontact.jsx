@@ -98,7 +98,7 @@ var WContact = React.createClass({
         var display = $genderBithdayContainer.css('display');
         if (ret['info']) {
             contact.birthday = moment(ret['info']['birth'], 'YYYY-MM-DD');
-            contact.idType = ret['info']['sex'];
+            contact.gender = ret['info']['sex'];
             this.setState({'contact': contact});
             if (display == 'none') {
                 $genderBithdayContainer.removeClass().css({'display': 'block'})
@@ -120,6 +120,7 @@ var WContact = React.createClass({
 
     showGenderSheet: function() {
         if (this.state.contact.idType == idType.IDENTIFICATION) {
+            Toast.fail('证件类型为身份证，性别由系统自动识别', 1);
             return;
         }
         var self = this;
@@ -143,6 +144,7 @@ var WContact = React.createClass({
     onBirthdayChange: function(date) {
         var contact = this.state.contact;
         if (contact.idType == idType.IDENTIFICATION) {
+            Toast.fail('证件类型为身份证，生日由系统自动识别', 1);
             return;
         }
         contact.birthday = date;
@@ -247,8 +249,14 @@ var WContact = React.createClass({
     },
 
     componentDidMount: function() {
+        var self = this;
         $('.contact-area-picker input').cityPicker({
-            title: "请选择地区"
+            title: "请选择地区",
+            onChange: function(picker, values, displayValues) {
+                var contact = self.state.contact;
+                contact.area = displayValues.join(' ');
+                self.setState({'contact': contact});
+            }
         });
         var contact = this.state.contact;
         if (contact.idType == idType.IDENTIFICATION) {
