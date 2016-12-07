@@ -15,7 +15,7 @@ var WFooter = React.createClass({
                 </div>
                 <div className="footer-copyright">
                     <a href="http://www.miibeian.gov.cn/">京ICP证 备15064919号</a>
-                    <a href="http://www.hxytravel.com"> | hxytravel.com</a>
+                    <a href="https://www.hxytravel.com"> | hxytravel.com</a>
                 </div>
             </div>
         );

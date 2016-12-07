@@ -7,6 +7,8 @@ var alert = Modal.alert;
 import { url, defaultValue, groupStatus } from 'config';
 import Rabbit from 'rabbit';
 import hxyImg from 'haixiaoyao.png'; 
+import shareImg from 'share.svg';
+import friendImg from 'friend.svg';
 
 import RouteInfo from './RouteInfo';
 
@@ -17,7 +19,8 @@ import square from '../img/54.png';
 import long from '../img/54.png';
 import righta from '../img/righta.svg';
 import right from '../img/right.svg';
-import point from '../img/point-to.svg';
+import point from '../img/arrow.svg';
+import zouzhiImg from '../img/zouzhi_logo.svg';
 
 function hxyError(e, tag) {
     alert(`失败，请直接联系海逍遥: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
@@ -45,7 +48,7 @@ var App = React.createClass({
         if (routes.status == 0) {
             var route = routes.routes[0];
             var title = `【${route.name}】${route.title}`
-            var link = `http://www.hxytravel.com${url.travel}/${route.routeid}`;
+            var link = `https://www.hxytravel.com${url.travel}/${route.routeid}`;
             var imgUrl = route.headImg;
             var desc = route.desc;
             $.get(url.wxShareConfig, {'url': location.href.split('#')[0]})
@@ -114,11 +117,25 @@ var App = React.createClass({
     },
 
     onOnlineChatClick: function() {
-
         $('html, body').animate({
             'scrollTop':  $('.online-chat-container').offset().top
         }, {
             'speed': 800
+        });
+    },
+
+    onShareTipOpen: function() {
+        $('.share-tip-container').removeClass().css({'display': 'block'})
+        .addClass('share-tip-container animated fadeIn')
+        .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $(this).removeClass('animated fadeIn');
+        });
+    },
+
+    onShareTipClose: function() {
+        $('.share-tip-container').removeClass().addClass('share-tip-container animated fadeOut')
+        .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $(this).css({'display': 'none'}).removeClass('animated fadeOut');
         });
     },
 
@@ -157,8 +174,7 @@ var App = React.createClass({
                 'status': 1,
                 'groups': []
             },
-            'onlineChatModalVisible': false,
-            'shareTipShow': ''
+            'onlineChatModalVisible': false
         };
     },
 
@@ -206,7 +222,7 @@ var App = React.createClass({
                 <div className="bottom-container">
                     <div className="row">
                         <div className="Asecond">
-                            <div className="Athird" onClick={()=>{this.setState({'shareTipShow': 'show'})}}>
+                            <div className="Athird" onClick={this.onShareTipOpen}>
                                 <div className="right-border" />
                                 <img src={b1}/>
                                 <p>分享</p>
@@ -226,9 +242,14 @@ var App = React.createClass({
                         </div>
                     </div>
                 </div>
-                <div className={`share-tip-container ${this.state.shareTipShow}`}>
-                    <img src={point} />
-                    <Button inline onClick={()=>{this.setState({'shareTipShow': ''})}}>我知道了</Button>
+                <div className="share-tip-container" onClick={this.onShareTipClose}>
+                    <div className="share-tip">
+                        <h3><img className="img-responsive" src={zouzhiImg}/>如何分享到微信：</h3>
+                        <p>1、点击右上角【...】</p>
+                        <p>2、选择<img className="img-responsive" src={shareImg}/>发送给朋友</p>
+                        <p className="share-tip-timeline">选择<img className="img-responsive" src={friendImg}/>分享到朋友圈</p>
+                    </div>
+                    <img className="img-responsive point" src={point} />
                 </div>
             </div>
         );

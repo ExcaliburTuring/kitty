@@ -1,9 +1,13 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Col, Image } from 'react-bootstrap';
+import { Progress } from 'antd';
+const ProgressLine = Progress.Line;
 
 import { url } from 'config';
 import Rabbit from 'rabbit';
+
+import 'antd/lib/index.css';
 
 var RouteList = Rabbit.create(url.route); 
 
@@ -26,6 +30,14 @@ var App = React.createClass({
     },
 
     render: function() {
+        if (this.state.data.status != 0) {
+            return (
+                <div className="container">
+                    <ProgressLine percent={50}/>
+                </div>
+            );
+        }
+
         var routes = this.state.data.routes;
         var routeList = routes.map(function(route) {
             return (
@@ -56,7 +68,6 @@ var Routes =React.createClass({
 
     render: function() {
         var route = this.props.route;
-
         return (
             <div className="route-container container">
                 <Col sm={6} md={6}>

@@ -6,6 +6,9 @@ import AccountBasicInfo from 'account_basicinfo';
 import Rabbit from 'rabbit';
 import { url, gender } from 'config';
 import WContact from 'wcontact';
+import maleImg from 'male.svg';
+import femaleImg from 'female.svg';
+import genderUnknownImg from 'gender_unknown.svg';
 
 var AccountContacts = Rabbit.create(url.contacts);
 var App = React.createClass({
@@ -180,18 +183,21 @@ var Contact = React.createClass({
         var contact = this.props.contact;
         var isAccount = contact.contactid == 0;
         var isMale = contact.gender == gender.MALE;
-        var avatarUrl = contact.avatarUrl ? contact.avatarUrl 
-                            : isMale 
-                                ? 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=850188828,2295753763&fm=58'
-                                : 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=481252135,1456887421&fm=58';
+        var isFemale = contact.gender == gender.FEMALE;
+        var avatarUrl = contact.avatarUrl;
+        if (!contact.avatarUrl) {
+            if (isMale) {
+                avatarUrl = maleImg;
+            } else if (isFemale) {
+                avatarUrl = femaleImg;
+            } else {
+                avatarUrl = genderUnknownImg;
+            }
+        }
         return (
             <div className="contact-container">
                 <div className="contact-body">
-                    {
-                        isAccount
-                        ? <img className="img-responsive img-thumbnail pull-left" src={avatarUrl}/>
-                        : null
-                    }
+                    <img className="img-responsive img-thumbnail pull-left" src={avatarUrl}/>
                     <p className="fixed">
                         {contact.name}
                         <span className="pull-right">{contact.mobile}</span>

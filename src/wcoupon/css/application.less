@@ -50,11 +50,13 @@
 
     .coupon-body {
         margin: .3rem 0 .3rem .2rem;
+        display: flex;
+        align-items: center;
 
         .coupon-price-container {
             width: 1.8rem;
             color: @currency;
-            padding: .2rem .2rem .2rem 0;
+            padding-right: .2rem;
             font-size: .4rem;
             text-align: center;
             font-weight: bolder;
@@ -69,20 +71,26 @@
                 font-size: .7rem;
             }
         }
-    }
 
-    .coupon-rule-container {
-        .border-left(@currency);
-        padding-left: .3rem;
-        font-size: @smaller-font-size;
+        .coupon-rule-container {
+            .border-left(@currency);
+            padding-left: .3rem;
+            font-size: @smaller-font-size;
 
-        .coupon-rule {
-            padding-left: .35rem;
-            margin-top: .1rem;
-            margin-bottom: .1rem;
+            .coupon-name {
+                font-size: @middle-font-size;
+                margin: .1rem 0;
+            }
 
-            li {
+            .coupon-rule {
+                padding-left: .35rem;
+                margin-top: .1rem;
                 margin-bottom: .1rem;
+                color: #666;
+
+                li {
+                    margin-bottom: .1rem;
+                }
             }
         }
     }
@@ -94,7 +102,8 @@
         box-shadow: 0 0 3px 0 @light-gray;
         background-image: url(./gray-wave.svg);
 
-        .coupon-price-container {
+        .coupon-price-container,
+        .coupon-rule-container .coupon-rule {
             color: @light-gray;
         }
 
