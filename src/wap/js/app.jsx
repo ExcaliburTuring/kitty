@@ -137,6 +137,11 @@ var App = React.createClass({
         });
     },
 
+    onSaveSuccessful: function() {
+        AccountBasicInfo.actions.load();
+        this.setState({'contact': null, 'selectedTab': ['mine']});
+    },
+
     getInitialState: function() {
         AccountBasicInfo.actions.load();
         return {
@@ -168,7 +173,7 @@ var App = React.createClass({
         if (this.state.contact) {
             return (
                 <WContact contact={this.state.contact}
-                    onSaveSuccessful={()=>{this.setState({'contact': null, 'selectedTab': ['mine']})}}
+                    onSaveSuccessful={this.onSaveSuccessful}
                     onCancleBtnClick={()=>{this.setState({'contact': null, 'selectedTab': ['mine']})}}/>
             );
         }
