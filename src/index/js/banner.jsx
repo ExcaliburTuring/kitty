@@ -5,9 +5,6 @@ import React from 'react';
 
 import Swiper from 'swiper';
 import a from '../img/A.jpg';
-import d from '../img/D.jpg';
-import e from '../img/E.jpg';
-import f from '../img/F.jpg';
 import WH from '../img/196.png';
 import { Col } from 'react-bootstrap';
 
@@ -29,9 +26,6 @@ var Banner = React.createClass({
 
     render: function() {
         var abg = {backgroundImage: "url(" + a + ")"};
-        var dbg = {backgroundImage: "url(" + d + ")"};
-        var ebg = {backgroundImage: "url(" + e + ")"};
-        var fbg = {backgroundImage: "url(" + f + ")"};
 
         return(
             <div className="WH-table">
