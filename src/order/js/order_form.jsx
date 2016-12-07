@@ -197,7 +197,7 @@ var OrderForm = React.createClass({
             'actualPrice': actualPrice,
             'policyDiscountid': policyDiscount.discountid,
             'couponid': coupon.couponid,
-            'studentDiscountid': this.state.discountData.studentDiscount.discountid,
+            'studentDiscountid': studentDiscount.discountid,
             'studentCount': studentDiscount.count
         };
     },
@@ -464,6 +464,7 @@ var OrderForm = React.createClass({
         var discountPrice = count * priceUtil.getPrice(this.state.discountData.studentDiscount.value);
         this.setState({
             'studentDiscount': {
+                'discountid': this.state.discountData.studentDiscount.discountid,
                 'count': count,
                 'value': priceUtil.getPriceStr(discountPrice)
             }
@@ -574,6 +575,7 @@ var OrderForm = React.createClass({
                 'name': ''
             },
             'studentDiscount': {
+                'discountid': -1,
                 'count': 0,
                 'value': '￥0'
             },

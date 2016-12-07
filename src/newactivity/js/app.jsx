@@ -1,19 +1,16 @@
 import React from 'react';
 
+import qrCode from '../img/new_activity_qrcode.png';
+
 var App = React.createClass({
 
     render: function() {
         return (
-            <div className="activity">
-                <div className="title">新人优惠!</div>
-                <div className="second-title">优惠规则：</div>
-                <div className="content">1、注册即送50元优惠券；</div>
-                <div className="content">2、完善个人资料此优惠券升级为100元！</div>
-                <div className="second-title">注意事项：</div>
-                <div className="content">此优惠券与多人优惠不可共用；</div>
-                <div className="button-container">
-                    <span className="button">点此去完善</span>
-                </div>
+            <div className="container newactivity">
+                <p className="bg-info">请使用微信扫一扫扫描下方二维码在手机上参加活动!
+                    <button type="button" className="btn btn-link" onClick={()=>{window.close()}}>我不想参加</button>
+                </p>
+                <img className="img-responsive" src={qrCode}/>
             </div>
         );
     }
