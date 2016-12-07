@@ -42,7 +42,7 @@ var OrderTip = React.createClass({
                 </p>
             );
         } else if (status == orderStatus.PAID && this.state.dayLeft) {
-            if (dayLeft < 0) {
+            if (this.state.dayLeft < 0) {
                 return (
                     <p className="order-tip">已经出发</p>
                 );

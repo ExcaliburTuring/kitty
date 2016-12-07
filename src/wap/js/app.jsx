@@ -51,8 +51,8 @@ var App = React.createClass({
 
     _wxshare: function() {
         var title = '海逍遥旅行';
-        var link = 'http://www.hxytravel.com/';
-        var imgUrl = 'http://www.hxytravel.com/img/QR.jpg';
+        var link = 'https://www.hxytravel.com/';
+        var imgUrl = 'https://www.hxytravel.com/img/QR.jpg';
         var desc = '海逍遥旅行，一种旅行方式，多种旅行体验！'
         $.get(url.wxShareConfig, {'url': location.href.split('#')[0]})
         .done(function(data) {
