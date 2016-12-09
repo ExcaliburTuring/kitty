@@ -90,7 +90,7 @@ var Discount = React.createClass({
                         }
                     </List.Item>
                     {
-                        studentDiscount
+                        this.props.discountData.studentDiscount
                         ? <List.Item
                             extra={
                                 <Stepper showNumber size="small" max={this.props.count} min={0} step={1}

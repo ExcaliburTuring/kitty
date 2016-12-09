@@ -341,10 +341,27 @@ var  OrderForm = React.createClass({
         var contact = this.state.contact;
         if (contact.accountid && contact.contactid == 0) {
             this.props.onAccountInfoChange();
+            this.setState({'contact': null});
         } else {
+            var id = `${contact.accountid}-${contact.contactid}`;
+            var find = false, selectTravellers = this.state.selectTravellers;
+            for (var index in selectTravellers) {
+                if (id == selectTravellers[index]) {
+                    find = true;
+                    break;
+                }
+            }
+            if (!find) {
+                selectTravellers.push(id);
+                this.setState({'contact': null, 'selectTravellers': selectTravellers});
+                OrderDiscount.actions.load({
+                    'routeid': this.props.orderInfoData.orderInfo.routeid, 
+                    'groupid': this.props.orderInfoData.orderInfo.groupid,
+                    'count': selectTravellers.length
+                });
+            }
             AccountContacts.actions.load();
         }
-        this.setState({'contact': null});
     },
 
     /**

@@ -24,8 +24,7 @@ var App = React.createClass({
             && coupons.coupons.length && coupons.coupons[0].status == 0 
             && coupons.coupons[0].updateCount == 0) {
             alert('优惠券提示', `${coupons.coupons[0].value}元新人优惠券已经放到您的账户中，完善个人信息可继续升级优惠券！`, [
-                {text: '不感兴趣', onPress: () => window.location.href = self.state.origin},
-                {text: '查看活动', onPress: () => {}}
+                {text: '确定', onPress: () => {}}
             ]);
         }
     },
@@ -126,14 +125,15 @@ var App = React.createClass({
                 <div className="second-title">注意事项：</div>
                 <div className="content">每个订单可以使用1张优惠券</div>
                 <div className="content">可与多人优惠、学生优惠同时使用</div>
-                <div className="content">有效期为领取为一年</div>
+                <div className="content">有效期为领取为半年</div>
                 {
-                    used
+                    false
                     ? <div className="button-container" onClick={()=>{window.location.href="/account/wcoupon"}}>
                         <span className="button">查看优惠券</span>
                     </div>
-                    : <div className="button-container" onClick={this.onAccountEditClick}>
-                        <span className="button">点此去完善</span>
+                    : <div className="button-container" >
+                        <span className="button" onClick={this.onAccountEditClick}>点此去完善</span>
+                        <span className="wait button" onClick={()=>{window.location.href=this.state.origin}>稍后参与</span>
                     </div>
                 }
             </div>
