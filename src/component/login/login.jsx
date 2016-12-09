@@ -16,7 +16,7 @@ var Login = React.createClass({
                     <p>尊敬的用户，对不起！由于您尚未登陆，故无法访问当前网页。</p>
                     <p>如您需继续访问，请先
                         <Button bsStyle="link" href="/wx/login" target="_blank">登陆</Button>
-                        <span className="login-addon-text">（海逍遥使用微信直接登陆，安全可靠！）</span>
+                        <span className="login-addon-text">（走之旅行使用微信直接登陆，安全可靠！）</span>
                     </p>
                 </Jumbotron>
             </div>

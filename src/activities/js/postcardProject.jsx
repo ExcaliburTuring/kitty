@@ -59,7 +59,7 @@ var App = React.createClass({
                     </div>
                     <div className="head">
                         <div className="line"/>
-                        <div className="title">海逍遥旅行</div>
+                        <div className="title">走之旅行</div>
                         <div className="line"/>
                     </div>
                 </div>

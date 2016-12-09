@@ -19,7 +19,7 @@ var App = React.createClass({
                     </h6>
                     <div className="head">
                         <div className="line"/>
-                        <div className="title">海逍遥领队计划</div>
+                        <div className="title">走之旅行领队计划</div>
                         <div className="line"/>
                         <div className="subheading">"这个世界上有高高在上的规则，也有自由奔放的灵魂。"</div>
                     </div>
@@ -48,10 +48,10 @@ var App = React.createClass({
                                 <span className="orange">要求： </span>充足时间，强健身体，责任心，丰富旅行经验，协调能力<br/>
                                 <span className="orange">时间： </span>连续7-9天<br/>
                                 <span className="orange">薪水： </span>300-500/天+奖金+食宿补贴+大交通报销<br/>
-                                <span className="orange">工作： </span>按照流程规范，带领队伍出发。完成活动安排、确保旅行安全、传播海逍遥旅行理念<br/>
+                                <span className="orange">工作： </span>按照流程规范，带领队伍出发。完成活动安排、确保旅行安全、传播走之旅行理念<br/>
                                 <span className="orange">福利： </span>旅途浪漫，想单身都难~<br/>
                                 <span className="orange">加分项： </span>1.985/211在读或毕业<br/>
-                                <span className="white">加分项： </span>2.海逍遥粉丝，参加过长线旅行<br/>
+                                <span className="white">加分项： </span>2.走之粉丝，参加过长线旅行<br/>
                                 <span className="white">加分项： </span>3.走南闯北的自助旅行经历、或者领队相关工作经验<br/>
                                 <span className="white">加分项： </span>4.完成领队体验<br/><br/>
                             </h5>
@@ -62,7 +62,7 @@ var App = React.createClass({
                         <div className="activity">
                             <h2>领队体验</h2>
                             <h5><span className="orange">对象： </span>任何想成为领队，体验领队的小伙伴<br/>
-                                <span className="orange">玩法： </span>海逍遥全部3天（含）以上产品，半价体验（出行时间与主领队协商确定），当上副领队，协助主领队完成整个旅程。旅行完成后，如果能加入我们，成为长线领队，那么所收费用全额返还，没有时间期限<br/><br/>
+                                <span className="orange">玩法： </span>走之旅行全部3天（含）以上产品，半价体验（出行时间与主领队协商确定），当上副领队，协助主领队完成整个旅程。旅行完成后，如果能加入我们，成为长线领队，那么所收费用全额返还，没有时间期限<br/><br/>
                             </h5>
                         </div>
                     </Col>
@@ -72,7 +72,7 @@ var App = React.createClass({
                     </div>
                     <div className="head">
                         <div className="line"/>
-                        <div className="title">海逍遥旅行</div>
+                        <div className="title">走之旅行</div>
                         <div className="line"/>
                     </div>
                 </div>

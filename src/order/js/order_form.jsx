@@ -113,7 +113,7 @@ var OrderForm = React.createClass({
 
         var discountData = this._getDiscount();
         if (priceUtil.getPrice(discountData.actualPrice) <= 0) {
-            message.error(`出现负数价格太不科学了，请联系海逍遥${defaultValue.hotline}`);
+            message.error(`出现负数价格太不科学了，请联系走之旅行${defaultValue.hotline}`);
             return false;
         }
         var self = this;
@@ -197,7 +197,7 @@ var OrderForm = React.createClass({
             'actualPrice': actualPrice,
             'policyDiscountid': policyDiscount.discountid,
             'couponid': coupon.couponid,
-            'studentDiscountid': this.state.discountData.studentDiscount.discountid,
+            'studentDiscountid': studentDiscount.discountid,
             'studentCount': studentDiscount.count
         };
     },
@@ -464,6 +464,7 @@ var OrderForm = React.createClass({
         var discountPrice = count * priceUtil.getPrice(this.state.discountData.studentDiscount.value);
         this.setState({
             'studentDiscount': {
+                'discountid': this.state.discountData.studentDiscount.discountid,
                 'count': count,
                 'value': priceUtil.getPriceStr(discountPrice)
             }
@@ -574,6 +575,7 @@ var OrderForm = React.createClass({
                 'name': ''
             },
             'studentDiscount': {
+                'discountid': -1,
                 'count': 0,
                 'value': '￥0'
             },
@@ -654,7 +656,8 @@ var OrderForm = React.createClass({
                                 onStudentDiscountChange={this.onStudentDiscountChange}/>
                             <Agreement orderid={orderInfo.orderid} isAgreed={this.state.isAgreed}
                                 onAgreementCheck={this.onAgreementCheck} selectTravellers={selectTravellers}
-                                count={count} price={price} actualPrice={actualPrice}/>
+                                count={count} price={price} actualPrice={actualPrice}
+                                routeid={orderInfo.routeid}/>
                             <Pay ref="pay" 
                                 orderid={orderInfo.orderid}
                                 onCreateOrderSubmit={this.onCreateOrderSubmit}

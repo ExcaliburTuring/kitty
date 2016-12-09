@@ -8,7 +8,7 @@ import { url, defaultValue } from 'config';
 import Rabbit from 'rabbit';
 
 function hxyError(e, tag) {
-    alert(`失败，请直接联系海逍遥: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
+    alert(`失败，请直接联系走之旅行: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
 }
 
 function isError(errMsg) {

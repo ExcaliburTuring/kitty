@@ -18,7 +18,7 @@ import compass1 from '../img/compass1.svg';
 import compass2 from '../img/compass2.svg';
 
 function hxyError(e, tag) {
-    alert(`失败，请直接联系海逍遥: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
+    alert(`失败，请直接联系走之旅行: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
 }
 
 function isError(errMsg) {
@@ -50,10 +50,10 @@ var App = React.createClass({
     },
 
     _wxshare: function() {
-        var title = '海逍遥旅行';
+        var title = '走之旅行';
         var link = 'https://www.hxytravel.com/';
         var imgUrl = 'https://www.hxytravel.com/img/QR.jpg';
-        var desc = '海逍遥旅行，一种旅行方式，多种旅行体验！'
+        var desc = '走之旅行，一种旅行方式，多种旅行体验！'
         $.get(url.wxShareConfig, {'url': location.href.split('#')[0]})
         .done(function(data) {
             if (data.status != 0 ){

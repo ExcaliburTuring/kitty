@@ -34,7 +34,7 @@ var Info = React.createClass({
                         </Col>
                         <Col sm={6} md={6}>
                             <div className="footer-content">
-                                <div className="footer-title">关于海逍遥</div>
+                                <div className="footer-title">关于走之</div>
                                 <ul className="link">
                                     <li>
                                         <p>北京海逍遥旅行社有限责任公司</p>

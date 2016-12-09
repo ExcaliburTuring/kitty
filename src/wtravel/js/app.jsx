@@ -14,7 +14,7 @@ import bg from '../img/11.png';
 import square from '../img/54.png';
 
 function hxyError(e, tag) {
-    alert(`失败，请直接联系海逍遥: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
+    alert(`失败，请直接联系走之旅行: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
 }
 
 function isError(errMsg) {
@@ -109,7 +109,7 @@ var App = React.createClass({
 
     getInitialState() {
         var routeid = window.location.pathname.split('/')[2];
-        RouteFlux.actions.load({'routeids': routeid});
+        RouteFlux.actions.load({'routeids': routeid, 'isImgtextRequired': true});
         GroupsFlux.actions.load({'routeid': routeid});
         return {
             'routes': {

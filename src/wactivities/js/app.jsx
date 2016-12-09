@@ -4,10 +4,6 @@ import Reflux from 'reflux';
 import Rabbit from 'rabbit';
 import { url } from 'config';
 
-import A1 from '../img/A1.png';
-import A2 from '../img/A2.png';
-import A3 from '../img/A3.png';
-
 var ActivityFlux = Rabbit.create(url.activityList);
 
 var App = React.createClass({
@@ -44,12 +40,16 @@ var Activity = React.createClass({
         return (
             <a href={`${url.activity}/${activity.activityid}`}>
                 <div className="activity-container">
-                    <div className="title">
-                        {activity.title}
-                    </div>
-                    <div className="desc">
-                        {activity.desc}
-                    </div>
+                    <p className="title">{activity.title}</p>
+                    <p className="desc">{activity.desc}</p>
+                    {
+                            activity.activityid == 3 && activity.param.count > 0 
+                            ? <p className="desc">还剩余
+                                <span className="postcard-count">{activity.param.count}</span>
+                                张
+                            </p>
+                            : null
+                    }
                     <div className="activity-img">
                         <img src={activity.wapImg}/>
                     </div>

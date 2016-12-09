@@ -54,8 +54,9 @@ var Agreement = React.createClass({
                 </AgreeItem>
                 <div className="agreement-link-container">
                     <a href="javascript:" onClick={this.onAgreementLinkClick}>《旅游合同》</a>
-                    <a href="/index/hxy_signup_notice.pdf">《报名须知》</a>
-                    <a href="/index/hxy_secure_notice.pdf">《海逍遥安全告知书》</a>
+                    <a href="/index/safe_notice.pdf">《安全须知》</a>
+                    <a href={`/travel/travel_notice.pdf?routeid=${this.props.routeid}`} target="_blank">《旅行行程单》</a>
+                    <a href={`/travel/travel_prepare.pdf?routeid=${this.props.routeid}`} target="_blank">《出发准备》</a>
                 </div>
             </div>
         );
