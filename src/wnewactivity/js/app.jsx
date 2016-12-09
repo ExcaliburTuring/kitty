@@ -98,11 +98,14 @@ var App = React.createClass({
             <div className="activity">
                 <img src={Headimg} className="img-responsive"/>
                 <div className="title">新人优惠!</div>
-                <div className="second-title">优惠规则：</div>
-                <div className="content">1、用户初次登录即送50元新人优惠券；</div>
-                <div className="content">2、完善个人资料此优惠券升级为100元！</div>
-                <div className="second-title">注意事项：</div>
-                <div className="content">此优惠券与多人优惠不可共用；</div>
+                <div className="second-title">参与</div>
+                <div className="content">1.登陆即送<strong>50元</strong>优惠券</div>
+                <div className="content">2.完善个人资料，升级为<strong>100元</strong>优惠券</div>
+                <div className="content">3.报名时使用优惠券，抵扣相应金额</div>
+                <div className="second-title">规则</div>
+                <div className="content">1、每个订单可以使用1张优惠券</div>
+                <div className="content">2、可与多人优惠、学生优惠同时使用</div>
+                <div className="content">3、领取后6个月内有效</div>
                 {
                     noNewAccountTip || newCouponUsedTip
                     ? <div className="second-title">业务提醒：</div>
