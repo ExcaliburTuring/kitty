@@ -107,10 +107,10 @@ var App = React.createClass({
                             </a>
                         </Col>
                     </div>
-                    <Separator text="海逍遥旅行" ref="hxyDesc"/>
+                    <Separator text="走之旅行" ref="hxyDesc"/>
                     <Jumbotron style={{'marginTop': 16 + 'px'}}>
                         <p>尊敬的用户，对不起！当前系统处于测试阶段</p>
-                        <p>如果您想报名某条路线可直接致电海逍遥: {defaultValue.hotline}</p>
+                        <p>如果您想报名某条路线可直接致电走之旅行: {defaultValue.hotline}</p>
                     </Jumbotron>
                     <Col className="products" sm={10} smPush={1} md={12} mdPush={0} lg={12}>
                         {products}

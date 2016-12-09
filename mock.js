@@ -41,6 +41,8 @@ var mockConfig = [
     config('/worder*', 'worder.html'),
     config('/wxpayresult*', 'wxpayresult.html'),
     config('/wnewactivity*', 'wnewactivity.html'),
+    config('/wpostcard*', 'wpostcard.html'),
+    config('/wshare*', 'wshare.html'),
     config('/login', 'login.html'),
     config('/notauth', 'notauth.html'),
     config('/notfound', 'notfound.html'),

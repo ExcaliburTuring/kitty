@@ -40,7 +40,7 @@ var Mine = React.createClass({
     },
 
     onHotlineClick: function() {
-        alert('客服', `联系海逍遥请拨打：${defaultValue.hotline}`, [
+        alert('客服', `联系走之旅行请拨打：${defaultValue.hotline}`, [
             { text: '确定', onPress: () => {}},
         ]);
     },

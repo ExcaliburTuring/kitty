@@ -256,7 +256,7 @@ var  OrderForm = React.createClass({
 
         var discountData = this._getDiscount();
         if (priceUtil.getPrice(discountData.actualPrice) <= 0) {
-            Toast.fail(`出现负数价格太不科学了，请联系海逍遥${defaultValue.hotline}`, 1);
+            Toast.fail(`出现负数价格太不科学了，请联系走之旅行${defaultValue.hotline}`, 1);
             return;
         }
         var self = this;
@@ -550,7 +550,8 @@ var  OrderForm = React.createClass({
                     travellers={travellers}
                     selectTravellers={selectTravellers}
                     price={price}
-                    actualPrice={actualPrice}/>
+                    actualPrice={actualPrice}
+                    routeid={orderInfoData.orderInfo.routeid}/>
                 <Footer ref="footer"
                     orderid={orderInfoData.orderInfo.orderid}
                     actualPrice={actualPrice}

@@ -76,7 +76,7 @@ var OrderOperationHelper = {
                 var content = (
                     <div>
                         <p>由于：<span className="order-refund-failed">{errMsg}</span> 
-                            的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+                            的原因，申请订单退款失败！但请您不要担心，走之旅行客服将主动与您联系，您也可直接致电走之旅行客服：
                             {defaultValue.hotline}
                         </p>
                     </div>
@@ -88,7 +88,7 @@ var OrderOperationHelper = {
             } else {
                 Modal.success({
                     title: '订单退款成功',
-                    content: '您已经成功申请订单退款！如可自动退款，将按原路返回到您的账户中。如无法自动退款，海逍遥工作人员将很快与您取得联系，请您耐心等候！'
+                    content: '您已经成功申请订单退款！如可自动退款，将按原路返回到您的账户中。如无法自动退款，走之旅行工作人员将很快与您取得联系，请您耐心等候！'
                 });
                 setTimeout('location.reload(true);', 300);
             }
@@ -96,7 +96,7 @@ var OrderOperationHelper = {
             var content = (
                 <div>
                     <p>由于：<span className="order-refund-failed">系统处理失败</span> 
-                        的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+                        的原因，申请订单退款失败！但请您不要担心，走之旅行客服将主动与您联系，您也可直接致电走之旅行客服：
                         {defaultValue.hotline}
                     </p>
                 </div>
@@ -146,7 +146,7 @@ var OrderOperationHelper = {
         var self = this;
         Modal.confirm({
             title: '取消订单',
-            content: `如果您对路线有疑问或建议或想修改订单，欢迎直接致电海逍遥:${defaultValue.hotline}`,
+            content: `如果您对路线有疑问或建议或想修改订单，欢迎直接致电走之旅行:${defaultValue.hotline}`,
             onOk: function() {
                 self._doCancelOrder();
             },

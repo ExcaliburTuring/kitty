@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import { Modal } from 'antd-mobile';
+import { Modal, Toast } from 'antd-mobile';
 const alert = Modal.alert;
 
 import Rabbit from 'rabbit';
@@ -92,14 +92,14 @@ var App = React.createClass({
         $.getJSON(url.basicinfo)
         .done(function(data) {
             if (data.status != 0) {
-                message.error(`加载信息失败，您可以联系${defaultValue.hotline}`);
+                Toast.fail(`加载信息失败，您可以联系${defaultValue.hotline}`);
             } else {
                 self.setState({'basicInfo': data.accountBasicInfo});
                 Coupons.actions.load({'type': 0}); // 获取新人优惠券
             }
         })
         .fail(function(jqxhr, textStatus, error) {
-             message.error(`加载信息失败，您可以联系${defaultValue.hotline}`);
+             Toast.fail(`加载信息失败，您可以联系${defaultValue.hotline}`);
         });
     },
 
@@ -111,49 +111,27 @@ var App = React.createClass({
                     onCancleBtnClick={()=>{this.setState({'contact': null})}}/>
             );
         }
-        var noNewAccountTip = null, newCouponUsedTip = null, alreadyJoin = null; 
-        if (this.state.basicInfo.accountInfo.status != accountStatus.WAIT_COMPLETE_INFO) {
-            noNewAccountTip = (<div className="content">您不符合活动范围</div>);
-        }
         var coupons = this.state.coupons.coupons;
-        if (coupons.length && coupons[0].status != 0) {
-            newCouponUsedTip = (<div className="content">您的新人优惠券已经使用</div>);
-        }
-        if (coupons.length && coupons[0].updateCount != 0) {
-            alreadyJoin = (<div className="content">您已经升级了优惠券</div>);
-        }
+        var used = this.state.basicInfo.accountInfo.status != accountStatus.WAIT_COMPLETE_INFO
+            || (coupons.length && coupons[0].status != 0) 
+            || (coupons.length && coupons[0].updateCount != 0);
         return (
             <div className="activity">
                 <img src={Headimg} className="img-responsive"/>
                 <div className="title">新人优惠!</div>
                 <div className="second-title">优惠规则：</div>
-                <div className="content">1、用户初次登录即送50元新人优惠券；</div>
-                <div className="content">2、完善个人资料此优惠券升级为100元！</div>
+                <div className="content">1、登陆即送<strong>¥50元</strong>优惠券</div>
+                <div className="content">2、完善个人资料，升级为<strong>¥100元</strong>优惠券</div>
+                <div className="content">3、报名时使用优惠券，抵扣相应金额</div>
                 <div className="second-title">注意事项：</div>
-                <div className="content">此优惠券与多人优惠不可共用；</div>
+                <div className="content">每个订单可以使用1张优惠券</div>
+                <div className="content">可与多人优惠、学生优惠同时使用</div>
+                <div className="content">有效期为领取为一年</div>
                 {
-                    noNewAccountTip || newCouponUsedTip
-                    ? <div className="second-title">业务提醒：</div>
-                    : null
-                }
-                {
-                    noNewAccountTip
-                    ? noNewAccountTip
-                    : null
-                }
-                {
-                    newCouponUsedTip
-                    ? newCouponUsedTip
-                    : null
-                }
-                {
-                    !newCouponUsedTip && alreadyJoin
-                    ? alreadyJoin
-                    : null
-                }
-                {
-                    noNewAccountTip || newCouponUsedTip || alreadyJoin
-                    ? null
+                    used
+                    ? <div className="button-container" onClick={()=>{window.location.href="/account/wcoupon"}}>
+                        <span className="button">查看优惠券</span>
+                    </div>
                     : <div className="button-container" onClick={this.onAccountEditClick}>
                         <span className="button">点此去完善</span>
                     </div>

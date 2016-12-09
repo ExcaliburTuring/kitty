@@ -58,7 +58,7 @@ var App = React.createClass({
         if (data.status != 0) {
             return (
                 <div className="order-loading-container">
-                    <p>订单加载异常，请联系海逍遥：{defaultValue.hotline}</p>
+                    <p>订单加载异常，请联系走之旅行客服：{defaultValue.hotline}</p>
                 </div>
             );
         }

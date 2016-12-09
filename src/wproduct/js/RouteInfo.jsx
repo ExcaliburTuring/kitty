@@ -12,7 +12,7 @@ import hxyImg from 'hxy_finger.png';
 
 import 'antd/lib/index.css';
 
-var onlineChat = marked(`### 长按二维码图片，选择识别图中二维码\n### 如无法识别，请搜索海逍遥旅行公众号\n### 也可直接拨打海逍遥客服电话：<a href='tel:${defaultValue.hotline}'>${defaultValue.hotline}</a>\n ![](${hxyImg})`);
+var onlineChat = marked(`### 长按二维码图片，选择识别图中二维码\n### 若无法识别可直接拨打走之旅行客服电话：<a href='tel:${defaultValue.hotline}'>${defaultValue.hotline}</a>\n ![](${hxyImg})`);
 
 var RouteInfo = React.createClass({
 

@@ -12,7 +12,7 @@ var App = React.createClass({
                 <div className="table">
                     <div className="head">
                         <div className="line"/>
-                        <div className="title">海逍遥优惠活动</div>
+                        <div className="title">走之旅行优惠活动</div>
                         <div className="line"/>
                         <div className="subheading">你们放假，我们“放价”！</div>
                     </div>
@@ -42,7 +42,7 @@ var App = React.createClass({
                             <h2>活动C：“码上有礼” 优惠券多多</h2>
                             <h5><span className="orange">对象： </span>有优惠码同学<br/>
                                 <span className="orange">参与方式： </span>报名时输入优惠码即可<br/>
-                                <span className="orange">详细说明： </span>2016年注册海逍遥的用户，我们会直接送100元优惠券到你账户作为见面礼~<br/>还想要怎么办捏，参加旅行后，在朋友圈秀出最美的照片，截图发给客服，我们会送出100元，300元，500元不等的优惠券，要看你怎么费尽心思打动我们客服喽。<br/>送出优惠码不记名，用不掉可以送给需要的小伙伴哈<br/><br/>
+                                <span className="orange">详细说明： </span>2016年注册走之旅行的用户，我们会直接送50元优惠券到你账户作为见面礼~<br/>还想要怎么办捏，参加旅行后，在朋友圈秀出最美的照片，截图发给客服，我们会送出100元，300元，500元不等的优惠券，要看你怎么费尽心思打动我们客服喽。<br/>送出优惠码不记名，用不掉可以送给需要的小伙伴哈<br/><br/>
                             </h5>
                         </div>
                     </Col>
@@ -52,7 +52,7 @@ var App = React.createClass({
                             <h2>活动D：“可能遇见TA”</h2>
                             <h5><span className="orange">对象： </span>单人参团小伙伴<br/>
                                 <span className="orange">内容： </span>没有单房差！<br/>
-                                <span className="orange">详细说明： </span>一个人来也不用担心哦，海逍遥领队最擅长的就是带大家一起玩了。年轻活力小团队，全程互动，迅速打成一片。脱离工作小圈子，跨公司跨行业认识一群有趣的人。<br/>大漠、星空、银河、帐篷，这么浪漫的旅程，一不小心就遇上了那个TA。<br/>PS：常年以来妹子比例从来没低于60%，汉子们在哪里，快来报名呀。<br/><br/>
+                                <span className="orange">详细说明： </span>一个人来也不用担心哦，走之旅行领队最擅长的就是带大家一起玩了。年轻活力小团队，全程互动，迅速打成一片。脱离工作小圈子，跨公司跨行业认识一群有趣的人。<br/>大漠、星空、银河、帐篷，这么浪漫的旅程，一不小心就遇上了那个TA。<br/>PS：常年以来妹子比例从来没低于60%，汉子们在哪里，快来报名呀。<br/><br/>
                             </h5>
                         </div>
                     </Col>
@@ -63,7 +63,7 @@ var App = React.createClass({
                     </div>*/}
                     <div className="head">
                         <div className="line"/>
-                        <div className="title">海逍遥旅行</div>
+                        <div className="title">走之旅行</div>
                         <div className="line"/>
                     </div>
                 </div>

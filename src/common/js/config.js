@@ -12,6 +12,7 @@ export var url = {
     'coupons': '/account/coupons',
     'discountCodeValidate': '/account/discountcode/validate',
     'wxShareConfig': '/account/wxshareconfig',
+    'postcardJoin': '/account/postcard/join',
 
     'travel': '/travel',
     'travels': '/routes',

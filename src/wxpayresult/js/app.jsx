@@ -63,7 +63,7 @@ var App = React.createClass({
             opr = (
                 <p className="weui-btn-area">
                     <a href={`tel:${defaultValue.hotline}`}
-                        className="weui-btn weui-btn_primary">联系海逍遥</a>
+                        className="weui-btn weui-btn_primary">联系走之旅行</a>
                     <a href={`${url.order}/${this.state.orderid}`}
                         className="weui-btn weui-btn_default">重新支付</a>
                 </p>
@@ -96,7 +96,7 @@ var App = React.createClass({
                 <div className="weui-msg__extra-area">
                     <div className="weui-footer">
                         <p className="weui-footer__links">
-                            <a href="/" className="weui-footer__link">海逍遥旅行社</a>
+                            <a href="/aboutus" className="weui-footer__link">走之旅行</a>
                         </p>
                         <p className="weui-footer__text">Copyright &copy;
                             2008-2016 <a href="https://www.hxytravel.com/">hxytravel.com</a></p>
