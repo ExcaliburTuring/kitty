@@ -10,8 +10,8 @@ import Rabbit from 'rabbit';
 
 import a from '../img/A.png';
 import b from '../img/B.png';
-import c from '../img/C.png';
-import WH from '../img/51.png';
+import c from '../img/bottom.png';
+import WH from '../img/52.png';
 import d from '../img/D.svg';
 import e from '../img/E.svg';
 import f from '../img/F.png';
@@ -86,15 +86,14 @@ var Slider = React.createClass({
     render: function() {
         var abg = {backgroundImage: "url(" + a + ")"};
         var bbg = {backgroundImage: "url(" + b + ")"};
-        var cbg = {backgroundImage: "url(" + c + ")"};
         return (
-            <div className="row">
+            <div className="row lineheight">
                 <img className="wh-container" src={WH} />
                 <div className="swiper-container Aone" ref="swiper">
+                    <img className="bottom-img" src={c} />
                     <div className="swiper-wrapper">
                         <div className="swiper-slide swiper-no-swiping" style={abg}></div>
                         <div className="swiper-slide swiper-no-swiping" style={bbg}></div>
-                        <div className="swiper-slide swiper-no-swiping" style={cbg}></div>
                     </div>
                     <div className="swiper-pagination swiper-pagination-bullets" ref="pagination"></div>
                 </div>
