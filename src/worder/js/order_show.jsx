@@ -33,6 +33,7 @@ var OrderShow = React.createClass({
     render: function () {
         var orderInfoData = this.props.orderInfoData;
         var orderInfo = orderInfoData.orderInfo;
+        var orderid = orderInfo.orderid, routeid = orderInfo.routeid, groupid = orderInfo.groupid;
         var travellerList = orderInfoData.orderTravellers.map(function(traveller, index) {
             return (
                 <Traveller traveller={traveller} key={index} readOnly/>
@@ -132,7 +133,27 @@ var OrderShow = React.createClass({
                     </List>
                 </div>
                 <OrderRefund orderInfo={orderInfo} orderRefound={orderInfoData.orderRefound}/>
-                <Footer orderid={orderInfo.orderid} actualPrice={orderInfo.actualPrice}
+                <div className="item-title">相关文件</div>
+                <div className="order-refund-container">
+                    <List>
+                        <List.Item arrow="horizontal" onClick={()=>{window.open(`/order/contract?orderid=${orderid}`)}}>
+                            旅游合同
+                        </List.Item>
+                        <List.Item arrow="horizontal" onClick={()=>{window.open('/index/safe_notice.pdf')}}>
+                            安全须知
+                        </List.Item>
+                        <List.Item arrow="horizontal" onClick={()=>{window.open(`/travel/travel_notice.pdf?routeid=${routeid}`)}}>
+                            旅行行程单
+                        </List.Item>
+                        <List.Item arrow="horizontal" onClick={()=>{window.open(`/travel/travel_prepare.pdf?routeid=${routeid}`)}}>
+                            出发准备
+                        </List.Item>
+                        <List.Item arrow="horizontal" onClick={()=>{window.open(`/travel/group_assemble.pdf?groupid=${groupid}`)}}>
+                            集合文件
+                        </List.Item>
+                    </List>
+                </div>
+                <Footer orderid={orderid} actualPrice={orderInfo.actualPrice}
                     orderInfo={orderInfo}/>
             </div>
         );

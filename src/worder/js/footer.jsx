@@ -38,7 +38,7 @@ var Footer = React.createClass({
                 alert('订单退款失败', (
                         <div>
                             <p>由于：<span className="order-refund-failed">{errMsg}</span> 
-                                的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+                                的原因，申请订单退款失败！但请您不要担心，走之旅行客服将主动与您联系，您也可直接致电走之旅行客服：
                                 {defaultValue.hotline}
                             </p>
                         </div>
@@ -46,7 +46,7 @@ var Footer = React.createClass({
                 );
             } else {
                 alert('订单退款失败', 
-                    '您已经成功申请订单退款！如可自动退款，将按原路返回到您的账户中。如无法自动退款，海逍遥工作人员将很快与您取得联系，请您耐心等候！', 
+                    '您已经成功申请订单退款！如可自动退款，将按原路返回到您的账户中。如无法自动退款，走之旅行工作人员将很快与您取得联系，请您耐心等候！', 
                     [{text: '确定', onPress: ()=>{setTimeout('location.reload(true);', 300);}}]
                 );
             }
@@ -54,7 +54,7 @@ var Footer = React.createClass({
             alert('订单退款失败', (
                 <div>
                     <p>由于：<span className="order-refund-failed">系统处理失败</span> 
-                        的原因，申请订单退款失败！但请您不要担心，海逍遥客服将主动与您联系，您也可直接致电海逍遥客服：
+                        的原因，申请订单退款失败！但请您不要担心，走之旅行客服将主动与您联系，您也可直接致电走之旅行客服：
                         {defaultValue.hotline}
                     </p>
                 </div>
@@ -99,7 +99,7 @@ var Footer = React.createClass({
 
     onCancelOrderBtnClick: function() {
         var self = this;
-        alert('取消订单？', `如果您对路线有疑问或建议或想修改订单，欢迎直接致电海逍遥:${defaultValue.hotline}`, [
+        alert('取消订单？', `如果您对路线有疑问或建议或想修改订单，欢迎直接联系走之旅行客服:${defaultValue.hotline}`, [
             {
                 text: '再考虑下',
                 onPress: () => {}
@@ -142,7 +142,7 @@ var Footer = React.createClass({
                     <p>实际支付：<span className="refund-price-text">{refundTypeInfo.actualPrice}</span></p>
                     <p>退款金额：<span className="refund-price-text">{refundTypeInfo.refundPrice}</span></p>
                     <p>扣减金额：<span className="refund-price-text">{refundTypeInfo.deductPrice}</span></p>
-                    <p>欢迎直接致电海逍遥:{defaultValue.hotline}</p>
+                    <p>欢迎直接致电走之旅行:{defaultValue.hotline}</p>
                 </div>
             ),
             [{

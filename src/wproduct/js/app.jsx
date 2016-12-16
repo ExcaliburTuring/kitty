@@ -9,6 +9,7 @@ import Rabbit from 'rabbit';
 import hxyImg from 'haixiaoyao.png'; 
 import shareImg from 'share.svg';
 import friendImg from 'friend.svg';
+import zouzhiImg from 'zouzhi_logo.svg';
 
 import RouteInfo from './RouteInfo';
 
@@ -20,10 +21,9 @@ import long from '../img/54.png';
 import righta from '../img/righta.svg';
 import right from '../img/right.svg';
 import point from '../img/arrow.svg';
-import zouzhiImg from '../img/zouzhi_logo.svg';
 
 function hxyError(e, tag) {
-    alert(`失败，请直接联系海逍遥: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
+    alert(`失败，请直接联系走之旅行: ${defaultValue.hotline}, ${JSON.stringify(e)}, tag: ${tag}`);
 }
 
 function isError(errMsg) {
@@ -45,63 +45,80 @@ var App = React.createClass({
      */
     onRoutesLoaded: function(routes) {
         this.setState({'routes': routes});
-        if (routes.status == 0) {
-            var route = routes.routes[0];
-            var title = `【${route.name}】${route.title}`
-            var link = `https://www.hxytravel.com${url.travel}/${route.routeid}`;
-            var imgUrl = route.headImg;
-            var desc = route.desc;
-            $.get(url.wxShareConfig, {'url': location.href.split('#')[0]})
-            .done(function(data) {
-                if (data.status != 0 ){
-                    return;
-                }
-                wx.config({
-                    'debug': false,
-                    'appId': data.appid,
-                    'timestamp': data.timestamp, 
-                    'nonceStr': data.nonceStr, 
-                    'signature': data.signature,
-                    'jsApiList': ['onMenuShareTimeline', 'onMenuShareAppMessage']
-                });
+        $.getJSON(url.basicinfo)
+        .done(function(data) {
+            if (data.status == 0) {
+                var basicInfo = data.accountBasicInfo;
+                var accountInfo = basicInfo.accountInfo;
+                onWxShare(accountInfo.accountid);
+            } else {
+                onWxShare('unknown');
+            }
+        })
+        .fail(function(jqxhr, textStatus, error) {
+            onWxShare('unknown')
+        });
+    },
 
-                wx.ready(function(){
-                    wx.checkJsApi({
-                        'jsApiList': ['onMenuShareTimeline', 'onMenuShareAppMessage'], 
-                        'success': function(res) {
-                            if (isError(res.errMsg)) {
-                                hxyError(res, "check res error");
-                                return;
-                            }
+    onWxShare: function() {
+        if (this.state.routes.status != 0 || this.state.routes.routes.length == 0) {
+            return;
+        }
+        var route = routes.routes[0];
+        var title = `【${route.name}】${route.title}`
+        var link = `https://www.hxytravel.com$/wproduct/${route.routeid}?source=${source}&channel=`;
+        var imgUrl = route.headImg;
+        var desc = route.desc;
+        $.get(url.wxShareConfig, {'url': location.href.split('#')[0]})
+        .done(function(data) {
+            if (data.status != 0 ){
+                return;
+            }
+            wx.config({
+                'debug': false,
+                'appId': data.appid,
+                'timestamp': data.timestamp, 
+                'nonceStr': data.nonceStr, 
+                'signature': data.signature,
+                'jsApiList': ['onMenuShareTimeline', 'onMenuShareAppMessage']
+            });
 
-                            if (res.checkResult.onMenuShareTimeline) {
-                                wx.onMenuShareTimeline({
-                                    title: title,
-                                    link: link,
-                                    imgUrl: imgUrl
-                                });
-                            }
-                            
-                            if (res.checkResult.onMenuShareAppMessage) {
-                                wx.onMenuShareAppMessage({
-                                    title: title,
-                                    desc: desc,
-                                    link: link,
-                                    imgUrl: imgUrl
-                                });
-                            }
-                        },
-                        'fail': function(e, tag) {
-                            hxyError(e, "check failed");
+            wx.ready(function(){
+                wx.checkJsApi({
+                    'jsApiList': ['onMenuShareTimeline', 'onMenuShareAppMessage'], 
+                    'success': function(res) {
+                        if (isError(res.errMsg)) {
+                            hxyError(res, "check res error");
+                            return;
                         }
-                    });
-                });
-        
-                wx.error(function(res){
-                    hxyError(res, "global error");
+
+                        if (res.checkResult.onMenuShareTimeline) {
+                            wx.onMenuShareTimeline({
+                                title: title,
+                                link: link + 'shareTimeline',
+                                imgUrl: imgUrl
+                            });
+                        }
+                        
+                        if (res.checkResult.onMenuShareAppMessage) {
+                            wx.onMenuShareAppMessage({
+                                title: title,
+                                desc: desc,
+                                link: link + 'shareAppMessage',
+                                imgUrl: imgUrl
+                            });
+                        }
+                    },
+                    'fail': function(e, tag) {
+                        hxyError(e, "check failed");
+                    }
                 });
             });
-        }
+    
+            wx.error(function(res){
+                hxyError(res, "global error");
+            });
+        });
     },
 
     onShowGroupBtnClick: function() {
@@ -141,7 +158,7 @@ var App = React.createClass({
 
     getInitialState() {
         var routeid = window.location.pathname.split('/')[2];
-        RouteFlux.actions.load({'routeids': routeid});
+        RouteFlux.actions.load({'routeids': routeid, 'isImgtextRequired': true});
         GroupsFlux.actions.load({'routeid': routeid});
         return {
             'routes': {
@@ -355,7 +372,7 @@ var GroupPopup = React.createClass({
         var groupList = null;
         if (groups.length == 0) {
             groupList = (
-                <p>{route.season}成团，如果您感兴趣，可以联系海逍遥：{defaultValue.hotline}</p>
+                <p>{route.season}成团，如果您感兴趣，可以联系走之旅行：{defaultValue.hotline}</p>
             );
         } else {
             groupList = this.props.groups.map(function(group, index) {

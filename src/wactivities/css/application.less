@@ -21,20 +21,33 @@ body {
             height: 3rem;
             width: 100%;
             margin-bottom: .6rem;
-            padding: .8rem 0 0 3%;
+            padding-left: 3%;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
 
             .title {
-                width: 50%;
+                width: 100%;
                 line-height: .6rem;
                 font-size: .36rem;
                 color: black;
+                margin-top: .6rem;
+                margin-bottom: .2rem;
             }
 
             .desc {
-                width: 50%;
+                width: 100%;
                 line-height: .6rem;
                 font-size: .24rem;
                 color: @gray;
+                margin-top: 0;
+                margin-bottom: 0;
+
+                .postcard-count {
+                    color: @light-currency;
+                    margin: 0 .05rem;
+                }
             }
 
             .activity-img {

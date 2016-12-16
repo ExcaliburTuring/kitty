@@ -100,7 +100,7 @@ var loaders = [{
       presets: ['es2015', 'stage-0', 'react']
     }
 }, {
-    test: /\.(png|jpg|gif)$/,
+    test: /\.(png|jpg|gif|jpeg)$/,
     loader: 'url-loader?limit=5000'
 }, {
     test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -139,7 +139,7 @@ var config = {
     resolve: {
         alias: config.PATH_MAP,
         modulesDirectories: ['node_modules', path.join(__dirname, '../node_modules')],
-        extensions: ['', '.web.js', '.js', '.jsx', '.json', '.css', '.less', '.jpg', '.png', '.gif']
+        extensions: ['', '.web.js', '.js', '.jsx', '.json', '.css', '.less', '.jpg', '.png', '.gif', '.jpeg']
     },
     externals: {
         // 'react-bootstrap': 'ReactBootstrap',

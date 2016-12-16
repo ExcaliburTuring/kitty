@@ -295,11 +295,20 @@ var OrderOperation = React.createClass({
                     <Button type="primary" onClick={this.onRefundOrderBtnClick}>
                         订单退款
                     </Button>
-                    <Button type="primary" onClick={this.onOtherRouteBtnClick}>
-                        其它路线
-                    </Button>
                     <Button type="primary" onClick={this.onDownloadTravelContractBtnClick}>
-                        下载合同
+                        旅游合同
+                    </Button>
+                    <Button type="primary" onClick={()=>{window.open('/index/safe_notice.pdf')}}>
+                        安全须知
+                    </Button>
+                    <Button type="primary" onClick={()=>{window.open(`/travel/travel_notice.pdf?routeid=${this.props.routeid}`)}}>
+                        旅行行程单
+                    </Button>
+                    <Button type="primary" onClick={()=>{window.open(`/travel/travel_prepare.pdf?routeid=${this.props.routeid}`)}}>
+                        出发准备
+                    </Button>
+                    <Button type="primary" onClick={()=>{window.open(`/travel/group_assemble.pdf?groupid=${this.props.groupid}`)}}>
+                        集合文件
                     </Button>
                 </div>
             );

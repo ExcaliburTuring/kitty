@@ -58,6 +58,7 @@ var Discount = React.createClass({
     onStudentDiscountChange: function(count) {
         var discountPrice = count * priceUtil.getPrice(this.props.discountData.studentDiscount.value);
         this.props.onStudentDiscountChange({
+            'discountid': this.props.discountData.studentDiscount.discountid,
             'count': count,
             'value': priceUtil.getPriceStr(discountPrice)
         });
@@ -88,14 +89,18 @@ var Discount = React.createClass({
                             coupon.couponid ? coupon.name : '不使用优惠码'
                         }
                     </List.Item>
-                    <List.Item
-                        extra={
-                            <Stepper showNumber size="small" max={this.props.count} min={0} step={1}
-                                defaultValue={studentDiscount.count} 
-                                onChange={this.onStudentDiscountChange} />
-                        }>
-                        学生优惠
-                    </List.Item>
+                    {
+                        this.props.discountData.studentDiscount
+                        ? <List.Item
+                            extra={
+                                <Stepper showNumber size="small" max={this.props.count} min={0} step={1}
+                                    defaultValue={studentDiscount.count} 
+                                    onChange={this.onStudentDiscountChange} />
+                            }>
+                            学生优惠
+                        </List.Item>
+                        : <List.Item>本团不可享受学生优惠</List.Item>
+                    }
                     <List.Item
                         extra={
                             <p className="discount-price">{this.props.discountPrice}</p>

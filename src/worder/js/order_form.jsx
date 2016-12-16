@@ -205,7 +205,7 @@ var  OrderForm = React.createClass({
             'actualPrice': actualPrice,
             'policyDiscountid': policyDiscount.discountid,
             'couponid': coupon.couponid,
-            'studentDiscountid': this.state.discountData.studentDiscount.discountid,
+            'studentDiscountid': studentDiscount.discountid,
             'studentCount': studentDiscount.count
         };
     },
@@ -256,7 +256,7 @@ var  OrderForm = React.createClass({
 
         var discountData = this._getDiscount();
         if (priceUtil.getPrice(discountData.actualPrice) <= 0) {
-            Toast.fail(`出现负数价格太不科学了，请联系海逍遥${defaultValue.hotline}`, 1);
+            Toast.fail(`出现负数价格太不科学了，请联系走之旅行${defaultValue.hotline}`, 1);
             return;
         }
         var self = this;
@@ -341,10 +341,28 @@ var  OrderForm = React.createClass({
         var contact = this.state.contact;
         if (contact.accountid && contact.contactid == 0) {
             this.props.onAccountInfoChange();
+            Coupons.actions.load({'usable': true});
+            this.setState({'contact': null});
         } else {
+            var id = `${contact.accountid}-${contact.contactid}`;
+            var find = false, selectTravellers = this.state.selectTravellers;
+            for (var index in selectTravellers) {
+                if (id == selectTravellers[index]) {
+                    find = true;
+                    break;
+                }
+            }
+            if (!find) {
+                selectTravellers.push(id);
+                this.setState({'contact': null, 'selectTravellers': selectTravellers});
+                OrderDiscount.actions.load({
+                    'routeid': this.props.orderInfoData.orderInfo.routeid, 
+                    'groupid': this.props.orderInfoData.orderInfo.groupid,
+                    'count': selectTravellers.length
+                });
+            }
             AccountContacts.actions.load();
         }
-        this.setState({'contact': null});
     },
 
     /**
@@ -469,6 +487,7 @@ var  OrderForm = React.createClass({
                 'msg': ''
             },
             'studentDiscount': {
+                'discountid': -1,
                 'count': 0,
                 'value': '￥0'
             },
@@ -549,7 +568,8 @@ var  OrderForm = React.createClass({
                     travellers={travellers}
                     selectTravellers={selectTravellers}
                     price={price}
-                    actualPrice={actualPrice}/>
+                    actualPrice={actualPrice}
+                    routeid={orderInfoData.orderInfo.routeid}/>
                 <Footer ref="footer"
                     orderid={orderInfoData.orderInfo.orderid}
                     actualPrice={actualPrice}

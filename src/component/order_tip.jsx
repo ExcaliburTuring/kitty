@@ -61,7 +61,7 @@ var OrderTip = React.createClass({
             );
         } else if (status == orderStatus.CLOSED) {
             return (
-                <p className="order-tip">行程取消，可联系海逍遥
+                <p className="order-tip">行程取消，可联系走之旅行
                     <span className="order-countdown">{defaultValue.hotline}</span>
                 </p>
             );

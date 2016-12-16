@@ -16,7 +16,7 @@ var NotAuth = React.createClass({
                 <Jumbotron>
                     <h2>Soooooorry</h2>
                     <p>尊敬的用户，对不起！您没有访问该页面的权限。</p>
-                    <p>{`您可直接致电海逍遥: ${defaultValue.hotline}`}</p>
+                    <p>{`您可直接致电走之旅行: ${defaultValue.hotline}`}</p>
                 </Jumbotron>
             </div>
         );
