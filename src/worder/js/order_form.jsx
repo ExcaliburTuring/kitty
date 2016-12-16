@@ -341,6 +341,7 @@ var  OrderForm = React.createClass({
         var contact = this.state.contact;
         if (contact.accountid && contact.contactid == 0) {
             this.props.onAccountInfoChange();
+            Coupons.actions.load({'usable': true});
             this.setState({'contact': null});
         } else {
             var id = `${contact.accountid}-${contact.contactid}`;

@@ -127,13 +127,13 @@ var App = React.createClass({
                 <div className="content">可与多人优惠、学生优惠同时使用</div>
                 <div className="content">有效期为领取为半年</div>
                 {
-                    false
+                    used
                     ? <div className="button-container" onClick={()=>{window.location.href="/account/wcoupon"}}>
                         <span className="button">查看优惠券</span>
                     </div>
                     : <div className="button-container" >
                         <span className="button" onClick={this.onAccountEditClick}>点此去完善</span>
-                        <span className="wait button" onClick={()=>{window.location.href=this.state.origin}>稍后参与</span>
+                        <span className="wait button" onClick={()=>{window.location.href=this.state.origin}}>稍后参与</span>
                     </div>
                 }
             </div>

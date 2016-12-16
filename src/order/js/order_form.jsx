@@ -501,6 +501,7 @@ var OrderForm = React.createClass({
         if (isAccount) {
             message.success("成功更新您的信息");
             AccountBasicInfo.actions.load();
+            Coupons.actions.load({'usable': true});
         } else {
             message.success("成功更新常用出行人");
             AccountContacts.actions.load();
